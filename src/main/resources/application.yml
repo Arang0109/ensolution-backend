@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: easywork
+
+  profiles:
+    active: local
+
+jwt:
+  secret: ${JWT_SECRET:my-secret-key-my-secret-key-my-secret-key-123456}
+  access-token-validity: 3600000
+  refresh-token-validity: 25200000
+
+server:
+  address: 0.0.0.0
+  port: 8080
+
+---
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true

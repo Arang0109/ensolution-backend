@@ -1,0 +1,10 @@
+{
+  "username": "test01",
+  "password": "test!12",
+  "name": "강민수",
+  "email": "test@test.com",
+  "phoneNumber": "01012345678",
+  "birthDate": "19950209",
+  "ci": "aaa-bbb-ccc",
+  "di": "ddd-eee-fff"
+}

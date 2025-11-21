@@ -1,0 +1,64 @@
+package com.project.easywork.client.controller;
+
+import com.project.easywork.common.util.ApiResponseMessage;
+import com.project.easywork.common.excel.HyundaiReportExporter;
+import com.project.easywork.common.excel.dto.MeasurementReportExportDto;
+import com.project.easywork.client.dto.view.StackDetailDto;
+import com.project.easywork.client.service.StackService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.nio.charset.StandardCharsets;
+
+@SecurityRequirement(name = "bearerAuth")
+@RestController
+@RequestMapping("/api/stacks")
+@RequiredArgsConstructor
+public class StackController {
+  
+  private final StackService stackService;
+  
+  @Operation(summary = "측정시설 상세정보 조회")
+  @ApiResponses({
+      @ApiResponse(responseCode = "200", description = "조회 성공"),
+      @ApiResponse(responseCode = "401", description = "인증 실패"),
+      @ApiResponse(responseCode = "404", description = "측정시설이 존재하지 않음")
+  })
+  @GetMapping("/{stackId}")
+  public ResponseEntity<ApiResponseMessage<StackDetailDto>> getStacks
+      (
+          @PathVariable Long stackId
+      ) {
+
+    return ResponseEntity.ok(
+        new ApiResponseMessage<>(true, "조회 성공", stackService.getStack(stackId))
+    );
+  }
+  
+  @PostMapping("/export/excel")
+  public ResponseEntity<byte[]> exportReportExcel(@RequestBody MeasurementReportExportDto request) throws Exception {
+    HyundaiReportExporter exporter = new HyundaiReportExporter();
+    byte[] fileData = exporter.export(request);
+    
+    String fileName = exporter.getFileName(request);
+    
+    String encodedFilename = java.net.URLEncoder.encode(fileName, StandardCharsets.UTF_8)
+        .replaceAll("\\+", "%20");
+    
+    String contentDisposition = "attachment; filename*=UTF-8''" + encodedFilename;
+    
+    return ResponseEntity.ok()
+        .header(HttpHeaders.CONTENT_DISPOSITION, contentDisposition)
+        .header(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, "Content-Disposition, Content-Type")
+        .contentType(MediaType.parseMediaType(
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"))
+        .body(fileData);
+  }
+}
