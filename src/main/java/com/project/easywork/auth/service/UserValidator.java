@@ -1,6 +1,6 @@
 package com.project.easywork.auth.service;
 
-import com.project.easywork.auth.dto.UserCreateDto;
+import com.project.easywork.auth.domain.dto.UserCreateDto;
 import com.project.easywork.common.exception.CustomException;
 import com.project.easywork.common.exception.ErrorCode;
 import com.project.easywork.auth.repository.UserRepository;

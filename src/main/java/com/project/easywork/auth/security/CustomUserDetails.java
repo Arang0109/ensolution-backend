@@ -1,6 +1,6 @@
 package com.project.easywork.auth.security;
 
-import com.project.easywork.auth.entity.User;
+import com.project.easywork.auth.domain.entity.User;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

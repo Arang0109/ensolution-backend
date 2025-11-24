@@ -1,9 +1,9 @@
 package com.project.easywork.auth.controller;
 
-import com.project.easywork.auth.dto.UserCreateDto;
+import com.project.easywork.auth.domain.dto.UserCreateDto;
 import com.project.easywork.common.util.ApiResponseMessage;
-import com.project.easywork.auth.dto.UserResponseDto;
-import com.project.easywork.auth.dto.UserUpdateDto;
+import com.project.easywork.auth.domain.dto.UserResponseDto;
+import com.project.easywork.auth.domain.dto.UserUpdateDto;
 import com.project.easywork.auth.security.CustomUserDetails;
 import com.project.easywork.auth.service.UserService;
 import com.project.easywork.common.validator.ValidationUtils;

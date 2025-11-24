@@ -1,7 +1,7 @@
 package com.project.easywork.auth.service;
 
 import com.project.easywork.auth.security.CustomUserDetails;
-import com.project.easywork.auth.entity.User;
+import com.project.easywork.auth.domain.entity.User;
 import com.project.easywork.auth.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;

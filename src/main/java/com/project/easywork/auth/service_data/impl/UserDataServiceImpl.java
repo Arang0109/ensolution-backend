@@ -1,11 +1,11 @@
 package com.project.easywork.auth.service_data.impl;
 
-import com.project.easywork.auth.dto.UserCreateDto;
-import com.project.easywork.auth.dto.UserResponseDto;
-import com.project.easywork.auth.dto.UserUpdateDto;
+import com.project.easywork.auth.domain.dto.UserCreateDto;
+import com.project.easywork.auth.domain.dto.UserResponseDto;
+import com.project.easywork.auth.domain.dto.UserUpdateDto;
 import com.project.easywork.auth.mapper.UserMapper;
 import com.project.easywork.auth.service_data.UserDataService;
-import com.project.easywork.auth.entity.User;
+import com.project.easywork.auth.domain.entity.User;
 import com.project.easywork.auth.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;

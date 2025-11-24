@@ -1,6 +1,7 @@
 package com.project.easywork.auth.controller;
 
-import com.project.easywork.auth.dto.*;
+import com.project.easywork.auth.domain.dto.LoginRequestDto;
+import com.project.easywork.auth.domain.dto.LoginResponseDto;
 import com.project.easywork.common.util.ApiResponseMessage;
 import com.project.easywork.auth.security.JwtTokenProvider;
 import com.project.easywork.auth.security.CustomUserDetails;
