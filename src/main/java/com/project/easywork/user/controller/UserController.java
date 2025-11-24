@@ -1,11 +1,11 @@
-package com.project.easywork.auth.controller;
+package com.project.easywork.user.controller;
 
-import com.project.easywork.auth.domain.dto.UserCreateDto;
+import com.project.easywork.user.domain.dto.UserCreateDto;
 import com.project.easywork.common.util.ApiResponseMessage;
-import com.project.easywork.auth.domain.dto.UserResponseDto;
-import com.project.easywork.auth.domain.dto.UserUpdateDto;
+import com.project.easywork.user.domain.dto.UserResponseDto;
+import com.project.easywork.user.domain.dto.UserUpdateDto;
 import com.project.easywork.auth.security.CustomUserDetails;
-import com.project.easywork.auth.service.UserService;
+import com.project.easywork.user.service.UserService;
 import com.project.easywork.common.validator.ValidationUtils;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;

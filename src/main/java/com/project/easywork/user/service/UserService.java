@@ -1,8 +1,8 @@
-package com.project.easywork.auth.service;
+package com.project.easywork.user.service;
 
-import com.project.easywork.auth.domain.dto.UserCreateDto;
-import com.project.easywork.auth.domain.dto.UserResponseDto;
-import com.project.easywork.auth.domain.dto.UserUpdateDto;
+import com.project.easywork.user.domain.dto.UserCreateDto;
+import com.project.easywork.user.domain.dto.UserResponseDto;
+import com.project.easywork.user.domain.dto.UserUpdateDto;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;

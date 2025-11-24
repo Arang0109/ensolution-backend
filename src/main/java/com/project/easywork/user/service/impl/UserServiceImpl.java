@@ -1,11 +1,11 @@
-package com.project.easywork.auth.service.impl;
+package com.project.easywork.user.service.impl;
 
-import com.project.easywork.auth.domain.dto.UserCreateDto;
-import com.project.easywork.auth.service_data.UserDataService;
-import com.project.easywork.auth.domain.dto.UserResponseDto;
-import com.project.easywork.auth.domain.dto.UserUpdateDto;
-import com.project.easywork.auth.service.UserService;
-import com.project.easywork.auth.service.UserValidator;
+import com.project.easywork.user.domain.dto.UserCreateDto;
+import com.project.easywork.user.service_data.UserDataService;
+import com.project.easywork.user.domain.dto.UserResponseDto;
+import com.project.easywork.user.domain.dto.UserUpdateDto;
+import com.project.easywork.user.service.UserService;
+import com.project.easywork.user.service.UserValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

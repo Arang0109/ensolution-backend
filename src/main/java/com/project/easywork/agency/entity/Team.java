@@ -1,6 +1,6 @@
 package com.project.easywork.agency.entity;
 
-import com.project.easywork.auth.domain.entity.User;
+import com.project.easywork.user.domain.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
 

@@ -1,4 +1,4 @@
-package com.project.easywork.auth.domain.dto;
+package com.project.easywork.user.domain.dto;
 
 import com.project.easywork.common.constant.Status;
 import lombok.*;

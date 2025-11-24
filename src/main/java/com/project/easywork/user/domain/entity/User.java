@@ -1,4 +1,4 @@
-package com.project.easywork.auth.domain.entity;
+package com.project.easywork.user.domain.entity;
 
 import com.project.easywork.agency.entity.Team;
 import com.project.easywork.common.constant.Status;
