@@ -6,10 +6,13 @@ import com.project.easywork.common.util.ApiResponseMessage;
 import com.project.easywork.auth.security.JwtTokenProvider;
 import com.project.easywork.auth.security.CustomUserDetails;
 import com.project.easywork.auth.service.RefreshTokenService;
+import com.project.easywork.common.validator.ValidationUtils;
+import com.project.easywork.user.domain.dto.UserCreateDto;
+import com.project.easywork.user.domain.dto.UserResponseDto;
+import com.project.easywork.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -19,6 +22,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.concurrent.TimeUnit;
@@ -29,15 +33,31 @@ import java.util.concurrent.TimeUnit;
 public class AuthController {
   
   private final RefreshTokenService refreshTokenService;
+  private final UserService userService;
   
   private final AuthenticationManager authenticationManager;
   private final JwtTokenProvider jwtTokenProvider;
   
+  @Operation(summary = "회원 등록", description = "새로운 회원 정보를 데이터베이스에 저장")
+  @PostMapping("/register")
+  public ResponseEntity<ApiResponseMessage<UserResponseDto>> register
+      (
+          @Valid @RequestBody UserCreateDto request,
+          BindingResult bindingResult
+      ) {
+    
+    if (bindingResult.hasErrors()) {
+      return ValidationUtils.handleBindingErrors(bindingResult);
+    }
+    
+    userService.register(request);
+    
+    ApiResponseMessage<UserResponseDto> registerSuccess = new ApiResponseMessage<>(true, "회원등록 성공", null);
+    
+    return ResponseEntity.status(HttpStatus.CREATED).body(registerSuccess);
+  }
+  
   @Operation(summary = "로그인 API")
-  @ApiResponses({
-      @ApiResponse(responseCode = "200", description = "로그인 성공"),
-      @ApiResponse(responseCode = "400", description = "요청 형식 오류")
-  })
   @PostMapping("/login")
   public ResponseEntity<ApiResponseMessage<LoginResponseDto>> login
       (
@@ -78,10 +98,6 @@ public class AuthController {
   }
   
   @Operation(summary = "로그아웃 API")
-  @ApiResponses({
-      @ApiResponse(responseCode = "200", description = "로그아웃 성공"),
-      @ApiResponse(responseCode = "401", description = "인증 실패")
-  })
   @PostMapping("/logout")
   public ResponseEntity<ApiResponseMessage<Void>> logout(
       @AuthenticationPrincipal CustomUserDetails userDetails,
@@ -132,8 +148,5 @@ public class AuthController {
           new ApiResponseMessage<>(true, "Access Token 재발급 성공", newAccessToken)
       );
   }
-  
-  
-  
 }
 
