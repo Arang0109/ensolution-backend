@@ -8,6 +8,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
 
 @Entity
 @Getter
@@ -18,8 +19,8 @@ import java.time.LocalDateTime;
 public class User {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "user_id", unique = true)
-  private Long userId;
+  @Column(name = "id", unique = true)
+  private Long id;
   
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "team_id")
@@ -79,6 +80,10 @@ public class User {
   protected void onUpdate() {
     this.updatedAt = LocalDateTime.now();
   }
+  
+  @ManyToMany(fetch = FetchType.EAGER)
+  @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+  private Collection<Role> roles;
   
   public void updateProfile(String name, String email, String department, String grade, String phoneNumber) {
     if (name != null) this.name = name;
