@@ -1,9 +1,9 @@
-package com.project.easywork.auth.service;
+package com.project.easywork.user.service;
 
-import com.project.easywork.auth.dto.UserCreateDto;
+import com.project.easywork.user.domain.dto.UserCreateDto;
 import com.project.easywork.common.exception.CustomException;
 import com.project.easywork.common.exception.ErrorCode;
-import com.project.easywork.auth.repository.UserRepository;
+import com.project.easywork.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

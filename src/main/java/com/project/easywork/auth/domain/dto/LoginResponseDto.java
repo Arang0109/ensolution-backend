@@ -1,4 +1,4 @@
-package com.project.easywork.auth.dto;
+package com.project.easywork.auth.domain.dto;
 
 import lombok.*;
 

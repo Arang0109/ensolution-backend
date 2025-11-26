@@ -1,8 +1,8 @@
-package com.project.easywork.auth.mapper;
+package com.project.easywork.user.mapper;
 
-import com.project.easywork.auth.dto.UserCreateDto;
-import com.project.easywork.auth.dto.UserResponseDto;
-import com.project.easywork.auth.entity.User;
+import com.project.easywork.user.domain.dto.UserCreateDto;
+import com.project.easywork.user.domain.dto.UserResponseDto;
+import com.project.easywork.user.domain.entity.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

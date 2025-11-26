@@ -1,6 +1,6 @@
-package com.project.easywork.auth.repository;
+package com.project.easywork.user.repository;
 
-import com.project.easywork.auth.entity.User;
+import com.project.easywork.user.domain.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

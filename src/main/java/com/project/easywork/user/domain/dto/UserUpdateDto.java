@@ -1,26 +1,22 @@
-package com.project.easywork.auth.dto;
+package com.project.easywork.user.domain.dto;
 
 import com.project.easywork.common.constant.Status;
 import lombok.*;
-
-import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 @ToString
-public class UserResponseDto {
+public class UserUpdateDto {
   private Long userId;
   private String username;
-  private String teamName;
+  private String password;
   private String grade;
   private String department;
   private String name;
   private String email;
   private String phoneNumber;
   private String birthDate;
-  private LocalDateTime createdAt;
-  private LocalDateTime updatedAt;
-  private Status Status;
+  private Status status;
 }

@@ -1,7 +1,6 @@
 package com.project.easywork.agency.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.project.easywork.auth.entity.User;
+import com.project.easywork.user.domain.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
 

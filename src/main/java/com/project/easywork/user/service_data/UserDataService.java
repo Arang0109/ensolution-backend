@@ -1,8 +1,8 @@
-package com.project.easywork.auth.service_data;
+package com.project.easywork.user.service_data;
 
-import com.project.easywork.auth.dto.UserCreateDto;
-import com.project.easywork.auth.dto.UserResponseDto;
-import com.project.easywork.auth.dto.UserUpdateDto;
+import com.project.easywork.user.domain.dto.UserCreateDto;
+import com.project.easywork.user.domain.dto.UserResponseDto;
+import com.project.easywork.user.domain.dto.UserUpdateDto;
 
 import java.util.List;
 
