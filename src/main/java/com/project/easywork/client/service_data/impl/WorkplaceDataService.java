@@ -1,10 +1,10 @@
 package com.project.easywork.client.service_data.impl;
 
-import com.project.easywork.client.service_data.WorkplaceDataService;
 import com.project.easywork.client.domain.persistance.Stack;
 import com.project.easywork.client.domain.persistance.Workplace;
 import com.project.easywork.client.repository.StackRepository;
 import com.project.easywork.client.repository.WorkplaceRepository;
+import com.project.easywork.client.service_data.IWorkplaceDataService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,18 +12,18 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class WorkplaceDataServiceImpl implements WorkplaceDataService {
+public class WorkplaceDataService implements IWorkplaceDataService {
   
   private final WorkplaceRepository workplaceRepository;
   private final StackRepository stackRepository;
   
   @Override
-  public Workplace findByWorkplaceId(Long id) {
+  public Workplace findById(Long id) {
     Workplace workplace = workplaceRepository.findById(id)
         .orElseThrow();
     
     List<Stack> sortedStacks =
-        stackRepository.findByWorkplace_WorkplaceIdOrderByStackNameAsc(id);
+        stackRepository.findByWorkplace_IdOrderByStackNameAsc(id);
     
     workplace.setStacks(sortedStacks);
     

@@ -1,7 +1,7 @@
 package com.project.easywork.client.controller;
 
 import com.project.easywork.common.util.ApiResponse;
-import com.project.easywork.common.excel.HyundaiReportExporter;
+//import com.project.easywork.common.excel.HyundaiReportExporter;
 import com.project.easywork.common.excel.dto.MeasurementReportExportDto;
 import com.project.easywork.client.domain.dto.stack.StackDetailDto;
 import com.project.easywork.client.service.StackService;
@@ -37,24 +37,24 @@ public class StackController {
     );
   }
   
-  @Operation(summary = "엑셀 내보내기 API", description = "측정시설 정보에 관련된 엑셀 파일을 생성하고 내보냅니다.")
-  @PostMapping("/export/excel")
-  public ResponseEntity<byte[]> exportReportExcel(@RequestBody MeasurementReportExportDto request) throws Exception {
-    HyundaiReportExporter exporter = new HyundaiReportExporter();
-    byte[] fileData = exporter.export(request);
-    
-    String fileName = exporter.getFileName(request);
-    
-    String encodedFilename = java.net.URLEncoder.encode(fileName, StandardCharsets.UTF_8)
-        .replaceAll("\\+", "%20");
-    
-    String contentDisposition = "attachment; filename*=UTF-8''" + encodedFilename;
-    
-    return ResponseEntity.ok()
-        .header(HttpHeaders.CONTENT_DISPOSITION, contentDisposition)
-        .header(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, "Content-Disposition, Content-Type")
-        .contentType(MediaType.parseMediaType(
-            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"))
-        .body(fileData);
-  }
+//  @Operation(summary = "엑셀 내보내기 API", description = "측정시설 정보에 관련된 엑셀 파일을 생성하고 내보냅니다.")
+//  @PostMapping("/export/excel")
+//  public ResponseEntity<byte[]> exportReportExcel(@RequestBody MeasurementReportExportDto request) throws Exception {
+//    HyundaiReportExporter exporter = new HyundaiReportExporter();
+//    byte[] fileData = exporter.export(request);
+//
+//    String fileName = exporter.getFileName(request);
+//
+//    String encodedFilename = java.net.URLEncoder.encode(fileName, StandardCharsets.UTF_8)
+//        .replaceAll("\\+", "%20");
+//
+//    String contentDisposition = "attachment; filename*=UTF-8''" + encodedFilename;
+//
+//    return ResponseEntity.ok()
+//        .header(HttpHeaders.CONTENT_DISPOSITION, contentDisposition)
+//        .header(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, "Content-Disposition, Content-Type")
+//        .contentType(MediaType.parseMediaType(
+//            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"))
+//        .body(fileData);
+//  }
 }

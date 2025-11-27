@@ -29,7 +29,7 @@ public class CompanyService implements ICompanyService {
   @Override
   @Transactional(readOnly = true)
   public CompanyResponseDto getCompany(Long companyId) {
-    return companyMapper.toDto(companyDataService.findByCompanyId(companyId));
+    return companyMapper.toDto(companyDataService.findById(companyId));
   }
   
   @Override
@@ -40,7 +40,7 @@ public class CompanyService implements ICompanyService {
   
   @Override
   public CompanyResponseDto updateCompany(Long companyId, CompanyUpdateRequestDto requestDto) {
-    Company company = companyDataService.findByCompanyId(companyId);
+    Company company = companyDataService.findById(companyId);
     company.update(requestDto);
     return companyMapper.toDto(company);
   }

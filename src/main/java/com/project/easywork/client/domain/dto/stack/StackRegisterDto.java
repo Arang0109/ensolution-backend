@@ -1,6 +1,6 @@
 package com.project.easywork.client.domain.dto.stack;
 
-import com.project.easywork.common.constant.Size;
+import com.project.easywork.common.constant.Grade;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -24,7 +24,7 @@ public class StackRegisterDto {
       description = "배출시설 종별 (TYPE_1=1종, TYPE_2=2종, TYPE_3=3종, TYPE_4=4종, TYPE_5=5종)",
       example = "TYPE_1"
   )
-  private Size stackSize;
+  private Grade stackGrade;
   
   @Schema(description = "측정공 높이", example = "3m")
   private String stackHeight;

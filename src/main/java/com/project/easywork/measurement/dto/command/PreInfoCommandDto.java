@@ -1,6 +1,6 @@
 package com.project.easywork.measurement.dto.command;
 
-import com.project.easywork.common.constant.Size;
+import com.project.easywork.common.constant.Grade;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.List;
@@ -62,7 +62,7 @@ public record PreInfoCommandDto(
       String businessCategory,
       
       @Schema(description = "사업장 규모", example = "TYPE_1")
-      Size workplaceSize
+      Grade workplaceGrade
   ) {}
   
   // ------------------------
@@ -81,7 +81,7 @@ public record PreInfoCommandDto(
       String semsNumber,
       
       @Schema(description = "측정시설 규모", example = "TYPE_1")
-      Size stackSize,
+      Grade stackGrade,
       
       @Schema(description = "굴뚝 높이(m)", example = "20.5")
       Double stackHeight,

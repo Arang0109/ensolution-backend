@@ -1,16 +1,20 @@
 package com.project.easywork.client.domain.persistance;
 
-import com.project.easywork.common.constant.Size;
-import com.project.easywork.client.domain.dto.workplace.WorkplaceUpdateDto;
+import com.project.easywork.common.constant.Grade;
+import com.project.easywork.client.domain.dto.workplace.WorkplaceUpdateRequestDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.annotations.UpdateTimestamp;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Entity
 @Getter
@@ -20,8 +24,8 @@ import java.util.List;
 public class Workplace {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "workplace_id")
-  private Long workplaceId;
+  @Column(nullable = false, unique = true)
+  private Long id;
   
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "company_id")
@@ -29,8 +33,8 @@ public class Workplace {
   @ToString.Exclude
   private Company company;
   
-  @Column(name = "workplace_name", nullable = false, length = 100)
-  private String workplaceName;
+  @Column(nullable = false, length = 100)
+  private String name;
   
   @Column
   private String address;
@@ -42,11 +46,19 @@ public class Workplace {
   private String businessCategory;
   
   @Enumerated(EnumType.STRING)
-  @Column(name = "workplace_size", length = 10)
-  private Size workplaceSize;
+  @Column(length = 10)
+  private Grade grade;
   
   @Column(columnDefinition = "LONGTEXT")
   private String remark;
+  
+  @CreationTimestamp
+  @Column(name = "created_at", nullable = false)
+  private LocalDate createdAt;
+  
+  @UpdateTimestamp
+  @Column(name = "modified_at", nullable = false)
+  private LocalDate modifiedAt;
   
   @OneToMany(mappedBy = "workplace", cascade = CascadeType.ALL, orphanRemoval = true)
   @ToString.Exclude
@@ -56,12 +68,25 @@ public class Workplace {
   @ToString.Exclude
   private List<Manager> managers = new ArrayList<>();
   
-  public void update(WorkplaceUpdateDto dto) {
-    this.workplaceName = dto.getWorkplaceName();
-    this.bizNumber = dto.getBizNumber();
-    this.address = dto.getAddress();
-    this.businessCategory = dto.getBusinessCategory();
-    this.workplaceSize = dto.getWorkplaceSize();
-    this.remark = dto.getRemark();
+  public void update(WorkplaceUpdateRequestDto dto) {
+    Optional.ofNullable(dto.getName())
+        .filter(name -> !name.isBlank())
+        .ifPresent(this::setName);
+    
+    Optional.ofNullable(dto.getBizNumber())
+        .filter(biz -> !biz.isBlank())
+        .ifPresent(this::setBizNumber);
+    
+    Optional.ofNullable(dto.getAddress())
+        .ifPresent(this::setAddress);
+    
+    Optional.ofNullable(dto.getBusinessCategory())
+        .ifPresent(this::setBusinessCategory);
+    
+    Optional.ofNullable(dto.getGrade())
+        .ifPresent(this::setGrade);
+    
+    Optional.ofNullable(dto.getRemark())
+        .ifPresent(this::setRemark);
   }
 }

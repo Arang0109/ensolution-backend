@@ -4,7 +4,7 @@ import com.project.easywork.client.service_data.StackDataService;
 import com.project.easywork.client.domain.dto.stack.StackDetailDto;
 import com.project.easywork.client.mapper.StackMapper;
 import com.project.easywork.client.service.StackService;
-import com.project.easywork.client.service.WorkplaceService;
+import com.project.easywork.client.service.IWorkplaceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 public class StackServiceImpl implements StackService {
   
   private final StackDataService stackDataService;
-  private final WorkplaceService workplaceService;
+  private final IWorkplaceService IWorkplaceService;
   private final StackMapper stackMapper;
   
   @Override

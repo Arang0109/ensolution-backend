@@ -15,7 +15,7 @@ public class CompanyDataService implements ICompanyDataService {
   private final CompanyRepository companyRepository;
   
   @Override
-  public Company findByCompanyId(Long companyId) {
+  public Company findById(Long companyId) {
     return companyRepository.findById(companyId)
         .orElseThrow();
   }

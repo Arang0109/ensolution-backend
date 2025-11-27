@@ -1,7 +1,7 @@
 
 package com.project.easywork.client.domain.persistance;
 
-import com.project.easywork.common.constant.Size;
+import com.project.easywork.common.constant.Grade;
 import com.project.easywork.common.constant.Shape;
 import com.project.easywork.common.constant.StackType;
 import jakarta.persistence.*;
@@ -39,7 +39,7 @@ public class Stack {
   
   @Enumerated(EnumType.STRING)
   @Column(name = "stack_size", length = 10)
-  private Size stackSize;
+  private Grade stackGrade;
   
   @Column(name ="stack_height", length = 10)
   private Double stackHeight;

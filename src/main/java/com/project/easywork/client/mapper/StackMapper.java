@@ -10,11 +10,11 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface StackMapper {
-  @Mapping(target = "workplace.workplaceId", source = "workplaceId")
-  Stack toEntity(StackDto dto);
-  
-  @Mapping(target = "workplaceId", source = "workplace.workplaceId")
-  StackDto toDto(Stack stack);
+//  @Mapping(target = "workplace.workplaceId", source = "workplaceId")
+//  Stack toEntity(StackDto dto);
+//
+//  @Mapping(target = "workplaceId", source = "workplace.workplaceId")
+//  StackDto toDto(Stack stack);
   
   List<StackDto> toDtoList(List<Stack> stacks);
   
