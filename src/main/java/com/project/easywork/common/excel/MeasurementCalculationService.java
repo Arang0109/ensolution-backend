@@ -1,8 +1,8 @@
 package com.project.easywork.common.excel;
 
+import com.project.easywork.client.domain.dto.stack.StackDetailResponseDto;
 import com.project.easywork.common.excel.dto.MeasurementData;
-import com.project.easywork.client.domain.dto.stack.StackDto;
-import com.project.easywork.client.service.StackService;
+import com.project.easywork.client.service.IStackService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -10,14 +10,14 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class MeasurementCalculationService {
 
-  private final StackService stackService;
+  private final IStackService IStackService;
   
   private void measurementPointCalculate(Long stackId, MeasurementData data) {
-    StackDto stack = stackService.getStack(stackId);
+    StackDetailResponseDto stack = IStackService.getStack(stackId);
     
-    double horizontal = stack.getHorizontalLength(); // 가로 (2R)
-    double vertical = stack.getVerticalLength();     // 세로 (높이 or 한 변)
-    String shape = String.valueOf(stack.getShape());
+    double horizontal = stack.getStack().getHorizontalLength(); // 가로 (2R)
+    double vertical = stack.getStack().getVerticalLength();     // 세로 (높이 or 한 변)
+    String shape = String.valueOf(stack.getStack().getShape());
     
     // 원형 굴뚝
     if ("CIRCULAR".equalsIgnoreCase(shape)) {

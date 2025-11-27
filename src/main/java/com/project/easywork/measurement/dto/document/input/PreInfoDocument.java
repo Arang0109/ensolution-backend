@@ -1,6 +1,6 @@
 package com.project.easywork.measurement.dto.document.input;
 
-import com.project.easywork.common.constant.Size;
+import com.project.easywork.common.constant.Grade;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -37,7 +37,7 @@ public class PreInfoDocument {
     private String address;
     private String bizNumber;
     private String businessCategory;
-    private Size workplaceSize;
+    private Grade workplaceGrade;
   }
   
   // ------------------------------------
@@ -49,7 +49,7 @@ public class PreInfoDocument {
     private Long stackId;
     private String stackName;
     private String semsNumber;
-    private Size stackSize;
+    private Grade stackGrade;
     private Double stackHeight;
     private String stackType;
     private String stackShape;

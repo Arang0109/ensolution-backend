@@ -19,7 +19,8 @@ public abstract class ExcelReportExporter {
   }
   
   public final String getFileName(MeasurementReportExportDto dto) {
-    return dto.getStackDetail().getStackName() + "-" + dto.getWorkplaceProfile().getWorkplaceName() + ".xlsx";
+//    return dto.getStackDetail().getStackName() + "-" + dto.getWorkplaceProfile().getWorkplaceName() + ".xlsx";
+  return "test.xlsx";
   }
   
   // 하위 클래스가 구현해야 하는 부분

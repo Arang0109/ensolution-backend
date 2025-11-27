@@ -1,18 +1,14 @@
 package com.project.easywork.client.controller;
 
+import com.project.easywork.client.domain.dto.workplace.*;
 import com.project.easywork.common.util.ApiResponse;
 import com.project.easywork.common.validator.ValidationUtils;
-import com.project.easywork.client.domain.dto.workplace.WorkplaceDto;
-import com.project.easywork.client.domain.dto.workplace.WorkplaceProfileDto;
-import com.project.easywork.client.domain.dto.workplace.WorkplaceDetailDto;
-import com.project.easywork.client.domain.dto.workplace.WorkplaceUpdateDto;
-import com.project.easywork.client.service.WorkplaceService;
+import com.project.easywork.client.service.IWorkplaceService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -26,63 +22,48 @@ import java.util.List;
 @RequiredArgsConstructor
 public class WorkplaceController {
   
-  private final WorkplaceService workplaceService;
+  private final IWorkplaceService workplaceService;
   
   @Operation(summary = "사업장 등록 API", description = "새로운 사업장 정보를 데이터베이스에 저장합니다.")
   @PostMapping()
-  public ResponseEntity<ApiResponse<WorkplaceDto>> registerWorkplace
+  public ResponseEntity<ApiResponse<Void>> registerWorkplace
       (
-          @Valid @RequestBody WorkplaceDto request,
+          @Valid @RequestBody WorkplaceCreateRequestDto request,
           BindingResult bindingResult
       ) {
-    
     if (bindingResult.hasErrors()) {
       return ValidationUtils.handleBindingErrors(bindingResult);
     }
-    
     workplaceService.registerWorkplace(request);
-    
-    ApiResponse<WorkplaceDto> registerSuccess = new ApiResponse<>(true, "의뢰업체 성공", null);
-    
-    return ResponseEntity.status(HttpStatus.CREATED).body(registerSuccess);
+    return ResponseEntity.ok().body(ApiResponse.ok());
   }
   
   @Operation(summary = "사업장 목록 조회 API", description = "전체 사업장 목록을 조회합니다.")
   @GetMapping()
-  public ResponseEntity<ApiResponse<List<WorkplaceProfileDto>>> getWorkplaces() {
-    return ResponseEntity.ok(
-        new ApiResponse<>(true, "조회 성공", workplaceService.getWorkplaces())
-    );
+  public ResponseEntity<ApiResponse<List<WorkplaceResponseDto>>> getWorkplaces() {
+    return ResponseEntity.ok().body(ApiResponse.ok(workplaceService.getWorkplaces()));
   }
   
   @Operation(summary = "사업장 조회 API", description = "해당 사업장의 상세정보를 조회합니다.")
   @GetMapping("/{workplaceId}")
-  public ResponseEntity<ApiResponse<WorkplaceDetailDto>> getWorkplace(@PathVariable Long workplaceId) {
-    WorkplaceDetailDto response = workplaceService.getWorkplace(workplaceId);
-    return ResponseEntity.ok(new ApiResponse<>(true, "단건 조회 성공", response));
+  public ResponseEntity<ApiResponse<WorkplaceDetailResponseDto>> getWorkplace(@PathVariable Long workplaceId) {
+    return ResponseEntity.ok().body(ApiResponse.ok(workplaceService.getWorkplace(workplaceId)));
   }
   
   @Operation(summary = "사업장 수정 API", description = "해당 사업장의 상세정보를 수정합니다.")
   @PatchMapping("/{workplaceId}")
-  public ResponseEntity<ApiResponse<WorkplaceUpdateDto>> updateWorkplace
+  public ResponseEntity<ApiResponse<WorkplaceResponseDto>> updateWorkplace
       (
           @PathVariable Long workplaceId,
-          @Valid @RequestBody WorkplaceUpdateDto request
+          @Valid @RequestBody WorkplaceUpdateRequestDto request
       ) {
-    WorkplaceUpdateDto response = workplaceService.updateWorkplaceProfile(workplaceId, request);
-    
-    return ResponseEntity.ok(
-        new ApiResponse<>(true, "수정 성공", response)
-    );
+    return ResponseEntity.ok().body(ApiResponse.ok(workplaceService.updateWorkplace(workplaceId, request)));
   }
   
   @Operation(summary = "사업장 삭제 API", description = "사업장 정보를 데이터베이스에서 삭제합니다.")
   @DeleteMapping("/{workplaceId}")
-  public ResponseEntity<ApiResponse<String>> removeWorkplace(@PathVariable Long workplaceId) {
+  public ResponseEntity<ApiResponse<Void>> removeWorkplace(@PathVariable Long workplaceId) {
     workplaceService.removeWorkplace(workplaceId);
-    
-    return ResponseEntity.ok(
-        new ApiResponse<>(true, "삭제 성공", "success")
-    );
+    return ResponseEntity.ok(ApiResponse.ok());
   }
 }

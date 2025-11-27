@@ -1,4 +1,4 @@
-package com.project.easywork.client.domain.dto.company;
+package com.project.easywork.client.domain.dto.prevention;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
@@ -10,16 +10,14 @@ import java.time.LocalDate;
 @Getter
 @Builder
 @ToString
-public class CompanyResponseDto {
+public class PreventionResponseDto {
   @Schema(
-      description = "의뢰업체 ID (PK)",
+      description = "방지시설 ID (PK)",
       accessMode = Schema.AccessMode.READ_ONLY)
   private Long id;
   
+  private Long stackId;
   private String name;
-  private String address;
-  private String ceoName;
-  private String bizNumber;
   private String remark;
   
   @Schema(description = "생성날짜") private LocalDate createdAt;

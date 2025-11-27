@@ -3,7 +3,7 @@ package com.project.easywork.common.constant;
 import lombok.Getter;
 
 @Getter
-public enum Size {
+public enum Grade {
   TYPE_1(1),
   TYPE_2(2),
   TYPE_3(3),
@@ -12,7 +12,7 @@ public enum Size {
   
   private final int number;
   
-  Size(int number) {
+  Grade(int number) {
     this.number = number;
   }
   

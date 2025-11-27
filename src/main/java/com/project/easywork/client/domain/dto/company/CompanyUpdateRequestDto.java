@@ -10,7 +10,6 @@ import lombok.ToString;
 @Getter
 @ToString
 public class CompanyUpdateRequestDto {
-  
   private String name;
   private String address;
   private String ceoName;

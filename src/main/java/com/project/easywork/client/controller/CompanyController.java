@@ -1,6 +1,7 @@
 package com.project.easywork.client.controller;
 
 import com.project.easywork.client.domain.dto.company.CompanyCreateRequestDto;
+import com.project.easywork.client.domain.dto.company.CompanyDetailResponseDto;
 import com.project.easywork.client.domain.dto.company.CompanyResponseDto;
 import com.project.easywork.client.domain.dto.company.CompanyUpdateRequestDto;
 import com.project.easywork.client.service.ICompanyService;
@@ -23,6 +24,7 @@ import java.util.List;
 @RequestMapping("/api/companies")
 @RequiredArgsConstructor
 public class CompanyController {
+  
   private final ICompanyService companyService;
   
   @Operation(summary = "의뢰업체 등록 API", description = "새로운 의뢰업체 정보를 데이터베이스에 저장합니다.")
@@ -47,28 +49,25 @@ public class CompanyController {
   
   @Operation(summary = "의뢰업체 조회 API", description = "해당 의뢰업체의 상세정보를 조회합니다.")
   @GetMapping("/{companyId}")
-  public ResponseEntity<ApiResponse<CompanyResponseDto>> getCompany(@PathVariable Long companyId) {
+  public ResponseEntity<ApiResponse<CompanyDetailResponseDto>> getCompany(@PathVariable Long companyId) {
     return ResponseEntity.ok().body(ApiResponse.ok(companyService.getCompany(companyId)));
   }
   
   @Operation(summary = "의뢰업체 수정 API", description = "해당 의뢰업체의 상세정보를 수정합니다.")
   @PatchMapping("/{companyId}")
-  public ResponseEntity<ApiResponse<Void>> updateWorkplace
+  public ResponseEntity<ApiResponse<CompanyResponseDto>> updateWorkplace
       (
           @PathVariable Long companyId,
           @Valid @RequestBody CompanyUpdateRequestDto request
       ) {
     
-    companyService.updateCompany(companyId, request);
-    
-    return ResponseEntity.ok(ApiResponse.ok());
+    return ResponseEntity.ok(ApiResponse.ok(companyService.updateCompany(companyId, request)));
   }
   
-  @Operation(summary = "사업장 삭제 API", description = "사업장 정보를 데이터베이스에서 삭제합니다.")
+  @Operation(summary = "의뢰업체 삭제 API", description = "의뢰업체 정보를 데이터베이스에서 삭제합니다.")
   @DeleteMapping("/{companyId}")
-  public ResponseEntity<ApiResponse<String>> removeCompany(@PathVariable Long companyId) {
+  public ResponseEntity<ApiResponse<Void>> removeCompany(@PathVariable Long companyId) {
     companyService.removeCompany(companyId);
-    
     return ResponseEntity.ok(ApiResponse.ok());
   }
 }

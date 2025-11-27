@@ -15,23 +15,23 @@ public class CompanyDataService implements ICompanyDataService {
   private final CompanyRepository companyRepository;
   
   @Override
-  public Company findByCompanyId(Long companyId) {
+  public Company findById(Long companyId) {
     return companyRepository.findById(companyId)
         .orElseThrow();
   }
   
   @Override
-  public void saveCompany(Company company) {
+  public void save(Company company) {
     companyRepository.save(company);
   }
   
   @Override
-  public void deleteCompany(Long companyId) {
+  public void deleteById(Long companyId) {
     companyRepository.deleteById(companyId);
   }
   
   @Override
-  public List<Company> findAllCompanies() {
+  public List<Company> findAll() {
     System.out.println("companyRepository.findAll() : " + companyRepository.findAll());
     return companyRepository.findAll();
   }
