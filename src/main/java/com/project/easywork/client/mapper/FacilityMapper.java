@@ -1,7 +1,7 @@
 package com.project.easywork.client.mapper;
 
-import com.project.easywork.client.dto.FacilityDto;
-import com.project.easywork.client.entity.Facility;
+import com.project.easywork.client.domain.dto.facility.FacilityDto;
+import com.project.easywork.client.domain.persistance.Facility;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

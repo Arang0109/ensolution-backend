@@ -1,7 +1,7 @@
 package com.project.easywork.client.service.impl;
 
 import com.project.easywork.client.service_data.StackDataService;
-import com.project.easywork.client.dto.view.StackDetailDto;
+import com.project.easywork.client.domain.dto.stack.StackDetailDto;
 import com.project.easywork.client.mapper.StackMapper;
 import com.project.easywork.client.service.StackService;
 import com.project.easywork.client.service.WorkplaceService;

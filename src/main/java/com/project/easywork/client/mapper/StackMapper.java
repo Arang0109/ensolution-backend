@@ -1,8 +1,8 @@
 package com.project.easywork.client.mapper;
 
-import com.project.easywork.client.dto.StackDto;
-import com.project.easywork.client.dto.view.StackDetailDto;
-import com.project.easywork.client.entity.Stack;
+import com.project.easywork.client.domain.dto.stack.StackDto;
+import com.project.easywork.client.domain.dto.stack.StackDetailDto;
+import com.project.easywork.client.domain.persistance.Stack;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

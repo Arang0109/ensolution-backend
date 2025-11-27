@@ -1,9 +1,9 @@
 package com.project.easywork.client.controller;
 
-import com.project.easywork.common.util.ApiResponseMessage;
+import com.project.easywork.common.util.ApiResponse;
 import com.project.easywork.common.excel.HyundaiReportExporter;
 import com.project.easywork.common.excel.dto.MeasurementReportExportDto;
-import com.project.easywork.client.dto.view.StackDetailDto;
+import com.project.easywork.client.domain.dto.stack.StackDetailDto;
 import com.project.easywork.client.service.StackService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -27,13 +27,13 @@ public class StackController {
   
   @Operation(summary = "측정시설 조회 API", description = "해당 측정시설의 상세정보를 조회합니다.")
   @GetMapping("/{stackId}")
-  public ResponseEntity<ApiResponseMessage<StackDetailDto>> getStacks
+  public ResponseEntity<ApiResponse<StackDetailDto>> getStacks
       (
           @PathVariable Long stackId
       ) {
 
     return ResponseEntity.ok(
-        new ApiResponseMessage<>(true, "조회 성공", stackService.getStack(stackId))
+        new ApiResponse<>(true, "조회 성공", stackService.getStack(stackId))
     );
   }
   

@@ -1,13 +1,18 @@
 package com.project.easywork.client.mapper;
 
-import com.project.easywork.client.dto.CompanyDto;
-import com.project.easywork.client.entity.Company;
+import com.project.easywork.client.domain.dto.company.CompanyCreateRequestDto;
+import com.project.easywork.client.domain.dto.company.CompanyResponseDto;
+import com.project.easywork.client.domain.persistance.Company;
+import org.mapstruct.Builder;
 import org.mapstruct.Mapper;
 
-@Mapper(componentModel = "spring")
+import java.util.List;
+
+@Mapper(componentModel = "spring", builder = @Builder(disableBuilder = false))
 public interface CompanyMapper {
   
-  Company toEntity(CompanyDto dto);
+  Company toEntityFromCompanyCreateDto(CompanyCreateRequestDto dto);
+  CompanyResponseDto toDto(Company company);
   
-  CompanyDto toDto(Company company);
+  List<CompanyResponseDto> toDtoList(List<Company> companies);
 }

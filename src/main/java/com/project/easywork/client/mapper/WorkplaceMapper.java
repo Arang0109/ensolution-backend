@@ -1,10 +1,10 @@
 package com.project.easywork.client.mapper;
 
-import com.project.easywork.client.dto.WorkplaceDto;
-import com.project.easywork.client.dto.list.WorkplaceProfileDto;
-import com.project.easywork.client.dto.update.WorkplaceUpdateDto;
-import com.project.easywork.client.dto.view.WorkplaceDetailDto;
-import com.project.easywork.client.entity.Workplace;
+import com.project.easywork.client.domain.dto.workplace.WorkplaceDto;
+import com.project.easywork.client.domain.dto.workplace.WorkplaceProfileDto;
+import com.project.easywork.client.domain.dto.workplace.WorkplaceUpdateDto;
+import com.project.easywork.client.domain.dto.workplace.WorkplaceDetailDto;
+import com.project.easywork.client.domain.persistance.Workplace;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -21,8 +21,9 @@ public interface WorkplaceMapper {
   
   List<WorkplaceDto> toDtoList(List<Workplace> workplaces);
   
-  @Mapping(target = "company", source = "company")
-  List<WorkplaceProfileDto> toProfileDtoList(List<Workplace> workplaces);
+//  @Mapping(target = "company", source = "company")
+//  @Mapping(target = "companyId", source = "company.id")
+//  List<WorkplaceProfileDto> toProfileDtoList(List<Workplace> workplaces);
   
   @Mapping(target = "stacks", source = "stacks")
   WorkplaceDetailDto toDetailDto(Workplace workplace);

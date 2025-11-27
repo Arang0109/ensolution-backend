@@ -1,6 +1,6 @@
 package com.project.easywork.client.service_data;
 
-import com.project.easywork.client.entity.Workplace;
+import com.project.easywork.client.domain.persistance.Workplace;
 
 import java.util.List;
 

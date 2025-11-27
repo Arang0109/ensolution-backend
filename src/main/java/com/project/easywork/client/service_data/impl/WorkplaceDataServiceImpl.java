@@ -1,8 +1,8 @@
 package com.project.easywork.client.service_data.impl;
 
 import com.project.easywork.client.service_data.WorkplaceDataService;
-import com.project.easywork.client.entity.Stack;
-import com.project.easywork.client.entity.Workplace;
+import com.project.easywork.client.domain.persistance.Stack;
+import com.project.easywork.client.domain.persistance.Workplace;
 import com.project.easywork.client.repository.StackRepository;
 import com.project.easywork.client.repository.WorkplaceRepository;
 import lombok.RequiredArgsConstructor;

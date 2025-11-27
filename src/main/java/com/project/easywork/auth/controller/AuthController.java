@@ -2,7 +2,7 @@ package com.project.easywork.auth.controller;
 
 import com.project.easywork.auth.domain.dto.LoginRequestDto;
 import com.project.easywork.auth.domain.dto.LoginResponseDto;
-import com.project.easywork.common.util.ApiResponseMessage;
+import com.project.easywork.common.util.ApiResponse;
 import com.project.easywork.auth.security.JwtTokenProvider;
 import com.project.easywork.auth.security.CustomUserDetails;
 import com.project.easywork.auth.service.RefreshTokenService;
@@ -42,7 +42,7 @@ public class AuthController {
   
   @Operation(summary = "회원가입 API", description = "새로운 회원 정보를 데이터베이스에 저장합니다.")
   @PostMapping("/register")
-  public ResponseEntity<ApiResponseMessage<UserResponseDto>> register
+  public ResponseEntity<ApiResponse<UserResponseDto>> register
       (
           @Valid @RequestBody UserCreateDto request,
           BindingResult bindingResult
@@ -54,14 +54,14 @@ public class AuthController {
     
     userService.register(request);
     
-    ApiResponseMessage<UserResponseDto> registerSuccess = new ApiResponseMessage<>(true, "회원등록 성공", null);
+    ApiResponse<UserResponseDto> registerSuccess = new ApiResponse<>(true, "회원등록 성공", null);
     
     return ResponseEntity.status(HttpStatus.CREATED).body(registerSuccess);
   }
   
   @Operation(summary = "로그인 API", description = "회원 로그인을 수행합니다.")
   @PostMapping("/login")
-  public ResponseEntity<ApiResponseMessage<LoginResponseDto>> login
+  public ResponseEntity<ApiResponse<LoginResponseDto>> login
       (
           @RequestBody LoginRequestDto request,
           HttpServletResponse httpResponse
@@ -95,13 +95,13 @@ public class AuthController {
         userDetails.getUsername());
     
     return ResponseEntity.ok(
-        new ApiResponseMessage<>(true, "로그인에 성공했습니다.", responseDto)
+        new ApiResponse<>(true, "로그인에 성공했습니다.", responseDto)
     );
   }
   
   @Operation(summary = "로그아웃 API", description = "회원 로그아웃을 수행합니다.")
   @PostMapping("/logout")
-  public ResponseEntity<ApiResponseMessage<Void>> logout(
+  public ResponseEntity<ApiResponse<Void>> logout(
       @AuthenticationPrincipal CustomUserDetails userDetails,
       HttpServletResponse response
   ) {
@@ -119,7 +119,7 @@ public class AuthController {
     response.setHeader(HttpHeaders.SET_COOKIE, refreshCookie.toString());
     
     return ResponseEntity.ok(
-        new ApiResponseMessage<>(true, "로그아웃 되었습니다.", null)
+        new ApiResponse<>(true, "로그아웃 되었습니다.", null)
     );
   }
   
@@ -131,7 +131,7 @@ public class AuthController {
       // 1️⃣ 유효성 검증 (서명, 만료시간)
       if (!jwtTokenProvider.validateToken(refreshToken)) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-            .body(new ApiResponseMessage<>(false, "Refresh Token이 유효하지 않습니다.", null));
+            .body(new ApiResponse<>(false, "Refresh Token이 유효하지 않습니다.", null));
       }
       
       // 2️⃣ username 추출
@@ -141,14 +141,14 @@ public class AuthController {
       String storedToken = refreshTokenService.getRefreshToken(username);
       if (storedToken == null || !storedToken.equals(refreshToken)) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-            .body(new ApiResponseMessage<>(false, "Refresh Token이 일치하지 않습니다.", null));
+            .body(new ApiResponse<>(false, "Refresh Token이 일치하지 않습니다.", null));
       }
       
       // 4️⃣ Access Token 재발급
       String newAccessToken = jwtTokenProvider.generateAccessToken(username);
       
       return ResponseEntity.ok(
-          new ApiResponseMessage<>(true, "Access Token 재발급 성공", newAccessToken)
+          new ApiResponse<>(true, "Access Token 재발급 성공", newAccessToken)
       );
   }
 }
