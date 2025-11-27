@@ -1,12 +1,12 @@
 package com.project.easywork.client.service.impl;
 
-import com.project.easywork.client.entity.Workplace;
+import com.project.easywork.client.domain.persistance.Workplace;
 import com.project.easywork.client.mapper.WorkplaceMapper;
 import com.project.easywork.client.service_data.WorkplaceDataService;
-import com.project.easywork.client.dto.WorkplaceDto;
-import com.project.easywork.client.dto.list.WorkplaceProfileDto;
-import com.project.easywork.client.dto.view.WorkplaceDetailDto;
-import com.project.easywork.client.dto.update.WorkplaceUpdateDto;
+import com.project.easywork.client.domain.dto.workplace.WorkplaceDto;
+import com.project.easywork.client.domain.dto.workplace.WorkplaceProfileDto;
+import com.project.easywork.client.domain.dto.workplace.WorkplaceDetailDto;
+import com.project.easywork.client.domain.dto.workplace.WorkplaceUpdateDto;
 import com.project.easywork.client.service.WorkplaceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -30,7 +30,8 @@ public class WorkplaceServiceImpl implements WorkplaceService {
   
   @Override
   public List<WorkplaceProfileDto> getWorkplaces() {
-    return workplaceMapper.toProfileDtoList(workplaceDataService.findAllWorkplaces());
+//    return workplaceMapper.toProfileDtoList(workplaceDataService.findAllWorkplaces());
+    return null;
   }
   
   @Override

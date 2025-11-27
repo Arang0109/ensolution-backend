@@ -3,7 +3,7 @@ package com.project.easywork.client.controller;
 import com.project.easywork.common.util.ApiResponseMessage;
 import com.project.easywork.common.excel.HyundaiReportExporter;
 import com.project.easywork.common.excel.dto.MeasurementReportExportDto;
-import com.project.easywork.client.dto.view.StackDetailDto;
+import com.project.easywork.client.domain.dto.stack.StackDetailDto;
 import com.project.easywork.client.service.StackService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;

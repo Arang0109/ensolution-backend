@@ -1,7 +1,7 @@
 package com.project.easywork.client.service_data.impl;
 
 import com.project.easywork.client.service_data.StackDataService;
-import com.project.easywork.client.entity.Stack;
+import com.project.easywork.client.domain.persistance.Stack;
 import com.project.easywork.client.repository.StackRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

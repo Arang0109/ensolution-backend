@@ -1,10 +1,10 @@
 package com.project.easywork.common.excel;
 
 import com.project.easywork.common.excel.dto.MeasurementReportExportDto;
-import com.project.easywork.client.dto.FacilityDto;
-import com.project.easywork.client.dto.TargetDto;
-import com.project.easywork.client.dto.view.PreventionDetailDto;
-import com.project.easywork.client.dto.view.StackDetailDto;
+import com.project.easywork.client.domain.dto.facility.FacilityDto;
+import com.project.easywork.client.domain.dto.target.TargetDto;
+import com.project.easywork.client.domain.dto.prevention.PreventionDetailDto;
+import com.project.easywork.client.domain.dto.stack.StackDetailDto;
 import lombok.RequiredArgsConstructor;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;

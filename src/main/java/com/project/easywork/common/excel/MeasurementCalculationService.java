@@ -1,7 +1,7 @@
 package com.project.easywork.common.excel;
 
 import com.project.easywork.common.excel.dto.MeasurementData;
-import com.project.easywork.client.dto.StackDto;
+import com.project.easywork.client.domain.dto.stack.StackDto;
 import com.project.easywork.client.service.StackService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

@@ -2,10 +2,10 @@ package com.project.easywork.client.controller;
 
 import com.project.easywork.common.util.ApiResponseMessage;
 import com.project.easywork.common.validator.ValidationUtils;
-import com.project.easywork.client.dto.WorkplaceDto;
-import com.project.easywork.client.dto.list.WorkplaceProfileDto;
-import com.project.easywork.client.dto.view.WorkplaceDetailDto;
-import com.project.easywork.client.dto.update.WorkplaceUpdateDto;
+import com.project.easywork.client.domain.dto.workplace.WorkplaceDto;
+import com.project.easywork.client.domain.dto.workplace.WorkplaceProfileDto;
+import com.project.easywork.client.domain.dto.workplace.WorkplaceDetailDto;
+import com.project.easywork.client.domain.dto.workplace.WorkplaceUpdateDto;
 import com.project.easywork.client.service.WorkplaceService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -29,7 +29,7 @@ public class WorkplaceController {
   private final WorkplaceService workplaceService;
   
   @Operation(summary = "사업장 등록 API", description = "새로운 사업장 정보를 데이터베이스에 저장합니다.")
-  @PostMapping("/register")
+  @PostMapping()
   public ResponseEntity<ApiResponseMessage<WorkplaceDto>> registerWorkplace
       (
           @Valid @RequestBody WorkplaceDto request,

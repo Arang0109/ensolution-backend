@@ -1,8 +1,8 @@
 package com.project.easywork.client.mapper;
 
-import com.project.easywork.client.dto.PreventionDto;
-import com.project.easywork.client.dto.view.PreventionDetailDto;
-import com.project.easywork.client.entity.Prevention;
+import com.project.easywork.client.domain.dto.prevention.PreventionDto;
+import com.project.easywork.client.domain.dto.prevention.PreventionDetailDto;
+import com.project.easywork.client.domain.persistance.Prevention;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

@@ -1,7 +1,7 @@
 package com.project.easywork.common.excel.dto;
 
-import com.project.easywork.client.dto.list.WorkplaceProfileDto;
-import com.project.easywork.client.dto.view.StackDetailDto;
+import com.project.easywork.client.domain.dto.workplace.WorkplaceProfileDto;
+import com.project.easywork.client.domain.dto.stack.StackDetailDto;
 import lombok.*;
 
 @NoArgsConstructor

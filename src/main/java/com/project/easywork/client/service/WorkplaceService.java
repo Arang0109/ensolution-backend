@@ -1,9 +1,9 @@
 package com.project.easywork.client.service;
 
-import com.project.easywork.client.dto.WorkplaceDto;
-import com.project.easywork.client.dto.list.WorkplaceProfileDto;
-import com.project.easywork.client.dto.view.WorkplaceDetailDto;
-import com.project.easywork.client.dto.update.WorkplaceUpdateDto;
+import com.project.easywork.client.domain.dto.workplace.WorkplaceDto;
+import com.project.easywork.client.domain.dto.workplace.WorkplaceProfileDto;
+import com.project.easywork.client.domain.dto.workplace.WorkplaceDetailDto;
+import com.project.easywork.client.domain.dto.workplace.WorkplaceUpdateDto;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
