@@ -10,10 +10,10 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface PreventionMapper {
-  @Mapping(target = "stack.stackId", source = "stackId")
+  @Mapping(target = "stack.id", source = "stackId")
   Prevention toEntity(PreventionDto dto);
   
-  @Mapping(target = "stackId", source = "stack.stackId")
+  @Mapping(target = "stackId", source = "stack.id")
   PreventionDto toDto(Prevention entity);
   
   List<PreventionDto> toDtoList(List<Prevention> preventions);

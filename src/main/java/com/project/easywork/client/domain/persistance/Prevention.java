@@ -5,9 +5,12 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.annotations.UpdateTimestamp;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,8 +22,8 @@ import java.util.List;
 public class Prevention {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "prevention_id")
-  private Long preventionId;
+  @Column(nullable = false, unique = true)
+  private Long id;
   
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "stack_id")
@@ -28,11 +31,19 @@ public class Prevention {
   @ToString.Exclude
   private Stack stack;
   
-  @Column(name = "prevention_name", nullable = false, length = 100)
-  private String preventionName;
+  @Column(nullable = false, length = 100)
+  private String name;
   
   @Column(columnDefinition = "LONGTEXT")
   private String remark;
+  
+  @CreationTimestamp
+  @Column(name = "created_at", nullable = false)
+  private LocalDate createdAt;
+  
+  @UpdateTimestamp
+  @Column(name = "modified_at", nullable = false)
+  private LocalDate modifiedAt;
   
   @OneToMany(mappedBy = "prevention", cascade = CascadeType.ALL, orphanRemoval = true)
   @ToString.Exclude

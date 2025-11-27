@@ -14,7 +14,7 @@ public class PreventionDto {
   @Schema(
       description = "방지시설 ID (PK)",
       accessMode = Schema.AccessMode.READ_ONLY)
-  private Long preventionId;
+  private Long id;
   
   @Schema(description = "배출구 ID (FK)", example = "1")
   @NotNull(message = "필수 입력")
@@ -22,7 +22,7 @@ public class PreventionDto {
   
   @Schema(description = "방지시설", example = "세정집진시설")
   @NotBlank(message = "필수 입력")
-  private String preventionName;
+  private String name;
   
   @Schema(description = "비고", example = "특이사항 없음")
   private String remark;

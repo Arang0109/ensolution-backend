@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface StackRepository extends JpaRepository<Stack, Long> {
-  List<Stack> findByWorkplace_IdOrderByStackNameAsc(Long workplaceId);
+  List<Stack> findStacksByWorkplaceId(Long workplaceId);
 }

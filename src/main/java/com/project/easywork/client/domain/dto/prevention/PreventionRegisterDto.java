@@ -13,7 +13,7 @@ import lombok.*;
 public class PreventionRegisterDto {
   @Schema(description = "방지시설", example = "세정집진시설")
   @NotBlank(message = "필수 입력")
-  private String preventionName;
+  private String name;
   
   @Schema(description = "대상 물질", example = "질소산화물")
   private String targetSubstance;

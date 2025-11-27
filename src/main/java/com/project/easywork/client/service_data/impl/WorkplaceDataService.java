@@ -18,16 +18,9 @@ public class WorkplaceDataService implements IWorkplaceDataService {
   private final StackRepository stackRepository;
   
   @Override
-  public Workplace findById(Long id) {
-    Workplace workplace = workplaceRepository.findById(id)
+  public Workplace findById(Long workplaceId) {
+    return workplaceRepository.findById(workplaceId)
         .orElseThrow();
-    
-    List<Stack> sortedStacks =
-        stackRepository.findByWorkplace_IdOrderByStackNameAsc(id);
-    
-    workplace.setStacks(sortedStacks);
-    
-    return workplace;
   }
   
   @Override

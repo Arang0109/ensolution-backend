@@ -1,7 +1,7 @@
 package com.project.easywork.common.excel.dto;
 
 //import com.project.easywork.client.domain.dto.workplace.WorkplaceProfileDto;
-import com.project.easywork.client.domain.dto.stack.StackDetailDto;
+//import com.project.easywork.client.domain.dto.stack.StackDetailDto;
 import lombok.*;
 
 @NoArgsConstructor
@@ -11,7 +11,7 @@ import lombok.*;
 @ToString
 public class MeasurementReportExportDto {
 //  private WorkplaceProfileDto workplaceProfile;
-  private StackDetailDto stackDetail;
+//  private StackDetailDto stackDetail;
   
   private String managerName;
 }

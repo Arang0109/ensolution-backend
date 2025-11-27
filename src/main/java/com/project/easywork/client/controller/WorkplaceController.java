@@ -46,8 +46,8 @@ public class WorkplaceController {
   
   @Operation(summary = "사업장 조회 API", description = "해당 사업장의 상세정보를 조회합니다.")
   @GetMapping("/{workplaceId}")
-  public ResponseEntity<ApiResponse<WorkplaceResponseDto>> getWorkplace(@PathVariable Long workplaceId) {
-    WorkplaceResponseDto response = workplaceService.getWorkplace(workplaceId);
+  public ResponseEntity<ApiResponse<WorkplaceDetailResponseDto>> getWorkplace(@PathVariable Long workplaceId) {
+    WorkplaceDetailResponseDto response = workplaceService.getWorkplace(workplaceId);
     return ResponseEntity.ok(new ApiResponse<>(true, "단건 조회 성공", response));
   }
   

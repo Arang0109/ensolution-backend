@@ -17,8 +17,4 @@ public interface WorkplaceMapper {
   WorkplaceResponseDto toDto(Workplace workplace);
   
   List<WorkplaceResponseDto> toDtoList(List<Workplace> workplaces);
-  
-//  @Mapping(target = "company", source = "company")
-//  @Mapping(target = "companyId", source = "company.id")
-//  List<WorkplaceProfileDto> toProfileDtoList(List<Workplace> workplaces);
 }

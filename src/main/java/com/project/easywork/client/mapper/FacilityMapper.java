@@ -9,10 +9,10 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface FacilityMapper {
-  @Mapping(target = "prevention.preventionId", source = "preventionId")
+  @Mapping(target = "prevention.id", source = "preventionId")
   Facility toEntity(FacilityDto dto);
   
-  @Mapping(target = "preventionId", source = "prevention.preventionId")
+  @Mapping(target = "preventionId", source = "prevention.id")
   FacilityDto toDto(Facility entity);
   
   List<FacilityDto> toDtoList(List<Facility> facilities);
