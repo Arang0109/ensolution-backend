@@ -8,9 +8,8 @@ import com.project.easywork.client.dto.view.WorkplaceDetailDto;
 import com.project.easywork.client.dto.update.WorkplaceUpdateDto;
 import com.project.easywork.client.service.WorkplaceService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -20,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Tag(name = "Workplace", description = "측정대상 사업장 관련 API")
 @SecurityRequirement(name = "bearerAuth")
 @RestController
 @RequestMapping("/api/workplaces")
@@ -28,11 +28,7 @@ public class WorkplaceController {
   
   private final WorkplaceService workplaceService;
   
-  @Operation(summary = "측정대상 사업장 등록", description = "새로운 사업장 정보를 데이터베이스에 저장")
-  @ApiResponses({
-      @ApiResponse(responseCode = "201", description = "생성 성공"),
-      @ApiResponse(responseCode = "400", description = "요청 형식 오류")
-  })
+  @Operation(summary = "사업장 등록 API", description = "새로운 사업장 정보를 데이터베이스에 저장합니다.")
   @PostMapping("/register")
   public ResponseEntity<ApiResponseMessage<WorkplaceDto>> registerWorkplace
       (
@@ -51,12 +47,7 @@ public class WorkplaceController {
     return ResponseEntity.status(HttpStatus.CREATED).body(registerSuccess);
   }
   
-  @Operation(summary = "측정대상 사업장 전체 조회")
-  @ApiResponses({
-      @ApiResponse(responseCode = "200", description = "조회 성공"),
-      @ApiResponse(responseCode = "401", description = "인증 실패"),
-      @ApiResponse(responseCode = "404", description = "측정대상 사업장이 존재하지 않음")
-  })
+  @Operation(summary = "사업장 목록 조회 API", description = "전체 사업장 목록을 조회합니다.")
   @GetMapping()
   public ResponseEntity<ApiResponseMessage<List<WorkplaceProfileDto>>> getWorkplaces() {
     return ResponseEntity.ok(
@@ -64,24 +55,14 @@ public class WorkplaceController {
     );
   }
   
-  @Operation(summary = "측정대상 사업장 단건 조회")
-  @ApiResponses({
-      @ApiResponse(responseCode = "200", description = "조회 성공"),
-      @ApiResponse(responseCode = "401", description = "인증 실패"),
-      @ApiResponse(responseCode = "404", description = "측정대상 사업장이 존재하지 않음")
-  })
+  @Operation(summary = "사업장 조회 API", description = "해당 사업장의 상세정보를 조회합니다.")
   @GetMapping("/{workplaceId}")
   public ResponseEntity<ApiResponseMessage<WorkplaceDetailDto>> getWorkplace(@PathVariable Long workplaceId) {
     WorkplaceDetailDto response = workplaceService.getWorkplace(workplaceId);
     return ResponseEntity.ok(new ApiResponseMessage<>(true, "단건 조회 성공", response));
   }
   
-  @Operation(summary = "측정대상 사업장 수정")
-  @ApiResponses({
-      @ApiResponse(responseCode = "200", description = "수정 성공"),
-      @ApiResponse(responseCode = "401", description = "인증 실패"),
-      @ApiResponse(responseCode = "404", description = "측정대상 사업장이 존재하지 않음")
-  })
+  @Operation(summary = "사업장 수정 API", description = "해당 사업장의 상세정보를 수정합니다.")
   @PatchMapping("/{workplaceId}")
   public ResponseEntity<ApiResponseMessage<WorkplaceUpdateDto>> updateWorkplace
       (
@@ -95,12 +76,7 @@ public class WorkplaceController {
     );
   }
   
-  @Operation(summary = "측정대상 사업장 삭제")
-  @ApiResponses({
-      @ApiResponse(responseCode = "200", description = "삭제 성공"),
-      @ApiResponse(responseCode = "401", description = "인증 실패"),
-      @ApiResponse(responseCode = "404", description = "측정대상 사업장이 존재하지 않음")
-  })
+  @Operation(summary = "사업장 삭제 API", description = "사업장 정보를 데이터베이스에서 삭제합니다.")
   @DeleteMapping("/{workplaceId}")
   public ResponseEntity<ApiResponseMessage<String>> removeWorkplace(@PathVariable Long workplaceId) {
     workplaceService.removeWorkplace(workplaceId);

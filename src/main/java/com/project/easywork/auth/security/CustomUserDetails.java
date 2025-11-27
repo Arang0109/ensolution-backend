@@ -16,7 +16,7 @@ public class CustomUserDetails implements UserDetails {
   private final Collection<? extends GrantedAuthority> authorities;
   
   public CustomUserDetails(User user) {
-    this.userId = user.getUserId();
+    this.userId = user.getId();
     this.username = user.getUsername();
     this.password = user.getPassword();
     this.authorities = Collections.emptyList();
