@@ -1,6 +1,6 @@
 package com.project.easywork.user.controller;
 
-import com.project.easywork.common.util.ApiResponseMessage;
+import com.project.easywork.common.util.ApiResponse;
 import com.project.easywork.user.domain.dto.UserResponseDto;
 import com.project.easywork.user.domain.dto.UserUpdateDto;
 import com.project.easywork.auth.security.CustomUserDetails;
@@ -25,7 +25,7 @@ public class UserController {
   
   @Operation(summary = "프로필 조회 API", description = "개인 프로필을 조회합니다.")
   @GetMapping("/me")
-  public ResponseEntity<ApiResponseMessage<UserResponseDto>> getProfile
+  public ResponseEntity<ApiResponse<UserResponseDto>> getProfile
       (
           @AuthenticationPrincipal CustomUserDetails userDetails
       ) {
@@ -33,13 +33,13 @@ public class UserController {
     String username = userDetails.getUsername();
     
     return ResponseEntity.ok(
-        new ApiResponseMessage<>(true, "조회 성공", userService.getProfileByUsername(username))
+        new ApiResponse<>(true, "조회 성공", userService.getProfileByUsername(username))
     );
   }
   
   @Operation(summary = "프로필 수정 API", description = "개인 프로필을 수정합니다.")
   @PatchMapping("/me")
-  public ResponseEntity<ApiResponseMessage<UserResponseDto>> patchProfile
+  public ResponseEntity<ApiResponse<UserResponseDto>> patchProfile
       (
           @AuthenticationPrincipal CustomUserDetails userDetails,
           @Valid @RequestBody UserUpdateDto request
@@ -49,13 +49,13 @@ public class UserController {
     UserResponseDto response = userService.update(request);
     
     return ResponseEntity.ok(
-        new ApiResponseMessage<>(true, "수정 성공", response)
+        new ApiResponse<>(true, "수정 성공", response)
     );
   }
   
   @Operation(summary = "회원탈퇴 API", description = "회원 정보를 데이터베이스에서 삭제합니다.")
   @DeleteMapping("/me")
-  public ResponseEntity<ApiResponseMessage<Void>> deleteProfile(
+  public ResponseEntity<ApiResponse<Void>> deleteProfile(
       @AuthenticationPrincipal CustomUserDetails userDetails
   ) {
     
@@ -63,7 +63,7 @@ public class UserController {
     // userService.delete 구현
     
     return ResponseEntity.ok(
-        new ApiResponseMessage<>(true, "success", null)
+        new ApiResponse<>(true, "success", null)
     );
   }
 }

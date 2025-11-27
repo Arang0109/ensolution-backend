@@ -1,6 +1,6 @@
 package com.project.easywork.user.controller;
 
-import com.project.easywork.common.util.ApiResponseMessage;
+import com.project.easywork.common.util.ApiResponse;
 import com.project.easywork.user.domain.dto.UserResponseDto;
 import com.project.easywork.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -25,9 +25,9 @@ public class AdminController {
   
   @Operation(summary = "전체 회원조회 API", description = "전체 회원 목록을 조회합니다.")
   @GetMapping("/users")
-  public ResponseEntity<ApiResponseMessage<List<UserResponseDto>>> getUserList() {
+  public ResponseEntity<ApiResponse<List<UserResponseDto>>> getUserList() {
     return ResponseEntity.ok(
-        new ApiResponseMessage<>(true, "조회 성공", userService.findAll())
+        new ApiResponse<>(true, "조회 성공", userService.findAll())
     );
   }
 }

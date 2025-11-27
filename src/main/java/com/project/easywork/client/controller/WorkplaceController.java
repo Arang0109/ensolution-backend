@@ -1,6 +1,6 @@
 package com.project.easywork.client.controller;
 
-import com.project.easywork.common.util.ApiResponseMessage;
+import com.project.easywork.common.util.ApiResponse;
 import com.project.easywork.common.validator.ValidationUtils;
 import com.project.easywork.client.domain.dto.workplace.WorkplaceDto;
 import com.project.easywork.client.domain.dto.workplace.WorkplaceProfileDto;
@@ -30,7 +30,7 @@ public class WorkplaceController {
   
   @Operation(summary = "사업장 등록 API", description = "새로운 사업장 정보를 데이터베이스에 저장합니다.")
   @PostMapping()
-  public ResponseEntity<ApiResponseMessage<WorkplaceDto>> registerWorkplace
+  public ResponseEntity<ApiResponse<WorkplaceDto>> registerWorkplace
       (
           @Valid @RequestBody WorkplaceDto request,
           BindingResult bindingResult
@@ -42,29 +42,29 @@ public class WorkplaceController {
     
     workplaceService.registerWorkplace(request);
     
-    ApiResponseMessage<WorkplaceDto> registerSuccess = new ApiResponseMessage<>(true, "의뢰업체 성공", null);
+    ApiResponse<WorkplaceDto> registerSuccess = new ApiResponse<>(true, "의뢰업체 성공", null);
     
     return ResponseEntity.status(HttpStatus.CREATED).body(registerSuccess);
   }
   
   @Operation(summary = "사업장 목록 조회 API", description = "전체 사업장 목록을 조회합니다.")
   @GetMapping()
-  public ResponseEntity<ApiResponseMessage<List<WorkplaceProfileDto>>> getWorkplaces() {
+  public ResponseEntity<ApiResponse<List<WorkplaceProfileDto>>> getWorkplaces() {
     return ResponseEntity.ok(
-        new ApiResponseMessage<>(true, "조회 성공", workplaceService.getWorkplaces())
+        new ApiResponse<>(true, "조회 성공", workplaceService.getWorkplaces())
     );
   }
   
   @Operation(summary = "사업장 조회 API", description = "해당 사업장의 상세정보를 조회합니다.")
   @GetMapping("/{workplaceId}")
-  public ResponseEntity<ApiResponseMessage<WorkplaceDetailDto>> getWorkplace(@PathVariable Long workplaceId) {
+  public ResponseEntity<ApiResponse<WorkplaceDetailDto>> getWorkplace(@PathVariable Long workplaceId) {
     WorkplaceDetailDto response = workplaceService.getWorkplace(workplaceId);
-    return ResponseEntity.ok(new ApiResponseMessage<>(true, "단건 조회 성공", response));
+    return ResponseEntity.ok(new ApiResponse<>(true, "단건 조회 성공", response));
   }
   
   @Operation(summary = "사업장 수정 API", description = "해당 사업장의 상세정보를 수정합니다.")
   @PatchMapping("/{workplaceId}")
-  public ResponseEntity<ApiResponseMessage<WorkplaceUpdateDto>> updateWorkplace
+  public ResponseEntity<ApiResponse<WorkplaceUpdateDto>> updateWorkplace
       (
           @PathVariable Long workplaceId,
           @Valid @RequestBody WorkplaceUpdateDto request
@@ -72,17 +72,17 @@ public class WorkplaceController {
     WorkplaceUpdateDto response = workplaceService.updateWorkplaceProfile(workplaceId, request);
     
     return ResponseEntity.ok(
-        new ApiResponseMessage<>(true, "수정 성공", response)
+        new ApiResponse<>(true, "수정 성공", response)
     );
   }
   
   @Operation(summary = "사업장 삭제 API", description = "사업장 정보를 데이터베이스에서 삭제합니다.")
   @DeleteMapping("/{workplaceId}")
-  public ResponseEntity<ApiResponseMessage<String>> removeWorkplace(@PathVariable Long workplaceId) {
+  public ResponseEntity<ApiResponse<String>> removeWorkplace(@PathVariable Long workplaceId) {
     workplaceService.removeWorkplace(workplaceId);
     
     return ResponseEntity.ok(
-        new ApiResponseMessage<>(true, "삭제 성공", "success")
+        new ApiResponse<>(true, "삭제 성공", "success")
     );
   }
 }

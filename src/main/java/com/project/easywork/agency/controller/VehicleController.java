@@ -2,7 +2,7 @@ package com.project.easywork.agency.controller;
 
 import com.project.easywork.agency.dto.VehicleDto;
 import com.project.easywork.agency.service.VehicleService;
-import com.project.easywork.common.util.ApiResponseMessage;
+import com.project.easywork.common.util.ApiResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -26,19 +26,19 @@ public class VehicleController {
   
   @Operation(summary = "차량 목록 조회 API", description = "전체 차량 목록을 조회합니다.")
   @GetMapping()
-  public ResponseEntity<ApiResponseMessage<List<VehicleDto>>> getVehicles() {
+  public ResponseEntity<ApiResponse<List<VehicleDto>>> getVehicles() {
     return ResponseEntity.ok(
-        new ApiResponseMessage<>(true, "조회 성공", vehicleService.getList())
+        new ApiResponse<>(true, "조회 성공", vehicleService.getList())
     );
   }
   
   @Operation(summary = "차량 조회 API", description = "해당 측정팀의 차량정보를 조회합니다.")
   @GetMapping("/{teamId}")
-  public ResponseEntity<ApiResponseMessage<List<VehicleDto>>> getVehiclesByTeam(
+  public ResponseEntity<ApiResponse<List<VehicleDto>>> getVehiclesByTeam(
       @PathVariable Long teamId
   ) {
     return ResponseEntity.ok(
-        new ApiResponseMessage<>(true, "조회 성공", vehicleService.getListByTeam(teamId))
+        new ApiResponse<>(true, "조회 성공", vehicleService.getListByTeam(teamId))
     );
   }
 }
