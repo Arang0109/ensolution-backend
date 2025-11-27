@@ -4,9 +4,6 @@ import com.project.easywork.client.domain.dto.stack.StackCreateRequestDto;
 import com.project.easywork.client.domain.dto.stack.StackDetailResponseDto;
 import com.project.easywork.client.domain.dto.stack.StackResponseDto;
 import com.project.easywork.client.domain.dto.stack.StackUpdateRequestDto;
-import com.project.easywork.client.domain.dto.workplace.WorkplaceCreateRequestDto;
-import com.project.easywork.client.domain.dto.workplace.WorkplaceResponseDto;
-import com.project.easywork.client.domain.dto.workplace.WorkplaceUpdateRequestDto;
 import com.project.easywork.common.util.ApiResponse;
 import com.project.easywork.client.service.IStackService;
 import com.project.easywork.common.validator.ValidationUtils;
@@ -52,14 +49,8 @@ public class StackController {
   
   @Operation(summary = "측정시설 조회 API", description = "해당 측정시설의 상세정보를 조회합니다.")
   @GetMapping("/{stackId}")
-  public ResponseEntity<ApiResponse<StackDetailResponseDto>> getStacks
-      (
-          @PathVariable Long stackId
-      ) {
-
-    return ResponseEntity.ok(
-        new ApiResponse<>(true, "조회 성공", stackService.getStack(stackId))
-    );
+  public ResponseEntity<ApiResponse<StackDetailResponseDto>> getStack(@PathVariable Long stackId) {
+    return ResponseEntity.ok().body(ApiResponse.ok(stackService.getStack(stackId)));
   }
   
   @Operation(summary = "측정시설 수정 API", description = "해당 측정시설의 상세정보를 수정합니다.")

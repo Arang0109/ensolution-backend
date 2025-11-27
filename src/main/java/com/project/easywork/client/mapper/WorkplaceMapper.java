@@ -10,7 +10,7 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface WorkplaceMapper {
-  
+  @Mapping(target = "company.id", source = "companyId")
   Workplace toEntityFromWorkplaceCreateDto(WorkplaceCreateRequestDto dto);
   
   @Mapping(target = "companyId", source = "company.id")

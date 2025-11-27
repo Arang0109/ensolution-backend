@@ -3,6 +3,7 @@ package com.project.easywork.client.domain.dto.stack;
 import com.project.easywork.client.domain.dto.prevention.PreventionResponseDto;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @NoArgsConstructor
@@ -12,5 +13,5 @@ import java.util.List;
 @ToString
 public class StackDetailResponseDto {
   private StackResponseDto stack;
-  private List<PreventionResponseDto> preventions;
+  private List<PreventionResponseDto> preventions = new ArrayList<>();
 }

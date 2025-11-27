@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface ICompanyDataService {
   Company findById(Long companyId);
-  void saveCompany(Company company);
-  void deleteCompany(Long companyId);
-  List<Company> findAllCompanies();
+  void save(Company company);
+  void deleteById(Long companyId);
+  List<Company> findAll();
 }

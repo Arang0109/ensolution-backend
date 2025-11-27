@@ -10,7 +10,7 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface StackMapper {
-  
+  @Mapping(target = "workplace.id", source = "workplaceId")
   Stack toEntityFromStackCreateDto(StackCreateRequestDto dto);
   
   @Mapping(target = "workplaceId", source = "workplace.id")

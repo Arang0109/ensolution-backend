@@ -29,7 +29,7 @@ public class CompanyService implements ICompanyService {
   
   @Override
   public void registerCompany(CompanyCreateRequestDto requestDto) {
-    companyDataService.saveCompany(companyMapper.toEntityFromCompanyCreateDto(requestDto));
+    companyDataService.save(companyMapper.toEntityFromCompanyCreateDto(requestDto));
   }
   
   @Override
@@ -47,7 +47,7 @@ public class CompanyService implements ICompanyService {
   @Override
   @Transactional(readOnly = true)
   public List<CompanyResponseDto> getCompanies() {
-    return companyMapper.toDtoList(companyDataService.findAllCompanies());
+    return companyMapper.toDtoList(companyDataService.findAll());
   }
   
   @Override
@@ -59,6 +59,6 @@ public class CompanyService implements ICompanyService {
   
   @Override
   public void removeCompany(Long companyId) {
-    companyDataService.deleteCompany(companyId);
+    companyDataService.deleteById(companyId);
   }
 }

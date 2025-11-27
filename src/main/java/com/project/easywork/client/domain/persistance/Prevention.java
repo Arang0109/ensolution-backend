@@ -1,6 +1,8 @@
 
 package com.project.easywork.client.domain.persistance;
 
+import com.project.easywork.client.domain.dto.prevention.PreventionUpdateRequestDto;
+import com.project.easywork.client.domain.dto.workplace.WorkplaceUpdateRequestDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,6 +15,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Entity
 @Getter
@@ -52,4 +55,13 @@ public class Prevention {
   @OneToMany(mappedBy = "prevention", cascade = CascadeType.ALL, orphanRemoval = true)
   @ToString.Exclude
   private List<Facility> facilities = new ArrayList<>();
+  
+  public void update(PreventionUpdateRequestDto dto) {
+    Optional.ofNullable(dto.getName())
+        .filter(name -> !name.isBlank())
+        .ifPresent(this::setName);
+    
+    Optional.ofNullable(dto.getRemark())
+        .ifPresent(this::setRemark);
+  }
 }

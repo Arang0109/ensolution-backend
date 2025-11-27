@@ -1,8 +1,6 @@
 package com.project.easywork.client.service_data.impl;
 
-import com.project.easywork.client.domain.persistance.Stack;
 import com.project.easywork.client.domain.persistance.Workplace;
-import com.project.easywork.client.repository.StackRepository;
 import com.project.easywork.client.repository.WorkplaceRepository;
 import com.project.easywork.client.service_data.IWorkplaceDataService;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +13,6 @@ import java.util.List;
 public class WorkplaceDataService implements IWorkplaceDataService {
   
   private final WorkplaceRepository workplaceRepository;
-  private final StackRepository stackRepository;
   
   @Override
   public Workplace findById(Long workplaceId) {
@@ -24,17 +21,17 @@ public class WorkplaceDataService implements IWorkplaceDataService {
   }
   
   @Override
-  public void saveWorkplace(Workplace workplace) {
+  public void save(Workplace workplace) {
     workplaceRepository.save(workplace);
   }
   
   @Override
-  public void deleteWorkplace(Long workplaceId) {
+  public void deleteById(Long workplaceId) {
     workplaceRepository.deleteById(workplaceId);
   }
   
   @Override
-  public List<Workplace> findAllWorkplaces() {
+  public List<Workplace> findAll() {
     return workplaceRepository.findAll();
   }
   

@@ -21,13 +21,13 @@ public class StackDataService implements IStackDataService {
   }
   
   @Override
-  public void saveStack(Stack stack) { stackRepository.save(stack); }
+  public void save(Stack stack) { stackRepository.save(stack); }
   
   @Override
-  public void deleteStack(Long stackId) { stackRepository.deleteById(stackId); }
+  public void deleteById(Long stackId) { stackRepository.deleteById(stackId); }
   
   @Override
-    public List<Stack> findAllStacks() {return stackRepository.findAll(); }
+    public List<Stack> findAll() {return stackRepository.findAll(); }
   
   @Override
   public List<Stack> findStacksByWorkplaceId(Long workplaceId) {

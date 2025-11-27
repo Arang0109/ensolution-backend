@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface PreventionRepository extends JpaRepository<Prevention, Long> {
-  List<Prevention> findByStack_IdOrderByNameAsc(Long stackId);
+  List<Prevention> findPreventionsByStackId(Long stackId);
 }

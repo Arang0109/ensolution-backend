@@ -28,7 +28,7 @@ public class WorkplaceService implements IWorkplaceService {
   public void registerWorkplace(WorkplaceCreateRequestDto requestDto) {
     Workplace workplace = workplaceMapper.toEntityFromWorkplaceCreateDto(requestDto);
     
-    workplaceDataService.saveWorkplace(workplace);
+    workplaceDataService.save(workplace);
   }
   
   @Override
@@ -46,7 +46,7 @@ public class WorkplaceService implements IWorkplaceService {
   @Override
   @Transactional(readOnly = true)
   public List<WorkplaceResponseDto> getWorkplaces() {
-    return workplaceMapper.toDtoList(workplaceDataService.findAllWorkplaces());
+    return workplaceMapper.toDtoList(workplaceDataService.findAll());
   }
   
   @Override
@@ -58,6 +58,6 @@ public class WorkplaceService implements IWorkplaceService {
   
   @Override
   public void removeWorkplace(Long workplaceId) {
-    workplaceDataService.deleteWorkplace(workplaceId);
+    workplaceDataService.deleteById(workplaceId);
   }
 }

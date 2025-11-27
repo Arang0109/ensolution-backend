@@ -10,9 +10,10 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-@Setter
+@Builder
 @ToString
-public class PreventionDetailDto extends PreventionDto {
-  List<FacilityDto> facilities = new ArrayList<>();
-  List<TargetDto> targets = new ArrayList<>();
+public class PreventionDetailResponseDto {
+  private PreventionResponseDto prevention;
+  private List<FacilityDto> facilities = new ArrayList<>();
+  private List<TargetDto> targets = new ArrayList<>();
 }
