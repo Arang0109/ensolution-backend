@@ -44,4 +44,9 @@ public class WorkplaceDataService implements IWorkplaceDataService {
   public List<Workplace> findAllWorkplaces() {
     return workplaceRepository.findAll();
   }
+  
+  @Override
+  public List<Workplace> findWorkplacesByCompanyId(Long CompanyId) {
+    return workplaceRepository.findWorkplacesByCompanyId(CompanyId);
+  }
 }

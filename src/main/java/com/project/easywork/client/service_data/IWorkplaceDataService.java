@@ -9,4 +9,5 @@ public interface IWorkplaceDataService {
   void saveWorkplace(Workplace workplace);
   void deleteWorkplace(Long workplaceId);
   List<Workplace> findAllWorkplaces();
+  List<Workplace> findWorkplacesByCompanyId(Long CompanyId);
 }

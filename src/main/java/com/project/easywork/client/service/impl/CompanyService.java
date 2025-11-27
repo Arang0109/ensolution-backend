@@ -1,12 +1,16 @@
 package com.project.easywork.client.service.impl;
 
 import com.project.easywork.client.domain.dto.company.CompanyCreateRequestDto;
+import com.project.easywork.client.domain.dto.company.CompanyDetailResponseDto;
 import com.project.easywork.client.domain.dto.company.CompanyResponseDto;
 import com.project.easywork.client.domain.dto.company.CompanyUpdateRequestDto;
+import com.project.easywork.client.domain.dto.workplace.WorkplaceResponseDto;
 import com.project.easywork.client.domain.persistance.Company;
 import com.project.easywork.client.mapper.CompanyMapper;
+import com.project.easywork.client.mapper.WorkplaceMapper;
 import com.project.easywork.client.service.ICompanyService;
 import com.project.easywork.client.service_data.ICompanyDataService;
+import com.project.easywork.client.service_data.IWorkplaceDataService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,7 +23,9 @@ import java.util.List;
 public class CompanyService implements ICompanyService {
   
   private final ICompanyDataService companyDataService;
+  private final IWorkplaceDataService workplaceDataService;
   private final CompanyMapper companyMapper;
+  private final WorkplaceMapper workplaceMapper;
   
   @Override
   public void registerCompany(CompanyCreateRequestDto requestDto) {
@@ -28,8 +34,14 @@ public class CompanyService implements ICompanyService {
   
   @Override
   @Transactional(readOnly = true)
-  public CompanyResponseDto getCompany(Long companyId) {
-    return companyMapper.toDto(companyDataService.findById(companyId));
+  public CompanyDetailResponseDto getCompany(Long companyId) {
+    CompanyResponseDto company = companyMapper.toDto(companyDataService.findById(companyId));
+    List<WorkplaceResponseDto> workplaces = workplaceMapper.toDtoList(workplaceDataService.findWorkplacesByCompanyId(companyId));
+    
+    return CompanyDetailResponseDto.builder()
+        .company(company)
+        .workplaces(workplaces)
+        .build();
   }
   
   @Override

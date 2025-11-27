@@ -1,6 +1,7 @@
 package com.project.easywork.client.controller;
 
 import com.project.easywork.client.domain.dto.company.CompanyCreateRequestDto;
+import com.project.easywork.client.domain.dto.company.CompanyDetailResponseDto;
 import com.project.easywork.client.domain.dto.company.CompanyResponseDto;
 import com.project.easywork.client.domain.dto.company.CompanyUpdateRequestDto;
 import com.project.easywork.client.service.ICompanyService;
@@ -48,7 +49,7 @@ public class CompanyController {
   
   @Operation(summary = "의뢰업체 조회 API", description = "해당 의뢰업체의 상세정보를 조회합니다.")
   @GetMapping("/{companyId}")
-  public ResponseEntity<ApiResponse<CompanyResponseDto>> getCompany(@PathVariable Long companyId) {
+  public ResponseEntity<ApiResponse<CompanyDetailResponseDto>> getCompany(@PathVariable Long companyId) {
     return ResponseEntity.ok().body(ApiResponse.ok(companyService.getCompany(companyId)));
   }
   
