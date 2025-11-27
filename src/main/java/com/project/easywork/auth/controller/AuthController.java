@@ -11,6 +11,7 @@ import com.project.easywork.user.domain.dto.UserCreateDto;
 import com.project.easywork.user.domain.dto.UserResponseDto;
 import com.project.easywork.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +28,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.concurrent.TimeUnit;
 
+@Tag(name = "Auth", description = "인증/인가 관련 API")
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
@@ -38,7 +40,7 @@ public class AuthController {
   private final AuthenticationManager authenticationManager;
   private final JwtTokenProvider jwtTokenProvider;
   
-  @Operation(summary = "회원 등록", description = "새로운 회원 정보를 데이터베이스에 저장")
+  @Operation(summary = "회원가입 API", description = "새로운 회원 정보를 데이터베이스에 저장합니다.")
   @PostMapping("/register")
   public ResponseEntity<ApiResponseMessage<UserResponseDto>> register
       (
@@ -57,7 +59,7 @@ public class AuthController {
     return ResponseEntity.status(HttpStatus.CREATED).body(registerSuccess);
   }
   
-  @Operation(summary = "로그인 API")
+  @Operation(summary = "로그인 API", description = "회원 로그인을 수행합니다.")
   @PostMapping("/login")
   public ResponseEntity<ApiResponseMessage<LoginResponseDto>> login
       (
@@ -97,7 +99,7 @@ public class AuthController {
     );
   }
   
-  @Operation(summary = "로그아웃 API")
+  @Operation(summary = "로그아웃 API", description = "회원 로그아웃을 수행합니다.")
   @PostMapping("/logout")
   public ResponseEntity<ApiResponseMessage<Void>> logout(
       @AuthenticationPrincipal CustomUserDetails userDetails,
@@ -121,6 +123,7 @@ public class AuthController {
     );
   }
   
+  @Operation(summary = "토큰 재발급 API", description = "새로운 AccessToken 발급")
   @PostMapping("/refresh")
     public ResponseEntity<?> refresh(
       @CookieValue(value = "refreshToken", required = false) String refreshToken

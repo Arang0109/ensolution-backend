@@ -6,9 +6,8 @@ import com.project.easywork.common.excel.dto.MeasurementReportExportDto;
 import com.project.easywork.client.dto.view.StackDetailDto;
 import com.project.easywork.client.service.StackService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -17,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.nio.charset.StandardCharsets;
 
+@Tag(name = "Stack", description = "측정시설 관련 API")
 @SecurityRequirement(name = "bearerAuth")
 @RestController
 @RequestMapping("/api/stacks")
@@ -25,12 +25,7 @@ public class StackController {
   
   private final StackService stackService;
   
-  @Operation(summary = "측정시설 상세정보 조회")
-  @ApiResponses({
-      @ApiResponse(responseCode = "200", description = "조회 성공"),
-      @ApiResponse(responseCode = "401", description = "인증 실패"),
-      @ApiResponse(responseCode = "404", description = "측정시설이 존재하지 않음")
-  })
+  @Operation(summary = "측정시설 조회 API", description = "해당 측정시설의 상세정보를 조회합니다.")
   @GetMapping("/{stackId}")
   public ResponseEntity<ApiResponseMessage<StackDetailDto>> getStacks
       (
@@ -42,6 +37,7 @@ public class StackController {
     );
   }
   
+  @Operation(summary = "엑셀 내보내기 API", description = "측정시설 정보에 관련된 엑셀 파일을 생성하고 내보냅니다.")
   @PostMapping("/export/excel")
   public ResponseEntity<byte[]> exportReportExcel(@RequestBody MeasurementReportExportDto request) throws Exception {
     HyundaiReportExporter exporter = new HyundaiReportExporter();

@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Tag(name = "Team", description = "측정대행업체 측정팀 관련 API")
 @SecurityRequirement(name = "bearerAuth")
 @RestController
 @RequestMapping("/api/teams")
@@ -24,24 +26,7 @@ public class TeamController {
   
   private final TeamService teamService;
   
-  @Operation(summary = "측정팀 전체 조회")
-  @ApiResponses({
-      @ApiResponse(responseCode = "200", description = "조회 성공"),
-      @ApiResponse(responseCode = "401", description = "인증 실패"),
-      @ApiResponse(responseCode = "404", description = "측정팀이 존재하지 않음")
-  })
-  @GetMapping()
-  public ResponseEntity<ApiResponseMessage<List<TeamDto>>> getTeams() {
-    return ResponseEntity.ok(
-        new ApiResponseMessage<>(true, "조회 성공", teamService.getList())
-    );
-  }
-  
-  @Operation(summary = "측정팀 등록", description = "새로운 측정팀을 데이터베이스에 저장")
-  @ApiResponses({
-      @ApiResponse(responseCode = "201", description = "생성 성공"),
-      @ApiResponse(responseCode = "400", description = "요청 형식 오류")
-  })
+  @Operation(summary = "측정팀 등록 API", description = "새로운 측정팀 정보를 데이터베이스에 저장합니다.")
   @PostMapping()
   public ResponseEntity<ApiResponseMessage<String>> registerTeam(
       @Valid @RequestBody TeamDto request,
@@ -57,22 +42,21 @@ public class TeamController {
     return ResponseEntity.ok(new ApiResponseMessage<>(true, "생성 성공", null));
   }
   
-  @Operation(summary = "측정팀 단건 조회")
-  @ApiResponses({
-      @ApiResponse(responseCode = "200", description = "조회 성공"),
-      @ApiResponse(responseCode = "401", description = "인증 실패"),
-      @ApiResponse(responseCode = "404", description = "측정팀이 존재하지 않음")
-  })
+  @Operation(summary = "측정팀 목록 조회 API", description = "전체 측정팀 목록을 조회합니다.")
+  @GetMapping()
+  public ResponseEntity<ApiResponseMessage<List<TeamDto>>> getTeams() {
+    return ResponseEntity.ok(
+        new ApiResponseMessage<>(true, "조회 성공", teamService.getList())
+    );
+  }
+  
+  @Operation(summary = "측정팀 조회 API", description = "해당 측정팀의 상세정보를 조회합니다.")
   @GetMapping("/{teamId}")
   public ResponseEntity<ApiResponseMessage<TeamDto>> getTeam(@PathVariable Long teamId) {
     return ResponseEntity.ok(new ApiResponseMessage<>(true, "조회 성공", teamService.get(teamId)));
   }
-  @Operation(summary = "측정팀 수정")
-  @ApiResponses({
-      @ApiResponse(responseCode = "200", description = "수정 성공"),
-      @ApiResponse(responseCode = "401", description = "인증 실패"),
-      @ApiResponse(responseCode = "404", description = "측정팀이 존재하지 않음")
-  })
+  
+  @Operation(summary = "측정팀 수정 API", description = "해당 측정팀의 상세정보를 수정합니다.")
   @PatchMapping("/{teamId}")
   public ResponseEntity<ApiResponseMessage<TeamDto>> updateTeam
       (
@@ -88,12 +72,7 @@ public class TeamController {
     );
   }
   
-  @Operation(summary = "측정팀 삭제")
-  @ApiResponses({
-      @ApiResponse(responseCode = "200", description = "삭제 성공"),
-      @ApiResponse(responseCode = "401", description = "인증 실패"),
-      @ApiResponse(responseCode = "404", description = "측정팀이 존재하지 않음")
-  })
+  @Operation(summary = "측정팀 삭제 API", description = "측정팀 정보를 데이터베이스에서 삭제합니다.")
   @DeleteMapping("/{teamId}")
   public ResponseEntity<ApiResponseMessage<String>> removeTeam(@PathVariable Long teamId) {
     teamService.delete(teamId);

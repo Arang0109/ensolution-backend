@@ -6,15 +6,15 @@ import com.project.easywork.user.domain.dto.UserUpdateDto;
 import com.project.easywork.auth.security.CustomUserDetails;
 import com.project.easywork.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+@Tag(name = "User", description = "사용자 관련 API")
 @SecurityRequirement(name = "bearerAuth")
 @RestController
 @RequestMapping("/api/users")
@@ -23,12 +23,7 @@ public class UserController {
   
   private final UserService userService;
   
-  @Operation(summary = "회원 프로필 조회")
-  @ApiResponses({
-      @ApiResponse(responseCode = "200", description = "조회 성공"),
-      @ApiResponse(responseCode = "401", description = "인증 실패"),
-      @ApiResponse(responseCode = "404", description = "사용자가 존재하지 않음")
-  })
+  @Operation(summary = "프로필 조회 API", description = "개인 프로필을 조회합니다.")
   @GetMapping("/me")
   public ResponseEntity<ApiResponseMessage<UserResponseDto>> getProfile
       (
@@ -36,19 +31,13 @@ public class UserController {
       ) {
     
     String username = userDetails.getUsername();
-    UserResponseDto response = userService.getProfileByUsername(username);
     
     return ResponseEntity.ok(
-        new ApiResponseMessage<>(true, "조회 성공", response)
+        new ApiResponseMessage<>(true, "조회 성공", userService.getProfileByUsername(username))
     );
   }
   
-  @Operation(summary = "회원 프로필 수정")
-  @ApiResponses({
-      @ApiResponse(responseCode = "200", description = "수정 성공"),
-      @ApiResponse(responseCode = "401", description = "인증 실패"),
-      @ApiResponse(responseCode = "404", description = "사용자가 존재하지 않음")
-  })
+  @Operation(summary = "프로필 수정 API", description = "개인 프로필을 수정합니다.")
   @PatchMapping("/me")
   public ResponseEntity<ApiResponseMessage<UserResponseDto>> patchProfile
       (
@@ -61,6 +50,20 @@ public class UserController {
     
     return ResponseEntity.ok(
         new ApiResponseMessage<>(true, "수정 성공", response)
+    );
+  }
+  
+  @Operation(summary = "회원탈퇴 API", description = "회원 정보를 데이터베이스에서 삭제합니다.")
+  @DeleteMapping("/me")
+  public ResponseEntity<ApiResponseMessage<Void>> deleteProfile(
+      @AuthenticationPrincipal CustomUserDetails userDetails
+  ) {
+    
+    Long id = userDetails.getUserId();
+    // userService.delete 구현
+    
+    return ResponseEntity.ok(
+        new ApiResponseMessage<>(true, "success", null)
     );
   }
 }
