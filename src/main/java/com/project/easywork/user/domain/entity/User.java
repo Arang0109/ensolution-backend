@@ -7,6 +7,7 @@ import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collection;
 
@@ -50,14 +51,8 @@ public class User {
   @Column(name = "phone_number", nullable = false, unique = true, length = 11)
   private String phoneNumber;
   
-  @Column(name = "birth_date", nullable = false, length = 8)
-  private String birthDate;
-  
-  @Column(nullable = false, unique = true)
-  private String ci;
-  
-  @Column(nullable = false)
-  private String di;
+  @Column(name = "birth_date", nullable = false)
+  private LocalDate birthDate;
   
   
   @Column(name = "created_at", nullable = false, updatable = false, insertable = false)

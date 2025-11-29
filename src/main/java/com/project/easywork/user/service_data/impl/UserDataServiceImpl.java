@@ -48,10 +48,6 @@ public class UserDataServiceImpl implements UserDataService {
         dto.getGrade(),
         dto.getPhoneNumber());
     
-    if (dto.getPassword() != null && !dto.getPassword().isBlank()) {
-      user.changePassword(passwordEncoder.encode(dto.getPassword()));
-    }
-    
     return userMapper.toResponseDto(user);
   }
   

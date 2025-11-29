@@ -1,8 +1,8 @@
 package com.project.easywork.user.domain.dto;
 
-import com.project.easywork.common.constant.Status;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @NoArgsConstructor
@@ -19,8 +19,7 @@ public class UserResponseDto {
   private String name;
   private String email;
   private String phoneNumber;
-  private String birthDate;
+  private LocalDate birthDate;
   private LocalDateTime createdAt;
   private LocalDateTime updatedAt;
-  private Status Status;
 }
