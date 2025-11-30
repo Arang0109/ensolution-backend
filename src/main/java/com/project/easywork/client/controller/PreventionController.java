@@ -1,6 +1,6 @@
 package com.project.easywork.client.controller;
 
-import com.project.easywork.client.domain.dto.prevention.PreventionCreaterequestDto;
+import com.project.easywork.client.domain.dto.prevention.PreventionCreateRequestDto;
 import com.project.easywork.client.domain.dto.prevention.PreventionDetailResponseDto;
 import com.project.easywork.client.domain.dto.prevention.PreventionResponseDto;
 import com.project.easywork.client.domain.dto.prevention.PreventionUpdateRequestDto;
@@ -31,7 +31,7 @@ public class PreventionController {
   @PostMapping()
   public ResponseEntity<ApiResponse<Void>> registerPrevention
       (
-          @Valid @RequestBody PreventionCreaterequestDto request,
+          @Valid @RequestBody PreventionCreateRequestDto request,
           BindingResult bindingResult
       ) {
     if (bindingResult.hasErrors()) {

@@ -1,27 +1,28 @@
 package com.project.easywork.client.domain.persistance;
 
+import com.project.easywork.client.domain.dto.prevention.PreventionUpdateRequestDto;
+import com.project.easywork.client.domain.dto.target.TargetUpdateRequestDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+
+import java.util.Optional;
 
 @Entity
 @Getter
 @Setter
-@ToString
 @Table(name = "target")
 public class Target {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "target_id")
-  private Long targetId;
+  @Column(nullable = false, unique = true)
+  private Long id;
   
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "prevention_id")
   @OnDelete(action = OnDeleteAction.CASCADE)
-  @ToString.Exclude
   private Prevention prevention;
   
   @Column(name = "target_substance", length = 100)
@@ -29,4 +30,13 @@ public class Target {
   
   @Column(name = "removal_efficiency")
   private Double removalEfficiency;
+  
+  public void update(TargetUpdateRequestDto dto) {
+    Optional.ofNullable(dto.getTargetSubstance())
+        .filter(targetSubstance -> !targetSubstance.isBlank())
+        .ifPresent(this::setTargetSubstance);
+    
+    Optional.ofNullable(dto.getRemovalEfficiency())
+        .ifPresent(this::setRemovalEfficiency);
+  }
 }

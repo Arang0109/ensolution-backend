@@ -8,12 +8,15 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-@Setter
 @ToString
-public class FacilityRegisterDto {
+public class FacilityCreateRequestDto {
   @Schema(description = "배출시설", example = "도장시설(데드너)")
   @NotBlank(message = "필수 입력")
-  private String facilityName;
+  private String name;
+  
+  @Schema(description = "방지시설 ID (FK)", example = "1")
+  @NotNull(message = "필수 입력")
+  private Long preventionId;
   
   @Schema(description = "연료 사용량", example = "000")
   private String fuelUsage;
@@ -27,7 +30,7 @@ public class FacilityRegisterDto {
   @Schema(description = "연료", example = "도료")
   private String fuelType;
   
-  @Schema(description = "방지시설 ID (FK)", example = "1")
-  @NotNull(message = "필수 입력")
-  private Long preventionId;
+  @Schema(description = "비고", example = "특이사항 없음")
+  private String remark;
+  
 }

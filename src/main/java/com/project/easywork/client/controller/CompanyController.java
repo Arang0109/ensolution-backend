@@ -55,7 +55,7 @@ public class CompanyController {
   
   @Operation(summary = "의뢰업체 수정 API", description = "해당 의뢰업체의 상세정보를 수정합니다.")
   @PatchMapping("/{companyId}")
-  public ResponseEntity<ApiResponse<CompanyResponseDto>> updateWorkplace
+  public ResponseEntity<ApiResponse<CompanyResponseDto>> updateCompany
       (
           @PathVariable Long companyId,
           @Valid @RequestBody CompanyUpdateRequestDto request

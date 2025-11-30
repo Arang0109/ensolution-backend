@@ -81,7 +81,6 @@ public class UserDto {
   private Status status = Status.ACTIVE;
   
   public void update(UserUpdateDto dto) {
-    this.username = dto.getUsername();
     this.name = dto.getName();
     this.email = dto.getEmail();
     this.phoneNumber = dto.getPhoneNumber();

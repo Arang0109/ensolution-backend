@@ -1,6 +1,6 @@
 package com.project.easywork.client.mapper;
 
-import com.project.easywork.client.domain.dto.prevention.PreventionCreaterequestDto;
+import com.project.easywork.client.domain.dto.prevention.PreventionCreateRequestDto;
 import com.project.easywork.client.domain.dto.prevention.PreventionResponseDto;
 import com.project.easywork.client.domain.persistance.Prevention;
 import org.mapstruct.Mapper;
@@ -11,7 +11,7 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface PreventionMapper {
   @Mapping(target = "stack.id", source = "stackId")
-  Prevention toEntityFromPreventionCreateDto(PreventionCreaterequestDto dto);
+  Prevention toEntityFromPreventionCreateDto(PreventionCreateRequestDto dto);
   
   @Mapping(target = "stackId", source = "stack.id")
   PreventionResponseDto toDto(Prevention prevention);

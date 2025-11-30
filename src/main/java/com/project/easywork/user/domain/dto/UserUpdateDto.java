@@ -11,7 +11,7 @@ import java.time.LocalDate;
 @ToString
 public class UserUpdateDto {
   private Long userId;
-  private String username;
+  private Long teamId;
   private String grade;
   private String department;
   private String name;

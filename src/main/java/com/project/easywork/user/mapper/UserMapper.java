@@ -14,7 +14,7 @@ public interface UserMapper {
   @Mapping(target = "password", ignore = true)
   User toEntityForCreate(UserCreateDto dto);
   
-  @Mapping(target = "teamName", source = "team.teamName")
+  @Mapping(target = "teamId", source = "team.teamId")
   UserResponseDto toResponseDto(User user);
   
   List<UserResponseDto> toResponseDtoList(List<User> users);
