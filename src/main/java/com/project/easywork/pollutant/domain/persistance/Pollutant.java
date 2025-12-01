@@ -1,8 +1,11 @@
 package com.project.easywork.pollutant.domain.persistance;
 
+import com.project.easywork.pollutant.domain.dto.PollutantUpdateRequestDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.Optional;
 
 @Entity
 @Getter
@@ -28,4 +31,21 @@ public class Pollutant {
   
   @Column(name = "sampling_volume", length = 10)
   private String samplingVolume;
+  
+  public void update(PollutantUpdateRequestDto dto) {
+    Optional.ofNullable(dto.getNameKr())
+        .ifPresent(this::setNameKr);
+    
+    Optional.ofNullable(dto.getNameEn())
+        .ifPresent(this::setNameEn);
+    
+    Optional.ofNullable(dto.getMethod())
+        .ifPresent(this::setMethod);
+    
+    Optional.ofNullable(dto.getSamplingTime())
+        .ifPresent(this::setSamplingTime);
+    
+    Optional.ofNullable(dto.getSamplingVolume())
+        .ifPresent(this::setSamplingVolume);
+  }
 }
