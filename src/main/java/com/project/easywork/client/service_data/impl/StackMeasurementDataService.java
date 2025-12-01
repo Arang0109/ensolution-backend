@@ -16,7 +16,7 @@ public class StackMeasurementDataService implements IStackMeasurementDataService
   
   @Override
   public StackMeasurement findById(Long stackMeasurementId) {
-    return null;
+    return stackMeasurementRepository.findById(stackMeasurementId).orElseThrow();
   }
   
   @Override
@@ -26,12 +26,7 @@ public class StackMeasurementDataService implements IStackMeasurementDataService
   
   @Override
   public void deleteById(Long stackMeasurementId) {
-  
-  }
-  
-  @Override
-  public List<StackMeasurement> findAll() {
-    return List.of();
+    stackMeasurementRepository.deleteById(stackMeasurementId);
   }
   
   @Override

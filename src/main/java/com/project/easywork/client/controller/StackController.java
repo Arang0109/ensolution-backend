@@ -67,7 +67,7 @@ public class StackController {
   
   @Operation(summary = "측정시설 삭제 API", description = "측정시설 정보를 데이터베이스에서 삭제합니다.")
   @DeleteMapping("/{stackId}")
-  public ResponseEntity<ApiResponse<Void>> removeWorkplace(@PathVariable Long stackId) {
+  public ResponseEntity<ApiResponse<Void>> removeStack(@PathVariable Long stackId) {
     stackService.removeStack(stackId);
     return ResponseEntity.ok(ApiResponse.ok());
   }
