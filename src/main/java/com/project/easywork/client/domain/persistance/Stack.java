@@ -76,6 +76,10 @@ public class Stack {
   @ToString.Exclude
   private List<Prevention> preventions = new ArrayList<>();
   
+  @OneToMany(mappedBy = "stack", cascade = CascadeType.ALL, orphanRemoval = true)
+  @ToString.Exclude
+  private List<StackMeasurement> stackMeasurements = new ArrayList<>();
+  
   public void update(StackUpdateRequestDto dto) {
     Optional.ofNullable(dto.getName())
         .filter(name -> !name.isBlank())

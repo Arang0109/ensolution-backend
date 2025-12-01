@@ -19,7 +19,6 @@ import java.util.Optional;
 @Entity
 @Getter
 @Setter
-@ToString
 @Table(name = "workplace")
 public class Workplace {
   @Id

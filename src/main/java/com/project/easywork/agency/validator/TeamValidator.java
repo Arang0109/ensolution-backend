@@ -1,4 +1,4 @@
-package com.project.easywork.common.validator;
+package com.project.easywork.agency.validator;
 
 import com.project.easywork.agency.dto.TeamDto;
 import com.project.easywork.agency.repository.TeamRepository;

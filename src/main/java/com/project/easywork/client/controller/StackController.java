@@ -6,7 +6,7 @@ import com.project.easywork.client.domain.dto.stack.StackResponseDto;
 import com.project.easywork.client.domain.dto.stack.StackUpdateRequestDto;
 import com.project.easywork.common.util.ApiResponse;
 import com.project.easywork.client.service.IStackService;
-import com.project.easywork.common.validator.ValidationUtils;
+import com.project.easywork.common.util.ValidationUtils;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
