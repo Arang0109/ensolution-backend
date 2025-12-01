@@ -1,7 +1,7 @@
 package com.project.easywork.pollutant.controller;
 
 import com.project.easywork.common.util.ApiResponse;
-import com.project.easywork.common.validator.ValidationUtils;
+import com.project.easywork.common.util.ValidationUtils;
 import com.project.easywork.pollutant.domain.dto.PollutantCreateRequestDto;
 import com.project.easywork.pollutant.domain.dto.PollutantResponseDto;
 import com.project.easywork.pollutant.domain.dto.PollutantUpdateRequestDto;

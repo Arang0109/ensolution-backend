@@ -1,6 +1,5 @@
-package com.project.easywork.common.validator;
+package com.project.easywork.common.util;
 
-import com.project.easywork.common.util.ApiResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 

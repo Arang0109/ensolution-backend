@@ -6,7 +6,7 @@ import com.project.easywork.common.util.ApiResponse;
 import com.project.easywork.auth.security.JwtTokenProvider;
 import com.project.easywork.auth.security.CustomUserDetails;
 import com.project.easywork.auth.service.RefreshTokenService;
-import com.project.easywork.common.validator.ValidationUtils;
+import com.project.easywork.common.util.ValidationUtils;
 import com.project.easywork.user.domain.dto.UserCreateDto;
 import com.project.easywork.user.domain.dto.UserResponseDto;
 import com.project.easywork.user.service.UserService;

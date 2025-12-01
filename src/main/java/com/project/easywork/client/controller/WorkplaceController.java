@@ -2,7 +2,7 @@ package com.project.easywork.client.controller;
 
 import com.project.easywork.client.domain.dto.workplace.*;
 import com.project.easywork.common.util.ApiResponse;
-import com.project.easywork.common.validator.ValidationUtils;
+import com.project.easywork.common.util.ValidationUtils;
 import com.project.easywork.client.service.IWorkplaceService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;

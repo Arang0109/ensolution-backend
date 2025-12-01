@@ -3,7 +3,7 @@ package com.project.easywork.agency.service.impl;
 import com.project.easywork.agency.dto.TeamDto;
 import com.project.easywork.agency.service.TeamService;
 import com.project.easywork.agency.service_data.TeamDataService;
-import com.project.easywork.common.validator.TeamValidator;
+import com.project.easywork.agency.validator.TeamValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

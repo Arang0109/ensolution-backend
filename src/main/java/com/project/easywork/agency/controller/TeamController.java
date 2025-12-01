@@ -3,7 +3,7 @@ package com.project.easywork.agency.controller;
 import com.project.easywork.agency.dto.TeamDto;
 import com.project.easywork.agency.service.TeamService;
 import com.project.easywork.common.util.ApiResponse;
-import com.project.easywork.common.validator.ValidationUtils;
+import com.project.easywork.common.util.ValidationUtils;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
