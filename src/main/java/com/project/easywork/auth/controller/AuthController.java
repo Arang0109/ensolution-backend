@@ -11,6 +11,7 @@ import com.project.easywork.user.domain.dto.UserCreateDto;
 import com.project.easywork.user.domain.dto.UserResponseDto;
 import com.project.easywork.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -94,6 +95,7 @@ public class AuthController {
   }
   
   @Operation(summary = "로그아웃 API", description = "회원 로그아웃을 수행합니다.")
+  @SecurityRequirement(name = "bearerAuth")
   @PostMapping("/logout")
   public ResponseEntity<ApiResponse<Void>> logout(
       @AuthenticationPrincipal CustomUserDetails userDetails,
@@ -116,6 +118,7 @@ public class AuthController {
   }
   
   @Operation(summary = "토큰 재발급 API", description = "새로운 AccessToken 발급")
+  @SecurityRequirement(name = "bearerAuth")
   @PostMapping("/refresh")
     public ResponseEntity<?> refresh(
       @CookieValue(value = "refreshToken", required = false) String refreshToken

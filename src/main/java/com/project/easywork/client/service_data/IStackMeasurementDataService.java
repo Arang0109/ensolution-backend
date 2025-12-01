@@ -8,6 +8,5 @@ public interface IStackMeasurementDataService {
   StackMeasurement findById(Long stackMeasurementId);
   StackMeasurement save(StackMeasurement stackMeasurement);
   void deleteById(Long stackMeasurementId);
-  List<StackMeasurement> findAll();
   List<StackMeasurement> findStackMeasurementsByStackId(Long stackId);
 }

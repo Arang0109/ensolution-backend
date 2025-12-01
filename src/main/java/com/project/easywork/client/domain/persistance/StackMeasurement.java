@@ -1,5 +1,6 @@
 package com.project.easywork.client.domain.persistance;
 
+import com.project.easywork.client.domain.dto.stack_measurement.StackMeasurementUpdateRequestDto;
 import com.project.easywork.common.constant.Cycle;
 import com.project.easywork.pollutant.domain.persistance.Pollutant;
 import jakarta.persistence.*;
@@ -12,6 +13,7 @@ import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 @Entity
 @Getter
@@ -49,4 +51,12 @@ public class StackMeasurement {
   @UpdateTimestamp
   @Column(name = "modified_at", nullable = false)
   private LocalDate modifiedAt;
+  
+  public void update(StackMeasurementUpdateRequestDto dto) {
+    Optional.ofNullable(dto.getCycle())
+        .ifPresent(this::setCycle);
+    
+    Optional.ofNullable(dto.getAllowance())
+        .ifPresent(this::setAllowance);
+  }
 }

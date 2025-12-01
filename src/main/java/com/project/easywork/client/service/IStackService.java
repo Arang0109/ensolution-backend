@@ -8,9 +8,9 @@ import com.project.easywork.client.domain.dto.stack.StackUpdateRequestDto;
 import java.util.List;
 
 public interface IStackService {
-  void registerStack(StackCreateRequestDto requestDto);
-  StackDetailResponseDto getStack(Long stackId);
+  void registerStack(StackCreateRequestDto dto);
+  StackDetailResponseDto getStack(Long id);
   List<StackResponseDto> getStacks();
-  StackResponseDto updateStack(Long stackId, StackUpdateRequestDto requestDto);
-  void removeStack(Long stackId);
+  StackResponseDto updateStack(Long id, StackUpdateRequestDto dto);
+  void removeStack(Long id);
 }
