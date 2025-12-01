@@ -30,6 +30,12 @@ public class Pollutant {
   @Column
   private String method;
   
+  @Column(name = "equipment_name", length = 100)
+  private String equipmentName;
+  
+  @Column(name = "test_method_name", length = 100)
+  private String testMethodName;
+  
   @Column(name = "sampling_time")
   private Double samplingTime;
   
@@ -49,6 +55,12 @@ public class Pollutant {
     
     Optional.ofNullable(dto.getMethod())
         .ifPresent(this::setMethod);
+    
+    Optional.ofNullable(dto.getEquipmentName())
+        .ifPresent(this::setEquipmentName);
+    
+    Optional.ofNullable(dto.getTestMethodName())
+        .ifPresent(this::setTestMethodName);
     
     Optional.ofNullable(dto.getSamplingTime())
         .ifPresent(this::setSamplingTime);

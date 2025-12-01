@@ -17,6 +17,8 @@ public class PollutantResponseDto {
   private String nameKr;
   private String nameEn;
   private String method;
+  private String equipmentName;
+  private String testMethodName;
   private Double samplingTime;
   private String samplingVolume;
 }
