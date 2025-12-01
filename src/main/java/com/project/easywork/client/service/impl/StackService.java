@@ -2,12 +2,15 @@ package com.project.easywork.client.service.impl;
 
 import com.project.easywork.client.domain.dto.prevention.PreventionResponseDto;
 import com.project.easywork.client.domain.dto.stack.*;
+import com.project.easywork.client.domain.dto.stack_measurement.StackMeasurementResponseDto;
 import com.project.easywork.client.domain.persistance.Stack;
 import com.project.easywork.client.mapper.PreventionMapper;
+import com.project.easywork.client.mapper.StackMeasurementMapper;
 import com.project.easywork.client.service_data.IPreventionDataService;
 import com.project.easywork.client.service_data.IStackDataService;
 import com.project.easywork.client.mapper.StackMapper;
 import com.project.easywork.client.service.IStackService;
+import com.project.easywork.client.service_data.IStackMeasurementDataService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,8 +24,10 @@ public class StackService implements IStackService {
   
   private final IStackDataService stackDataService;
   private final IPreventionDataService preventionDataService;
+  private final IStackMeasurementDataService stackMeasurementDataService;
   private final StackMapper stackMapper;
   private final PreventionMapper preventionMapper;
+  private final StackMeasurementMapper stackMeasurementMapper;
   
   @Override
   public void registerStack(StackCreateRequestDto requestDto) {
@@ -36,9 +41,12 @@ public class StackService implements IStackService {
     StackResponseDto stack = stackMapper.toDto(stackDataService.findById(stackId));
     List<PreventionResponseDto> preventions = preventionMapper
         .toDtoList(preventionDataService.findPreventionsByStackId(stackId));
+    List<StackMeasurementResponseDto> stackMeasurements = stackMeasurementMapper
+        .toDtoList(stackMeasurementDataService.findStackMeasurementsByStackId(stackId));
     return StackDetailResponseDto.builder()
         .stack(stack)
         .preventions(preventions)
+        .stackMeasurements(stackMeasurements)
         .build();
   }
   
