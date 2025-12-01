@@ -1,8 +1,8 @@
 package com.project.easywork.client.domain.dto.stack_measurement;
 
 import com.project.easywork.common.constant.Cycle;
+import com.project.easywork.pollutant.domain.dto.PollutantResponseDto;
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -19,7 +19,7 @@ public class StackMeasurementResponseDto {
   private Long id;
   
   private Long stackId;
-  private Long pollutantId;
+  private PollutantResponseDto pollutant;
   private Cycle cycle;
   private Double allowance;
   
