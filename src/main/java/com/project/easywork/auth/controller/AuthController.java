@@ -52,11 +52,7 @@ public class AuthController {
       return ValidationUtils.handleBindingErrors(bindingResult);
     }
     
-    userService.register(request);
-    
-    ApiResponse<UserResponseDto> registerSuccess = new ApiResponse<>(true, "회원등록 성공", null);
-    
-    return ResponseEntity.status(HttpStatus.CREATED).body(registerSuccess);
+    return ResponseEntity.ok().body(ApiResponse.ok(userService.register(request)));
   }
   
   @Operation(summary = "로그인 API", description = "회원 로그인을 수행합니다.")
@@ -94,9 +90,7 @@ public class AuthController {
         accessToken,
         userDetails.getUsername());
     
-    return ResponseEntity.ok(
-        new ApiResponse<>(true, "로그인에 성공했습니다.", responseDto)
-    );
+    return ResponseEntity.ok().body(ApiResponse.ok(responseDto));
   }
   
   @Operation(summary = "로그아웃 API", description = "회원 로그아웃을 수행합니다.")
@@ -118,9 +112,7 @@ public class AuthController {
     
     response.setHeader(HttpHeaders.SET_COOKIE, refreshCookie.toString());
     
-    return ResponseEntity.ok(
-        new ApiResponse<>(true, "로그아웃 되었습니다.", null)
-    );
+    return ResponseEntity.ok().body(ApiResponse.ok(true, "로그아웃 성공"));
   }
   
   @Operation(summary = "토큰 재발급 API", description = "새로운 AccessToken 발급")

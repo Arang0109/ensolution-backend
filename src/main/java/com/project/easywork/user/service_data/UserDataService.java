@@ -1,14 +1,13 @@
 package com.project.easywork.user.service_data;
 
-import com.project.easywork.user.domain.dto.UserCreateDto;
-import com.project.easywork.user.domain.dto.UserResponseDto;
-import com.project.easywork.user.domain.dto.UserUpdateDto;
+import com.project.easywork.user.domain.entity.User;
 
 import java.util.List;
 
 public interface UserDataService {
-  List<UserResponseDto> findAll();
-  void save(UserCreateDto dto);
-  UserResponseDto update(UserUpdateDto dto);
-  UserResponseDto findByUsername(String username);
+  List<User> findAll();
+  User save(User user);
+  User update(User user);
+  User findByUsername(String username);
+  User findById(Long userId);
 }

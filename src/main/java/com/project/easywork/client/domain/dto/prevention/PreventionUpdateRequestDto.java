@@ -8,6 +8,5 @@ import lombok.*;
 @ToString
 public class PreventionUpdateRequestDto {
   private String name;
-  private Long stackId;
   private String remark;
 }

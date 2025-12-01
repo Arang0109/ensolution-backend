@@ -8,8 +8,9 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@Setter
 @ToString
-public class PreventionCreaterequestDto {
+public class PreventionCreateRequestDto {
   @Schema(description = "방지시설", example = "세정집진시설")
   @NotBlank(message = "필수 입력")
   private String name;

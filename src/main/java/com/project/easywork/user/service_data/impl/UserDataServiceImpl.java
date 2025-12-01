@@ -1,14 +1,9 @@
 package com.project.easywork.user.service_data.impl;
 
-import com.project.easywork.user.domain.dto.UserCreateDto;
-import com.project.easywork.user.domain.dto.UserResponseDto;
-import com.project.easywork.user.domain.dto.UserUpdateDto;
-import com.project.easywork.user.mapper.UserMapper;
 import com.project.easywork.user.domain.entity.User;
 import com.project.easywork.user.repository.UserRepository;
 import com.project.easywork.user.service_data.UserDataService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,49 +11,35 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class UserDataServiceImpl implements UserDataService {
   
   private final UserRepository userRepository;
-  private final UserMapper userMapper;
-  private final PasswordEncoder passwordEncoder;
   
   @Override
   @Transactional
-  public List<UserResponseDto> findAll() {
-    return userMapper.toResponseDtoList(userRepository.findAll());
+  public List<User> findAll() {
+    return userRepository.findAll();
   }
   
   @Override
   @Transactional
-  public void save(UserCreateDto dto) {
-    User user = userMapper.toEntityForCreate(dto);
-    user.changePassword(passwordEncoder.encode(dto.getPassword()));
-    userRepository.save(user);
+  public User save(User user) {
+    return userRepository.save(user);
   }
   
   @Override
-  @Transactional
-  public UserResponseDto update(UserUpdateDto dto) {
-    User user = userRepository.findById(dto.getUserId()).orElseThrow();
-    
-    user.updateProfile(
-        dto.getName(),
-        dto.getEmail(),
-        dto.getDepartment(),
-        dto.getGrade(),
-        dto.getPhoneNumber());
-    
-    if (dto.getPassword() != null && !dto.getPassword().isBlank()) {
-      user.changePassword(passwordEncoder.encode(dto.getPassword()));
-    }
-    
-    return userMapper.toResponseDto(user);
+  public User update(User user) {
+    return userRepository.save(user);
   }
   
   @Override
-  public UserResponseDto findByUsername(String userName) {
-    return userMapper.toResponseDto(
-        userRepository.findByUsername(userName).orElseThrow()
-    );
+  public User findByUsername(String userName) {
+    return userRepository.findByUsername(userName).orElseThrow();
+  }
+  
+  @Override
+  public User findById(Long userId) {
+    return userRepository.findById(userId).orElseThrow();
   }
 }

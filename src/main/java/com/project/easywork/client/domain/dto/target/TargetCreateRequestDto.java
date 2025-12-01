@@ -9,12 +9,7 @@ import lombok.*;
 @Getter
 @Setter
 @ToString
-public class TargetDto {
-  
-  @Schema(
-      description = "대상물질 ID (PK)",
-      accessMode = Schema.AccessMode.READ_ONLY)
-  private Long targetId;
+public class TargetCreateRequestDto {
   
   @Schema(description = "방지시설 ID (FK)", example = "1")
   @NotNull(message = "필수 입력")

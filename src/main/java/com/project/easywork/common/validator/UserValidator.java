@@ -1,4 +1,4 @@
-package com.project.easywork.user.service;
+package com.project.easywork.common.validator;
 
 import com.project.easywork.user.domain.dto.UserCreateDto;
 import com.project.easywork.common.exception.CustomException;

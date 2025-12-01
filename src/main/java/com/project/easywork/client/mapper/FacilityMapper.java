@@ -1,6 +1,7 @@
 package com.project.easywork.client.mapper;
 
-import com.project.easywork.client.domain.dto.facility.FacilityDto;
+import com.project.easywork.client.domain.dto.facility.FacilityCreateRequestDto;
+import com.project.easywork.client.domain.dto.facility.FacilityResponseDto;
 import com.project.easywork.client.domain.persistance.Facility;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -10,10 +11,11 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface FacilityMapper {
   @Mapping(target = "prevention.id", source = "preventionId")
-  Facility toEntity(FacilityDto dto);
+  Facility toEntityFromFacilityCreateDto(FacilityCreateRequestDto dto);
   
   @Mapping(target = "preventionId", source = "prevention.id")
-  FacilityDto toDto(Facility entity);
+  FacilityResponseDto toDto(Facility facility);
   
-  List<FacilityDto> toDtoList(List<Facility> facilities);
+  List<FacilityResponseDto> toDtoList(List<Facility> facilities);
+  List<Facility> toEntityList(List<FacilityCreateRequestDto> facilities);
 }

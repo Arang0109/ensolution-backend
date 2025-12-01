@@ -1,8 +1,8 @@
 package com.project.easywork.user.domain.dto;
 
-import com.project.easywork.common.constant.Status;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @NoArgsConstructor
@@ -11,16 +11,14 @@ import java.time.LocalDateTime;
 @Setter
 @ToString
 public class UserResponseDto {
-  private Long userId;
   private String username;
-  private String teamName;
+  private Long teamId;
   private String grade;
   private String department;
   private String name;
   private String email;
   private String phoneNumber;
-  private String birthDate;
+  private LocalDate birthDate;
   private LocalDateTime createdAt;
   private LocalDateTime updatedAt;
-  private Status Status;
 }

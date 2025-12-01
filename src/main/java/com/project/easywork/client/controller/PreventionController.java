@@ -1,9 +1,6 @@
 package com.project.easywork.client.controller;
 
-import com.project.easywork.client.domain.dto.prevention.PreventionCreaterequestDto;
-import com.project.easywork.client.domain.dto.prevention.PreventionDetailResponseDto;
-import com.project.easywork.client.domain.dto.prevention.PreventionResponseDto;
-import com.project.easywork.client.domain.dto.prevention.PreventionUpdateRequestDto;
+import com.project.easywork.client.domain.dto.prevention.*;
 import com.project.easywork.client.service.IPreventionService;
 import com.project.easywork.common.util.ApiResponse;
 import com.project.easywork.common.validator.ValidationUtils;
@@ -29,16 +26,17 @@ public class PreventionController {
   
   @Operation(summary = "방지시설 등록 API", description = "새로운 방지시설 정보를 데이터베이스에 저장합니다.")
   @PostMapping()
-  public ResponseEntity<ApiResponse<Void>> registerPrevention
+  public ResponseEntity<ApiResponse<PreventionDetailResponseDto>> registerPreventionBundle
       (
-          @Valid @RequestBody PreventionCreaterequestDto request,
+          @Valid @RequestBody PreventionBundleCreateRequestDto request,
           BindingResult bindingResult
       ) {
     if (bindingResult.hasErrors()) {
       return ValidationUtils.handleBindingErrors(bindingResult);
     }
-    preventionService.registerPrevention(request);
-    return ResponseEntity.ok().body(ApiResponse.ok());
+    return ResponseEntity.ok().body(
+        ApiResponse.ok(preventionService.registerPreventionBundle(request))
+    );
   }
   
   @Operation(summary = "방지시설 목록 조회 API", description = "전체 방지시설 목록을 조회합니다.")
