@@ -7,6 +7,7 @@ import com.project.easywork.pollutant.domain.persistance.Pollutant;
 import com.project.easywork.pollutant.mapper.PollutantMapper;
 import com.project.easywork.pollutant.service.IPollutantService;
 import com.project.easywork.pollutant.service_data.IPollutantDataService;
+import com.project.easywork.pollutant.validator.PollutantValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,11 +19,13 @@ import java.util.List;
 @Transactional
 public class PollutantService implements IPollutantService {
   
+  private final PollutantValidator pollutantValidator;
   private final IPollutantDataService pollutantDataService;
   private final PollutantMapper pollutantMapper;
   
   @Override
   public PollutantResponseDto registerPollutant(PollutantCreateRequestDto requestDto) {
+    pollutantValidator.validate(requestDto);
     Pollutant pollutant = pollutantMapper.toEntityFromPollutantCreateDto(requestDto);
     return pollutantMapper.toDto(pollutantDataService.save(pollutant));
   }
