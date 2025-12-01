@@ -3,6 +3,7 @@ package com.project.easywork.client.service.impl;
 import com.project.easywork.client.domain.dto.target.TargetCreateRequestDto;
 import com.project.easywork.client.domain.dto.target.TargetResponseDto;
 import com.project.easywork.client.domain.dto.target.TargetUpdateRequestDto;
+import com.project.easywork.client.domain.persistance.Facility;
 import com.project.easywork.client.domain.persistance.Target;
 import com.project.easywork.client.mapper.TargetMapper;
 import com.project.easywork.client.service.ITargetService;
@@ -22,9 +23,27 @@ public class TargetService implements ITargetService {
   private final TargetMapper targetMapper;
   
   @Override
-  public void registerTarget(TargetCreateRequestDto requestDto) {
-    Target target = targetMapper.toEntityFromFacilityCreateDto(requestDto);
-    targetDataService.save(target);
+  public TargetResponseDto registerTarget(TargetCreateRequestDto requestDto) {
+    Target target = targetMapper.toEntityFromTargetCreateDto(requestDto);
+    return targetMapper.toDto(targetDataService.save(target));
+  }
+  
+  @Override
+  public List<TargetResponseDto> registerTargets(List<TargetCreateRequestDto> requestDtos) {
+    if (requestDtos == null || requestDtos.isEmpty()) {
+      return List.of();
+    }
+    
+    List<Target> targets = requestDtos.stream()
+        .map(dto -> {
+          Target target = targetMapper.toEntityFromTargetCreateDto(dto);
+          return targetDataService.save(target);
+        })
+        .toList();
+    
+    return targets.stream()
+        .map(targetMapper::toDto)
+        .toList();
   }
   
   @Override

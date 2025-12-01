@@ -7,7 +7,7 @@ import java.util.List;
 public interface IPreventionDataService {
   Prevention findById(Long preventionId);
   
-  void save(Prevention prevention);
+  Prevention save(Prevention prevention);
   
   void deleteById(Long preventionId);
   

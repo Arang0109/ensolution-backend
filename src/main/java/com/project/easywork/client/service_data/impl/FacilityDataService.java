@@ -21,8 +21,8 @@ public class FacilityDataService implements IFacilityDataService {
   }
   
   @Override
-  public void save(Facility facility) {
-    facilityRepository.save(facility);
+  public Facility save(Facility facility) {
+    return facilityRepository.save(facility);
   }
   
   @Override

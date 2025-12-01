@@ -7,7 +7,7 @@ import java.util.List;
 public interface ITargetDataService {
   Target findById(Long targetId);
   
-  void save(Target target);
+  Target save(Target target);
   
   void deleteById(Long targetId);
   

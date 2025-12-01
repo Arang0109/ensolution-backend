@@ -7,7 +7,9 @@ import com.project.easywork.client.domain.dto.facility.FacilityUpdateRequestDto;
 import java.util.List;
 
 public interface IFacilityService {
-  void registerFacility(FacilityCreateRequestDto requestDto);
+  FacilityResponseDto registerFacility(FacilityCreateRequestDto requestDto);
+  
+  List<FacilityResponseDto> registerFacilities(List<FacilityCreateRequestDto> requestDtos);
   
   List<FacilityResponseDto> getFacilities();
   

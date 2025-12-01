@@ -37,6 +37,8 @@ public class StackController {
     if (bindingResult.hasErrors()) {
       return ValidationUtils.handleBindingErrors(bindingResult);
     }
+    System.out.println("controller");
+    System.out.println("request: " + request);
     stackService.registerStack(request);
     return ResponseEntity.ok().body(ApiResponse.ok());
   }

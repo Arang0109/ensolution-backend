@@ -38,7 +38,7 @@ public class StackCreateRequestDto {
   private Double horizontalLength;
   
   @Schema(description = "세로 길이", example = "1.5")
-  private Double VerticalLength;
+  private Double verticalLength;
   
   @Schema(description = "측정시설 모양")
   private Shape shape;

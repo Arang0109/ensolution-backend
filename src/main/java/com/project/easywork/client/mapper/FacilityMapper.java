@@ -17,4 +17,5 @@ public interface FacilityMapper {
   FacilityResponseDto toDto(Facility facility);
   
   List<FacilityResponseDto> toDtoList(List<Facility> facilities);
+  List<Facility> toEntityList(List<FacilityCreateRequestDto> facilities);
 }

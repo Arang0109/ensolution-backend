@@ -1,6 +1,7 @@
 package com.project.easywork.user.controller;
 
 import com.project.easywork.common.util.ApiResponse;
+import com.project.easywork.user.domain.dto.PasswordUpdateDto;
 import com.project.easywork.user.domain.dto.UserResponseDto;
 import com.project.easywork.user.domain.dto.UserUpdateDto;
 import com.project.easywork.auth.security.CustomUserDetails;
@@ -51,6 +52,17 @@ public class UserController {
     return ResponseEntity.ok(
         new ApiResponse<>(true, "수정 성공", response)
     );
+  }
+  
+  @Operation(summary = "비밀번호 변경 API", description = "비밀번호를 수정합니다.")
+  @PatchMapping("/me/password")
+  public ResponseEntity<ApiResponse<UserResponseDto>> patchPassword
+      (
+          @AuthenticationPrincipal CustomUserDetails userDetails,
+          @Valid @RequestBody PasswordUpdateDto request
+      ) {
+    return ResponseEntity.ok().body(
+        ApiResponse.ok(userService.updatePassword(userDetails.getUserId(), request)));
   }
   
   @Operation(summary = "회원탈퇴 API", description = "회원 정보를 데이터베이스에서 삭제합니다.")

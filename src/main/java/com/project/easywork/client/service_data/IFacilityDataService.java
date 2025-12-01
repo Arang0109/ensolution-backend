@@ -7,7 +7,7 @@ import java.util.List;
 public interface IFacilityDataService {
   Facility findById(Long facilityId);
   
-  void save(Facility facility);
+  Facility save(Facility facility);
   
   void deleteById(Long facilityId);
   

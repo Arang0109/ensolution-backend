@@ -1,24 +1,24 @@
 package com.project.easywork.client.service.impl;
 
 import com.project.easywork.client.domain.dto.facility.FacilityResponseDto;
-import com.project.easywork.client.domain.dto.prevention.PreventionCreateRequestDto;
-import com.project.easywork.client.domain.dto.prevention.PreventionDetailResponseDto;
-import com.project.easywork.client.domain.dto.prevention.PreventionResponseDto;
-import com.project.easywork.client.domain.dto.prevention.PreventionUpdateRequestDto;
+import com.project.easywork.client.domain.dto.prevention.*;
 import com.project.easywork.client.domain.dto.target.TargetResponseDto;
 import com.project.easywork.client.domain.persistance.Prevention;
 import com.project.easywork.client.mapper.FacilityMapper;
 import com.project.easywork.client.mapper.PreventionMapper;
 import com.project.easywork.client.mapper.TargetMapper;
+import com.project.easywork.client.service.IFacilityService;
 import com.project.easywork.client.service.IPreventionService;
+import com.project.easywork.client.service.ITargetService;
 import com.project.easywork.client.service_data.IPreventionDataService;
-import com.project.easywork.client.service_data.impl.FacilityDataService;
-import com.project.easywork.client.service_data.impl.TargetDataService;
+import com.project.easywork.client.service_data.IFacilityDataService;
+import com.project.easywork.client.service_data.ITargetDataService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -28,14 +28,39 @@ public class PreventionService implements IPreventionService {
   private final IPreventionDataService preventionDataService;
   private final PreventionMapper preventionMapper;
   private final FacilityMapper facilityMapper;
-  private final FacilityDataService facilityDataService;
+  private final IFacilityDataService facilityDataService;
+  private final IFacilityService facilityService;
   private final TargetMapper targetMapper;
-  private final TargetDataService targetDataService;
+  private final ITargetDataService targetDataService;
+  private final ITargetService targetService;
   
   @Override
-  public void registerPrevention(PreventionCreateRequestDto requestDto) {
-    Prevention prevention = preventionMapper.toEntityFromPreventionCreateDto(requestDto);
-    preventionDataService.save(prevention);
+  public PreventionDetailResponseDto registerPreventionBundle(PreventionBundleCreateRequestDto requestDto) {
+    
+    Prevention savedPrevention = preventionDataService.save(
+        preventionMapper.toEntityFromPreventionCreateDto(requestDto.getPrevention())
+    );
+    Long preventionId = savedPrevention.getId();
+    
+    List<FacilityResponseDto> facilityDtos = Optional.ofNullable(requestDto.getFacilities())
+        .map(list -> {
+          list.forEach(dto -> dto.setPreventionId(preventionId));
+          return facilityService.registerFacilities(list);
+        })
+        .orElse(List.of());
+    
+    List<TargetResponseDto> targetDtos = Optional.ofNullable(requestDto.getTargets())
+        .map(list -> {
+          list.forEach(dto -> dto.setPreventionId(preventionId));
+          return targetService.registerTargets(list);
+        })
+        .orElse(List.of());
+    
+    return PreventionDetailResponseDto.builder()
+        .prevention(preventionMapper.toDto(savedPrevention))
+        .facilities(facilityDtos)
+        .targets(targetDtos)
+        .build();
   }
   
   @Override

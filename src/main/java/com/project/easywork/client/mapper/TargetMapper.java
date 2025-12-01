@@ -11,10 +11,11 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface TargetMapper {
   @Mapping(target = "prevention.id", source = "preventionId")
-  Target toEntityFromFacilityCreateDto(TargetCreateRequestDto dto);
+  Target toEntityFromTargetCreateDto(TargetCreateRequestDto dto);
   
   @Mapping(target = "preventionId", source = "prevention.id")
   TargetResponseDto toDto(Target target);
   
   List<TargetResponseDto> toDtoList(List<Target> targets);
+  List<Target> toEntityList(List<TargetCreateRequestDto> targets);
 }

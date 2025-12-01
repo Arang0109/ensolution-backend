@@ -7,7 +7,9 @@ import com.project.easywork.client.domain.dto.target.TargetUpdateRequestDto;
 import java.util.List;
 
 public interface ITargetService {
-  void registerTarget(TargetCreateRequestDto requestDto);
+  TargetResponseDto registerTarget(TargetCreateRequestDto requestDto);
+  
+  List<TargetResponseDto> registerTargets(List<TargetCreateRequestDto> requestDtos);
   
   List<TargetResponseDto> getTargets();
   

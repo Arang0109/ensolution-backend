@@ -8,6 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@Setter
 @ToString
 public class FacilityCreateRequestDto {
   @Schema(description = "배출시설", example = "도장시설(데드너)")

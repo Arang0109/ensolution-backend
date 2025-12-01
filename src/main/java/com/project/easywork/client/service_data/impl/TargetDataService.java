@@ -21,8 +21,8 @@ public class TargetDataService implements ITargetDataService {
   }
   
   @Override
-  public void save(Target target) {
-    targetRepository.save(target);
+  public Target save(Target target) {
+    return targetRepository.save(target);
   }
   
   @Override

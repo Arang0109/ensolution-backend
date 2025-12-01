@@ -22,9 +22,27 @@ public class FacilityService implements IFacilityService {
   private final FacilityMapper facilityMapper;
   
   @Override
-  public void registerFacility(FacilityCreateRequestDto requestDto) {
+  public FacilityResponseDto registerFacility(FacilityCreateRequestDto requestDto) {
     Facility facility = facilityMapper.toEntityFromFacilityCreateDto(requestDto);
-    facilityDataService.save(facility);
+    return facilityMapper.toDto(facilityDataService.save(facility));
+  }
+  
+  @Override
+  public List<FacilityResponseDto> registerFacilities(List<FacilityCreateRequestDto> requestDtos) {
+    if (requestDtos == null || requestDtos.isEmpty()) {
+      return List.of();
+    }
+    
+    List<Facility> facilities = requestDtos.stream()
+        .map(dto -> {
+          Facility facility = facilityMapper.toEntityFromFacilityCreateDto(dto);
+          return facilityDataService.save(facility);
+        })
+        .toList();
+    
+    return facilities.stream()
+        .map(facilityMapper::toDto)
+        .toList();
   }
   
   @Override

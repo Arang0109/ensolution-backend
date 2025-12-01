@@ -5,9 +5,12 @@ import com.project.easywork.client.domain.dto.target.TargetUpdateRequestDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.annotations.UpdateTimestamp;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 @Entity
@@ -30,6 +33,14 @@ public class Target {
   
   @Column(name = "removal_efficiency")
   private Double removalEfficiency;
+  
+  @CreationTimestamp
+  @Column(name = "created_at", nullable = false)
+  private LocalDate createdAt;
+  
+  @UpdateTimestamp
+  @Column(name = "modified_at", nullable = false)
+  private LocalDate modifiedAt;
   
   public void update(TargetUpdateRequestDto dto) {
     Optional.ofNullable(dto.getTargetSubstance())

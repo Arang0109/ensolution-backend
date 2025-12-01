@@ -21,8 +21,8 @@ public class PreventionDataService implements IPreventionDataService {
   }
   
   @Override
-  public void save(Prevention prevention) {
-    preventionRepository.save(prevention);
+  public Prevention save(Prevention prevention) {
+    return preventionRepository.save(prevention);
   }
   
   @Override
