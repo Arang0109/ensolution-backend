@@ -25,7 +25,7 @@ public class AdminController {
   
   @Operation(summary = "전체 회원조회 API", description = "전체 회원 목록을 조회합니다.")
   @GetMapping("/users")
-  public ResponseEntity<ApiResponse<List<UserResponseDto>>> getUserList() {
+  public ResponseEntity<ApiResponse<List<UserResponseDto>>> getUsers() {
     return ResponseEntity.ok(
         new ApiResponse<>(true, "조회 성공", userService.findAll())
     );
