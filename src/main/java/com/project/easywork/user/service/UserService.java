@@ -1,5 +1,6 @@
 package com.project.easywork.user.service;
 
+import com.project.easywork.auth.security.CustomUserDetails;
 import com.project.easywork.user.domain.dto.PasswordUpdateDto;
 import com.project.easywork.user.domain.dto.UserCreateDto;
 import com.project.easywork.user.domain.dto.UserResponseDto;
@@ -12,5 +13,6 @@ public interface UserService {
   UserResponseDto getProfileByUsername(String username);
   UserResponseDto register(UserCreateDto dto);
   UserResponseDto update(UserUpdateDto dto);
+  void removeUser(CustomUserDetails userDetails);
   UserResponseDto updatePassword(Long userId, PasswordUpdateDto dto);
 }

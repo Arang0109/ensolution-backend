@@ -1,5 +1,6 @@
 package com.project.easywork.user.service.impl;
 
+import com.project.easywork.auth.security.CustomUserDetails;
 import com.project.easywork.client.validator.UserPasswordValidator;
 import com.project.easywork.user.domain.dto.PasswordUpdateDto;
 import com.project.easywork.user.domain.dto.UserCreateDto;
@@ -67,6 +68,12 @@ public class UserServiceImpl implements UserService {
     userPasswordValidator.validate(user, dto);
     user.changePassword(passwordEncoder.encode(dto.getNewPassword()));
     return userMapper.toResponseDto(user);
+  }
+  
+  @Override
+  public void removeUser(CustomUserDetails userDetails) {
+    Long userId = userDetails.getUserId();
+    userDataService.deleteById(userId);
   }
   
   private User getUserById(Long userId) {

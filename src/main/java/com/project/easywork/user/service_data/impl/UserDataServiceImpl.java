@@ -34,6 +34,11 @@ public class UserDataServiceImpl implements UserDataService {
   }
   
   @Override
+  public void deleteById(Long userId) {
+    userRepository.deleteById(userId);
+  }
+  
+  @Override
   public User findByUsername(String userName) {
     return userRepository.findByUsername(userName).orElseThrow();
   }

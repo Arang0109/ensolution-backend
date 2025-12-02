@@ -70,10 +70,7 @@ public class UserController {
   public ResponseEntity<ApiResponse<Void>> deleteProfile(
       @AuthenticationPrincipal CustomUserDetails userDetails
   ) {
-    
-    Long id = userDetails.getUserId();
-    // userService.delete 구현
-    
+    userService.removeUser(userDetails);
     return ResponseEntity.ok(
         new ApiResponse<>(true, "success", null)
     );
