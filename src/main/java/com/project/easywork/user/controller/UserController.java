@@ -46,7 +46,7 @@ public class UserController {
           @Valid @RequestBody UserUpdateDto request
       ) {
     
-    request.setUserId(userDetails.getUserId());
+    request.setUserId(userDetails.getUser().getId());
     UserResponseDto response = userService.update(request);
     
     return ResponseEntity.ok(
@@ -62,7 +62,7 @@ public class UserController {
           @Valid @RequestBody PasswordUpdateDto request
       ) {
     return ResponseEntity.ok().body(
-        ApiResponse.ok(userService.updatePassword(userDetails.getUserId(), request)));
+        ApiResponse.ok(userService.updatePassword(userDetails.getUser().getId(), request)));
   }
   
   @Operation(summary = "회원탈퇴 API", description = "회원 정보를 데이터베이스에서 삭제합니다.")

@@ -59,13 +59,6 @@ public class UserCreateDto {
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
   private LocalDate birthDate;
   
-  @Schema(description = "connecting information", example = "aaa-bbb-ccc")
-  @NotBlank(message = "필수 입력")
-  private String ci;
-  @Schema(description = "duplication information", example = "ddd-eee-fff")
-  @NotBlank(message = "필수 입력")
-  private String di;
-  
   @Schema(
     description = "생성일", example = "2025-09-26 01:24:12",
     accessMode =Schema.AccessMode.READ_ONLY)

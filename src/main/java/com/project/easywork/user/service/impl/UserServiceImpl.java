@@ -12,6 +12,7 @@ import com.project.easywork.user.domain.dto.UserUpdateDto;
 import com.project.easywork.user.service.UserService;
 import com.project.easywork.client.validator.UserValidator;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,6 +40,7 @@ public class UserServiceImpl implements UserService {
   }
   
   @Override
+  @PreAuthorize("hasRole('ADMIN')")
   public List<UserResponseDto> findAll() {
     return userMapper.toResponseDtoList(userDataService.findAll());
   }
@@ -72,7 +74,7 @@ public class UserServiceImpl implements UserService {
   
   @Override
   public void removeUser(CustomUserDetails userDetails) {
-    Long userId = userDetails.getUserId();
+    Long userId = userDetails.getUser().getId();
     userDataService.deleteById(userId);
   }
   
