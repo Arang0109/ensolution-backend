@@ -28,6 +28,7 @@ public class StackResponseDto {
   private Double verticalLength;
   private Shape shape;
   private Orientation orientation;
+  private Double standardOxygen;
   private String remark;
   
   @Schema(description = "생성날짜") private LocalDate createdAt;
