@@ -3,7 +3,8 @@ package com.project.easywork.user.domain.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -13,20 +14,26 @@ import java.util.Collection;
 @Table(name = "Role")
 public class Role {
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
   
-  @ManyToMany(mappedBy = "roles")
-  private Collection<User> users;
-  
-  @ManyToMany
-  @JoinTable(name = "roles_privileges", joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "privilege_id", referencedColumnName = "id"))
-  private Collection<Privilege> privileges;
-  
+  @Column(nullable = false, unique = true, length = 50)
   private String name;
   
-  public Role(final String name) {
-    super();
+  @ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
+  @Builder.Default
+  private Set<User> users = new HashSet<>();
+  
+  @ManyToMany(fetch = FetchType.EAGER)
+  @JoinTable(
+      name = "roles_privileges",
+      joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"),
+      inverseJoinColumns = @JoinColumn(name = "privilege_id", referencedColumnName = "id")
+  )
+  @Builder.Default
+  private Set<Privilege> privileges = new HashSet<>();
+  
+  public Role(String name) {
     this.name = name;
   }
   

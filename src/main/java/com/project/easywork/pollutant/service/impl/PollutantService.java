@@ -9,6 +9,7 @@ import com.project.easywork.pollutant.service.IPollutantService;
 import com.project.easywork.pollutant.service_data.IPollutantDataService;
 import com.project.easywork.pollutant.validator.PollutantValidator;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,6 +44,7 @@ public class PollutantService implements IPollutantService {
   }
   
   @Override
+  @PreAuthorize("hasRole('LAB')")
   public PollutantResponseDto updatePollutant(Long pollutantId, PollutantUpdateRequestDto requestDto) {
     Pollutant pollutant = pollutantDataService.findById(pollutantId);
     pollutant.update(requestDto);
@@ -50,6 +52,7 @@ public class PollutantService implements IPollutantService {
   }
   
   @Override
+  @PreAuthorize("hasRole('LAB')")
   public void removePollutant(Long pollutantId) {
     pollutantDataService.deleteById(pollutantId);
   }

@@ -2,8 +2,6 @@ package com.project.easywork.user.domain.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -23,11 +21,9 @@ public class UserUpdateDto {
   private String name;
   private String email;
   @Schema(description = "휴대폰 번호", example = "01055152835")
-  @NotBlank(message = "필수 입력")
   @Pattern(regexp = "^\\d{10,11}$", message = "휴대폰 번호는 10~11자리 숫자여야 합니다.")
   private String phoneNumber;
   @Schema(description = "생년월일", example = "1995-02-09")
-  @NotNull(message = "필수 입력")
   @DateTimeFormat(pattern = "yyyy-MM-dd")
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
   private LocalDate birthDate;

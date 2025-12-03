@@ -3,7 +3,8 @@ package com.project.easywork.user.domain.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -13,13 +14,15 @@ import java.util.Collection;
 @Table(name = "privilege")
 public class Privilege {
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
   
+  @Column(nullable = false, unique = true, length = 50)
   private String name;
   
-  @ManyToMany(mappedBy = "privileges")
-  private Collection<Role> roles;
+  @ManyToMany(mappedBy = "privileges", fetch = FetchType.LAZY)
+  @Builder.Default
+  private Set<Role> roles = new HashSet<>();
   
   @Override
   public String toString() {

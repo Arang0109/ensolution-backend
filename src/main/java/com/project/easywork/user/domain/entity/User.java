@@ -9,7 +9,8 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -77,8 +78,12 @@ public class User {
   }
   
   @ManyToMany(fetch = FetchType.EAGER)
-  @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
-  private Collection<Role> roles;
+  @JoinTable(
+      name = "users_roles",
+      joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+      inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+  @Builder.Default
+  private Set<Role> roles = new HashSet<>();
   
   public void updateProfile(String name, String email, String department, String grade, String phoneNumber) {
     if (name != null) this.name = name;

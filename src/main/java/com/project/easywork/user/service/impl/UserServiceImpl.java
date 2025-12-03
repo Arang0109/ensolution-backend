@@ -1,5 +1,6 @@
 package com.project.easywork.user.service.impl;
 
+import com.project.easywork.auth.security.CustomUserDetails;
 import com.project.easywork.client.validator.UserPasswordValidator;
 import com.project.easywork.user.domain.dto.PasswordUpdateDto;
 import com.project.easywork.user.domain.dto.UserCreateDto;
@@ -11,6 +12,7 @@ import com.project.easywork.user.domain.dto.UserUpdateDto;
 import com.project.easywork.user.service.UserService;
 import com.project.easywork.client.validator.UserValidator;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,6 +40,7 @@ public class UserServiceImpl implements UserService {
   }
   
   @Override
+  @PreAuthorize("hasRole('ADMIN')")
   public List<UserResponseDto> findAll() {
     return userMapper.toResponseDtoList(userDataService.findAll());
   }
@@ -67,6 +70,12 @@ public class UserServiceImpl implements UserService {
     userPasswordValidator.validate(user, dto);
     user.changePassword(passwordEncoder.encode(dto.getNewPassword()));
     return userMapper.toResponseDto(user);
+  }
+  
+  @Override
+  public void removeUser(CustomUserDetails userDetails) {
+    Long userId = userDetails.getUser().getId();
+    userDataService.deleteById(userId);
   }
   
   private User getUserById(Long userId) {
