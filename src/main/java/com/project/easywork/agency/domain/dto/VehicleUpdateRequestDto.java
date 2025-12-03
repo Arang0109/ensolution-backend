@@ -9,7 +9,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @Getter
 @ToString
-public class VehicleUpdateDto {
+public class VehicleUpdateRequestDto {
   private Long teamId;
   private String vehicleNumber;
 }

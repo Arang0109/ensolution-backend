@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface VehicleRepository extends JpaRepository<Vehicle, Long> {
-  List<Vehicle> findByTeam_Id(Long teamId);
+  List<Vehicle> findVehiclesByTeamId(Long teamId);
 }

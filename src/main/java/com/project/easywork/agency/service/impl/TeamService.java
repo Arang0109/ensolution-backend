@@ -1,13 +1,12 @@
 package com.project.easywork.agency.service.impl;
 
-import com.project.easywork.agency.domain.dto.TeamCreateRequestDto;
-import com.project.easywork.agency.domain.dto.TeamDetailResponseDto;
-import com.project.easywork.agency.domain.dto.TeamResponseDto;
-import com.project.easywork.agency.domain.dto.TeamUpdateRequestDto;
+import com.project.easywork.agency.domain.dto.*;
 import com.project.easywork.agency.domain.entity.Team;
 import com.project.easywork.agency.mapper.TeamMapper;
+import com.project.easywork.agency.mapper.VehicleMapper;
 import com.project.easywork.agency.service.ITeamService;
 import com.project.easywork.agency.service_data.ITeamDataService;
+import com.project.easywork.agency.service_data.IVehicleDataService;
 import com.project.easywork.agency.validator.TeamValidator;
 import com.project.easywork.user.domain.dto.UserResponseDto;
 import com.project.easywork.user.mapper.UserMapper;
@@ -27,7 +26,9 @@ public class TeamService implements ITeamService {
   private final TeamMapper teamMapper;
   private final TeamValidator teamValidator;
   private final UserMapper userMapper;
+  private final VehicleMapper vehicleMapper;
   private final IUserDataService userDataService;
+  private final IVehicleDataService vehicleDataService;
   
   @Override
   public TeamResponseDto register(TeamCreateRequestDto dto) {
@@ -51,10 +52,14 @@ public class TeamService implements ITeamService {
     List<UserResponseDto> users = userMapper.toResponseDtoList(
         userDataService.findUsersByTeamId(id)
     );
+    List<VehicleResponseDto> vehicles = vehicleMapper.toDtoList(
+        vehicleDataService.findVehiclesByTeamId(id)
+    );
     
     return TeamDetailResponseDto.builder()
         .team(team)
         .users(users)
+        .vehicles(vehicles)
         .build();
   }
   

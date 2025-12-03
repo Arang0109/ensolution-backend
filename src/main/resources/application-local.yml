@@ -1,12 +1,12 @@
 spring:
-  datasource:
-    url: jdbc:mysql://172.27.168.186:3306/easywork?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-    username: mingsu
-    password: mingsu!12
-    driver-class-name: com.mysql.cj.jdbc.Driver
+  config:
+    activate:
+      on-profile: local
+  jpa:
+    hibernate:
+      ddl-auto: update
 
-  data:
-    redis:
-      host: 172.27.168.186
-      port: 6379
-      timeout: 1000
+logging:
+  level:
+    root: info
+    com.project.easywork: debug

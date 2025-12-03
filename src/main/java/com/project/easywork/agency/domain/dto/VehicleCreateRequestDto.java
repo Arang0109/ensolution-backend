@@ -7,7 +7,7 @@ import lombok.*;
 @AllArgsConstructor
 @Getter
 @ToString
-public class VehicleCreateDto {
+public class VehicleCreateRequestDto {
   private Long teamId;
   @NotBlank(message = "필수 입력") private String vehicleNumber;
 }

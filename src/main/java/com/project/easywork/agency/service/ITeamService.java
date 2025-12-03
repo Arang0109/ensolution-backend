@@ -11,6 +11,6 @@ public interface ITeamService {
   List<TeamResponseDto> getList();
   TeamDetailResponseDto get(Long teamId);
   TeamResponseDto register(TeamCreateRequestDto dto);
-  TeamResponseDto update(Long id, TeamUpdateRequestDto dto);
+  TeamResponseDto update(Long teamId, TeamUpdateRequestDto dto);
   void delete(Long teamId);
 }
