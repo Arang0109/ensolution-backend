@@ -46,6 +46,9 @@ public class StackCreateRequestDto {
   @Schema(description = "측정시설 방향")
   private Orientation orientation;
   
+  @Schema(description = "표준산소 농도(%)")
+  private Double standardOxygen;
+  
   @Schema(description = "비고", example = "특이사항 없음")
   private String remark;
 }

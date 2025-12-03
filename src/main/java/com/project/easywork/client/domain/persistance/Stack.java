@@ -61,6 +61,9 @@ public class Stack {
   @Enumerated(EnumType.STRING)
   private Orientation orientation;
   
+  @Column(name = "standard_oxygen")
+  private Double standardOxygen;
+  
   @Column(columnDefinition = "LONGTEXT")
   private String remark;
   

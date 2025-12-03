@@ -21,5 +21,6 @@ public class StackUpdateRequestDto {
   private Double verticalLength;
   private Shape shape;
   private Orientation orientation;
+  private Double standardOxygen;
   private String remark;
 }
