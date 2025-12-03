@@ -1,4 +1,4 @@
-package com.project.easywork.agency.entity;
+package com.project.easywork.agency.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.*;

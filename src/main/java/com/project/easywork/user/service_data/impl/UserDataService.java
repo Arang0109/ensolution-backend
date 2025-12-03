@@ -2,7 +2,7 @@ package com.project.easywork.user.service_data.impl;
 
 import com.project.easywork.user.domain.entity.User;
 import com.project.easywork.user.repository.UserRepository;
-import com.project.easywork.user.service_data.UserDataService;
+import com.project.easywork.user.service_data.IUserDataService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,7 +12,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class UserDataServiceImpl implements UserDataService {
+public class UserDataService implements IUserDataService {
   
   private final UserRepository userRepository;
   
@@ -46,5 +46,10 @@ public class UserDataServiceImpl implements UserDataService {
   @Override
   public User findById(Long userId) {
     return userRepository.findById(userId).orElseThrow();
+  }
+  
+  @Override
+  public List<User> findUsersByTeamId(Long id) {
+    return userRepository.findUsersByTeamId(id);
   }
 }

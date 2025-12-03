@@ -1,4 +1,4 @@
-package com.project.easywork.agency.dto;
+package com.project.easywork.agency.domain.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;

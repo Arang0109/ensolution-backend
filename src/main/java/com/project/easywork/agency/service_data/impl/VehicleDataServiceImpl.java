@@ -1,6 +1,6 @@
 package com.project.easywork.agency.service_data.impl;
 
-import com.project.easywork.agency.dto.VehicleDto;
+import com.project.easywork.agency.domain.dto.VehicleDto;
 import com.project.easywork.agency.mapper.VehicleMapper;
 import com.project.easywork.agency.repository.VehicleRepository;
 import com.project.easywork.agency.service_data.VehicleDataService;
@@ -23,6 +23,6 @@ public class VehicleDataServiceImpl implements VehicleDataService {
   
   @Override
   public List<VehicleDto> findVehiclesByTeam(Long teamId) {
-    return vehicleMapper.toDtoList(vehicleRepository.findByTeam_TeamId(teamId));
+    return vehicleMapper.toDtoList(vehicleRepository.findByTeam_Id(teamId));
   }
 }

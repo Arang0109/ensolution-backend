@@ -1,6 +1,6 @@
 package com.project.easywork.agency.service_data.impl;
 
-import com.project.easywork.agency.entity.Team;
+import com.project.easywork.agency.domain.entity.Team;
 import com.project.easywork.agency.repository.TeamRepository;
 import com.project.easywork.agency.service_data.ITeamDataService;
 import com.project.easywork.common.exception.CustomException;

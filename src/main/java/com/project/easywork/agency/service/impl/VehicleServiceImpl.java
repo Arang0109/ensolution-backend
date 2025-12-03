@@ -1,6 +1,6 @@
 package com.project.easywork.agency.service.impl;
 
-import com.project.easywork.agency.dto.VehicleDto;
+import com.project.easywork.agency.domain.dto.VehicleDto;
 import com.project.easywork.agency.service.VehicleService;
 import com.project.easywork.agency.service_data.VehicleDataService;
 import lombok.RequiredArgsConstructor;

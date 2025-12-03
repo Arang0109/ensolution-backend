@@ -1,6 +1,6 @@
 package com.project.easywork.agency.controller;
 
-import com.project.easywork.agency.dto.VehicleDto;
+import com.project.easywork.agency.domain.dto.VehicleDto;
 import com.project.easywork.agency.service.VehicleService;
 import com.project.easywork.common.util.ApiResponse;
 import io.swagger.v3.oas.annotations.Operation;

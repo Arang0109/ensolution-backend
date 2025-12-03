@@ -1,6 +1,6 @@
 package com.project.easywork.agency.service_data;
 
-import com.project.easywork.agency.entity.Team;
+import com.project.easywork.agency.domain.entity.Team;
 
 import java.util.List;
 

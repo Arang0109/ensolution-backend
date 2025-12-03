@@ -6,7 +6,7 @@ import com.project.easywork.user.domain.dto.PasswordUpdateDto;
 import com.project.easywork.user.domain.dto.UserCreateDto;
 import com.project.easywork.user.domain.entity.User;
 import com.project.easywork.user.mapper.UserMapper;
-import com.project.easywork.user.service_data.UserDataService;
+import com.project.easywork.user.service_data.IUserDataService;
 import com.project.easywork.user.domain.dto.UserResponseDto;
 import com.project.easywork.user.domain.dto.UserUpdateDto;
 import com.project.easywork.user.service.UserService;
@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserService {
   private final UserPasswordValidator userPasswordValidator;
   private final PasswordEncoder passwordEncoder;
   
-  private final UserDataService userDataService;
+  private final IUserDataService IUserDataService;
   private final UserMapper userMapper;
   
   @Override
@@ -36,18 +36,18 @@ public class UserServiceImpl implements UserService {
     userValidator.validate(dto);
     User user = userMapper.toEntityForCreate(dto);
     user.changePassword(passwordEncoder.encode(dto.getPassword()));
-    return userMapper.toResponseDto(userDataService.save(user));
+    return userMapper.toResponseDto(IUserDataService.save(user));
   }
   
   @Override
   @PreAuthorize("hasRole('ADMIN')")
   public List<UserResponseDto> findAll() {
-    return userMapper.toResponseDtoList(userDataService.findAll());
+    return userMapper.toResponseDtoList(IUserDataService.findAll());
   }
   
   @Override
   public UserResponseDto getProfileByUsername(String username) {
-    return userMapper.toResponseDto(userDataService.findByUsername(username));
+    return userMapper.toResponseDto(IUserDataService.findByUsername(username));
   }
   
   @Override
@@ -61,7 +61,7 @@ public class UserServiceImpl implements UserService {
         dto.getGrade(),
         dto.getPhoneNumber());
     
-    return userMapper.toResponseDto(userDataService.update(user));
+    return userMapper.toResponseDto(IUserDataService.update(user));
   }
   
   @Override
@@ -75,10 +75,10 @@ public class UserServiceImpl implements UserService {
   @Override
   public void removeUser(CustomUserDetails userDetails) {
     Long userId = userDetails.getUser().getId();
-    userDataService.deleteById(userId);
+    IUserDataService.deleteById(userId);
   }
   
   private User getUserById(Long userId) {
-    return userDataService.findById(userId);
+    return IUserDataService.findById(userId);
   }
 }
