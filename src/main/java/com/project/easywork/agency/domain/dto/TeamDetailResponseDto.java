@@ -14,4 +14,5 @@ import java.util.List;
 public class TeamDetailResponseDto {
   private TeamResponseDto team;
   private List<UserResponseDto> users = new ArrayList<>();
+  private List<VehicleResponseDto> vehicles = new ArrayList<>();
 }

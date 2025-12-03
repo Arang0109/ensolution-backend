@@ -1,6 +1,6 @@
 package com.project.easywork.agency.controller;
 
-import com.project.easywork.agency.domain.dto.VehicleDto;
+import com.project.easywork.agency.domain.dto.VehicleResponseDto;
 import com.project.easywork.agency.service.VehicleService;
 import com.project.easywork.common.util.ApiResponse;
 import io.swagger.v3.oas.annotations.Operation;
@@ -26,7 +26,7 @@ public class VehicleController {
   
   @Operation(summary = "차량 목록 조회 API", description = "전체 차량 목록을 조회합니다.")
   @GetMapping()
-  public ResponseEntity<ApiResponse<List<VehicleDto>>> getVehicles() {
+  public ResponseEntity<ApiResponse<List<VehicleResponseDto>>> getVehicles() {
     return ResponseEntity.ok(
         new ApiResponse<>(true, "조회 성공", vehicleService.getList())
     );
@@ -34,7 +34,7 @@ public class VehicleController {
   
   @Operation(summary = "차량 조회 API", description = "해당 측정팀의 차량정보를 조회합니다.")
   @GetMapping("/{teamId}")
-  public ResponseEntity<ApiResponse<List<VehicleDto>>> getVehiclesByTeam(
+  public ResponseEntity<ApiResponse<List<VehicleResponseDto>>> getVehiclesByTeam(
       @PathVariable Long teamId
   ) {
     return ResponseEntity.ok(

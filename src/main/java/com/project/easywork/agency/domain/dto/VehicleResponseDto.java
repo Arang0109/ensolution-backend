@@ -7,13 +7,13 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-@Setter
+@Builder
 @ToString
-public class VehicleDto {
+public class VehicleResponseDto {
   @Schema(
       description = "차량 기본키",
       accessMode = Schema.AccessMode.READ_ONLY)
-  private Long vehicleId;
+  private Long id;
   
   @Schema(description = "팀 ID (FK)", example = "1")
   private Long teamId;

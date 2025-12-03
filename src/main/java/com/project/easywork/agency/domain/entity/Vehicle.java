@@ -7,16 +7,13 @@ import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Getter
-@ToString
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
-@Builder
+@Setter
 @Table(name = "vehicle")
 public class Vehicle {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "vehicle_id")
-  private Long vehicleId;
+  @Column(nullable = false, unique = true)
+  private Long id;
   
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "team_id")

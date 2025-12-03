@@ -1,11 +1,11 @@
 package com.project.easywork.agency.service;
 
-import com.project.easywork.agency.domain.dto.VehicleDto;
+import com.project.easywork.agency.domain.dto.VehicleResponseDto;
 
 import java.util.List;
 
 public interface VehicleService {
-  List<VehicleDto> getList();
+  List<VehicleResponseDto> getList();
   
-  List<VehicleDto> getListByTeam(Long teamId);
+  List<VehicleResponseDto> getListByTeam(Long teamId);
 }
