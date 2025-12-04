@@ -46,7 +46,7 @@ public class Schedule {
   @Column(name = "created_at", nullable = false)
   private LocalDate createdAt;
   
-  private void update(Stack stack, Team team, ScheduleUpdateRequestDto dto) {
+  public void update(Stack stack, Team team, ScheduleUpdateRequestDto dto) {
     Optional.ofNullable(stack)
         .ifPresent(this::setStack);
     
@@ -60,7 +60,7 @@ public class Schedule {
         .ifPresent(this::setMeasurementType);
   }
   
-  private void updateStatus(ScheduleStatusUpdateRequestDto dto) {
+  public void updateStatus(ScheduleStatusUpdateRequestDto dto) {
     this.status = dto.getStatus();
   }
 }
