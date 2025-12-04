@@ -1,7 +1,10 @@
 package com.project.easywork.agency.controller;
 
-import com.project.easywork.agency.dto.TeamDto;
-import com.project.easywork.agency.service.TeamService;
+import com.project.easywork.agency.domain.dto.TeamCreateRequestDto;
+import com.project.easywork.agency.domain.dto.TeamDetailResponseDto;
+import com.project.easywork.agency.domain.dto.TeamResponseDto;
+import com.project.easywork.agency.domain.dto.TeamUpdateRequestDto;
+import com.project.easywork.agency.service.ITeamService;
 import com.project.easywork.common.util.ApiResponse;
 import com.project.easywork.common.util.ValidationUtils;
 import io.swagger.v3.oas.annotations.Operation;
@@ -22,60 +25,50 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TeamController {
   
-  private final TeamService teamService;
+  private final ITeamService teamService;
   
   @Operation(summary = "측정팀 등록 API", description = "새로운 측정팀 정보를 데이터베이스에 저장합니다.")
   @PostMapping()
-  public ResponseEntity<ApiResponse<String>> registerTeam(
-      @Valid @RequestBody TeamDto request,
+  public ResponseEntity<ApiResponse<TeamResponseDto>> registerTeam(
+      @Valid @RequestBody TeamCreateRequestDto request,
       BindingResult bindingResult
   ) {
-    
     if (bindingResult.hasErrors()) {
       return ValidationUtils.handleBindingErrors(bindingResult);
     }
-    
-    teamService.register(request);
-    
-    return ResponseEntity.ok(new ApiResponse<>(true, "생성 성공", null));
+    return ResponseEntity.ok().body(ApiResponse.ok(teamService.register(request)));
   }
   
   @Operation(summary = "측정팀 목록 조회 API", description = "전체 측정팀 목록을 조회합니다.")
   @GetMapping()
-  public ResponseEntity<ApiResponse<List<TeamDto>>> getTeams() {
-    return ResponseEntity.ok(
-        new ApiResponse<>(true, "조회 성공", teamService.getList())
-    );
+  public ResponseEntity<ApiResponse<List<TeamResponseDto>>> getTeams() {
+    return ResponseEntity.ok().body(ApiResponse.ok(teamService.getList()));
   }
   
   @Operation(summary = "측정팀 조회 API", description = "해당 측정팀의 상세정보를 조회합니다.")
   @GetMapping("/{teamId}")
-  public ResponseEntity<ApiResponse<TeamDto>> getTeam(@PathVariable Long teamId) {
-    return ResponseEntity.ok(new ApiResponse<>(true, "조회 성공", teamService.get(teamId)));
+  public ResponseEntity<ApiResponse<TeamDetailResponseDto>> getTeam(@PathVariable Long teamId) {
+    return ResponseEntity.ok().body(ApiResponse.ok(teamService.get(teamId)));
   }
   
   @Operation(summary = "측정팀 수정 API", description = "해당 측정팀의 상세정보를 수정합니다.")
   @PatchMapping("/{teamId}")
-  public ResponseEntity<ApiResponse<TeamDto>> updateTeam
+  public ResponseEntity<ApiResponse<TeamResponseDto>> updateTeam
       (
           @PathVariable Long teamId,
-          @Valid @RequestBody TeamDto request
+          @Valid @RequestBody TeamUpdateRequestDto request,
+          BindingResult bindingResult
       ) {
-    
-    request.setTeamId(teamId);
-    teamService.update(request);
-    
-    return ResponseEntity.ok(
-        new ApiResponse<>(true, "수정 성공", null)
-    );
+    if (bindingResult.hasErrors()) {
+      return ValidationUtils.handleBindingErrors(bindingResult);
+    }
+    return ResponseEntity.ok(ApiResponse.ok(teamService.update(teamId, request)));
   }
   
   @Operation(summary = "측정팀 삭제 API", description = "측정팀 정보를 데이터베이스에서 삭제합니다.")
   @DeleteMapping("/{teamId}")
-  public ResponseEntity<ApiResponse<String>> removeTeam(@PathVariable Long teamId) {
+  public ResponseEntity<ApiResponse<Void>> removeTeam(@PathVariable Long teamId) {
     teamService.delete(teamId);
-    return ResponseEntity.ok(
-        new ApiResponse<>(true, "삭제 성공", null)
-    );
+    return ResponseEntity.ok(ApiResponse.ok());
   }
 }

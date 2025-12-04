@@ -1,4 +1,4 @@
-package com.project.easywork.agency.dto;
+package com.project.easywork.agency.domain.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
@@ -7,13 +7,13 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-@Setter
+@Builder
 @ToString
-public class VehicleDto {
+public class VehicleResponseDto {
   @Schema(
       description = "차량 기본키",
       accessMode = Schema.AccessMode.READ_ONLY)
-  private Long vehicleId;
+  private Long id;
   
   @Schema(description = "팀 ID (FK)", example = "1")
   private Long teamId;

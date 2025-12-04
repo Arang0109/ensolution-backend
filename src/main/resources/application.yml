@@ -1,3 +1,4 @@
+# spring config
 spring:
   application:
     name: easywork
@@ -5,18 +6,36 @@ spring:
   profiles:
     active: local
 
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:easywork}?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: ${DB_USER:root}
+    password: ${DB_PASSWORD:0000}
+
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      timeout: ${REDIS_TIMEOUT:1000}
+
+  jpa:
+    show-sql: true
+
+#Java Web Token
 jwt:
   secret: ${JWT_SECRET:my-secret-key-my-secret-key-my-secret-key-123456}
-  access-token-validity: 3600000
-  refresh-token-validity: 25200000
+  access-token-validity: ${AT_VALID:3600000}
+  refresh-token-validity: ${RT_VALID:25200000}
 
+# server
 server:
   address: 0.0.0.0
   port: 8080
+  tomcat:
+    uri-encoding: UTF-8
 
----
-spring:
-  jpa:
-    hibernate:
-      ddl-auto: update
-    show-sql: true
+# logging
+logging:
+  level:
+    root: info
+    com.project.easywork: debug

@@ -1,6 +1,6 @@
 package com.project.easywork.user.domain.entity;
 
-import com.project.easywork.agency.entity.Team;
+import com.project.easywork.agency.domain.entity.Team;
 import com.project.easywork.common.constant.Status;
 import jakarta.persistence.*;
 import lombok.*;

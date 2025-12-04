@@ -1,27 +1,26 @@
-package com.project.easywork.agency.entity;
+package com.project.easywork.agency.domain.entity;
 
+import com.project.easywork.agency.domain.dto.TeamUpdateRequestDto;
 import com.project.easywork.user.domain.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Entity
 @Getter
-@ToString
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
-@Builder
+@Setter
 @Table(name = "team")
 public class Team {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "team_id")
-  private Long teamId;
+  @Column(nullable = false, unique = true)
+  private Long id;
   
-  @Column(name = "team_name", nullable = false, length = 100)
-  private String teamName;
+  @Column(nullable = false, length = 100)
+  private String name;
   
   @OneToMany(mappedBy = "team", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
   @ToString.Exclude
@@ -30,4 +29,10 @@ public class Team {
   @OneToMany(mappedBy = "team", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
   @ToString.Exclude
   private List<Vehicle> vehicles = new ArrayList<>();
+  
+  public void update(TeamUpdateRequestDto dto) {
+    Optional.ofNullable(dto.getName())
+        .filter(str -> !str.isBlank())
+        .ifPresent(this::setName);
+  }
 }
