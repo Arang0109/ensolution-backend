@@ -1,4 +1,4 @@
-package com.project.easywork.schedule.dto;
+package com.project.easywork.schedule.domain.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

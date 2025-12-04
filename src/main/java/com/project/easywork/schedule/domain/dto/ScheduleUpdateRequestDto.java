@@ -1,4 +1,4 @@
-package com.project.easywork.schedule.dto;
+package com.project.easywork.schedule.domain.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
