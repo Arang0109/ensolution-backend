@@ -39,3 +39,10 @@ logging:
   level:
     root: info
     com.project.easywork: debug
+
+# swagger
+springdoc:
+  swagger-ui:
+    doc-expansion: none
+    operations-sorter: alpha
+    tags-sorter: alpha

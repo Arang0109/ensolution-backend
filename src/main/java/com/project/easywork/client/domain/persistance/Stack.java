@@ -5,6 +5,7 @@ import com.project.easywork.client.domain.dto.stack.StackUpdateRequestDto;
 import com.project.easywork.common.constant.Grade;
 import com.project.easywork.common.constant.Shape;
 import com.project.easywork.common.constant.Orientation;
+import com.project.easywork.schedule.domain.persistance.Schedule;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -82,6 +83,10 @@ public class Stack {
   @OneToMany(mappedBy = "stack", cascade = CascadeType.ALL, orphanRemoval = true)
   @ToString.Exclude
   private List<StackMeasurement> stackMeasurements = new ArrayList<>();
+  
+  @OneToMany(mappedBy = "stack")
+  @ToString.Exclude
+  private List<Schedule> schedules = new ArrayList<>();
   
   public void update(StackUpdateRequestDto dto) {
     Optional.ofNullable(dto.getName())

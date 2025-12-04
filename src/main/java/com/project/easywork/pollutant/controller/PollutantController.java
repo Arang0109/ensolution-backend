@@ -26,7 +26,10 @@ public class PollutantController {
   
   private final IPollutantService pollutantService;
   
-  @Operation(summary = "측정물질 등록 API", description = "새로운 측정물질 정보를 데이터베이스에 저장합니다.")
+  @Operation(
+      summary = "측정물질 등록 API",
+      description = "새로운 측정물질 정보를 데이터베이스에 저장합니다."
+  )
   @PostMapping()
   public ResponseEntity<ApiResponse<PollutantResponseDto>> registerPollutant(
       @Valid @RequestBody PollutantCreateRequestDto request,
