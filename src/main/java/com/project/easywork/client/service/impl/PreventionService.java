@@ -85,7 +85,7 @@ public class PreventionService implements IPreventionService {
   }
   
   @Override
-  public List<PreventionResponseDto> getPreventionsByStackId(Long stackId) {
+  public List<PreventionResponseDto> getPreventionsByStack(Long stackId) {
     return preventionMapper
         .toDtoList(preventionDataService.findPreventionsByStackId(stackId));
   }
