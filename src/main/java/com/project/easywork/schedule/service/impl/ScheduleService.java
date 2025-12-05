@@ -4,6 +4,7 @@ import com.project.easywork.agency.domain.entity.Team;
 import com.project.easywork.agency.service_data.ITeamDataService;
 import com.project.easywork.client.domain.persistance.Stack;
 import com.project.easywork.client.service_data.IStackDataService;
+import com.project.easywork.common.constant.ScheduleStatus;
 import com.project.easywork.schedule.domain.dto.ScheduleCreateRequestDto;
 import com.project.easywork.schedule.domain.dto.ScheduleResponseDto;
 import com.project.easywork.schedule.domain.dto.ScheduleStatusUpdateRequestDto;
@@ -36,8 +37,10 @@ public class ScheduleService implements IScheduleService {
   
   @Override
   @Transactional(readOnly = true)
-  public List<ScheduleResponseDto> getListByStack(Long stackId) {
-    return scheduleMapper.toDtoList(scheduleDataService.findSchedulesByStackId(stackId));
+  public List<ScheduleResponseDto> getListByStack(Long stackId, List<ScheduleStatus> status) {
+    return scheduleMapper.toDtoList(
+        scheduleDataService.findSchedulesByStackIdAndStatusIn(stackId, status)
+    );
   }
   
   @Override

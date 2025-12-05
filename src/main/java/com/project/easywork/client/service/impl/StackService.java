@@ -4,22 +4,18 @@ import com.project.easywork.client.domain.dto.prevention.PreventionResponseDto;
 import com.project.easywork.client.domain.dto.stack.*;
 import com.project.easywork.client.domain.dto.stack_measurement.StackMeasurementResponseDto;
 import com.project.easywork.client.domain.persistance.Stack;
-import com.project.easywork.client.mapper.PreventionMapper;
 import com.project.easywork.client.mapper.StackMeasurementMapper;
 import com.project.easywork.client.service.IPreventionService;
-import com.project.easywork.client.service_data.IPreventionDataService;
 import com.project.easywork.client.service_data.IStackDataService;
 import com.project.easywork.client.mapper.StackMapper;
 import com.project.easywork.client.service.IStackService;
 import com.project.easywork.client.service_data.IStackMeasurementDataService;
-import com.project.easywork.schedule.domain.dto.ScheduleResponseDto;
-import com.project.easywork.schedule.mapper.ScheduleMapper;
-import com.project.easywork.schedule.service.IScheduleService;
-import com.project.easywork.schedule.service_data.IScheduleDataService;
+import com.project.easywork.common.constant.ScheduleStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -27,7 +23,6 @@ import java.util.List;
 @Transactional
 public class StackService implements IStackService {
   
-  private final IScheduleService scheduleService;
   private final IPreventionService preventionService;
   
   private final IStackDataService stackDataService;
@@ -49,12 +44,11 @@ public class StackService implements IStackService {
     List<PreventionResponseDto> preventions = preventionService.getPreventionsByStackId(stackId);
     List<StackMeasurementResponseDto> stackMeasurements = stackMeasurementMapper
         .toDtoList(stackMeasurementDataService.findStackMeasurementsByStackId(stackId));
-    List<ScheduleResponseDto> schedules = scheduleService.getListByStack(stackId);
+    List<ScheduleStatus> status = new ArrayList<>();
     return StackDetailResponseDto.builder()
         .stack(stack)
         .preventions(preventions)
         .stackMeasurements(stackMeasurements)
-        .schedules(schedules)
         .build();
   }
   

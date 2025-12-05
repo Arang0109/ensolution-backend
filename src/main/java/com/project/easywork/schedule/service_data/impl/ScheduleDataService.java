@@ -1,5 +1,6 @@
 package com.project.easywork.schedule.service_data.impl;
 
+import com.project.easywork.common.constant.ScheduleStatus;
 import com.project.easywork.common.exception.CustomException;
 import com.project.easywork.common.exception.ErrorCode;
 import com.project.easywork.schedule.domain.persistance.Schedule;
@@ -42,7 +43,7 @@ public class ScheduleDataService implements IScheduleDataService {
   }
   
   @Override
-  public List<Schedule> findSchedulesByStackId(Long stackId) {
-    return scheduleRepository.findSchedulesByStackId(stackId);
+  public List<Schedule> findSchedulesByStackIdAndStatusIn(Long stackId, List<ScheduleStatus> status) {
+    return scheduleRepository.findSchedulesByStackIdAndStatusIn(stackId, status);
   }
 }
