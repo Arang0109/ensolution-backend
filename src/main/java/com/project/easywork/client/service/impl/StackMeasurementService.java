@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -28,6 +30,11 @@ public class StackMeasurementService implements IStackMeasurementService {
   @Override
   public StackMeasurementResponseDto getStackMeasurement(Long id) {
     return stackMeasurementMapper.toDto(stackMeasurementDataService.findById(id));
+  }
+  
+  @Override
+  public List<StackMeasurementResponseDto> getStackMeasurementsByStack(Long stackId) {
+    return stackMeasurementMapper.toDtoList(stackMeasurementDataService.findStackMeasurementsByStackId(stackId));
   }
   
   @Override

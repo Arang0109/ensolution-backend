@@ -8,7 +8,7 @@ public interface IPreventionService {
   PreventionDetailResponseDto registerPreventionBundle(PreventionBundleCreateRequestDto requestDto);
   PreventionDetailResponseDto getPrevention(Long preventionId);
   List<PreventionResponseDto> getPreventions();
-  List<PreventionResponseDto> getPreventionsByStackId(Long stackId);
+  List<PreventionResponseDto> getPreventionsByStack(Long stackId);
   PreventionResponseDto updatePrevention(Long preventionId, PreventionUpdateRequestDto requestDto);
   void removePrevention(Long preventionId);
 }
