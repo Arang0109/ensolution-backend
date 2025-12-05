@@ -4,17 +4,18 @@ import com.project.easywork.client.domain.dto.prevention.PreventionResponseDto;
 import com.project.easywork.client.domain.dto.stack.*;
 import com.project.easywork.client.domain.dto.stack_measurement.StackMeasurementResponseDto;
 import com.project.easywork.client.domain.persistance.Stack;
-import com.project.easywork.client.mapper.PreventionMapper;
 import com.project.easywork.client.mapper.StackMeasurementMapper;
-import com.project.easywork.client.service_data.IPreventionDataService;
+import com.project.easywork.client.service.IPreventionService;
 import com.project.easywork.client.service_data.IStackDataService;
 import com.project.easywork.client.mapper.StackMapper;
 import com.project.easywork.client.service.IStackService;
 import com.project.easywork.client.service_data.IStackMeasurementDataService;
+import com.project.easywork.common.constant.ScheduleStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -22,11 +23,12 @@ import java.util.List;
 @Transactional
 public class StackService implements IStackService {
   
+  private final IPreventionService preventionService;
+  
   private final IStackDataService stackDataService;
-  private final IPreventionDataService preventionDataService;
   private final IStackMeasurementDataService stackMeasurementDataService;
+  
   private final StackMapper stackMapper;
-  private final PreventionMapper preventionMapper;
   private final StackMeasurementMapper stackMeasurementMapper;
   
   @Override
@@ -39,10 +41,10 @@ public class StackService implements IStackService {
   @Transactional(readOnly = true)
   public StackDetailResponseDto getStack(Long stackId) {
     StackResponseDto stack = stackMapper.toDto(stackDataService.findById(stackId));
-    List<PreventionResponseDto> preventions = preventionMapper
-        .toDtoList(preventionDataService.findPreventionsByStackId(stackId));
+    List<PreventionResponseDto> preventions = preventionService.getPreventionsByStackId(stackId);
     List<StackMeasurementResponseDto> stackMeasurements = stackMeasurementMapper
         .toDtoList(stackMeasurementDataService.findStackMeasurementsByStackId(stackId));
+    List<ScheduleStatus> status = new ArrayList<>();
     return StackDetailResponseDto.builder()
         .stack(stack)
         .preventions(preventions)

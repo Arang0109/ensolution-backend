@@ -4,9 +4,12 @@ import com.project.easywork.client.domain.dto.stack.StackCreateRequestDto;
 import com.project.easywork.client.domain.dto.stack.StackDetailResponseDto;
 import com.project.easywork.client.domain.dto.stack.StackResponseDto;
 import com.project.easywork.client.domain.dto.stack.StackUpdateRequestDto;
+import com.project.easywork.common.constant.ScheduleStatus;
 import com.project.easywork.common.util.ApiResponse;
 import com.project.easywork.client.service.IStackService;
 import com.project.easywork.common.util.ValidationUtils;
+import com.project.easywork.schedule.domain.dto.ScheduleResponseDto;
+import com.project.easywork.schedule.service.IScheduleService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -26,6 +29,7 @@ import java.util.List;
 public class StackController {
   
   private final IStackService stackService;
+  private final IScheduleService scheduleService;
   
   @Operation(summary = "측정시설 등록 API", description = "새로운 측정시설 정보를 데이터베이스에 저장합니다.")
   @PostMapping()
@@ -55,6 +59,14 @@ public class StackController {
     return ResponseEntity.ok().body(ApiResponse.ok(stackService.getStack(stackId)));
   }
   
+  @Operation(summary = "측정시설 지난 일정 조회 API", description = "해당 측정시설에서 이미 완료된 측정일정 목록을 조회합니다.")
+  @GetMapping("/stacks/{stackId}/schedules")
+  public ResponseEntity<ApiResponse<List<ScheduleResponseDto>>> getSchedulesByStack(
+      @PathVariable Long stackId,
+      @RequestParam(required = false) List<ScheduleStatus> status) {
+    return ResponseEntity.ok(ApiResponse.ok(scheduleService.getListByStack(stackId, status)));
+  }
+  
   @Operation(summary = "측정시설 수정 API", description = "해당 측정시설의 상세정보를 수정합니다.")
   @PatchMapping("/{stackId}")
   public ResponseEntity<ApiResponse<StackResponseDto>> updateStack
@@ -71,6 +83,7 @@ public class StackController {
     stackService.removeStack(stackId);
     return ResponseEntity.ok(ApiResponse.ok());
   }
+  
   
 //  @Operation(summary = "엑셀 내보내기 API", description = "측정시설 정보에 관련된 엑셀 파일을 생성하고 내보냅니다.")
 //  @PostMapping("/export/excel")
