@@ -28,8 +28,10 @@ public class CompanyService implements ICompanyService {
   private final WorkplaceMapper workplaceMapper;
   
   @Override
-  public void registerCompany(CompanyCreateRequestDto requestDto) {
-    companyDataService.save(companyMapper.toEntityFromCompanyCreateDto(requestDto));
+  public CompanyResponseDto registerCompany(CompanyCreateRequestDto requestDto) {
+    Company company = companyMapper.toEntityFromCompanyCreateDto(requestDto);
+    
+    return companyMapper.toDto(companyDataService.save(company));
   }
   
   @Override

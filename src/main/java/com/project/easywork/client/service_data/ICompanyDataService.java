@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface ICompanyDataService {
   Company findById(Long id);
-  void save(Company entity);
+  Company save(Company entity);
   void deleteById(Long id);
   List<Company> findAll();
 }
