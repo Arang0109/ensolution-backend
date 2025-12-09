@@ -8,7 +8,7 @@ import com.project.easywork.client.domain.dto.company.CompanyUpdateRequestDto;
 import java.util.List;
 
 public interface ICompanyService {
-  void registerCompany(CompanyCreateRequestDto requestDto);
+  CompanyResponseDto registerCompany(CompanyCreateRequestDto requestDto);
   CompanyDetailResponseDto getCompany(Long companyId);
   List<CompanyResponseDto> getCompanies();
   CompanyResponseDto updateCompany(Long companyId, CompanyUpdateRequestDto requestDto);

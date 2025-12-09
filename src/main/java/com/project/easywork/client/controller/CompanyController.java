@@ -29,15 +29,14 @@ public class CompanyController {
   
   @Operation(summary = "의뢰업체 등록 API", description = "새로운 의뢰업체 정보를 데이터베이스에 저장합니다.")
   @PostMapping()
-  public ResponseEntity<ApiResponse<Void>> registerCompany(
+  public ResponseEntity<ApiResponse<CompanyResponseDto>> registerCompany(
       @Valid @RequestBody CompanyCreateRequestDto request,
       BindingResult bindingResult
   ) {
     if (bindingResult.hasErrors()) {
       return ValidationUtils.handleBindingErrors(bindingResult);
     }
-    companyService.registerCompany(request);
-    return ResponseEntity.ok().body(ApiResponse.ok());
+    return ResponseEntity.ok().body(ApiResponse.ok(companyService.registerCompany(request)));
   }
   
   @Operation(summary = "의뢰업체 목록 조회 API", description = "전체 의뢰업체 목록을 조회합니다.")
