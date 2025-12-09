@@ -11,8 +11,13 @@ public class MeasurementDataService {
   
   private final MeasurementRepository measurementRepository;
   
+  public MeasurementDocument findById(String objectId) {
+    return measurementRepository.findById(objectId).orElseThrow(
+        () -> new IllegalArgumentException("Measurement not found")
+    );
+  }
+  
   public MeasurementDocument save(MeasurementDocument doc) {
-    
     return measurementRepository.save(doc);
   }
 }
