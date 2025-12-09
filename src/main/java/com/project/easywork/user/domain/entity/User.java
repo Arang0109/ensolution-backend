@@ -1,28 +1,25 @@
 package com.project.easywork.user.domain.entity;
 
 import com.project.easywork.agency.domain.entity.Team;
-import com.project.easywork.common.constant.Status;
+import com.project.easywork.common.constant.Active;
+import com.project.easywork.common.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity
-@Getter
+@SuperBuilder(toBuilder = true)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-@Builder
+@Entity
+@Getter
 @Table(name = "users")
-public class User {
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "id", unique = true)
-  private Long id;
+public class User extends BaseEntity {
   
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "team_id")
@@ -55,31 +52,13 @@ public class User {
   @Column(name = "birth_date", nullable = false)
   private LocalDate birthDate;
   
-  
-  @Column(name = "created_at", nullable = false, updatable = false, insertable = false)
-  private LocalDateTime createdAt;
-  
-  @Column(name = "updated_at", nullable = false, updatable = false, insertable = false)
-  private LocalDateTime updatedAt;
-  
   @Enumerated(EnumType.STRING)
   @Column(nullable = false, length = 10)
-  private Status status = Status.ACTIVE;
+  private Active active = Active.ACTIVE;
   
-  @PrePersist
-  protected void onCreate() {
-    this.createdAt = LocalDateTime.now();
-    this.updatedAt = LocalDateTime.now();
-  }
-  
-  @PreUpdate
-  protected void onUpdate() {
-    this.updatedAt = LocalDateTime.now();
-  }
-  
-  @ManyToMany(fetch = FetchType.EAGER)
+  @ManyToMany(fetch = FetchType.LAZY)
   @JoinTable(
-      name = "users_roles",
+      name = "user_role",
       joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
       inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
   @Builder.Default
@@ -95,13 +74,5 @@ public class User {
   
   public void changePassword(String encodedPassword) {
     this.password = encodedPassword;
-  }
-  
-  public void changeTeam(Team newTeam) {
-    this.team = newTeam;
-  }
-  
-  public void changeStatus(Status newStatus) {
-    this.status = newStatus;
   }
 }

@@ -1,7 +1,7 @@
 package com.project.easywork.user.domain.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.project.easywork.common.constant.Status;
+import com.project.easywork.common.constant.Active;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.*;
 import lombok.*;
@@ -9,7 +9,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -67,11 +66,11 @@ public class UserCreateDto {
   @Schema(
       description = "수정일", example = "2025-09-26 01:24:12",
       accessMode =Schema.AccessMode.READ_ONLY)
-  private LocalDateTime updatedAt;
+  private LocalDateTime modifiedAt;
   
   @Schema(
       description = "상태", example = "ACTIVE",
       accessMode =Schema.AccessMode.READ_ONLY
   )
-  private Status status = Status.ACTIVE;
+  private Active active = Active.ACTIVE;
 }

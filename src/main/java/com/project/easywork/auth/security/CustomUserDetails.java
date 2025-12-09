@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -23,11 +24,10 @@ public class CustomUserDetails implements UserDetails {
   public Collection<? extends GrantedAuthority> getAuthorities() {
     return user.getRoles().stream()
         .flatMap(role -> {
-          // ROLE_ prefix required
+          // Fix: ROLE_ prefix 붙이기
           Stream<SimpleGrantedAuthority> roleAuth =
               Stream.of(new SimpleGrantedAuthority(role.getName()));
           
-          // Role → Privilege 변환 (READ/WRITE 등)
           Stream<SimpleGrantedAuthority> privilegeAuth =
               role.getPrivileges().stream()
                   .map(p -> new SimpleGrantedAuthority(p.getName()));

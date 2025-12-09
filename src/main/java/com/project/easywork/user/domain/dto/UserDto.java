@@ -1,7 +1,7 @@
 package com.project.easywork.user.domain.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.project.easywork.common.constant.Status;
+import com.project.easywork.common.constant.Active;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.*;
 import lombok.*;
@@ -78,7 +78,7 @@ public class UserDto {
       description = "상태", example = "ACTIVE",
       accessMode =Schema.AccessMode.READ_ONLY
   )
-  private Status status = Status.ACTIVE;
+  private Active active = Active.ACTIVE;
   
   public void update(UserUpdateDto dto) {
     this.name = dto.getName();

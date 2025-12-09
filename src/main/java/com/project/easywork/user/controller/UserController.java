@@ -33,9 +33,7 @@ public class UserController {
     
     String username = userDetails.getUsername();
     
-    return ResponseEntity.ok(
-        new ApiResponse<>(true, "조회 성공", userService.getProfileByUsername(username))
-    );
+    return ResponseEntity.ok().body(ApiResponse.ok(userService.getProfileByUsername(username)));
   }
   
   @Operation(summary = "프로필 수정 API", description = "개인 프로필을 수정합니다.")

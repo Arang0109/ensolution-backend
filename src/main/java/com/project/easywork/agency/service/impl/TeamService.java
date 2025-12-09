@@ -49,7 +49,7 @@ public class TeamService implements ITeamService {
   @Transactional(readOnly = true)
   public TeamDetailResponseDto get(Long id) {
     TeamResponseDto team = teamMapper.toDto(teamDataService.findById(id));
-    List<UserResponseDto> users = userMapper.toResponseDtoList(
+    List<UserResponseDto> users = userMapper.toDtoList(
         userDataService.findUsersByTeamId(id)
     );
     List<VehicleResponseDto> vehicles = vehicleMapper.toDtoList(

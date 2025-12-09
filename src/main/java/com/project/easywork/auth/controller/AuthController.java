@@ -23,10 +23,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @Tag(name = "Auth", description = "인증/인가 관련 API")
@@ -87,9 +89,15 @@ public class AuthController {
     
     httpResponse.setHeader(HttpHeaders.SET_COOKIE, refreshCookie.toString());
     
+    List<String> roles = userDetails.getAuthorities().stream()
+        .map(GrantedAuthority::getAuthority)  // "ROLE_ADMIN"
+        .map(auth -> auth.replace("ROLE_", "")) // "ADMIN" (Optional)
+        .toList();
+    
     LoginResponseDto responseDto = new LoginResponseDto(
         accessToken,
-        userDetails.getUsername());
+        userDetails.getUsername(),
+        roles);
     
     return ResponseEntity.ok().body(ApiResponse.ok(responseDto));
   }

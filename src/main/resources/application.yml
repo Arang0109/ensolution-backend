@@ -19,7 +19,12 @@ spring:
       timeout: ${REDIS_TIMEOUT:1000}
 
   jpa:
-    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: true
 
 #Java Web Token
 jwt:
