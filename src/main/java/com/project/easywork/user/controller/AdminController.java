@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,10 +25,9 @@ public class AdminController {
   private final UserService userService;
   
   @Operation(summary = "전체 회원조회 API", description = "전체 회원 목록을 조회합니다.")
+  @PreAuthorize("hasRole('ADMIN')")
   @GetMapping("/users")
   public ResponseEntity<ApiResponse<List<UserResponseDto>>> getUsers() {
-    return ResponseEntity.ok(
-        new ApiResponse<>(true, "조회 성공", userService.findAll())
-    );
+    return ResponseEntity.ok(ApiResponse.ok(userService.findAll()));
   }
 }

@@ -20,5 +20,5 @@ public class UserResponseDto {
   private String phoneNumber;
   private LocalDate birthDate;
   private LocalDateTime createdAt;
-  private LocalDateTime updatedAt;
+  private LocalDateTime modifiedAt;
 }
