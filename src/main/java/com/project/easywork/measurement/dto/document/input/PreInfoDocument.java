@@ -1,6 +1,8 @@
 package com.project.easywork.measurement.dto.document.input;
 
 import com.project.easywork.common.constant.Grade;
+import com.project.easywork.common.constant.Orientation;
+import com.project.easywork.common.constant.Shape;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -21,9 +23,10 @@ public class PreInfoDocument {
   @Getter
   @Builder
   public static class PreInfoCompanyDocument {
-    private Long companyId;
-    private String companyName;
+    private Long id;
+    private String name;
     private String ceoName;
+    private String bizNumber;
   }
   
   // ------------------------------------
@@ -32,12 +35,12 @@ public class PreInfoDocument {
   @Getter
   @Builder
   public static class PreInfoWorkplaceDocument {
-    private Long workplaceId;
-    private String workplaceName;
+    private Long id;
+    private String name;
     private String address;
     private String bizNumber;
     private String businessCategory;
-    private Grade workplaceGrade;
+    private Grade grade;
   }
   
   // ------------------------------------
@@ -46,15 +49,16 @@ public class PreInfoDocument {
   @Getter
   @Builder
   public static class PreInfoStackDocument {
-    private Long stackId;
-    private String stackName;
+    private Long id;
+    private String name;
     private String semsNumber;
-    private Grade stackGrade;
-    private Double stackHeight;
-    private String stackType;
-    private String stackShape;
+    private Grade grade;
+    private Double height;
     private Double horizontalLength;
     private Double verticalLength;
+    private Shape shape;
+    private Orientation orientation;
+    private Double standardOxygen;
   }
   
   // ------------------------------------
@@ -63,7 +67,7 @@ public class PreInfoDocument {
   @Getter
   @Builder
   public static class PreInfoPreventionDocument {
-    private String preventionName;
+    private String name;
     private List<PreInfoFacilityDocument> facilities;
     private List<PreInfoTargetDocument> targets;
   }
@@ -74,7 +78,7 @@ public class PreInfoDocument {
   @Getter
   @Builder
   public static class PreInfoFacilityDocument {
-    private String facilityName;
+    private String name;
     private String fuelUsage;
     private String itemOutput;
     private String fuelInput;
