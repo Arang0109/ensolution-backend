@@ -1,6 +1,7 @@
 package com.project.easywork.client.mapper;
 
 import com.project.easywork.client.domain.dto.stack.StackCreateRequestDto;
+import com.project.easywork.client.domain.dto.stack.StackDetailResponseDto;
 import com.project.easywork.client.domain.dto.stack.StackResponseDto;
 import com.project.easywork.client.domain.persistance.Stack;
 import org.mapstruct.Mapper;

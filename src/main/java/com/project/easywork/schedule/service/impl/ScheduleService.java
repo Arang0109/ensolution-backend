@@ -3,6 +3,13 @@ package com.project.easywork.schedule.service.impl;
 import com.project.easywork.agency.domain.entity.Team;
 import com.project.easywork.agency.service_data.ITeamDataService;
 import com.project.easywork.client.domain.persistance.Stack;
+import com.project.easywork.client.mapper.CompanyMapper;
+import com.project.easywork.client.mapper.StackMapper;
+import com.project.easywork.client.mapper.WorkplaceMapper;
+import com.project.easywork.client.service.ICompanyService;
+import com.project.easywork.client.service.IWorkplaceService;
+import com.project.easywork.client.service.impl.StackService;
+import com.project.easywork.client.service.impl.WorkplaceService;
 import com.project.easywork.client.service_data.IStackDataService;
 import com.project.easywork.common.constant.ScheduleStatus;
 import com.project.easywork.measurement.service.IMeasurementService;
@@ -27,6 +34,9 @@ public class ScheduleService implements IScheduleService {
   private final ITeamDataService teamDataService;
   private final IMeasurementService measurementService;
   private final ScheduleMapper scheduleMapper;
+  private final StackService stackService;
+  private final CompanyMapper companyMapper;
+  private final WorkplaceMapper workplaceMapper;
   
   @Override
   @Transactional(readOnly = true)
@@ -49,6 +59,19 @@ public class ScheduleService implements IScheduleService {
     return scheduleMapper.toDtoList(
         scheduleDataService.findSchedulesByStackIdAndStatusIn(stackId, status)
     );
+  }
+  
+  @Override
+  @Transactional(readOnly = true)
+  public ScheduleDetailResponseDto getSchedule(Long scheduleId) {
+    Schedule schedule = scheduleDataService.findDetailById(scheduleId);
+    
+    return ScheduleDetailResponseDto.builder()
+        .schedule(scheduleMapper.toDto(schedule))
+        .workplace(workplaceMapper.toDto(schedule.getStack().getWorkplace()))
+        .company(companyMapper.toDto(schedule.getStack().getWorkplace().getCompany()))
+        .stack(stackService.getStack(schedule.getStack().getId()))
+        .build();
   }
   
   @Override

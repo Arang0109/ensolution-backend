@@ -25,6 +25,13 @@ public class ScheduleDataService implements IScheduleDataService {
   }
   
   @Override
+  public Schedule findDetailById(Long scheduleId) {
+    return scheduleRepository.findDetailById(scheduleId).orElseThrow(
+        () -> new CustomException(ErrorCode.NOT_FOUND, "해당 측정 일정이 존재하지 않습니다.")
+    );
+  }
+  
+  @Override
   public Schedule save(Schedule schedule) {
     return scheduleRepository.save(schedule);
   }

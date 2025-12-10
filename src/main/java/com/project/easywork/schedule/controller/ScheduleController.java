@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -43,6 +44,14 @@ public class ScheduleController {
   @GetMapping()
   public ResponseEntity<ApiResponse<List<ScheduleTableViewDto>>> getPollutants() {
     return ResponseEntity.ok().body(ApiResponse.ok(scheduleService.getList()));
+  }
+  
+  @Operation(summary = "측정일정 상세 조회 API", description = "해당 측정일정의 상세정보를 조회합니다.")
+  @GetMapping("/{scheduleId}")
+  public ResponseEntity<ApiResponse<ScheduleDetailResponseDto>> getSchedule(
+      @PathVariable Long scheduleId
+  ) {
+    return ResponseEntity.ok().body(ApiResponse.ok(scheduleService.getSchedule(scheduleId)));
   }
   
   @Operation(summary = "측정일정 수정 API", description = "해당 측정일정의 상세정보를 수정합니다.")

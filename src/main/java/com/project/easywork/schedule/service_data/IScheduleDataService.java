@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface IScheduleDataService {
   Schedule findById(Long scheduleId);
+  Schedule findDetailById(Long scheduleId);
   Schedule save(Schedule schedule);
   void deleteById(Long scheduleId);
   List<Schedule> findAllWithTeamAndStack();
