@@ -1,4 +1,4 @@
-package com.project.easywork.common.util.pressure;
+package com.project.easywork.common.domain;
 
 import java.util.function.Function;
 

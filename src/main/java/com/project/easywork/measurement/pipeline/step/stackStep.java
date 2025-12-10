@@ -16,34 +16,31 @@ public class stackStep implements MeasurementStep {
     Measurement d = context.getDomain();
     
     Shape stackShape = d.getMeasurement().preInfo().stack().shape();
-    double x, y;
-    int measurePoint;
     
-    x = d.getMeasurement().preInfo().stack().horizontalLength();
+    double diameter = d.getMeasurement().preInfo().stack().horizontalLength();
+    double height   = d.getMeasurement().preInfo().stack().verticalLength();
     
-    if (stackShape.equals(Shape.RECTANGULAR)) {
-      y = d.getMeasurement().preInfo().stack().verticalLength();
-      MeasurePointStrategy strategy = MeasurePointStrategyFactory.of("rectangle");
-      measurePoint = strategy.calculate(x, y);
-    } else if (stackShape.equals(Shape.CIRCULAR)) {
-      y = d.getMeasurement().preInfo().stack().horizontalLength();
-      MeasurePointStrategy strategy = MeasurePointStrategyFactory.of("circle");
-      measurePoint = strategy.calculate(x, y);
-      
-      int n = 1;
-      
-      if (measurePoint != 1) {
-        n = measurePoint / 4;
+    switch (stackShape) {
+      case Shape.RECTANGULAR -> {
+        MeasurePointStrategy strategy = MeasurePointStrategyFactory.of("rectangle");
+        int pointCount = strategy.calculate(diameter, height);
+        context.setPointCount(pointCount);
       }
-      
-      List<Double> list = new ArrayList<Double>();
-      
-      for (int i = 0; i < n; i++) {
-        double k = (x / 2.0) * Math.sqrt((2.0*(i+1) - 1) / (2.0*n));
-        list.add((x / 2.0) - k);
+      case Shape.CIRCULAR -> {
+        MeasurePointStrategy strategy = MeasurePointStrategyFactory.of("circle");
+        int pointCount = strategy.calculate(diameter, diameter);
+        
+        int n = (pointCount == 1) ? 1 : pointCount / 4;
+        
+        List<Double> coords = new ArrayList<>();
+        double r = diameter / 2.0;
+        
+        for (int i = 0; i < n; i++) {
+          double k = r * Math.sqrt((2.0 * (i+1) - 1) / (2.0 * n));
+          coords.add(r - k);
+        }
+        context.setPointCount(pointCount);
       }
     }
-    
-    
   }
 }

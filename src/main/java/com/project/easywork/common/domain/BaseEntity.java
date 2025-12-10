@@ -1,4 +1,4 @@
-package com.project.easywork.common.entity;
+package com.project.easywork.common.domain;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;

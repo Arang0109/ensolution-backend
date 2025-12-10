@@ -37,15 +37,6 @@ public class ScheduleService implements IScheduleService {
   @Override
   @Transactional(readOnly = true)
   public List<ScheduleTableViewDto> getList() {
-    List<Schedule> list = scheduleDataService.findAllWithTeamAndStack();
-    Schedule s = list.get(0);
-    
-    System.out.println("stack class = " + s.getStack().getClass());
-    System.out.println("team class = " + s.getTeam().getClass());
-    
-    System.out.println("stack id = " + s.getStack().getId());
-    System.out.println("team id = " + s.getTeam().getId());
-    System.out.println(scheduleMapper.toTableList(list));
     return scheduleMapper.toTableList(scheduleDataService.findAllWithTeamAndStack());
   }
   

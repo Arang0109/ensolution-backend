@@ -1,4 +1,6 @@
-package com.project.easywork.common.util.pressure;
+package com.project.easywork.common.util;
+
+import com.project.easywork.common.domain.PressureUnit;
 
 public class PressureConverter {
   

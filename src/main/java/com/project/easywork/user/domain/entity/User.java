@@ -2,7 +2,7 @@ package com.project.easywork.user.domain.entity;
 
 import com.project.easywork.agency.domain.entity.Team;
 import com.project.easywork.user.domain.Active;
-import com.project.easywork.common.entity.BaseEntity;
+import com.project.easywork.common.domain.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;

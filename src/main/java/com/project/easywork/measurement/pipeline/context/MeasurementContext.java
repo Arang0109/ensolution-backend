@@ -14,8 +14,8 @@ public class MeasurementContext {
   
   // 1. PressureConvertStep
   private Double atmospherePressure;
-  private Double StaticPressure;
-  private Double DynamicPressure;
+  private Double staticPressure;
+  private Double dynamicPressure;
   private Double gasMeterGaugePressure;
   
   // 2. MoistureCalculateStep
@@ -26,6 +26,7 @@ public class MeasurementContext {
   
   // 4.
   private Double oxygenCorrected;
+  private Integer pointCount;
   
   private MeasurementResultDocument result;
   

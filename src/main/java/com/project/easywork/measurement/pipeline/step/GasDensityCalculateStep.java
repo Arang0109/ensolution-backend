@@ -5,6 +5,7 @@ import com.project.easywork.measurement.pipeline.domain.Measurement;
 import com.project.easywork.measurement.pipeline.context.MeasurementContext;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class GasDensityCalculateStep implements MeasurementStep {
   
@@ -28,13 +29,26 @@ public class GasDensityCalculateStep implements MeasurementStep {
     context.setGasDensity(gasDensity.doubleValue());
     
     // 산소 보정
+    BigDecimal avgO2Rounded = avgO2.setScale(1, RoundingMode.HALF_UP);
     context.setOxygenCorrected(1.0);
     
     Double standardO2 = d.getMeasurement().exhaustGas().standardOxygen();
     
     if (standardO2 != null && standardO2 > 0) {
-      double corrected = (21.0 - standardO2) / (21.0 - avgO2.doubleValue());
-      context.setOxygenCorrected(corrected);
+      
+      // rule 1: avgO2 >= 20.9 이면 무조건 1.0
+      if (standardO2 >= 20.9) {
+        context.setOxygenCorrected(1.0);
+        return;
+      }
+      
+      // rule 2: 계산 적용
+      BigDecimal numerator = BigDecimal.valueOf(21.0 - standardO2);
+      BigDecimal denominator = BigDecimal.valueOf(21.0).subtract(avgO2Rounded);
+      
+      BigDecimal corrected = numerator.divide(denominator, 6, RoundingMode.HALF_UP);
+      
+      context.setOxygenCorrected(corrected.doubleValue());
     }
   }
 }
