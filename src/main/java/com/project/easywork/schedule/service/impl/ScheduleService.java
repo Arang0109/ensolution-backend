@@ -5,6 +5,7 @@ import com.project.easywork.agency.service_data.ITeamDataService;
 import com.project.easywork.client.domain.persistance.Stack;
 import com.project.easywork.client.service_data.IStackDataService;
 import com.project.easywork.common.constant.ScheduleStatus;
+import com.project.easywork.measurement.service.IMeasurementService;
 import com.project.easywork.schedule.domain.dto.ScheduleCreateRequestDto;
 import com.project.easywork.schedule.domain.dto.ScheduleResponseDto;
 import com.project.easywork.schedule.domain.dto.ScheduleStatusUpdateRequestDto;
@@ -27,6 +28,7 @@ public class ScheduleService implements IScheduleService {
   private final IScheduleDataService scheduleDataService;
   private final IStackDataService stackDataService;
   private final ITeamDataService teamDataService;
+  private final IMeasurementService measurementService;
   private final ScheduleMapper scheduleMapper;
   
   @Override
@@ -46,7 +48,12 @@ public class ScheduleService implements IScheduleService {
   @Override
   public ScheduleResponseDto register(ScheduleCreateRequestDto dto) {
     Schedule schedule = scheduleMapper.toEntityFromScheduleCreateDto(dto);
-    return scheduleMapper.toDto(scheduleDataService.save(schedule));
+    
+    schedule = scheduleDataService.save(schedule);
+    
+    measurementService.createDraft(schedule.getId());
+    
+    return scheduleMapper.toDto(schedule);
   }
   
   @Override
@@ -73,5 +80,6 @@ public class ScheduleService implements IScheduleService {
   @Override
   public void delete(Long scheduleId) {
     scheduleDataService.deleteById(scheduleId);
+    measurementService.deleteDraft(scheduleId);
   }
 }

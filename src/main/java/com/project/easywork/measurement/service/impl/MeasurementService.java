@@ -1,8 +1,8 @@
-package com.project.easywork.measurement.service;
+package com.project.easywork.measurement.service.impl;
 
 import com.project.easywork.common.constant.MeasurementStatus;
-import com.project.easywork.measurement.domain.Measurement;
-import com.project.easywork.measurement.dto.MeasurementDraftUpdateRequest;
+import com.project.easywork.measurement.pipeline.domain.Measurement;
+import com.project.easywork.measurement.dto.MeasurementDraftUpdateCommandDto;
 import com.project.easywork.measurement.pipeline.MeasurementPipeline;
 import com.project.easywork.measurement.dto.command.MeasurementCommandDto;
 import com.project.easywork.measurement.dto.document.MeasurementDocument;
@@ -12,25 +12,54 @@ import com.project.easywork.measurement.pipeline.step.GasDensityCalculateStep;
 import com.project.easywork.measurement.pipeline.step.MoistureCalculateStep;
 import com.project.easywork.measurement.pipeline.step.PressureConvertStep;
 import com.project.easywork.measurement.pipeline.step.ResultBuildStep;
-import com.project.easywork.measurement.service_data.MeasurementDataService;
+import com.project.easywork.measurement.service.IMeasurementService;
+import com.project.easywork.measurement.service_data.IMeasurementDataService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
-
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class MeasurementService {
+public class MeasurementService implements IMeasurementService {
   
-  private final MeasurementDataService measurementDataService;
+  private final IMeasurementDataService measurementDataService;
   
   private final PreInfoMapper preInfoMapper;
   private final WeatherMapper weatherMapper;
   private final MoistureMapper moistureMapper;
   private final ExhaustGasMapper exhaustGasMapper;
   
+  @Override
+  public void createDraft(Long scheduleId) {
+    MeasurementDocument emptyDoc = MeasurementDocument.builder()
+        .scheduleId(scheduleId)
+        .status(MeasurementStatus.DRAFT)
+        .build();
+    
+    measurementDataService.save(emptyDoc);
+  }
+  
+  @Override
+  public void updateDraft(Long scheduleId, MeasurementDraftUpdateCommandDto request) {
+    MeasurementDocument document = measurementDataService.findByScheduleId(scheduleId);
+    
+    document.setStatus(MeasurementStatus.DRAFT); // 상태 변경
+    
+    document.setPreInfo(preInfoMapper.toDocument(request.preInfo()));
+    document.setWeather(weatherMapper.toDocument(request.weather()));
+    document.setMoisture(moistureMapper.toDocument(request.moisture()));
+    document.setExhaustGas(exhaustGasMapper.toDocument(request.exhaustGas()));
+    
+    measurementDataService.save(document);
+  }
+  
+  @Override
+  public void deleteDraft(Long scheduleId) {
+    measurementDataService.deleteByScheduleId(scheduleId);
+  }
+  
+  @Override
   public MeasurementDocument processAndSave(String objectId, MeasurementCommandDto dto) {
     
     MeasurementDocument doc = measurementDataService.findById(objectId);
@@ -57,29 +86,5 @@ public class MeasurementService {
     doc.setStatus(MeasurementStatus.COMPLETED);
     
     return measurementDataService.save(doc);
-  }
-  
-  public MeasurementDocument createDraft(Long scheduleId) {
-    MeasurementDocument doc = MeasurementDocument.builder()
-        .scheduleId(scheduleId)
-        .status(MeasurementStatus.DRAFT)
-        .build();
-    return measurementDataService.save(doc);
-  }
-  
-  public void updateDraft(String objectId, MeasurementDraftUpdateRequest request) {
-    MeasurementDocument document = measurementDataService.findById(objectId);
-    
-    // 상태 변경
-    document.setStatus(MeasurementStatus.DRAFT);
-    
-    // 부분 업데이트
-    if (request.getPreInfo() != null) document.setPreInfo(request.getPreInfo());
-    if (request.getWeather() != null) document.setWeather(request.getWeather());
-    if (request.getMoisture() != null) document.setMoisture(request.getMoisture());
-    if (request.getExhaustGas() != null) document.setExhaustGas(request.getExhaustGas());
-    if (request.getResult() != null) document.setResult(request.getResult());
-    
-    measurementDataService.save(document);
   }
 }

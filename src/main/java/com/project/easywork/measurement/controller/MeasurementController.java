@@ -1,37 +1,32 @@
 package com.project.easywork.measurement.controller;
 
 import com.project.easywork.common.util.ApiResponse;
-import com.project.easywork.measurement.dto.MeasurementDraftUpdateRequest;
-import com.project.easywork.measurement.dto.command.MeasurementCommandDto;
-import com.project.easywork.measurement.dto.document.MeasurementDocument;
-import com.project.easywork.measurement.service.MeasurementService;
+import com.project.easywork.measurement.dto.MeasurementDraftUpdateCommandDto;
+import com.project.easywork.measurement.service.IMeasurementService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@Tag(name = "Measurement", description = "측정 데이터 관련 API")
 @SecurityRequirement(name = "bearerAuth")
 @RestController
 @RequestMapping("/api/measurement")
 @RequiredArgsConstructor
 public class MeasurementController {
   
-  private final MeasurementService measurementService;
+  private final IMeasurementService measurementService;
   
-  @PostMapping
-  public ResponseEntity<ApiResponse<MeasurementDocument>> createReport(
-      @RequestBody MeasurementCommandDto request
-  ) {
-    return ResponseEntity.ok().body(ApiResponse.ok(measurementService.processAndSave(request)));
-  }
-  
-  @PatchMapping("/{objectId}/draft")
+  @Operation(summary = "측정 데이터 업데이트 API", description = "측정 데이터를 업데이트합니다.")
+  @PutMapping("/{scheduleId}/draft")
   public ResponseEntity<ApiResponse<Void>> updateDraft(
-      @PathVariable String objectId,
-      @RequestBody MeasurementDraftUpdateRequest request
+      @PathVariable Long scheduleId,
+      @RequestBody MeasurementDraftUpdateCommandDto request
   ) {
-    measurementService.updateDraft(objectId, request);
-    return ResponseEntity.noContent().build();
+    measurementService.updateDraft(scheduleId, request);
+    return ResponseEntity.ok().body(ApiResponse.ok());
   }
   
 }

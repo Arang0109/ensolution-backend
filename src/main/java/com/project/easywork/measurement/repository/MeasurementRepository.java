@@ -4,6 +4,10 @@ import com.project.easywork.measurement.dto.document.MeasurementDocument;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface MeasurementRepository extends MongoRepository<MeasurementDocument, String> {
+  Optional<MeasurementDocument> findByScheduleId(Long scheduleId);
+  void deleteByScheduleId(Long scheduleId);
 }
