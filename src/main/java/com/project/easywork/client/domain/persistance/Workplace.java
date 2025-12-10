@@ -1,6 +1,6 @@
 package com.project.easywork.client.domain.persistance;
 
-import com.project.easywork.common.constant.Grade;
+import com.project.easywork.client.domain.Grade;
 import com.project.easywork.client.domain.dto.workplace.WorkplaceUpdateRequestDto;
 import jakarta.persistence.*;
 import lombok.Getter;

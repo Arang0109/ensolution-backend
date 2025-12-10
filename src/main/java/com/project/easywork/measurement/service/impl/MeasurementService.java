@@ -1,6 +1,6 @@
 package com.project.easywork.measurement.service.impl;
 
-import com.project.easywork.common.constant.MeasurementStatus;
+import com.project.easywork.measurement.dto.MeasurementStatus;
 import com.project.easywork.measurement.pipeline.domain.Measurement;
 import com.project.easywork.measurement.dto.MeasurementDraftUpdateCommandDto;
 import com.project.easywork.measurement.pipeline.MeasurementPipeline;

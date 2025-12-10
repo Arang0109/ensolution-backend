@@ -1,6 +1,6 @@
 package com.project.easywork.schedule.domain.dto;
 
-import com.project.easywork.common.constant.ScheduleStatus;
+import com.project.easywork.schedule.domain.ScheduleStatus;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 

@@ -1,7 +1,7 @@
 package com.project.easywork.user.domain.entity;
 
 import com.project.easywork.agency.domain.entity.Team;
-import com.project.easywork.common.constant.Active;
+import com.project.easywork.user.domain.Active;
 import com.project.easywork.common.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;

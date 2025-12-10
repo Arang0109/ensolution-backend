@@ -21,8 +21,8 @@ public class WorkplaceDataService implements IWorkplaceDataService {
   }
   
   @Override
-  public void save(Workplace workplace) {
-    workplaceRepository.save(workplace);
+  public Workplace save(Workplace workplace) {
+    return workplaceRepository.save(workplace);
   }
   
   @Override

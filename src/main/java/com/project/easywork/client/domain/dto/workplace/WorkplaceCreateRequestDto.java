@@ -1,6 +1,6 @@
 package com.project.easywork.client.domain.dto.workplace;
 
-import com.project.easywork.common.constant.Grade;
+import com.project.easywork.client.domain.Grade;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;

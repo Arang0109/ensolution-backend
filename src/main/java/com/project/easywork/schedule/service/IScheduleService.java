@@ -1,6 +1,6 @@
 package com.project.easywork.schedule.service;
 
-import com.project.easywork.common.constant.ScheduleStatus;
+import com.project.easywork.schedule.domain.ScheduleStatus;
 import com.project.easywork.schedule.domain.dto.*;
 
 import java.util.List;

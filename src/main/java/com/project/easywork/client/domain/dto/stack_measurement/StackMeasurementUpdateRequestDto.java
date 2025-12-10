@@ -1,6 +1,6 @@
 package com.project.easywork.client.domain.dto.stack_measurement;
 
-import com.project.easywork.common.constant.Cycle;
+import com.project.easywork.client.domain.Cycle;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -1,6 +1,6 @@
 package com.project.easywork.client.domain.dto.workplace;
 
-import com.project.easywork.common.constant.Grade;
+import com.project.easywork.client.domain.Grade;
 import lombok.*;
 
 @NoArgsConstructor

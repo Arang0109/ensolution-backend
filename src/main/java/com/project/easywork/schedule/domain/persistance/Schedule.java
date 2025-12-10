@@ -2,7 +2,7 @@ package com.project.easywork.schedule.domain.persistance;
 
 import com.project.easywork.agency.domain.entity.Team;
 import com.project.easywork.client.domain.persistance.Stack;
-import com.project.easywork.common.constant.ScheduleStatus;
+import com.project.easywork.schedule.domain.ScheduleStatus;
 import com.project.easywork.schedule.domain.dto.ScheduleStatusUpdateRequestDto;
 import com.project.easywork.schedule.domain.dto.ScheduleUpdateRequestDto;
 import jakarta.persistence.*;

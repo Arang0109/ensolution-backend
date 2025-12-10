@@ -5,7 +5,7 @@ import com.project.easywork.client.domain.dto.workplace.*;
 import java.util.List;
 
 public interface IWorkplaceService {
-  void registerWorkplace(WorkplaceCreateRequestDto requestDto);
+  WorkplaceResponseDto registerWorkplace(WorkplaceCreateRequestDto requestDto);
   WorkplaceDetailResponseDto getWorkplace(Long workplaceId);
   List<WorkplaceResponseDto> getWorkplaces();
   WorkplaceResponseDto updateWorkplace(Long workplaceId, WorkplaceUpdateRequestDto requestDto);

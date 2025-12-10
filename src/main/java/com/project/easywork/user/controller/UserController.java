@@ -1,6 +1,6 @@
 package com.project.easywork.user.controller;
 
-import com.project.easywork.common.util.ApiResponse;
+import com.project.easywork.common.api.ApiResponse;
 import com.project.easywork.user.domain.dto.PasswordUpdateDto;
 import com.project.easywork.user.domain.dto.UserResponseDto;
 import com.project.easywork.user.domain.dto.UserUpdateDto;

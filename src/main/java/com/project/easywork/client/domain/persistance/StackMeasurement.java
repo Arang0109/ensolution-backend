@@ -1,7 +1,7 @@
 package com.project.easywork.client.domain.persistance;
 
 import com.project.easywork.client.domain.dto.stack_measurement.StackMeasurementUpdateRequestDto;
-import com.project.easywork.common.constant.Cycle;
+import com.project.easywork.client.domain.Cycle;
 import com.project.easywork.pollutant.domain.persistance.Pollutant;
 import jakarta.persistence.*;
 import lombok.Getter;

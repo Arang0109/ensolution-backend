@@ -1,4 +1,4 @@
-package com.project.easywork.common.constant;
+package com.project.easywork.client.domain;
 
 import lombok.Getter;
 

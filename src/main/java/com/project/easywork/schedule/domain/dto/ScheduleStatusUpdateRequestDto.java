@@ -1,6 +1,6 @@
 package com.project.easywork.schedule.domain.dto;
 
-import com.project.easywork.common.constant.ScheduleStatus;
+import com.project.easywork.schedule.domain.ScheduleStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

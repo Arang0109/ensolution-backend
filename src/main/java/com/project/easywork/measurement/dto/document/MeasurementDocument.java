@@ -1,6 +1,6 @@
 package com.project.easywork.measurement.dto.document;
 
-import com.project.easywork.common.constant.MeasurementStatus;
+import com.project.easywork.measurement.dto.MeasurementStatus;
 import com.project.easywork.measurement.dto.document.input.*;
 import com.project.easywork.measurement.dto.document.result.MeasurementResultDocument;
 import lombok.*;

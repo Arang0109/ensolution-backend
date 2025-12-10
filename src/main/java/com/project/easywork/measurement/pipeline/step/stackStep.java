@@ -1,6 +1,6 @@
 package com.project.easywork.measurement.pipeline.step;
 
-import com.project.easywork.common.constant.Shape;
+import com.project.easywork.client.domain.Shape;
 import com.project.easywork.common.util.measurePoint.MeasurePointStrategy;
 import com.project.easywork.common.util.measurePoint.MeasurePointStrategyFactory;
 import com.project.easywork.measurement.pipeline.domain.Measurement;

@@ -1,4 +1,4 @@
-package com.project.easywork.common.constant;
+package com.project.easywork.measurement.dto;
 
 public enum MeasurementStatus {
   DRAFT,       // 임시 저장 상태

@@ -25,10 +25,10 @@ public class WorkplaceService implements IWorkplaceService {
   private final StackMapper stackMapper;
   
   @Override
-  public void registerWorkplace(WorkplaceCreateRequestDto requestDto) {
+  public WorkplaceResponseDto registerWorkplace(WorkplaceCreateRequestDto requestDto) {
     Workplace workplace = workplaceMapper.toEntityFromWorkplaceCreateDto(requestDto);
     
-    workplaceDataService.save(workplace);
+    return workplaceMapper.toDto(workplaceDataService.save(workplace));
   }
   
   @Override

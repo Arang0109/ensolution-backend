@@ -1,6 +1,6 @@
 package com.project.easywork.schedule.service_data;
 
-import com.project.easywork.common.constant.ScheduleStatus;
+import com.project.easywork.schedule.domain.ScheduleStatus;
 import com.project.easywork.schedule.domain.persistance.Schedule;
 
 import java.util.List;

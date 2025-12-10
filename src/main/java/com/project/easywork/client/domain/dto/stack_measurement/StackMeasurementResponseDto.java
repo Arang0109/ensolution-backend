@@ -1,6 +1,6 @@
 package com.project.easywork.client.domain.dto.stack_measurement;
 
-import com.project.easywork.common.constant.Cycle;
+import com.project.easywork.client.domain.Cycle;
 import com.project.easywork.pollutant.domain.dto.PollutantResponseDto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
