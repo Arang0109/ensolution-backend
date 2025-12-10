@@ -1,6 +1,8 @@
 package com.project.easywork.measurement.dto.command;
 
 import com.project.easywork.common.constant.Grade;
+import com.project.easywork.common.constant.Orientation;
+import com.project.easywork.common.constant.Shape;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.List;
@@ -31,13 +33,16 @@ public record PreInfoCommandDto(
   public record PreInfoCompany(
       
       @Schema(description = "의뢰업체 ID", example = "123")
-      Long companyId,
+      Long id,
       
       @Schema(description = "의뢰업체명", example = "㈜오션환경")
-      String companyName,
+      String name,
       
       @Schema(description = "대표자명", example = "홍길동")
-      String ceoName
+      String ceoName,
+      
+      @Schema(description = "사업자 번호", example = "123-45-67890")
+      String bizNumber
   ) {}
   
   // ------------------------
@@ -47,10 +52,10 @@ public record PreInfoCommandDto(
   public record PreInfoWorkplace(
       
       @Schema(description = "사업장 ID", example = "51")
-      Long workplaceId,
+      Long id,
       
       @Schema(description = "사업장명", example = "부산 공장 1")
-      String workplaceName,
+      String name,
       
       @Schema(description = "주소", example = "부산시 사하구...")
       String address,
@@ -62,7 +67,7 @@ public record PreInfoCommandDto(
       String businessCategory,
       
       @Schema(description = "사업장 규모", example = "TYPE_1")
-      Grade workplaceGrade
+      Grade grade
   ) {}
   
   // ------------------------
@@ -72,31 +77,34 @@ public record PreInfoCommandDto(
   public record PreInfoStack(
       
       @Schema(description = "측정시설 ID", example = "998")
-      Long stackId,
+      Long id,
       
       @Schema(description = "측정시설 이름", example = "1번 굴뚝")
-      String stackName,
+      String name,
       
       @Schema(description = "SEMS 번호", example = "1111")
       String semsNumber,
       
       @Schema(description = "측정시설 규모", example = "TYPE_1")
-      Grade stackGrade,
+      Grade grade,
       
       @Schema(description = "굴뚝 높이(m)", example = "20.5")
-      Double stackHeight,
-      
-      @Schema(description = "굴뚝 타입 (수직/수평)", example = "수직")
-      String stackType,
-      
-      @Schema(description = "굴뚝 형상 (사각/원형)", example = "원형")
-      String stackShape,
+      Double height,
       
       @Schema(description = "수평 길이(m)", example = "1.0")
       Double horizontalLength,
       
       @Schema(description = "수직 길이(m)", example = "1.0")
-      Double verticalLength
+      Double verticalLength,
+      
+      @Schema(description = "굴뚝 형상 (사각/원형)", example = "CIRCULAR")
+      Shape shape,
+      
+      @Schema(description = "굴뚝 타입 (수직/수평)", example = "VERTICAL")
+      Orientation orientation,
+      
+      @Schema(description = "표준산소농도 (%)", example = "21.0")
+      Double standardOxygen
   ) {}
   
   // ------------------------
@@ -106,7 +114,7 @@ public record PreInfoCommandDto(
   public record PreInfoPrevention(
       
       @Schema(description = "방지시설명", example = "세정집진시설")
-      String preventionName,
+      String name,
       
       @Schema(description = "시설 목록")
       List<PreInfoFacility> facilities,
@@ -122,7 +130,7 @@ public record PreInfoCommandDto(
   public record PreInfoFacility(
       
       @Schema(description = "시설명", example = "데드너")
-      String facilityName,
+      String name,
       
       @Schema(description = "연료 사용량", example = "000")
       String fuelUsage,

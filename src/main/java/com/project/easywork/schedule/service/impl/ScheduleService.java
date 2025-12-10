@@ -3,12 +3,17 @@ package com.project.easywork.schedule.service.impl;
 import com.project.easywork.agency.domain.entity.Team;
 import com.project.easywork.agency.service_data.ITeamDataService;
 import com.project.easywork.client.domain.persistance.Stack;
+import com.project.easywork.client.mapper.CompanyMapper;
+import com.project.easywork.client.mapper.StackMapper;
+import com.project.easywork.client.mapper.WorkplaceMapper;
+import com.project.easywork.client.service.ICompanyService;
+import com.project.easywork.client.service.IWorkplaceService;
+import com.project.easywork.client.service.impl.StackService;
+import com.project.easywork.client.service.impl.WorkplaceService;
 import com.project.easywork.client.service_data.IStackDataService;
 import com.project.easywork.common.constant.ScheduleStatus;
-import com.project.easywork.schedule.domain.dto.ScheduleCreateRequestDto;
-import com.project.easywork.schedule.domain.dto.ScheduleResponseDto;
-import com.project.easywork.schedule.domain.dto.ScheduleStatusUpdateRequestDto;
-import com.project.easywork.schedule.domain.dto.ScheduleUpdateRequestDto;
+import com.project.easywork.measurement.service.IMeasurementService;
+import com.project.easywork.schedule.domain.dto.*;
 import com.project.easywork.schedule.domain.persistance.Schedule;
 import com.project.easywork.schedule.mapper.ScheduleMapper;
 import com.project.easywork.schedule.service.IScheduleService;
@@ -27,12 +32,25 @@ public class ScheduleService implements IScheduleService {
   private final IScheduleDataService scheduleDataService;
   private final IStackDataService stackDataService;
   private final ITeamDataService teamDataService;
+  private final IMeasurementService measurementService;
   private final ScheduleMapper scheduleMapper;
+  private final StackService stackService;
+  private final CompanyMapper companyMapper;
+  private final WorkplaceMapper workplaceMapper;
   
   @Override
   @Transactional(readOnly = true)
-  public List<ScheduleResponseDto> getList() {
-    return scheduleMapper.toDtoList(scheduleDataService.findAll());
+  public List<ScheduleTableViewDto> getList() {
+    List<Schedule> list = scheduleDataService.findAllWithTeamAndStack();
+    Schedule s = list.get(0);
+    
+    System.out.println("stack class = " + s.getStack().getClass());
+    System.out.println("team class = " + s.getTeam().getClass());
+    
+    System.out.println("stack id = " + s.getStack().getId());
+    System.out.println("team id = " + s.getTeam().getId());
+    System.out.println(scheduleMapper.toTableList(list));
+    return scheduleMapper.toTableList(scheduleDataService.findAllWithTeamAndStack());
   }
   
   @Override
@@ -44,9 +62,27 @@ public class ScheduleService implements IScheduleService {
   }
   
   @Override
+  @Transactional(readOnly = true)
+  public ScheduleDetailResponseDto getSchedule(Long scheduleId) {
+    Schedule schedule = scheduleDataService.findDetailById(scheduleId);
+    
+    return ScheduleDetailResponseDto.builder()
+        .schedule(scheduleMapper.toDto(schedule))
+        .workplace(workplaceMapper.toDto(schedule.getStack().getWorkplace()))
+        .company(companyMapper.toDto(schedule.getStack().getWorkplace().getCompany()))
+        .stack(stackService.getStack(schedule.getStack().getId()))
+        .build();
+  }
+  
+  @Override
   public ScheduleResponseDto register(ScheduleCreateRequestDto dto) {
     Schedule schedule = scheduleMapper.toEntityFromScheduleCreateDto(dto);
-    return scheduleMapper.toDto(scheduleDataService.save(schedule));
+    
+    schedule = scheduleDataService.save(schedule);
+    
+    measurementService.createDraft(schedule.getId());
+    
+    return scheduleMapper.toDto(schedule);
   }
   
   @Override
@@ -73,5 +109,6 @@ public class ScheduleService implements IScheduleService {
   @Override
   public void delete(Long scheduleId) {
     scheduleDataService.deleteById(scheduleId);
+    measurementService.deleteDraft(scheduleId);
   }
 }

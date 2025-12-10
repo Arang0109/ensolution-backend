@@ -1,7 +1,7 @@
 package com.project.easywork.measurement.pipeline.step;
 
 import com.project.easywork.common.util.pressure.PressureConverter;
-import com.project.easywork.measurement.domain.Measurement;
+import com.project.easywork.measurement.pipeline.domain.Measurement;
 import com.project.easywork.measurement.pipeline.context.MeasurementContext;
 
 public class PressureConvertStep implements MeasurementStep {

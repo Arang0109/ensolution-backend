@@ -1,8 +1,9 @@
 package com.project.easywork.measurement.pipeline.step;
 
+import com.project.easywork.common.constant.Shape;
 import com.project.easywork.common.util.measurePoint.MeasurePointStrategy;
 import com.project.easywork.common.util.measurePoint.MeasurePointStrategyFactory;
-import com.project.easywork.measurement.domain.Measurement;
+import com.project.easywork.measurement.pipeline.domain.Measurement;
 import com.project.easywork.measurement.pipeline.context.MeasurementContext;
 
 import java.util.ArrayList;
@@ -14,17 +15,17 @@ public class stackStep implements MeasurementStep {
     
     Measurement d = context.getDomain();
     
-    String stackShape = d.getMeasurement().preInfo().stack().stackShape();
+    Shape stackShape = d.getMeasurement().preInfo().stack().shape();
     double x, y;
     int measurePoint;
     
     x = d.getMeasurement().preInfo().stack().horizontalLength();
     
-    if (stackShape.equals("사각")) {
+    if (stackShape.equals(Shape.RECTANGULAR)) {
       y = d.getMeasurement().preInfo().stack().verticalLength();
       MeasurePointStrategy strategy = MeasurePointStrategyFactory.of("rectangle");
       measurePoint = strategy.calculate(x, y);
-    } else if (stackShape.equals("원형")) {
+    } else if (stackShape.equals(Shape.CIRCULAR)) {
       y = d.getMeasurement().preInfo().stack().horizontalLength();
       MeasurePointStrategy strategy = MeasurePointStrategyFactory.of("circle");
       measurePoint = strategy.calculate(x, y);
