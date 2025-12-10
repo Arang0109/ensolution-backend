@@ -9,10 +9,10 @@ public class ResultBuildStep implements MeasurementStep {
   public void execute(MeasurementContext context) {
     
     MeasurementResultDocument result = MeasurementResultDocument.builder()
-        .weatherPressureMmHg(context.getWeatherPressureMmHg())
-        .staticPressureMmHg(context.getStaticPressureMmHg())
-        .gasEquipGaugePressureMmHg(context.getGasEquipGaugePressureMmHg())
-        .moistureContent(context.getMoistureContent()) // or 2
+        .weatherPressureMmHg(context.getAtmospherePressure())
+        .staticPressureMmHg(context.getStaticPressure())
+        .gasEquipGaugePressureMmHg(context.getGasMeterGaugePressure())
+        .moistureContent(context.getMoistureRatio()) // or 2
         .gasDensity(context.getGasDensity())
         .oxygenCorrected(context.getOxygenCorrected())
         .build();

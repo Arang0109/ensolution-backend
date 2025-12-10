@@ -13,12 +13,13 @@ public class MeasurementContext {
   private final Measurement domain;
   
   // 1. PressureConvertStep
-  private Double weatherPressureMmHg;
-  private Double staticPressureMmHg;
-  private Double gasEquipGaugePressureMmHg;
+  private Double atmospherePressure;
+  private Double StaticPressure;
+  private Double DynamicPressure;
+  private Double gasMeterGaugePressure;
   
   // 2. MoistureCalculateStep
-  private Double moistureContent;
+  private Double moistureRatio;
   
   // 3. GasDensityCalculateStep
   private Double gasDensity;
