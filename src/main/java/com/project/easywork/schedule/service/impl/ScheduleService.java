@@ -4,14 +4,10 @@ import com.project.easywork.agency.domain.entity.Team;
 import com.project.easywork.agency.service_data.ITeamDataService;
 import com.project.easywork.client.domain.persistance.Stack;
 import com.project.easywork.client.mapper.CompanyMapper;
-import com.project.easywork.client.mapper.StackMapper;
 import com.project.easywork.client.mapper.WorkplaceMapper;
-import com.project.easywork.client.service.ICompanyService;
-import com.project.easywork.client.service.IWorkplaceService;
 import com.project.easywork.client.service.impl.StackService;
-import com.project.easywork.client.service.impl.WorkplaceService;
 import com.project.easywork.client.service_data.IStackDataService;
-import com.project.easywork.common.constant.ScheduleStatus;
+import com.project.easywork.schedule.domain.ScheduleStatus;
 import com.project.easywork.measurement.service.IMeasurementService;
 import com.project.easywork.schedule.domain.dto.*;
 import com.project.easywork.schedule.domain.persistance.Schedule;
@@ -41,15 +37,6 @@ public class ScheduleService implements IScheduleService {
   @Override
   @Transactional(readOnly = true)
   public List<ScheduleTableViewDto> getList() {
-    List<Schedule> list = scheduleDataService.findAllWithTeamAndStack();
-    Schedule s = list.get(0);
-    
-    System.out.println("stack class = " + s.getStack().getClass());
-    System.out.println("team class = " + s.getTeam().getClass());
-    
-    System.out.println("stack id = " + s.getStack().getId());
-    System.out.println("team id = " + s.getTeam().getId());
-    System.out.println(scheduleMapper.toTableList(list));
     return scheduleMapper.toTableList(scheduleDataService.findAllWithTeamAndStack());
   }
   

@@ -1,6 +1,6 @@
 package com.project.easywork.user.controller;
 
-import com.project.easywork.common.util.ApiResponse;
+import com.project.easywork.common.api.ApiResponse;
 import com.project.easywork.user.domain.dto.UserResponseDto;
 import com.project.easywork.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -27,7 +27,7 @@ public class AdminController {
   @Operation(summary = "전체 회원조회 API", description = "전체 회원 목록을 조회합니다.")
   @PreAuthorize("hasRole('ADMIN')")
   @GetMapping("/users")
-  public ResponseEntity<ApiResponse<List<UserResponseDto>>> getUsers() {
-    return ResponseEntity.ok(ApiResponse.ok(userService.findAll()));
+  public ResponseEntity<ApiResponse<List<UserResponseDto>>> getList() {
+    return ResponseEntity.ok(ApiResponse.success(userService.findAll()));
   }
 }

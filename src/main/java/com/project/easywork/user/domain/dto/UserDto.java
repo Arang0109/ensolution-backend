@@ -1,7 +1,7 @@
 package com.project.easywork.user.domain.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.project.easywork.common.constant.Active;
+import com.project.easywork.user.domain.Active;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.*;
 import lombok.*;

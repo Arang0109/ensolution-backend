@@ -7,14 +7,15 @@ import lombok.Getter;
 @Builder
 public class MeasurementResultDocument {
   
-  private Double weatherPressureMmHg;
-  private Double staticPressureMmHg;
-  private Double gasEquipGaugePressureMmHg;
+  private Double atmospherePressure;
+  private Double staticPressure;
+  private Double dynamicPressure;
+  private Double gasMeterGaugePressure;
   
-  private Double moistureContent;
+  private Double moistureRatio;
   private Double gasDensity;
   private Double oxygenCorrected;
   
-  private Integer measurementPoint;
+  private Integer pointCount;
   
 }

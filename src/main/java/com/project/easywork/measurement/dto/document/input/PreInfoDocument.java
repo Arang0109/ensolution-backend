@@ -1,8 +1,8 @@
 package com.project.easywork.measurement.dto.document.input;
 
-import com.project.easywork.common.constant.Grade;
-import com.project.easywork.common.constant.Orientation;
-import com.project.easywork.common.constant.Shape;
+import com.project.easywork.client.domain.Grade;
+import com.project.easywork.client.domain.Orientation;
+import com.project.easywork.client.domain.Shape;
 import lombok.Builder;
 import lombok.Getter;
 

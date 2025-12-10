@@ -1,7 +1,7 @@
 package com.project.easywork.schedule.repository;
 
 import com.project.easywork.client.domain.persistance.Stack;
-import com.project.easywork.common.constant.ScheduleStatus;
+import com.project.easywork.schedule.domain.ScheduleStatus;
 import com.project.easywork.schedule.domain.persistance.Schedule;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

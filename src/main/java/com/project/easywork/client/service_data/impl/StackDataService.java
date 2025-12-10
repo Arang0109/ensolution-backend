@@ -21,7 +21,7 @@ public class StackDataService implements IStackDataService {
   }
   
   @Override
-  public void save(Stack stack) { stackRepository.save(stack); }
+  public Stack save(Stack stack) { return stackRepository.save(stack); }
   
   @Override
   public void deleteById(Long stackId) { stackRepository.deleteById(stackId); }

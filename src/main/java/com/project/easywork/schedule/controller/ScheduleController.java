@@ -1,17 +1,15 @@
 package com.project.easywork.schedule.controller;
 
-import com.project.easywork.common.util.ApiResponse;
-import com.project.easywork.common.util.ValidationUtils;
+import com.project.easywork.common.api.ApiResponse;
+import com.project.easywork.schedule.domain.ScheduleStatus;
 import com.project.easywork.schedule.domain.dto.*;
 import com.project.easywork.schedule.service.IScheduleService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,56 +28,60 @@ public class ScheduleController {
       description = "새로운 측정일정 정보를 데이터베이스에 저장합니다."
   )
   @PostMapping()
-  public ResponseEntity<ApiResponse<ScheduleResponseDto>> registerSchedule(
-      @Valid @RequestBody ScheduleCreateRequestDto request,
-      BindingResult bindingResult
+  public ResponseEntity<ApiResponse<ScheduleResponseDto>> register(
+      @Valid @RequestBody ScheduleCreateRequestDto request
   ) {
-    if (bindingResult.hasErrors()) {
-      return ValidationUtils.handleBindingErrors(bindingResult);
-    }
-    return ResponseEntity.ok().body(ApiResponse.ok(scheduleService.register(request)));
+    return ResponseEntity.ok().body(ApiResponse.success(scheduleService.register(request)));
   }
   
   @Operation(summary = "측정일정 목록 조회 API", description = "전체 측정일정 목록을 조회합니다.")
   @GetMapping()
-  public ResponseEntity<ApiResponse<List<ScheduleTableViewDto>>> getPollutants() {
-    return ResponseEntity.ok().body(ApiResponse.ok(scheduleService.getList()));
+  public ResponseEntity<ApiResponse<List<ScheduleTableViewDto>>> getList() {
+    return ResponseEntity.ok().body(ApiResponse.success(scheduleService.getList()));
+  }
+  
+  @Operation(summary = "측정시설 지난 일정 조회 API", description = "해당 측정시설에서 이미 완료된 측정일정 목록을 조회합니다.")
+  @GetMapping("/stacks/{stackId}")
+  public ResponseEntity<ApiResponse<List<ScheduleResponseDto>>> getListByStack(
+      @PathVariable Long stackId,
+      @RequestParam(required = false) List<ScheduleStatus> status) {
+    return ResponseEntity.ok(ApiResponse.success(scheduleService.getListByStack(stackId, status)));
   }
   
   @Operation(summary = "측정일정 상세 조회 API", description = "해당 측정일정의 상세정보를 조회합니다.")
   @GetMapping("/{scheduleId}")
-  public ResponseEntity<ApiResponse<ScheduleDetailResponseDto>> getSchedule(
+  public ResponseEntity<ApiResponse<ScheduleDetailResponseDto>> get(
       @PathVariable Long scheduleId
   ) {
-    return ResponseEntity.ok().body(ApiResponse.ok(scheduleService.getSchedule(scheduleId)));
+    return ResponseEntity.ok().body(ApiResponse.success(scheduleService.getSchedule(scheduleId)));
   }
   
   @Operation(summary = "측정일정 수정 API", description = "해당 측정일정의 상세정보를 수정합니다.")
   @PatchMapping("/{scheduleId}")
-  public ResponseEntity<ApiResponse<ScheduleResponseDto>> updateSchedule
+  public ResponseEntity<ApiResponse<ScheduleResponseDto>> update
       (
           @PathVariable Long scheduleId,
           @Valid @RequestBody ScheduleUpdateRequestDto request
       ) {
     
-    return ResponseEntity.ok(ApiResponse.ok(scheduleService.update(scheduleId, request)));
+    return ResponseEntity.ok(ApiResponse.success(scheduleService.update(scheduleId, request)));
   }
   
   @Operation(summary = "측정상태 수정 API", description = "해당 측정일정의 측정상태를 수정합니다.")
   @PatchMapping("/{scheduleId}/status")
-  public ResponseEntity<ApiResponse<ScheduleResponseDto>> updateSchedule
+  public ResponseEntity<ApiResponse<ScheduleResponseDto>> updateStatus
       (
           @PathVariable Long scheduleId,
           @Valid @RequestBody ScheduleStatusUpdateRequestDto request
       ) {
     
-    return ResponseEntity.ok(ApiResponse.ok(scheduleService.updateStatus(scheduleId, request)));
+    return ResponseEntity.ok(ApiResponse.success(scheduleService.updateStatus(scheduleId, request)));
   }
   
   @Operation(summary = "측정일정 삭제 API", description = "측정일정 정보를 데이터베이스에서 삭제합니다.")
   @DeleteMapping("/{scheduleId}")
-  public ResponseEntity<ApiResponse<Void>> removeCompany(@PathVariable Long scheduleId) {
+  public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long scheduleId) {
     scheduleService.delete(scheduleId);
-    return ResponseEntity.ok(ApiResponse.ok());
+    return ResponseEntity.ok(ApiResponse.success());
   }
 }

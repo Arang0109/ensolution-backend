@@ -5,15 +5,13 @@ import com.project.easywork.client.domain.dto.company.CompanyDetailResponseDto;
 import com.project.easywork.client.domain.dto.company.CompanyResponseDto;
 import com.project.easywork.client.domain.dto.company.CompanyUpdateRequestDto;
 import com.project.easywork.client.service.ICompanyService;
-import com.project.easywork.common.util.ApiResponse;
-import com.project.easywork.common.util.ValidationUtils;
+import com.project.easywork.common.api.ApiResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,44 +27,40 @@ public class CompanyController {
   
   @Operation(summary = "의뢰업체 등록 API", description = "새로운 의뢰업체 정보를 데이터베이스에 저장합니다.")
   @PostMapping()
-  public ResponseEntity<ApiResponse<CompanyResponseDto>> registerCompany(
-      @Valid @RequestBody CompanyCreateRequestDto request,
-      BindingResult bindingResult
+  public ResponseEntity<ApiResponse<CompanyResponseDto>> register(
+      @Valid @RequestBody CompanyCreateRequestDto request
   ) {
-    if (bindingResult.hasErrors()) {
-      return ValidationUtils.handleBindingErrors(bindingResult);
-    }
-    return ResponseEntity.ok().body(ApiResponse.ok(companyService.registerCompany(request)));
+    return ResponseEntity.ok().body(ApiResponse.success(companyService.registerCompany(request)));
   }
   
   @Operation(summary = "의뢰업체 목록 조회 API", description = "전체 의뢰업체 목록을 조회합니다.")
   @GetMapping()
-  public ResponseEntity<ApiResponse<List<CompanyResponseDto>>> getCompanies() {
+  public ResponseEntity<ApiResponse<List<CompanyResponseDto>>> getList() {
     System.out.println("companyService.getCompanies() : " + companyService.getCompanies());
-    return ResponseEntity.ok().body(ApiResponse.ok(companyService.getCompanies()));
+    return ResponseEntity.ok().body(ApiResponse.success(companyService.getCompanies()));
   }
   
   @Operation(summary = "의뢰업체 조회 API", description = "해당 의뢰업체의 상세정보를 조회합니다.")
   @GetMapping("/{companyId}")
-  public ResponseEntity<ApiResponse<CompanyDetailResponseDto>> getCompany(@PathVariable Long companyId) {
-    return ResponseEntity.ok().body(ApiResponse.ok(companyService.getCompany(companyId)));
+  public ResponseEntity<ApiResponse<CompanyDetailResponseDto>> get(@PathVariable Long companyId) {
+    return ResponseEntity.ok().body(ApiResponse.success(companyService.getCompany(companyId)));
   }
   
   @Operation(summary = "의뢰업체 수정 API", description = "해당 의뢰업체의 상세정보를 수정합니다.")
   @PatchMapping("/{companyId}")
-  public ResponseEntity<ApiResponse<CompanyResponseDto>> updateCompany
+  public ResponseEntity<ApiResponse<CompanyResponseDto>> update
       (
           @PathVariable Long companyId,
           @Valid @RequestBody CompanyUpdateRequestDto request
       ) {
     
-    return ResponseEntity.ok(ApiResponse.ok(companyService.updateCompany(companyId, request)));
+    return ResponseEntity.ok(ApiResponse.success(companyService.updateCompany(companyId, request)));
   }
   
   @Operation(summary = "의뢰업체 삭제 API", description = "의뢰업체 정보를 데이터베이스에서 삭제합니다.")
   @DeleteMapping("/{companyId}")
-  public ResponseEntity<ApiResponse<Void>> removeCompany(@PathVariable Long companyId) {
+  public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long companyId) {
     companyService.removeCompany(companyId);
-    return ResponseEntity.ok(ApiResponse.ok());
+    return ResponseEntity.ok(ApiResponse.success());
   }
 }

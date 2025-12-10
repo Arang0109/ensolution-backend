@@ -27,9 +27,9 @@ public class StackService implements IStackService {
   private final StackMapper stackMapper;
   
   @Override
-  public void registerStack(StackCreateRequestDto requestDto) {
+  public StackResponseDto registerStack(StackCreateRequestDto requestDto) {
     Stack stack = stackMapper.toEntityFromStackCreateDto(requestDto);
-    stackDataService.save(stack);
+    return stackMapper.toDto(stackDataService.save(stack));
   }
   
   @Override

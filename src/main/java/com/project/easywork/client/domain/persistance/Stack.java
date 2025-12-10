@@ -2,9 +2,9 @@
 package com.project.easywork.client.domain.persistance;
 
 import com.project.easywork.client.domain.dto.stack.StackUpdateRequestDto;
-import com.project.easywork.common.constant.Grade;
-import com.project.easywork.common.constant.Shape;
-import com.project.easywork.common.constant.Orientation;
+import com.project.easywork.client.domain.Grade;
+import com.project.easywork.client.domain.Shape;
+import com.project.easywork.client.domain.Orientation;
 import com.project.easywork.schedule.domain.persistance.Schedule;
 import jakarta.persistence.*;
 import lombok.Getter;

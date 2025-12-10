@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface IWorkplaceDataService {
   Workplace findById(Long id);
-  void save(Workplace workplace);
+  Workplace save(Workplace workplace);
   void deleteById(Long workplaceId);
   List<Workplace> findAll();
   List<Workplace> findWorkplacesByCompanyId(Long CompanyId);

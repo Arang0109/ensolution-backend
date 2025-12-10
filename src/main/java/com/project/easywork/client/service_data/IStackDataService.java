@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface IStackDataService {
   Stack findById(Long stackId);
-  void save(Stack stack);
+  Stack save(Stack stack);
   void deleteById(Long stackId);
   List<Stack> findAll();
   List<Stack> findStacksByWorkplaceId(Long workplaceId);

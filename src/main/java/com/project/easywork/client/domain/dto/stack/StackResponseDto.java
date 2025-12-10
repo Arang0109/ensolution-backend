@@ -1,8 +1,8 @@
 package com.project.easywork.client.domain.dto.stack;
 
-import com.project.easywork.common.constant.Grade;
-import com.project.easywork.common.constant.Shape;
-import com.project.easywork.common.constant.Orientation;
+import com.project.easywork.client.domain.Grade;
+import com.project.easywork.client.domain.Shape;
+import com.project.easywork.client.domain.Orientation;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
