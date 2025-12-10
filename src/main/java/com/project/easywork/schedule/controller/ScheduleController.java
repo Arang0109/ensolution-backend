@@ -2,10 +2,7 @@ package com.project.easywork.schedule.controller;
 
 import com.project.easywork.common.util.ApiResponse;
 import com.project.easywork.common.util.ValidationUtils;
-import com.project.easywork.schedule.domain.dto.ScheduleCreateRequestDto;
-import com.project.easywork.schedule.domain.dto.ScheduleResponseDto;
-import com.project.easywork.schedule.domain.dto.ScheduleStatusUpdateRequestDto;
-import com.project.easywork.schedule.domain.dto.ScheduleUpdateRequestDto;
+import com.project.easywork.schedule.domain.dto.*;
 import com.project.easywork.schedule.service.IScheduleService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -44,7 +41,7 @@ public class ScheduleController {
   
   @Operation(summary = "측정일정 목록 조회 API", description = "전체 측정일정 목록을 조회합니다.")
   @GetMapping()
-  public ResponseEntity<ApiResponse<List<ScheduleResponseDto>>> getPollutants() {
+  public ResponseEntity<ApiResponse<List<ScheduleTableViewDto>>> getPollutants() {
     return ResponseEntity.ok().body(ApiResponse.ok(scheduleService.getList()));
   }
   

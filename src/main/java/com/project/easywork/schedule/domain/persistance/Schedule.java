@@ -40,6 +40,7 @@ public class Schedule {
   @Column(name = "measurement_type")
   private String measurementType;
   
+  @Enumerated(EnumType.STRING)
   private ScheduleStatus status;
   
   @CreationTimestamp

@@ -38,8 +38,8 @@ public class ScheduleDataService implements IScheduleDataService {
   }
   
   @Override
-  public List<Schedule> findAll() {
-    return scheduleRepository.findAll();
+  public List<Schedule> findAllWithTeamAndStack() {
+    return scheduleRepository.findAllWithTeamAndStack();
   }
   
   @Override
