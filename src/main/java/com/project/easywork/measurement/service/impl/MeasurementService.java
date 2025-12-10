@@ -51,6 +51,8 @@ public class MeasurementService implements IMeasurementService {
     document.setMoisture(moistureMapper.toDocument(request.moisture()));
     document.setExhaustGas(exhaustGasMapper.toDocument(request.exhaustGas()));
     
+    document.setResult(null);
+    
     measurementDataService.save(document);
   }
   
@@ -60,9 +62,9 @@ public class MeasurementService implements IMeasurementService {
   }
   
   @Override
-  public MeasurementDocument processAndSave(String objectId, MeasurementCommandDto dto) {
+  public void saveDocument(Long scheduleId, MeasurementCommandDto dto) {
     
-    MeasurementDocument doc = measurementDataService.findById(objectId);
+    MeasurementDocument doc = measurementDataService.findByScheduleId(scheduleId);
     
     doc.setPreInfo(preInfoMapper.toDocument(dto.preInfo()));
     doc.setWeather(weatherMapper.toDocument(dto.weather()));
@@ -85,6 +87,6 @@ public class MeasurementService implements IMeasurementService {
     doc.setResult(context.getResult());
     doc.setStatus(MeasurementStatus.COMPLETED);
     
-    return measurementDataService.save(doc);
+    measurementDataService.save(doc);
   }
 }

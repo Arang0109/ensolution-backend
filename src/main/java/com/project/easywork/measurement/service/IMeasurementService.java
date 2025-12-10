@@ -8,6 +8,5 @@ public interface IMeasurementService {
   void createDraft(Long scheduleId);
   void updateDraft(Long scheduleId, MeasurementDraftUpdateCommandDto request);
   void deleteDraft(Long scheduleId);
-  
-  MeasurementDocument processAndSave(String objectId, MeasurementCommandDto dto);
+  void saveDocument(Long scheduleId, MeasurementCommandDto dto);
 }

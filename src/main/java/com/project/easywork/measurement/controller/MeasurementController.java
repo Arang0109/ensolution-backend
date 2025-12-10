@@ -2,6 +2,7 @@ package com.project.easywork.measurement.controller;
 
 import com.project.easywork.common.util.ApiResponse;
 import com.project.easywork.measurement.dto.MeasurementDraftUpdateCommandDto;
+import com.project.easywork.measurement.dto.command.MeasurementCommandDto;
 import com.project.easywork.measurement.service.IMeasurementService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -29,4 +30,13 @@ public class MeasurementController {
     return ResponseEntity.ok().body(ApiResponse.ok());
   }
   
+  @Operation(summary = "측정 데이터 저장 API", description = "측정 데이터를 저장합니다.")
+  @PostMapping("/{scheduleId}/completed")
+  public ResponseEntity<ApiResponse<Void>> saveDocument(
+      @PathVariable Long scheduleId,
+      @RequestBody MeasurementCommandDto request
+  ) {
+    measurementService.saveDocument(scheduleId, request);
+    return ResponseEntity.ok().body(ApiResponse.ok());
+  }
 }
