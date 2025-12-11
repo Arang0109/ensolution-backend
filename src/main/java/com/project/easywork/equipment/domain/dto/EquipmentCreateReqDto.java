@@ -64,6 +64,12 @@ public class EquipmentCreateReqDto {
   private LocalDate purchaseDate;
   
   @Schema(
+      description = "교정이 수행된 날짜 (YYYY-MM-DD)",
+      example = "2025-01-15"
+  )
+  private LocalDate calibrationDate;
+  
+  @Schema(
       description = "교정 주기(월 단위)",
       example = "12"
   )

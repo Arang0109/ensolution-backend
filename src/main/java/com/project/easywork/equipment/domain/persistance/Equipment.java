@@ -3,12 +3,9 @@ package com.project.easywork.equipment.domain.persistance;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Getter
@@ -56,6 +53,10 @@ public class Equipment {
   @Column(name = "is_available")
   private Boolean isAvailable = true;
   
+  // 교정 날짜
+  @Column(name = "calibration_date", nullable = false)
+  private LocalDate calibrationDate;
+  
   // 교정 주기 (월 단위 예시)
   @Column(name = "calibration_cycle")
   private Integer calibrationCycle;
@@ -64,15 +65,11 @@ public class Equipment {
   @Lob
   private String remark;
   
-  @OneToMany(
-      mappedBy = "equipment",
-      cascade = CascadeType.ALL,
-      orphanRemoval = true
-  )
-  @ToString.Exclude
-  private List<EquipmentCalibration> calibrations = new ArrayList<>();
-  
   public void toggleAvailable() {
     this.isAvailable = !this.isAvailable;
+  }
+  
+  public void updateCalibrationDate(LocalDate calibrationDate) {
+    this.calibrationDate = calibrationDate;
   }
 }

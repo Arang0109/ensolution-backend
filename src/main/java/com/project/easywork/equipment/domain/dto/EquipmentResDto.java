@@ -26,6 +26,7 @@ public class EquipmentResDto {
   private String originCountry;
   private LocalDate purchaseDate;
   private Boolean isAvailable;
+  private LocalDate calibrationDate;
   private Integer calibrationCycle;
   
   private String remark;

@@ -11,10 +11,6 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Getter
 @ToString
-public class EquipmentCalibrationUpdateReqDto {
-  
+public class EquipmentCalibrationDateUpdateDto {
   private LocalDate calibrationDate;
-  private LocalDate nextCalibrationDate;
-  private String certificateUrl;
-  private String remark;
 }

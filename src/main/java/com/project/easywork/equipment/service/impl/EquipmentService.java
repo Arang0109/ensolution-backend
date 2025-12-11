@@ -1,5 +1,6 @@
 package com.project.easywork.equipment.service.impl;
 
+import com.project.easywork.equipment.domain.dto.EquipmentCalibrationDateUpdateDto;
 import com.project.easywork.equipment.domain.dto.EquipmentCreateReqDto;
 import com.project.easywork.equipment.domain.dto.EquipmentResDto;
 import com.project.easywork.equipment.domain.dto.EquipmentUpdateReqDto;
@@ -49,6 +50,15 @@ public class EquipmentService implements IEquipmentService {
   public EquipmentResDto update(Long equipmentId, EquipmentUpdateReqDto dto) {
     Equipment equipment = equipmentDataService.findById(equipmentId);
     equipmentMapper.updateFromDto(dto, equipment);
+    return equipmentMapper.toDto(
+        equipmentDataService.save(equipment)
+    );
+  }
+  
+  @Override
+  public EquipmentResDto updateCalibrationDate(Long equipmentId, EquipmentCalibrationDateUpdateDto dto) {
+    Equipment equipment = equipmentDataService.findById(equipmentId);
+    equipment.updateCalibrationDate(dto.getCalibrationDate());
     return equipmentMapper.toDto(
         equipmentDataService.save(equipment)
     );
