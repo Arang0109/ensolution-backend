@@ -42,7 +42,7 @@ public class ScheduleService implements IScheduleService {
   
   @Override
   @Transactional(readOnly = true)
-  public List<ScheduleResponseDto> getListByStack(Long stackId, List<ScheduleStatus> status) {
+  public List<ScheduleResDto> getListByStack(Long stackId, List<ScheduleStatus> status) {
     return scheduleMapper.toDtoList(
         scheduleDataService.findSchedulesByStackIdAndStatusIn(stackId, status)
     );
@@ -50,10 +50,10 @@ public class ScheduleService implements IScheduleService {
   
   @Override
   @Transactional(readOnly = true)
-  public ScheduleDetailResponseDto getSchedule(Long scheduleId) {
+  public ScheduleDetailResDto getSchedule(Long scheduleId) {
     Schedule schedule = scheduleDataService.findDetailById(scheduleId);
     
-    return ScheduleDetailResponseDto.builder()
+    return ScheduleDetailResDto.builder()
         .schedule(scheduleMapper.toDto(schedule))
         .workplace(workplaceMapper.toDto(schedule.getStack().getWorkplace()))
         .company(companyMapper.toDto(schedule.getStack().getWorkplace().getCompany()))
@@ -62,7 +62,7 @@ public class ScheduleService implements IScheduleService {
   }
   
   @Override
-  public ScheduleResponseDto register(ScheduleCreateRequestDto dto) {
+  public ScheduleResDto register(ScheduleCreateReqDto dto) {
     Schedule schedule = scheduleMapper.toEntityFromScheduleCreateDto(dto);
     
     schedule = scheduleDataService.save(schedule);
@@ -73,7 +73,7 @@ public class ScheduleService implements IScheduleService {
   }
   
   @Override
-  public ScheduleResponseDto update(Long scheduleId, ScheduleUpdateRequestDto dto) {
+  public ScheduleResDto update(Long scheduleId, ScheduleUpdateReqDto dto) {
     Schedule schedule = scheduleDataService.findById(scheduleId);
     
     Stack stack = null;
@@ -87,7 +87,7 @@ public class ScheduleService implements IScheduleService {
   }
   
   @Override
-  public ScheduleResponseDto updateStatus(Long scheduleId, ScheduleStatusUpdateRequestDto dto) {
+  public ScheduleResDto updateStatus(Long scheduleId, ScheduleStatusUpdateReqDto dto) {
     Schedule schedule = scheduleDataService.findById(scheduleId);
     schedule.updateStatus(dto);
     return scheduleMapper.toDto(scheduleDataService.save(schedule));

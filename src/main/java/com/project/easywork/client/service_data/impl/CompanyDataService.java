@@ -32,7 +32,6 @@ public class CompanyDataService implements ICompanyDataService {
   
   @Override
   public List<Company> findAll() {
-    System.out.println("companyRepository.findAll() : " + companyRepository.findAll());
     return companyRepository.findAll();
   }
 }
