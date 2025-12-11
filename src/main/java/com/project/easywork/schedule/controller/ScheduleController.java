@@ -28,8 +28,8 @@ public class ScheduleController {
       description = "새로운 측정일정 정보를 데이터베이스에 저장합니다."
   )
   @PostMapping()
-  public ResponseEntity<ApiResponse<ScheduleResponseDto>> register(
-      @Valid @RequestBody ScheduleCreateRequestDto request
+  public ResponseEntity<ApiResponse<ScheduleResDto>> register(
+      @Valid @RequestBody ScheduleCreateReqDto request
   ) {
     return ResponseEntity.ok().body(ApiResponse.success(scheduleService.register(request)));
   }
@@ -42,7 +42,7 @@ public class ScheduleController {
   
   @Operation(summary = "측정시설 지난 일정 조회 API", description = "해당 측정시설에서 이미 완료된 측정일정 목록을 조회합니다.")
   @GetMapping("/stacks/{stackId}")
-  public ResponseEntity<ApiResponse<List<ScheduleResponseDto>>> getListByStack(
+  public ResponseEntity<ApiResponse<List<ScheduleResDto>>> getListByStack(
       @PathVariable Long stackId,
       @RequestParam(required = false) List<ScheduleStatus> status) {
     return ResponseEntity.ok(ApiResponse.success(scheduleService.getListByStack(stackId, status)));
@@ -50,7 +50,7 @@ public class ScheduleController {
   
   @Operation(summary = "측정일정 상세 조회 API", description = "해당 측정일정의 상세정보를 조회합니다.")
   @GetMapping("/{scheduleId}")
-  public ResponseEntity<ApiResponse<ScheduleDetailResponseDto>> get(
+  public ResponseEntity<ApiResponse<ScheduleDetailResDto>> get(
       @PathVariable Long scheduleId
   ) {
     return ResponseEntity.ok().body(ApiResponse.success(scheduleService.getSchedule(scheduleId)));
@@ -58,10 +58,10 @@ public class ScheduleController {
   
   @Operation(summary = "측정일정 수정 API", description = "해당 측정일정의 상세정보를 수정합니다.")
   @PatchMapping("/{scheduleId}")
-  public ResponseEntity<ApiResponse<ScheduleResponseDto>> update
+  public ResponseEntity<ApiResponse<ScheduleResDto>> update
       (
           @PathVariable Long scheduleId,
-          @Valid @RequestBody ScheduleUpdateRequestDto request
+          @Valid @RequestBody ScheduleUpdateReqDto request
       ) {
     
     return ResponseEntity.ok(ApiResponse.success(scheduleService.update(scheduleId, request)));
@@ -69,10 +69,10 @@ public class ScheduleController {
   
   @Operation(summary = "측정상태 수정 API", description = "해당 측정일정의 측정상태를 수정합니다.")
   @PatchMapping("/{scheduleId}/status")
-  public ResponseEntity<ApiResponse<ScheduleResponseDto>> updateStatus
+  public ResponseEntity<ApiResponse<ScheduleResDto>> updateStatus
       (
           @PathVariable Long scheduleId,
-          @Valid @RequestBody ScheduleStatusUpdateRequestDto request
+          @Valid @RequestBody ScheduleStatusUpdateReqDto request
       ) {
     
     return ResponseEntity.ok(ApiResponse.success(scheduleService.updateStatus(scheduleId, request)));

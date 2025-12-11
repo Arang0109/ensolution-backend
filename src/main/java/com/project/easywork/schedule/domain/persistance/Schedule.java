@@ -3,8 +3,8 @@ package com.project.easywork.schedule.domain.persistance;
 import com.project.easywork.agency.domain.entity.Team;
 import com.project.easywork.client.domain.persistance.Stack;
 import com.project.easywork.schedule.domain.ScheduleStatus;
-import com.project.easywork.schedule.domain.dto.ScheduleStatusUpdateRequestDto;
-import com.project.easywork.schedule.domain.dto.ScheduleUpdateRequestDto;
+import com.project.easywork.schedule.domain.dto.ScheduleStatusUpdateReqDto;
+import com.project.easywork.schedule.domain.dto.ScheduleUpdateReqDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -41,13 +41,13 @@ public class Schedule {
   private String measurementType;
   
   @Enumerated(EnumType.STRING)
-  private ScheduleStatus status;
+  private ScheduleStatus status = ScheduleStatus.MEASURING;
   
   @CreationTimestamp
   @Column(name = "created_at", nullable = false)
   private LocalDate createdAt;
   
-  public void update(Stack stack, Team team, ScheduleUpdateRequestDto dto) {
+  public void update(Stack stack, Team team, ScheduleUpdateReqDto dto) {
     Optional.ofNullable(stack)
         .ifPresent(this::setStack);
     
@@ -61,7 +61,7 @@ public class Schedule {
         .ifPresent(this::setMeasurementType);
   }
   
-  public void updateStatus(ScheduleStatusUpdateRequestDto dto) {
+  public void updateStatus(ScheduleStatusUpdateReqDto dto) {
     this.status = dto.getStatus();
   }
 }

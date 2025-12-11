@@ -1,7 +1,7 @@
 package com.project.easywork.schedule.mapper;
 
-import com.project.easywork.schedule.domain.dto.ScheduleCreateRequestDto;
-import com.project.easywork.schedule.domain.dto.ScheduleResponseDto;
+import com.project.easywork.schedule.domain.dto.ScheduleCreateReqDto;
+import com.project.easywork.schedule.domain.dto.ScheduleResDto;
 import com.project.easywork.schedule.domain.dto.ScheduleTableViewDto;
 import com.project.easywork.schedule.domain.persistance.Schedule;
 import org.mapstruct.Builder;
@@ -18,11 +18,11 @@ import java.util.List;
 public interface ScheduleMapper {
   @Mapping(target = "stack.id", source = "stackId")
   @Mapping(target = "team.id", source = "teamId")
-  Schedule toEntityFromScheduleCreateDto(ScheduleCreateRequestDto dto);
+  Schedule toEntityFromScheduleCreateDto(ScheduleCreateReqDto dto);
   
   @Mapping(target = "stackId", source = "stack.id")
   @Mapping(target = "teamId", source = "team.id")
-  ScheduleResponseDto toDto(Schedule schedule);
+  ScheduleResDto toDto(Schedule schedule);
   
   @Mapping(target = "stackId", source = "stack.id")
   @Mapping(target = "stackName", source = "stack.name")
@@ -32,6 +32,6 @@ public interface ScheduleMapper {
   @Mapping(target = "workplaceName", source = "stack.workplace.name")
   ScheduleTableViewDto toTable(Schedule schedule);
   
-  List<ScheduleResponseDto> toDtoList(List<Schedule> schedules);
+  List<ScheduleResDto> toDtoList(List<Schedule> schedules);
   List<ScheduleTableViewDto> toTableList(List<Schedule> schedules);
 }

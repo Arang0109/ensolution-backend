@@ -5,15 +5,13 @@ import com.project.easywork.client.domain.dto.stack.StackDetailResponseDto;
 import com.project.easywork.client.domain.dto.workplace.WorkplaceResponseDto;
 import lombok.*;
 
-import java.time.LocalDate;
-
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Builder
 @ToString
-public class ScheduleDetailResponseDto {
-  private ScheduleResponseDto schedule;
+public class ScheduleDetailResDto {
+  private ScheduleResDto schedule;
   private StackDetailResponseDto stack;
   private WorkplaceResponseDto workplace;
   private CompanyResponseDto company;
