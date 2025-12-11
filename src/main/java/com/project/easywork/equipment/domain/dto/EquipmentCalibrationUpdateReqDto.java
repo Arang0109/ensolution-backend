@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @NoArgsConstructor
@@ -15,8 +14,6 @@ import java.time.LocalDate;
 public class EquipmentCalibrationUpdateReqDto {
   
   private LocalDate calibrationDate;
-  private String agency;
-  private BigDecimal cost;
   private LocalDate nextCalibrationDate;
   private String certificateUrl;
   private String remark;

@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
@@ -25,13 +24,6 @@ public class EquipmentCalibration {
   // 교정 날짜
   @Column(name = "calibration_date", nullable = false)
   private LocalDate calibrationDate;
-  
-  // 교정 기관
-  @Column(length = 100)
-  private String agency;
-  
-  // 교정 비용
-  private BigDecimal cost;
   
   // 다음 교정 예정일
   @Column(name = "next_calibration_date")

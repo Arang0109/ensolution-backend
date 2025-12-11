@@ -24,18 +24,6 @@ public class EquipmentCalibrationCreateReqDto {
   private LocalDate calibrationDate;
   
   @Schema(
-      description = "교정 기관명",
-      example = "한국표준과학연구원(KRISS)"
-  )
-  private String agency;
-  
-  @Schema(
-      description = "교정 비용",
-      example = "200000"
-  )
-  private BigDecimal cost;
-  
-  @Schema(
       description = "다음 교정 예정일 (YYYY-MM-DD)",
       example = "2026-01-15"
   )
