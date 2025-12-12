@@ -12,6 +12,8 @@ import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Entity
@@ -47,6 +49,9 @@ public class Schedule {
   @Column(name = "created_at", nullable = false)
   private LocalDate createdAt;
   
+  @OneToMany(mappedBy = "schedule", cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<SchedulePollutant> pollutants = new ArrayList<>();
+  
   public void update(Stack stack, Team team, ScheduleUpdateReqDto dto) {
     Optional.ofNullable(stack)
         .ifPresent(this::setStack);
@@ -63,5 +68,12 @@ public class Schedule {
   
   public void updateStatus(ScheduleStatusUpdateReqDto dto) {
     this.status = dto.getStatus();
+  }
+  
+  public void addPollutant(SchedulePollutant pollutant) {
+    if (pollutant == null) return;
+    
+    pollutants.add(pollutant);
+    pollutant.setSchedule(this);
   }
 }

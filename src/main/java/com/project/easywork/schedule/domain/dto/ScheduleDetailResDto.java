@@ -5,6 +5,8 @@ import com.project.easywork.client.domain.dto.stack.StackDetailResponseDto;
 import com.project.easywork.client.domain.dto.workplace.WorkplaceResponseDto;
 import lombok.*;
 
+import java.util.List;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -12,6 +14,7 @@ import lombok.*;
 @ToString
 public class ScheduleDetailResDto {
   private ScheduleResDto schedule;
+  private List<SchedulePollutantResDto> measurements;
   private StackDetailResponseDto stack;
   private WorkplaceResponseDto workplace;
   private CompanyResponseDto company;
