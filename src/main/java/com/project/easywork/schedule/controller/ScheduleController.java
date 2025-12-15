@@ -29,9 +29,10 @@ public class ScheduleController {
   )
   @PostMapping()
   public ResponseEntity<ApiResponse<ScheduleResDto>> register(
-      @Valid @RequestBody ScheduleCreateReqDto request
+      @Valid @RequestBody ScheduleCreateReqDto scheduleCreateReqDto,
+      @Valid @RequestBody List<SchedulePollutantCreateReqDto> schedulePollutantCreateReqDtos
   ) {
-    return ResponseEntity.ok().body(ApiResponse.success(scheduleService.register(request)));
+    return ResponseEntity.ok().body(ApiResponse.success(scheduleService.register(scheduleCreateReqDto, schedulePollutantCreateReqDtos)));
   }
   
   @Operation(summary = "측정일정 목록 조회 API", description = "전체 측정일정 목록을 조회합니다.")
@@ -64,7 +65,17 @@ public class ScheduleController {
           @Valid @RequestBody ScheduleUpdateReqDto request
       ) {
     
-    return ResponseEntity.ok(ApiResponse.success(scheduleService.update(scheduleId, request)));
+    return ResponseEntity.ok().body(ApiResponse.success(scheduleService.update(scheduleId, request)));
+  }
+  
+  @Operation(summary = "측정항목 추가 API", description = "해당 측정일정의 측정항목을 추가합니다.")
+  @PostMapping("/{scheduleId}/measurements")
+  public ResponseEntity<ApiResponse<Void>> addMeasurement(
+      @PathVariable Long scheduleId,
+      @Valid @RequestBody List<SchedulePollutantCreateReqDto> request
+  ) {
+    scheduleService.addMeasurement(scheduleId, request);
+    return ResponseEntity.ok().body(ApiResponse.success());
   }
   
   @Operation(summary = "측정상태 수정 API", description = "해당 측정일정의 측정상태를 수정합니다.")
@@ -75,13 +86,13 @@ public class ScheduleController {
           @Valid @RequestBody ScheduleStatusUpdateReqDto request
       ) {
     
-    return ResponseEntity.ok(ApiResponse.success(scheduleService.updateStatus(scheduleId, request)));
+    return ResponseEntity.ok().body(ApiResponse.success(scheduleService.updateStatus(scheduleId, request)));
   }
   
   @Operation(summary = "측정일정 삭제 API", description = "측정일정 정보를 데이터베이스에서 삭제합니다.")
   @DeleteMapping("/{scheduleId}")
   public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long scheduleId) {
     scheduleService.delete(scheduleId);
-    return ResponseEntity.ok(ApiResponse.success());
+    return ResponseEntity.ok().body(ApiResponse.success());
   }
 }

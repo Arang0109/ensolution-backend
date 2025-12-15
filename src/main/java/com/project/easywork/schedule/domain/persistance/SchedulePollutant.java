@@ -1,6 +1,5 @@
 package com.project.easywork.schedule.domain.persistance;
 
-import com.project.easywork.client.domain.persistance.Stack;
 import com.project.easywork.client.domain.persistance.StackMeasurement;
 import jakarta.persistence.*;
 import lombok.Getter;
