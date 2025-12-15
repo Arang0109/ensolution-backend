@@ -11,6 +11,7 @@ import com.project.easywork.schedule.domain.ScheduleStatus;
 import com.project.easywork.measurement.service.IMeasurementService;
 import com.project.easywork.schedule.domain.dto.*;
 import com.project.easywork.schedule.domain.persistance.Schedule;
+import com.project.easywork.schedule.domain.persistance.SchedulePollutant;
 import com.project.easywork.schedule.mapper.ScheduleMapper;
 import com.project.easywork.schedule.mapper.SchedulePollutantMapper;
 import com.project.easywork.schedule.service.IScheduleService;
@@ -71,16 +72,26 @@ public class ScheduleService implements IScheduleService {
   }
   
   @Override
-  public ScheduleResDto register(
-      ScheduleCreateReqDto scheduleCreateReqDto,
-      List<SchedulePollutantCreateReqDto> pollutantDtos) {
+  public ScheduleResDto register(ScheduleCreateReqDto scheduleCreateReqDto) {
     Schedule schedule = scheduleMapper.toEntityFromScheduleCreateDto(scheduleCreateReqDto);
-    
-    pollutantDtos.stream()
-        .map(schedulePollutantMapper::toEntity)
-        .forEach(schedule::addPollutant);
-    
     schedule = scheduleDataService.save(schedule);
+    
+    Long scheduleId = schedule.getId();
+    
+    List<SchedulePollutantCreateReqDto> linkDtos =
+        scheduleCreateReqDto.getMeasurementIds().stream()
+            .map(measurementId ->
+                SchedulePollutantCreateReqDto.builder()
+                    .scheduleId(scheduleId)
+                    .stackMeasurementId(measurementId)
+                    .build()
+            )
+            .toList();
+    
+    List<SchedulePollutant> schedulePollutants =
+        schedulePollutantMapper.toEntityList(linkDtos);
+    
+    schedulePollutantDataService.saveAll(schedulePollutants);
     
     measurementService.createDraft(schedule.getId());
     

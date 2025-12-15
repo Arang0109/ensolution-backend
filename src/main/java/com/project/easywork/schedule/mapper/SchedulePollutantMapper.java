@@ -15,7 +15,7 @@ import java.util.List;
     builder = @Builder(),
     unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface SchedulePollutantMapper {
-  @Mapping(target = "schedule", ignore = true)
+  @Mapping(target = "schedule.id", source = "scheduleId")
   @Mapping(target = "stackMeasurement.id", source = "stackMeasurementId")
   SchedulePollutant toEntity(SchedulePollutantCreateReqDto dto);
   
@@ -24,4 +24,5 @@ public interface SchedulePollutantMapper {
   SchedulePollutantResDto toDto(SchedulePollutant schedulePollutant);
   
   List<SchedulePollutantResDto> toDtoList(List<SchedulePollutant> schedulePollutants);
+  List<SchedulePollutant> toEntityList(List<SchedulePollutantCreateReqDto> schedulePollutantCreateReqDtos);
 }

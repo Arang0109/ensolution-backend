@@ -29,10 +29,9 @@ public class ScheduleController {
   )
   @PostMapping()
   public ResponseEntity<ApiResponse<ScheduleResDto>> register(
-      @Valid @RequestBody ScheduleCreateReqDto scheduleCreateReqDto,
-      @Valid @RequestBody List<SchedulePollutantCreateReqDto> schedulePollutantCreateReqDtos
+      @Valid @RequestBody ScheduleCreateReqDto scheduleCreateReqDto
   ) {
-    return ResponseEntity.ok().body(ApiResponse.success(scheduleService.register(scheduleCreateReqDto, schedulePollutantCreateReqDtos)));
+    return ResponseEntity.ok().body(ApiResponse.success(scheduleService.register(scheduleCreateReqDto)));
   }
   
   @Operation(summary = "측정일정 목록 조회 API", description = "전체 측정일정 목록을 조회합니다.")
