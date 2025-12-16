@@ -92,6 +92,6 @@ public class ScheduleController {
   @DeleteMapping("/{scheduleId}")
   public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long scheduleId) {
     scheduleService.delete(scheduleId);
-    return ResponseEntity.ok().body(ApiResponse.success());
+    return ResponseEntity.ok().body(ApiResponse.success("삭제 되었습니다.", null));
   }
 }

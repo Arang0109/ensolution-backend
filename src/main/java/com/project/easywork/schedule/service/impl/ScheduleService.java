@@ -7,6 +7,8 @@ import com.project.easywork.client.mapper.CompanyMapper;
 import com.project.easywork.client.mapper.WorkplaceMapper;
 import com.project.easywork.client.service.IStackService;
 import com.project.easywork.client.service_data.IStackDataService;
+import com.project.easywork.common.exception.CustomException;
+import com.project.easywork.common.exception.ErrorCode;
 import com.project.easywork.schedule.domain.ScheduleStatus;
 import com.project.easywork.measurement.service.IMeasurementService;
 import com.project.easywork.schedule.domain.dto.*;
@@ -18,6 +20,7 @@ import com.project.easywork.schedule.service.IScheduleService;
 import com.project.easywork.schedule.service_data.IScheduleDataService;
 import com.project.easywork.schedule.service_data.ISchedulePollutantDataService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -74,8 +77,8 @@ public class ScheduleService implements IScheduleService {
   @Override
   public ScheduleResDto register(ScheduleCreateReqDto scheduleCreateReqDto) {
     Schedule schedule = scheduleMapper.toEntityFromScheduleCreateDto(scheduleCreateReqDto);
-    schedule = scheduleDataService.save(schedule);
     
+    schedule = scheduleDataService.save(schedule);
     Long scheduleId = schedule.getId();
     
     List<SchedulePollutantCreateReqDto> linkDtos =
