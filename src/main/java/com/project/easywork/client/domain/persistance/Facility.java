@@ -1,10 +1,9 @@
 
 package com.project.easywork.client.domain.persistance;
 
-import com.project.easywork.client.domain.dto.facility.FacilityUpdateRequestDto;
-import com.project.easywork.client.domain.dto.prevention.PreventionUpdateRequestDto;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.OnDelete;
@@ -12,11 +11,11 @@ import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDate;
-import java.util.Optional;
 
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 @Table(name = "facility")
 public class Facility {
   @Id
@@ -55,28 +54,7 @@ public class Facility {
   @Column(name = "modified_at", nullable = false)
   private LocalDate modifiedAt;
   
-  public void update(FacilityUpdateRequestDto dto) {
-    Optional.ofNullable(dto.getName())
-        .filter(name -> !name.isBlank())
-        .ifPresent(this::setName);
-    
-    Optional.ofNullable(dto.getFuelUsage())
-        .filter(str -> !str.isBlank())
-        .ifPresent(this::setFuelUsage);
-    
-    Optional.ofNullable(dto.getItemOutput())
-        .filter(str -> !str.isBlank())
-        .ifPresent(this::setItemOutput);
-    
-    Optional.ofNullable(dto.getFuelInput())
-        .filter(str -> !str.isBlank())
-        .ifPresent(this::setFuelInput);
-    
-    Optional.ofNullable(dto.getFuelType())
-        .filter(str -> !str.isBlank())
-        .ifPresent(this::setFuelType);
-    
-    Optional.ofNullable(dto.getRemark())
-        .ifPresent(this::setRemark);
+  public void attachPrevention(Prevention prevention) {
+    this.prevention = prevention;
   }
 }

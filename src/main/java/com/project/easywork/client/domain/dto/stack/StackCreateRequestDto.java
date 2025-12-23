@@ -8,10 +8,10 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
+@Builder
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@ToString
 public class StackCreateRequestDto {
   @Schema(description = "측정공", example = "stack_000")
   @NotBlank(message = "필수 입력")

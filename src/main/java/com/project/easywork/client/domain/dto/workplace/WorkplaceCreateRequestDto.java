@@ -6,10 +6,10 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.*;
 
+@Builder
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@ToString
 public class WorkplaceCreateRequestDto {
   @Schema(description = "측정대상 사업장", example = "테스트 사업장")
   @NotBlank(message = "필수 입력")

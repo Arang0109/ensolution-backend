@@ -5,11 +5,8 @@ import lombok.*;
 
 import java.time.LocalDate;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
 @Builder
-@ToString
+@Getter
 public class TargetResponseDto {
   
   @Schema(

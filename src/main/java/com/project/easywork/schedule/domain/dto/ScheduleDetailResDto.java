@@ -18,4 +18,6 @@ public class ScheduleDetailResDto {
   private StackDetailResponseDto stack;
   private WorkplaceResponseDto workplace;
   private CompanyResponseDto company;
+  
+  private Integer measurementPoint;
 }

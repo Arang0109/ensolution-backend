@@ -6,11 +6,10 @@ import lombok.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Builder
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Builder
-@ToString
 public class WorkplaceDetailResponseDto {
   private WorkplaceResponseDto workplace;
   private List<StackResponseDto> stacks = new ArrayList<>();

@@ -1,14 +1,12 @@
 package com.project.easywork.client.service.impl;
 
-import com.project.easywork.client.domain.dto.prevention.PreventionResponseDto;
 import com.project.easywork.client.domain.dto.stack.*;
-import com.project.easywork.client.domain.dto.stack_measurement.StackMeasurementResponseDto;
 import com.project.easywork.client.domain.persistance.Stack;
-import com.project.easywork.client.service.IPreventionService;
-import com.project.easywork.client.service.IStackMeasurementService;
+import com.project.easywork.client.domain.persistance.Workplace;
 import com.project.easywork.client.service_data.IStackDataService;
 import com.project.easywork.client.mapper.StackMapper;
 import com.project.easywork.client.service.IStackService;
+import com.project.easywork.client.service_data.IWorkplaceDataService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,29 +18,24 @@ import java.util.List;
 @Transactional
 public class StackService implements IStackService {
   
-  private final IPreventionService preventionService;
-  private final IStackMeasurementService stackMeasurementService;
-  
+  private final IWorkplaceDataService workplaceDataService;
   private final IStackDataService stackDataService;
   private final StackMapper stackMapper;
   
   @Override
   public StackResponseDto registerStack(StackCreateRequestDto requestDto) {
-    Stack stack = stackMapper.toEntityFromStackCreateDto(requestDto);
+    
+    Workplace workplace = workplaceDataService.findById(requestDto.getWorkplaceId());
+    Stack stack = stackMapper.toEntity(requestDto);
+    stack.attachWorkplace(workplace);
+    
     return stackMapper.toDto(stackDataService.save(stack));
   }
   
   @Override
   @Transactional(readOnly = true)
   public StackDetailResponseDto getStack(Long stackId) {
-    StackResponseDto stack = stackMapper.toDto(stackDataService.findById(stackId));
-    List<PreventionResponseDto> preventions = preventionService.getPreventionsByStack(stackId);
-    List<StackMeasurementResponseDto> stackMeasurements = stackMeasurementService.getStackMeasurementsByStack(stackId);
-    return StackDetailResponseDto.builder()
-        .stack(stack)
-        .preventions(preventions)
-        .stackMeasurements(stackMeasurements)
-        .build();
+    return stackMapper.toDetailDto(stackDataService.findById(stackId));
   }
   
   @Override
@@ -54,7 +47,7 @@ public class StackService implements IStackService {
   @Override
   public StackResponseDto updateStack(Long stackId, StackUpdateRequestDto requestDto) {
     Stack stack = stackDataService.findById(stackId);
-    stack.update(requestDto);
+    stackMapper.updateStack(requestDto, stack);
     return stackMapper.toDto(stack);
   }
   

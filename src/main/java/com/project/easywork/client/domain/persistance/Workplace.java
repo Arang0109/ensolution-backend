@@ -1,9 +1,9 @@
 package com.project.easywork.client.domain.persistance;
 
 import com.project.easywork.client.domain.Grade;
-import com.project.easywork.client.domain.dto.workplace.WorkplaceUpdateRequestDto;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
@@ -14,11 +14,11 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 @Table(name = "workplace")
 public class Workplace {
   @Id
@@ -67,25 +67,7 @@ public class Workplace {
   @ToString.Exclude
   private List<Manager> managers = new ArrayList<>();
   
-  public void update(WorkplaceUpdateRequestDto dto) {
-    Optional.ofNullable(dto.getName())
-        .filter(name -> !name.isBlank())
-        .ifPresent(this::setName);
-    
-    Optional.ofNullable(dto.getBizNumber())
-        .filter(biz -> !biz.isBlank())
-        .ifPresent(this::setBizNumber);
-    
-    Optional.ofNullable(dto.getAddress())
-        .ifPresent(this::setAddress);
-    
-    Optional.ofNullable(dto.getBusinessCategory())
-        .ifPresent(this::setBusinessCategory);
-    
-    Optional.ofNullable(dto.getGrade())
-        .ifPresent(this::setGrade);
-    
-    Optional.ofNullable(dto.getRemark())
-        .ifPresent(this::setRemark);
+  public void attachCompany(Company company) {
+    this.company = company;
   }
 }

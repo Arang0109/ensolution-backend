@@ -2,6 +2,7 @@ package com.project.easywork.schedule.service.impl;
 
 import com.project.easywork.agency.domain.entity.Team;
 import com.project.easywork.agency.service_data.ITeamDataService;
+import com.project.easywork.client.domain.dto.stack.StackDetailResponseDto;
 import com.project.easywork.client.domain.persistance.Stack;
 import com.project.easywork.client.mapper.CompanyMapper;
 import com.project.easywork.client.mapper.WorkplaceMapper;
@@ -9,6 +10,8 @@ import com.project.easywork.client.service.IStackService;
 import com.project.easywork.client.service_data.IStackDataService;
 import com.project.easywork.common.exception.CustomException;
 import com.project.easywork.common.exception.ErrorCode;
+import com.project.easywork.common.util.measurePoint.MeasurePointStrategy;
+import com.project.easywork.common.util.measurePoint.MeasurePointStrategyFactory;
 import com.project.easywork.schedule.domain.ScheduleStatus;
 import com.project.easywork.measurement.service.IMeasurementService;
 import com.project.easywork.schedule.domain.dto.*;
@@ -76,7 +79,11 @@ public class ScheduleService implements IScheduleService {
   
   @Override
   public ScheduleResDto register(ScheduleCreateReqDto scheduleCreateReqDto) {
-    Schedule schedule = scheduleMapper.toEntityFromScheduleCreateDto(scheduleCreateReqDto);
+    Stack stack = stackDataService.findById(scheduleCreateReqDto.getStackId());
+    Team team = teamDataService.findById(scheduleCreateReqDto.getTeamId());
+    Schedule schedule = scheduleMapper.toEntity(scheduleCreateReqDto);
+    schedule.attachStack(stack);
+    schedule.attachTeam(team);
     
     schedule = scheduleDataService.save(schedule);
     Long scheduleId = schedule.getId();
@@ -122,7 +129,6 @@ public class ScheduleService implements IScheduleService {
     Team team = null;
     if (dto.getTeamId() != null) team = teamDataService.findById(dto.getTeamId());
     
-    schedule.update(stack, team, dto);
     return scheduleMapper.toDto(scheduleDataService.save(schedule));
   }
   

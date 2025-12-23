@@ -1,10 +1,9 @@
 
 package com.project.easywork.client.domain.persistance;
 
-import com.project.easywork.client.domain.dto.prevention.PreventionUpdateRequestDto;
-import com.project.easywork.client.domain.dto.workplace.WorkplaceUpdateRequestDto;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
@@ -15,12 +14,11 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Entity
 @Getter
 @Setter
-@ToString
+@NoArgsConstructor
 @Table(name = "prevention")
 public class Prevention {
   @Id
@@ -56,12 +54,7 @@ public class Prevention {
   @ToString.Exclude
   private List<Facility> facilities = new ArrayList<>();
   
-  public void update(PreventionUpdateRequestDto dto) {
-    Optional.ofNullable(dto.getName())
-        .filter(name -> !name.isBlank())
-        .ifPresent(this::setName);
-    
-    Optional.ofNullable(dto.getRemark())
-        .ifPresent(this::setRemark);
+  public void attachStack(Stack stack) {
+    this.stack = stack;
   }
 }

@@ -4,11 +4,10 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
+@Builder
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
-@ToString
 public class TargetCreateRequestDto {
   
   @Schema(description = "방지시설 ID (FK)", example = "1")

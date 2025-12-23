@@ -4,9 +4,9 @@ import com.project.easywork.agency.domain.entity.Team;
 import com.project.easywork.client.domain.persistance.Stack;
 import com.project.easywork.schedule.domain.ScheduleStatus;
 import com.project.easywork.schedule.domain.dto.ScheduleStatusUpdateReqDto;
-import com.project.easywork.schedule.domain.dto.ScheduleUpdateReqDto;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
@@ -14,11 +14,11 @@ import org.hibernate.annotations.CreationTimestamp;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 @Table(name = "schedule")
 public class Schedule {
   @Id
@@ -52,18 +52,12 @@ public class Schedule {
   @OneToMany(mappedBy = "schedule", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<SchedulePollutant> pollutants = new ArrayList<>();
   
-  public void update(Stack stack, Team team, ScheduleUpdateReqDto dto) {
-    Optional.ofNullable(stack)
-        .ifPresent(this::setStack);
-    
-    Optional.ofNullable(team)
-        .ifPresent(this::setTeam);
-    
-    Optional.ofNullable(dto.getMeasureDate())
-        .ifPresent(this::setMeasureDate);
-    
-    Optional.ofNullable(dto.getMeasurementType())
-        .ifPresent(this::setMeasurementType);
+  public void attachStack(Stack stack) {
+    this.stack = stack;
+  }
+  
+  public void attachTeam(Team team) {
+    this.team = team;
   }
   
   public void updateStatus(ScheduleStatusUpdateReqDto dto) {
@@ -74,6 +68,5 @@ public class Schedule {
     if (pollutant == null) return;
     
     pollutants.add(pollutant);
-    pollutant.setSchedule(this);
   }
 }

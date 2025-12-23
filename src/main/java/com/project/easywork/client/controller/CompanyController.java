@@ -53,7 +53,6 @@ public class CompanyController {
           @PathVariable Long companyId,
           @Valid @RequestBody CompanyUpdateRequestDto request
       ) {
-    
     return ResponseEntity.ok(ApiResponse.success(companyService.updateCompany(companyId, request)));
   }
   

@@ -3,10 +3,9 @@ package com.project.easywork.client.domain.dto.workplace;
 import com.project.easywork.client.domain.Grade;
 import lombok.*;
 
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@ToString
 public class WorkplaceUpdateRequestDto {
   private String name;
   private String address;

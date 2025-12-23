@@ -5,10 +5,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@ToString
 public class CompanyUpdateRequestDto {
   private String name;
   private String address;
