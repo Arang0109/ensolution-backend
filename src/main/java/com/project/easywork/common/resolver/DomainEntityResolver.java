@@ -1,9 +1,6 @@
 package com.project.easywork.common.resolver;
 
-import com.project.easywork.client.domain.persistance.Company;
-import com.project.easywork.client.domain.persistance.Stack;
-import com.project.easywork.client.domain.persistance.StackMeasurement;
-import com.project.easywork.client.domain.persistance.Workplace;
+import com.project.easywork.client.domain.persistance.*;
 import com.project.easywork.client.service_data.*;
 import com.project.easywork.common.exception.CustomException;
 import com.project.easywork.common.exception.ErrorCode;
@@ -63,5 +60,29 @@ public class DomainEntityResolver {
       throw new CustomException(ErrorCode.NOT_FOUND, "해당 측정시설의 측정항목을 찾을 수 없습니다.");
     }
     return stackMeasurement;
+  }
+  
+  public Prevention getPreventionOrThrow(Long preventionId) {
+    Prevention prevention = preventionDataService.findById(preventionId);
+    if(prevention == null) {
+      throw new CustomException(ErrorCode.NOT_FOUND, "해당 방지시설을 찾을 수 없습니다.");
+    }
+    return prevention;
+  }
+  
+  public Facility getFacilityOrThrow(Long facilityId) {
+    Facility facility = facilityDataService.findById(facilityId);
+    if(facility == null) {
+      throw new CustomException(ErrorCode.NOT_FOUND, "해당 배출시설을 찾을 수 없습니다.");
+    }
+    return facility;
+  }
+  
+  public Target getTargetOrThrow(Long targetId) {
+    Target target = targetDataService.findById(targetId);
+    if(target == null) {
+      throw new CustomException(ErrorCode.NOT_FOUND, "해당 배출시설의 제거항목을 찾을 수 없습니다.");
+    }
+    return target;
   }
 }
