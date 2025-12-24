@@ -16,7 +16,7 @@ public class PollutantDataService implements IPollutantDataService {
   
   @Override
   public Pollutant findById(Long id) {
-    return pollutantRepository.findById(id).orElseThrow();
+    return pollutantRepository.findById(id).orElse(null);
   }
   
   @Override

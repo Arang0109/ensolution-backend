@@ -6,7 +6,6 @@ import com.project.easywork.pollutant.domain.dto.PollutantUpdateRequestDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,29 +47,5 @@ public class Pollutant {
   private String samplingVolume;
   
   @OneToMany(mappedBy = "pollutant", cascade = CascadeType.ALL, orphanRemoval = true)
-  @ToString.Exclude
   private List<StackMeasurement> stackMeasurements = new ArrayList<>();
-  
-  public void update(PollutantUpdateRequestDto dto) {
-    Optional.ofNullable(dto.getNameKr())
-        .ifPresent(this::setNameKr);
-    
-    Optional.ofNullable(dto.getNameEn())
-        .ifPresent(this::setNameEn);
-    
-    Optional.ofNullable(dto.getMethod())
-        .ifPresent(this::setMethod);
-    
-    Optional.ofNullable(dto.getEquipmentName())
-        .ifPresent(this::setEquipmentName);
-    
-    Optional.ofNullable(dto.getTestMethodName())
-        .ifPresent(this::setTestMethodName);
-    
-    Optional.ofNullable(dto.getSamplingTime())
-        .ifPresent(this::setSamplingTime);
-    
-    Optional.ofNullable(dto.getSamplingVolume())
-        .ifPresent(this::setSamplingVolume);
-  }
 }

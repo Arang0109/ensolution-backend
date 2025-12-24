@@ -2,15 +2,12 @@ package com.project.easywork.pollutant.domain.dto;
 
 import com.project.easywork.pollutant.domain.Phase;
 import jakarta.validation.constraints.Min;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
+@Builder
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@ToString
 public class PollutantCreateRequestDto {
   private String nameKr;
   private String nameEn;
