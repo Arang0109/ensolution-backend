@@ -4,11 +4,8 @@ import com.project.easywork.pollutant.domain.Phase;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
 @Builder
-@ToString
+@Getter
 public class PollutantResponseDto {
   @Schema(
       description = "측정물질 ID (PK)",

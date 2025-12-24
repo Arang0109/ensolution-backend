@@ -69,4 +69,9 @@ public class Schedule {
     
     pollutants.add(pollutant);
   }
+  
+  public void addPollutants(List<SchedulePollutant> pollutants) {
+    if (pollutants == null) return;
+    pollutants.forEach(this::addPollutant);
+  }
 }

@@ -1,5 +1,6 @@
 package com.project.easywork.pollutant.service.impl;
 
+import com.project.easywork.common.resolver.DomainEntityResolver;
 import com.project.easywork.pollutant.domain.dto.PollutantCreateRequestDto;
 import com.project.easywork.pollutant.domain.dto.PollutantResponseDto;
 import com.project.easywork.pollutant.domain.dto.PollutantUpdateRequestDto;
@@ -20,9 +21,11 @@ import java.util.List;
 @Transactional
 public class PollutantService implements IPollutantService {
   
-  private final PollutantValidator pollutantValidator;
   private final IPollutantDataService pollutantDataService;
   private final PollutantMapper pollutantMapper;
+  
+  private final PollutantValidator pollutantValidator;
+  private final DomainEntityResolver domainEntityResolver;
   
   @Override
   public PollutantResponseDto registerPollutant(PollutantCreateRequestDto requestDto) {
@@ -33,9 +36,8 @@ public class PollutantService implements IPollutantService {
   
   @Override
   public PollutantResponseDto getPollutant(Long pollutantId) {
-    return pollutantMapper.toDto(
-        pollutantDataService.findById(pollutantId)
-    );
+    Pollutant pollutant = domainEntityResolver.getPollutantOrThrow(pollutantId);
+    return pollutantMapper.toDto(pollutant);
   }
   
   @Override
@@ -46,14 +48,15 @@ public class PollutantService implements IPollutantService {
   @Override
   @PreAuthorize("hasRole('LAB')")
   public PollutantResponseDto updatePollutant(Long pollutantId, PollutantUpdateRequestDto requestDto) {
-    Pollutant pollutant = pollutantDataService.findById(pollutantId);
-    pollutant.update(requestDto);
+    Pollutant pollutant = domainEntityResolver.getPollutantOrThrow(pollutantId);
+    pollutantMapper.updatePollutant(requestDto, pollutant);
     return pollutantMapper.toDto(pollutant);
   }
   
   @Override
   @PreAuthorize("hasRole('LAB')")
   public void removePollutant(Long pollutantId) {
+    domainEntityResolver.getPollutantOrThrow(pollutantId);
     pollutantDataService.deleteById(pollutantId);
   }
 }

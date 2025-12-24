@@ -35,4 +35,8 @@ public class SchedulePollutant {
   public void attachSchedule(Schedule schedule) {
     this.schedule = schedule;
   }
+  
+  public void attachStackMeasurement(StackMeasurement stackMeasurement) {
+    this.stackMeasurement = stackMeasurement;
+  }
 }

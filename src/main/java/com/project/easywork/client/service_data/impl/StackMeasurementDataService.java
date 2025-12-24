@@ -16,7 +16,7 @@ public class StackMeasurementDataService implements IStackMeasurementDataService
   
   @Override
   public StackMeasurement findById(Long stackMeasurementId) {
-    return stackMeasurementRepository.findById(stackMeasurementId).orElseThrow();
+    return stackMeasurementRepository.findById(stackMeasurementId).orElse(null);
   }
   
   @Override

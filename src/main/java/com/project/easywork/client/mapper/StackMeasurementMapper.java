@@ -5,14 +5,13 @@ import com.project.easywork.client.domain.dto.stack_measurement.StackMeasurement
 import com.project.easywork.client.domain.dto.stack_measurement.StackMeasurementUpdateRequestDto;
 import com.project.easywork.client.domain.persistance.StackMeasurement;
 import com.project.easywork.pollutant.mapper.PollutantMapper;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
+import org.mapstruct.*;
 
 import java.util.List;
 
 @Mapper(
     componentModel = "spring",
+    builder = @Builder(),
     uses = {
         PollutantMapper.class
     }
@@ -25,6 +24,9 @@ public interface StackMeasurementMapper {
   
   List<StackMeasurementResponseDto> toDtoList(List<StackMeasurement> stackMeasurements);
   
+  @BeanMapping(
+      nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE
+  )
   void updateStackMeasurement(
       StackMeasurementUpdateRequestDto dto, @MappingTarget StackMeasurement stackMeasurement
   );

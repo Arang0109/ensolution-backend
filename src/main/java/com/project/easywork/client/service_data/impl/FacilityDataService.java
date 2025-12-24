@@ -16,8 +16,7 @@ public class FacilityDataService implements IFacilityDataService {
   
   @Override
   public Facility findById(Long facilityId) {
-    return facilityRepository.findById(facilityId)
-        .orElseThrow();
+    return facilityRepository.findById(facilityId).orElse(null);
   }
   
   @Override

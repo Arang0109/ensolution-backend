@@ -1,13 +1,11 @@
 package com.project.easywork.common.resolver;
 
-import com.project.easywork.client.domain.persistance.Company;
-import com.project.easywork.client.domain.persistance.Stack;
-import com.project.easywork.client.domain.persistance.Workplace;
-import com.project.easywork.client.service_data.ICompanyDataService;
-import com.project.easywork.client.service_data.IStackDataService;
-import com.project.easywork.client.service_data.IWorkplaceDataService;
+import com.project.easywork.client.domain.persistance.*;
+import com.project.easywork.client.service_data.*;
 import com.project.easywork.common.exception.CustomException;
 import com.project.easywork.common.exception.ErrorCode;
+import com.project.easywork.pollutant.domain.persistance.Pollutant;
+import com.project.easywork.pollutant.service_data.IPollutantDataService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -18,6 +16,11 @@ public class DomainEntityResolver {
   private final ICompanyDataService companyDataService;
   private final IWorkplaceDataService workplaceDataService;
   private final IStackDataService stackDataService;
+  private final IPollutantDataService pollutantDataService;
+  private final IStackMeasurementDataService stackMeasurementDataService;
+  private final IPreventionDataService preventionDataService;
+  private final IFacilityDataService facilityDataService;
+  private final ITargetDataService targetDataService;
   
   public Company getCompanyOrThrow(Long companyId) {
     Company company = companyDataService.findById(companyId);
@@ -41,5 +44,45 @@ public class DomainEntityResolver {
       throw new CustomException(ErrorCode.NOT_FOUND, "해당 측정시설을 찾을 수 없습니다.");
     }
     return stack;
+  }
+  
+  public Pollutant getPollutantOrThrow(Long pollutantId) {
+    Pollutant pollutant = pollutantDataService.findById(pollutantId);
+    if(pollutant == null) {
+      throw new CustomException(ErrorCode.NOT_FOUND, "해당 오염물질을 찾을 수 없습니다.");
+    }
+    return pollutant;
+  }
+  
+  public StackMeasurement getStackMeasurementOrThrow(Long stackMeasurementId) {
+    StackMeasurement stackMeasurement = stackMeasurementDataService.findById(stackMeasurementId);
+    if(stackMeasurement == null) {
+      throw new CustomException(ErrorCode.NOT_FOUND, "해당 측정시설의 측정항목을 찾을 수 없습니다.");
+    }
+    return stackMeasurement;
+  }
+  
+  public Prevention getPreventionOrThrow(Long preventionId) {
+    Prevention prevention = preventionDataService.findById(preventionId);
+    if(prevention == null) {
+      throw new CustomException(ErrorCode.NOT_FOUND, "해당 방지시설을 찾을 수 없습니다.");
+    }
+    return prevention;
+  }
+  
+  public Facility getFacilityOrThrow(Long facilityId) {
+    Facility facility = facilityDataService.findById(facilityId);
+    if(facility == null) {
+      throw new CustomException(ErrorCode.NOT_FOUND, "해당 배출시설을 찾을 수 없습니다.");
+    }
+    return facility;
+  }
+  
+  public Target getTargetOrThrow(Long targetId) {
+    Target target = targetDataService.findById(targetId);
+    if(target == null) {
+      throw new CustomException(ErrorCode.NOT_FOUND, "해당 배출시설의 제거항목을 찾을 수 없습니다.");
+    }
+    return target;
   }
 }

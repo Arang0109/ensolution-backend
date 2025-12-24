@@ -5,10 +5,7 @@ import com.project.easywork.client.domain.dto.prevention.PreventionDetailRespons
 import com.project.easywork.client.domain.dto.prevention.PreventionResponseDto;
 import com.project.easywork.client.domain.dto.prevention.PreventionUpdateRequestDto;
 import com.project.easywork.client.domain.persistance.Prevention;
-import org.mapstruct.Builder;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
+import org.mapstruct.*;
 
 import java.util.List;
 
@@ -31,5 +28,8 @@ public interface PreventionMapper {
   
   List<PreventionResponseDto> toDtoList(List<Prevention> preventions);
   
+  @BeanMapping(
+      nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE
+  )
   void updatePrevention(PreventionUpdateRequestDto dto, @MappingTarget Prevention prevention);
 }

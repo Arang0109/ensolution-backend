@@ -10,6 +10,7 @@ import com.project.easywork.client.service.IStackService;
 import com.project.easywork.client.service_data.IStackDataService;
 import com.project.easywork.common.exception.CustomException;
 import com.project.easywork.common.exception.ErrorCode;
+import com.project.easywork.common.resolver.DomainEntityResolver;
 import com.project.easywork.common.util.measurePoint.MeasurePointStrategy;
 import com.project.easywork.common.util.measurePoint.MeasurePointStrategyFactory;
 import com.project.easywork.schedule.domain.ScheduleStatus;
@@ -49,6 +50,8 @@ public class ScheduleService implements IScheduleService {
   private final CompanyMapper companyMapper;
   private final WorkplaceMapper workplaceMapper;
   
+  private final DomainEntityResolver domainEntityResolver;
+  
   @Override
   @Transactional(readOnly = true)
   public List<ScheduleTableViewDto> getList() {
@@ -79,29 +82,13 @@ public class ScheduleService implements IScheduleService {
   
   @Override
   public ScheduleResDto register(ScheduleCreateReqDto scheduleCreateReqDto) {
-    Stack stack = stackDataService.findById(scheduleCreateReqDto.getStackId());
+    Stack stack = domainEntityResolver.getStackOrThrow(scheduleCreateReqDto.getStackId());
     Team team = teamDataService.findById(scheduleCreateReqDto.getTeamId());
     Schedule schedule = scheduleMapper.toEntity(scheduleCreateReqDto);
     schedule.attachStack(stack);
     schedule.attachTeam(team);
     
     schedule = scheduleDataService.save(schedule);
-    Long scheduleId = schedule.getId();
-    
-    List<SchedulePollutantCreateReqDto> linkDtos =
-        scheduleCreateReqDto.getMeasurementIds().stream()
-            .map(measurementId ->
-                SchedulePollutantCreateReqDto.builder()
-                    .scheduleId(scheduleId)
-                    .stackMeasurementId(measurementId)
-                    .build()
-            )
-            .toList();
-    
-    List<SchedulePollutant> schedulePollutants =
-        schedulePollutantMapper.toEntityList(linkDtos);
-    
-    schedulePollutantDataService.saveAll(schedulePollutants);
     
     measurementService.createDraft(schedule.getId());
     
