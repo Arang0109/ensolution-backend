@@ -84,15 +84,12 @@ public class Stack {
   private LocalDate modifiedAt;
   
   @OneToMany(mappedBy = "stack", cascade = CascadeType.ALL, orphanRemoval = true)
-  @ToString.Exclude
   private List<Prevention> preventions = new ArrayList<>();
   
   @OneToMany(mappedBy = "stack", cascade = CascadeType.ALL, orphanRemoval = true)
-  @ToString.Exclude
   private List<StackMeasurement> stackMeasurements = new ArrayList<>();
   
   @OneToMany(mappedBy = "stack")
-  @ToString.Exclude
   private List<Schedule> schedules = new ArrayList<>();
   
   public void attachWorkplace(Workplace workplace) {

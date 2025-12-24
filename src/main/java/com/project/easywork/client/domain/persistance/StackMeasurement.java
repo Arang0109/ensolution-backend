@@ -36,13 +36,11 @@ public class StackMeasurement {
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "stack_id")
   @OnDelete(action = OnDeleteAction.CASCADE)
-  @ToString.Exclude
   private Stack stack;
   
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "pollutant_id")
   @OnDelete(action = OnDeleteAction.CASCADE)
-  @ToString.Exclude
   private Pollutant pollutant;
   
   @Enumerated(EnumType.STRING)
