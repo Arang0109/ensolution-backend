@@ -1,7 +1,9 @@
 package com.project.easywork.equipment.domain.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -43,6 +45,7 @@ public class EquipmentCreateReqDto {
       description = "장비 가격",
       example = "1250000"
   )
+  @Min(value = 0, message = "0 이상의 값을 입력해주세요.")
   private BigDecimal price;
   
   @Schema(
@@ -73,6 +76,7 @@ public class EquipmentCreateReqDto {
       description = "교정 주기(월 단위)",
       example = "12"
   )
+  @Size(min = 1, max = 12, message = "1~36 사이의 값을 입력해주세요.")
   private Integer calibrationCycle;
   
   @Schema(

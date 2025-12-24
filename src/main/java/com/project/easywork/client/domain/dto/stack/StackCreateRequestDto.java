@@ -4,6 +4,7 @@ import com.project.easywork.client.domain.Grade;
 import com.project.easywork.client.domain.Orientation;
 import com.project.easywork.client.domain.Shape;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -32,12 +33,15 @@ public class StackCreateRequestDto {
   private Grade grade;
   
   @Schema(description = "측정공 높이", example = "15.5")
+  @Min(value = 0, message = "0 이상의 값을 입력해주세요.")
   private Double height;
   
   @Schema(description = "가로 길이", example = "1.2")
+  @Min(value = 0, message = "0 이상의 값을 입력해주세요.")
   private Double horizontalLength;
   
   @Schema(description = "세로 길이", example = "1.5")
+  @Min(value = 0, message = "0 이상의 값을 입력해주세요.")
   private Double verticalLength;
   
   @Schema(description = "측정시설 모양")
