@@ -16,8 +16,7 @@ public class PreventionDataService implements IPreventionDataService {
   
   @Override
   public Prevention findById(Long preventionId) {
-    return preventionRepository.findById(preventionId)
-        .orElseThrow();
+    return preventionRepository.findById(preventionId).orElse(null);
   }
   
   @Override

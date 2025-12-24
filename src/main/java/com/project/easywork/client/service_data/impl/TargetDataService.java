@@ -16,8 +16,7 @@ public class TargetDataService implements ITargetDataService {
   
   @Override
   public Target findById(Long targetId) {
-    return targetRepository.findById(targetId)
-        .orElseThrow();
+    return targetRepository.findById(targetId).orElse(null);
   }
   
   @Override

@@ -9,6 +9,7 @@ import com.project.easywork.client.mapper.TargetMapper;
 import com.project.easywork.client.service.ITargetService;
 import com.project.easywork.client.service_data.IPreventionDataService;
 import com.project.easywork.client.service_data.ITargetDataService;
+import com.project.easywork.common.resolver.DomainEntityResolver;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,10 +25,12 @@ public class TargetService implements ITargetService {
   private final ITargetDataService targetDataService;
   private final TargetMapper targetMapper;
   
+  private final DomainEntityResolver domainEntityResolver;
+  
   @Override
   public TargetResponseDto registerTarget(TargetCreateRequestDto requestDto) {
     
-    Prevention prevention = preventionDataService.findById(requestDto.getPreventionId());
+    Prevention prevention = domainEntityResolver.getPreventionOrThrow(requestDto.getPreventionId());
     Target target = targetMapper.toEntity(requestDto);
     target.attachPrevention(prevention);
     
@@ -61,13 +64,14 @@ public class TargetService implements ITargetService {
   
   @Override
   public TargetResponseDto updateTarget(Long targetId, TargetUpdateRequestDto requestDto) {
-    Target target = targetDataService.findById(targetId);
+    Target target = domainEntityResolver.getTargetOrThrow(targetId);
     targetMapper.updateTarget(requestDto, target);
     return targetMapper.toDto(target);
   }
   
   @Override
   public void removeTarget(Long targetId) {
+    domainEntityResolver.getTargetOrThrow(targetId);
     targetDataService.deleteById(targetId);
   }
 }

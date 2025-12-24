@@ -2,10 +2,7 @@
 package com.project.easywork.client.domain.persistance;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -29,7 +26,6 @@ public class Prevention {
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "stack_id")
   @OnDelete(action = OnDeleteAction.CASCADE)
-  @ToString.Exclude
   private Stack stack;
   
   @Column(nullable = false, length = 100)
@@ -47,11 +43,9 @@ public class Prevention {
   private LocalDate modifiedAt;
   
   @OneToMany(mappedBy = "prevention", cascade = CascadeType.ALL, orphanRemoval = true)
-  @ToString.Exclude
   private List<Target> targets = new ArrayList<>();
   
   @OneToMany(mappedBy = "prevention", cascade = CascadeType.ALL, orphanRemoval = true)
-  @ToString.Exclude
   private List<Facility> facilities = new ArrayList<>();
   
   public void attachStack(Stack stack) {

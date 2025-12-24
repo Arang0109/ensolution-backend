@@ -4,10 +4,7 @@ import com.project.easywork.client.domain.dto.target.TargetCreateRequestDto;
 import com.project.easywork.client.domain.dto.target.TargetResponseDto;
 import com.project.easywork.client.domain.dto.target.TargetUpdateRequestDto;
 import com.project.easywork.client.domain.persistance.Target;
-import org.mapstruct.Builder;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
+import org.mapstruct.*;
 
 import java.util.List;
 
@@ -24,5 +21,8 @@ public interface TargetMapper {
   List<TargetResponseDto> toDtoList(List<Target> targets);
   List<Target> toEntityList(List<TargetCreateRequestDto> targets);
   
+  @BeanMapping(
+      nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE
+  )
   void updateTarget(TargetUpdateRequestDto dto, @MappingTarget Target target);
 }

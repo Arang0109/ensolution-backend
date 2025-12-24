@@ -8,7 +8,7 @@ import com.project.easywork.client.domain.persistance.Prevention;
 import com.project.easywork.client.mapper.FacilityMapper;
 import com.project.easywork.client.service.IFacilityService;
 import com.project.easywork.client.service_data.IFacilityDataService;
-import com.project.easywork.client.service_data.IPreventionDataService;
+import com.project.easywork.common.resolver.DomainEntityResolver;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,14 +20,15 @@ import java.util.List;
 @Transactional
 public class FacilityService implements IFacilityService {
   
-  private final IPreventionDataService preventionDataService;
   private final IFacilityDataService facilityDataService;
   private final FacilityMapper facilityMapper;
+  
+  private final DomainEntityResolver domainEntityResolver;
   
   @Override
   public FacilityResponseDto registerFacility(FacilityCreateRequestDto requestDto) {
     
-    Prevention prevention = preventionDataService.findById(requestDto.getPreventionId());
+    Prevention prevention = domainEntityResolver.getPreventionOrThrow(requestDto.getPreventionId());
     Facility facility = facilityMapper.toEntity(requestDto);
     facility.attachPrevention(prevention);
     
@@ -61,13 +62,14 @@ public class FacilityService implements IFacilityService {
   
   @Override
   public FacilityResponseDto updateFacility(Long facilityId, FacilityUpdateRequestDto requestDto) {
-    Facility facility = facilityDataService.findById(facilityId);
+    Facility facility = domainEntityResolver.getFacilityOrThrow(facilityId);
     facilityMapper.updateFacility(requestDto, facility);
     return facilityMapper.toDto(facility);
   }
   
   @Override
   public void removeFacility(Long facilityId) {
+    domainEntityResolver.getFacilityOrThrow(facilityId);
     facilityDataService.deleteById(facilityId);
   }
 }
