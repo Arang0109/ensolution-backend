@@ -7,11 +7,10 @@ import lombok.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Builder
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Builder
-@ToString
 public class PreventionDetailResponseDto {
   private PreventionResponseDto prevention;
   private List<FacilityResponseDto> facilities = new ArrayList<>();

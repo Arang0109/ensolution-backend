@@ -16,8 +16,7 @@ public class StackDataService implements IStackDataService {
   
   @Override
   public Stack findById(Long stackId) {
-    return stackRepository.findById(stackId)
-        .orElseThrow();
+    return stackRepository.findById(stackId).orElse(null);
   }
   
   @Override

@@ -16,8 +16,7 @@ public class WorkplaceDataService implements IWorkplaceDataService {
   
   @Override
   public Workplace findById(Long workplaceId) {
-    return workplaceRepository.findById(workplaceId)
-        .orElseThrow();
+    return workplaceRepository.findById(workplaceId).orElse(null);
   }
   
   @Override

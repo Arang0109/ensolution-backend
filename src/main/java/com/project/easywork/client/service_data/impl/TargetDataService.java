@@ -26,6 +26,11 @@ public class TargetDataService implements ITargetDataService {
   }
   
   @Override
+  public List<Target> saveAll(List<Target> targets) {
+    return targetRepository.saveAll(targets);
+  }
+  
+  @Override
   public void deleteById(Long targetId) {
     targetRepository.deleteById(targetId);
   }

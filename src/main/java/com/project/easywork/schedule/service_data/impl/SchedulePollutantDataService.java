@@ -20,6 +20,11 @@ public class SchedulePollutantDataService implements ISchedulePollutantDataServi
   }
   
   @Override
+  public void saveAll(List<SchedulePollutant> schedulePollutants) {
+    schedulePollutantRepository.saveAll(schedulePollutants);
+  }
+  
+  @Override
   public List<SchedulePollutant> findAllByScheduleId(Long scheduleId) {
     return schedulePollutantRepository.findSchedulePollutantsByScheduleId(scheduleId);
   }

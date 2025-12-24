@@ -1,9 +1,8 @@
 package com.project.easywork.client.domain.persistance;
 
-import com.project.easywork.client.domain.dto.prevention.PreventionUpdateRequestDto;
-import com.project.easywork.client.domain.dto.target.TargetUpdateRequestDto;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.OnDelete;
@@ -11,11 +10,11 @@ import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDate;
-import java.util.Optional;
 
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 @Table(name = "target")
 public class Target {
   @Id
@@ -42,12 +41,7 @@ public class Target {
   @Column(name = "modified_at", nullable = false)
   private LocalDate modifiedAt;
   
-  public void update(TargetUpdateRequestDto dto) {
-    Optional.ofNullable(dto.getTargetSubstance())
-        .filter(targetSubstance -> !targetSubstance.isBlank())
-        .ifPresent(this::setTargetSubstance);
-    
-    Optional.ofNullable(dto.getRemovalEfficiency())
-        .ifPresent(this::setRemovalEfficiency);
+  public void attachPrevention(Prevention prevention) {
+    this.prevention = prevention;
   }
 }

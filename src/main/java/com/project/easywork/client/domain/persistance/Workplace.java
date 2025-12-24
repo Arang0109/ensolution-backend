@@ -1,9 +1,9 @@
 package com.project.easywork.client.domain.persistance;
 
 import com.project.easywork.client.domain.Grade;
-import com.project.easywork.client.domain.dto.workplace.WorkplaceUpdateRequestDto;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
@@ -14,12 +14,20 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Entity
 @Getter
 @Setter
-@Table(name = "workplace")
+@NoArgsConstructor
+@Table(
+    name = "workplace",
+    uniqueConstraints = {
+        @UniqueConstraint(
+            name = "uk_company_name",
+            columnNames = {"company_id", "name"}
+        )
+    }
+)
 public class Workplace {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -67,25 +75,11 @@ public class Workplace {
   @ToString.Exclude
   private List<Manager> managers = new ArrayList<>();
   
-  public void update(WorkplaceUpdateRequestDto dto) {
-    Optional.ofNullable(dto.getName())
-        .filter(name -> !name.isBlank())
-        .ifPresent(this::setName);
-    
-    Optional.ofNullable(dto.getBizNumber())
-        .filter(biz -> !biz.isBlank())
-        .ifPresent(this::setBizNumber);
-    
-    Optional.ofNullable(dto.getAddress())
-        .ifPresent(this::setAddress);
-    
-    Optional.ofNullable(dto.getBusinessCategory())
-        .ifPresent(this::setBusinessCategory);
-    
-    Optional.ofNullable(dto.getGrade())
-        .ifPresent(this::setGrade);
-    
-    Optional.ofNullable(dto.getRemark())
-        .ifPresent(this::setRemark);
+  public void attachCompany(Company company) {
+    this.company = company;
+  }
+  
+  public Workplace orElseThrow(Object o) {
+    return null;
   }
 }

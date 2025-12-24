@@ -4,13 +4,12 @@ import com.project.easywork.client.domain.dto.company.CompanyCreateRequestDto;
 import com.project.easywork.client.domain.dto.company.CompanyDetailResponseDto;
 import com.project.easywork.client.domain.dto.company.CompanyResponseDto;
 import com.project.easywork.client.domain.dto.company.CompanyUpdateRequestDto;
-import com.project.easywork.client.domain.dto.workplace.WorkplaceResponseDto;
 import com.project.easywork.client.domain.persistance.Company;
 import com.project.easywork.client.mapper.CompanyMapper;
-import com.project.easywork.client.mapper.WorkplaceMapper;
 import com.project.easywork.client.service.ICompanyService;
 import com.project.easywork.client.service_data.ICompanyDataService;
-import com.project.easywork.client.service_data.IWorkplaceDataService;
+import com.project.easywork.client.validator.CompanyValidator;
+import com.project.easywork.common.resolver.DomainEntityResolver;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,31 +18,29 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-@Transactional
 public class CompanyService implements ICompanyService {
   
   private final ICompanyDataService companyDataService;
-  private final IWorkplaceDataService workplaceDataService;
   private final CompanyMapper companyMapper;
-  private final WorkplaceMapper workplaceMapper;
+  
+  private final CompanyValidator companyValidator;
+  private final DomainEntityResolver domainEntityResolver;
   
   @Override
-  public CompanyResponseDto registerCompany(CompanyCreateRequestDto requestDto) {
-    Company company = companyMapper.toEntityFromCompanyCreateDto(requestDto);
+  @Transactional
+  public CompanyResponseDto registerCompany(CompanyCreateRequestDto dto) {
+    // Validation step
+    companyValidator.validateForCreate(dto);
     
-    return companyMapper.toDto(companyDataService.save(company));
+    Company company = companyMapper.toEntity(dto);
+    return companyMapper.toDto(company);
   }
   
   @Override
   @Transactional(readOnly = true)
   public CompanyDetailResponseDto getCompany(Long companyId) {
-    CompanyResponseDto company = companyMapper.toDto(companyDataService.findById(companyId));
-    List<WorkplaceResponseDto> workplaces = workplaceMapper.toDtoList(workplaceDataService.findWorkplacesByCompanyId(companyId));
-    
-    return CompanyDetailResponseDto.builder()
-        .company(company)
-        .workplaces(workplaces)
-        .build();
+    Company company = domainEntityResolver.getCompanyOrThrow(companyId);
+    return companyMapper.toDetailDto(company);
   }
   
   @Override
@@ -53,14 +50,20 @@ public class CompanyService implements ICompanyService {
   }
   
   @Override
-  public CompanyResponseDto updateCompany(Long companyId, CompanyUpdateRequestDto requestDto) {
-    Company company = companyDataService.findById(companyId);
-    company.update(requestDto);
+  @Transactional
+  public CompanyResponseDto updateCompany(Long companyId, CompanyUpdateRequestDto dto) {
+    // Validation step
+    companyValidator.validateForUpdate(companyId, dto);
+    
+    Company company = domainEntityResolver.getCompanyOrThrow(companyId);
+    companyMapper.updateCompany(dto, company);
     return companyMapper.toDto(company);
   }
   
   @Override
+  @Transactional
   public void removeCompany(Long companyId) {
+    domainEntityResolver.getCompanyOrThrow(companyId);
     companyDataService.deleteById(companyId);
   }
 }

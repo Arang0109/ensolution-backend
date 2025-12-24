@@ -3,15 +3,12 @@ package com.project.easywork.client.domain.dto.company;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
+@Builder
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@ToString
 public class CompanyCreateRequestDto {
   
   @Schema(description = "측정대행 의뢰업체", example = "테스트 의뢰업체")

@@ -3,6 +3,7 @@ package com.project.easywork.schedule.domain.persistance;
 import com.project.easywork.client.domain.persistance.StackMeasurement;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.OnDelete;
@@ -11,6 +12,7 @@ import org.hibernate.annotations.OnDeleteAction;
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 @Table(name = "schedule_pollutant")
 public class SchedulePollutant {
   @Id
@@ -29,4 +31,8 @@ public class SchedulePollutant {
   @OnDelete(action = OnDeleteAction.CASCADE)
   @ToString.Exclude
   private StackMeasurement stackMeasurement;
+  
+  public void attachSchedule(Schedule schedule) {
+    this.schedule = schedule;
+  }
 }

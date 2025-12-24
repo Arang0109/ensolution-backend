@@ -3,11 +3,12 @@ package com.project.easywork.client.service.impl;
 import com.project.easywork.client.domain.dto.target.TargetCreateRequestDto;
 import com.project.easywork.client.domain.dto.target.TargetResponseDto;
 import com.project.easywork.client.domain.dto.target.TargetUpdateRequestDto;
-import com.project.easywork.client.domain.persistance.Facility;
+import com.project.easywork.client.domain.persistance.Prevention;
 import com.project.easywork.client.domain.persistance.Target;
 import com.project.easywork.client.mapper.TargetMapper;
 import com.project.easywork.client.service.ITargetService;
-import com.project.easywork.client.service_data.impl.TargetDataService;
+import com.project.easywork.client.service_data.IPreventionDataService;
+import com.project.easywork.client.service_data.ITargetDataService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,29 +20,35 @@ import java.util.List;
 @Transactional
 public class TargetService implements ITargetService {
   
-  private final TargetDataService targetDataService;
+  private final IPreventionDataService preventionDataService;
+  private final ITargetDataService targetDataService;
   private final TargetMapper targetMapper;
   
   @Override
   public TargetResponseDto registerTarget(TargetCreateRequestDto requestDto) {
-    Target target = targetMapper.toEntityFromTargetCreateDto(requestDto);
+    
+    Prevention prevention = preventionDataService.findById(requestDto.getPreventionId());
+    Target target = targetMapper.toEntity(requestDto);
+    target.attachPrevention(prevention);
+    
     return targetMapper.toDto(targetDataService.save(target));
   }
   
   @Override
-  public List<TargetResponseDto> registerTargets(List<TargetCreateRequestDto> requestDtos) {
+  public List<TargetResponseDto> registerTargets(List<TargetCreateRequestDto> requestDtos, Prevention prevention) {
     if (requestDtos == null || requestDtos.isEmpty()) {
       return List.of();
     }
     
     List<Target> targets = requestDtos.stream()
         .map(dto -> {
-          Target target = targetMapper.toEntityFromTargetCreateDto(dto);
-          return targetDataService.save(target);
+          Target target = targetMapper.toEntity(dto);
+          target.attachPrevention(prevention);
+          return target;
         })
         .toList();
     
-    return targets.stream()
+    return targetDataService.saveAll(targets).stream()
         .map(targetMapper::toDto)
         .toList();
   }
@@ -55,7 +62,7 @@ public class TargetService implements ITargetService {
   @Override
   public TargetResponseDto updateTarget(Long targetId, TargetUpdateRequestDto requestDto) {
     Target target = targetDataService.findById(targetId);
-    target.update(requestDto);
+    targetMapper.updateTarget(requestDto, target);
     return targetMapper.toDto(target);
   }
   

@@ -4,6 +4,7 @@ import com.project.easywork.client.domain.dto.facility.FacilityResponseDto;
 import com.project.easywork.client.domain.dto.prevention.*;
 import com.project.easywork.client.domain.dto.target.TargetResponseDto;
 import com.project.easywork.client.domain.persistance.Prevention;
+import com.project.easywork.client.domain.persistance.Stack;
 import com.project.easywork.client.mapper.FacilityMapper;
 import com.project.easywork.client.mapper.PreventionMapper;
 import com.project.easywork.client.mapper.TargetMapper;
@@ -12,6 +13,7 @@ import com.project.easywork.client.service.IPreventionService;
 import com.project.easywork.client.service.ITargetService;
 import com.project.easywork.client.service_data.IPreventionDataService;
 import com.project.easywork.client.service_data.IFacilityDataService;
+import com.project.easywork.client.service_data.IStackDataService;
 import com.project.easywork.client.service_data.ITargetDataService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -25,6 +27,7 @@ import java.util.Optional;
 @Transactional
 public class PreventionService implements IPreventionService {
   
+  private final IStackDataService stackDataService;
   private final IPreventionDataService preventionDataService;
   private final PreventionMapper preventionMapper;
   private final FacilityMapper facilityMapper;
@@ -37,45 +40,35 @@ public class PreventionService implements IPreventionService {
   @Override
   public PreventionDetailResponseDto registerPreventionBundle(PreventionBundleCreateRequestDto requestDto) {
     
-    Prevention savedPrevention = preventionDataService.save(
-        preventionMapper.toEntityFromPreventionCreateDto(requestDto.getPrevention())
-    );
-    Long preventionId = savedPrevention.getId();
+    // stack 엔티티 불러오기 -> prevention 연관 엔티티 설정 -> 저장
+    Stack stack = stackDataService.findById(requestDto.getPrevention().getStackId());
+    Prevention prevention = preventionMapper.toEntity(requestDto.getPrevention());
+    prevention.attachStack(stack);
+    Prevention savedPrevention = preventionDataService.save(prevention);
     
-    List<FacilityResponseDto> facilityDtos = Optional.ofNullable(requestDto.getFacilities())
-        .map(list -> {
-          list.forEach(dto -> dto.setPreventionId(preventionId));
-          return facilityService.registerFacilities(list);
-        })
-        .orElse(List.of());
+    //
+    if (requestDto.getFacilities() != null) {
+      facilityService.registerFacilities(
+          requestDto.getFacilities(),
+          savedPrevention
+      );
+    }
     
-    List<TargetResponseDto> targetDtos = Optional.ofNullable(requestDto.getTargets())
-        .map(list -> {
-          list.forEach(dto -> dto.setPreventionId(preventionId));
-          return targetService.registerTargets(list);
-        })
-        .orElse(List.of());
+    if (requestDto.getTargets() != null) {
+      targetService.registerTargets(
+          requestDto.getTargets(),
+          savedPrevention
+      );
+    }
     
-    return PreventionDetailResponseDto.builder()
-        .prevention(preventionMapper.toDto(savedPrevention))
-        .facilities(facilityDtos)
-        .targets(targetDtos)
-        .build();
+    return preventionMapper.toDetailDto(savedPrevention);
   }
   
   @Override
   @Transactional(readOnly = true)
   public PreventionDetailResponseDto getPrevention(Long preventionId) {
-    PreventionResponseDto prevention = preventionMapper.toDto(preventionDataService.findById(preventionId));
-    List<FacilityResponseDto> facilities = facilityMapper
-        .toDtoList(facilityDataService.findFacilitiesByPreventionId(preventionId));
-    List<TargetResponseDto> targets = targetMapper
-        .toDtoList(targetDataService.findTargetsByPreventionId(preventionId));
-    return PreventionDetailResponseDto.builder()
-        .prevention(prevention)
-        .facilities(facilities)
-        .targets(targets)
-        .build();
+    Prevention prevention = preventionDataService.findById(preventionId);
+    return preventionMapper.toDetailDto(prevention);
   }
   
   @Override
@@ -93,7 +86,7 @@ public class PreventionService implements IPreventionService {
   @Override
   public PreventionResponseDto updatePrevention(Long preventionId, PreventionUpdateRequestDto requestDto) {
     Prevention prevention = preventionDataService.findById(preventionId);
-    prevention.update(requestDto);
+    preventionMapper.updatePrevention(requestDto, prevention);
     return preventionMapper.toDto(prevention);
   }
   

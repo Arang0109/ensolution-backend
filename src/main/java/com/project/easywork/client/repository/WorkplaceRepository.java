@@ -9,4 +9,10 @@ import java.util.List;
 @Repository
 public interface WorkplaceRepository extends JpaRepository<Workplace, Long> {
   List<Workplace> findWorkplacesByCompanyId(Long companyId);
+  
+  boolean existsByName(String name);
+  boolean existsByNameAndIdNot(String name, Long id);
+  
+  boolean existsByBizNumber(String bizNumber);
+  boolean existsByBizNumberAndIdNot(String bizNumber, Long id);
 }

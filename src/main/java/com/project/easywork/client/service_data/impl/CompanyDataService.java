@@ -3,6 +3,8 @@ package com.project.easywork.client.service_data.impl;
 import com.project.easywork.client.domain.persistance.Company;
 import com.project.easywork.client.repository.CompanyRepository;
 import com.project.easywork.client.service_data.ICompanyDataService;
+import com.project.easywork.common.exception.CustomException;
+import com.project.easywork.common.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,8 +18,7 @@ public class CompanyDataService implements ICompanyDataService {
   
   @Override
   public Company findById(Long companyId) {
-    return companyRepository.findById(companyId)
-        .orElseThrow();
+    return companyRepository.findById(companyId).orElse(null);
   }
   
   @Override

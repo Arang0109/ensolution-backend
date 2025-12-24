@@ -1,14 +1,15 @@
 package com.project.easywork.client.domain.dto.target;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 
+@Builder
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
-@ToString
 public class TargetCreateRequestDto {
   
   @Schema(description = "방지시설 ID (FK)", example = "1")
@@ -19,5 +20,6 @@ public class TargetCreateRequestDto {
   private String targetSubstance;
   
   @Schema(description = "제거 효율", example = "40")
+  @Size(min = 0, max = 100, message = "0~100 사이의 값을 입력해주세요.")
   private Double removalEfficiency;
 }

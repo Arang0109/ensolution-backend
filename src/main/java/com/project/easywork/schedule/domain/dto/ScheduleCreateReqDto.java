@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -25,4 +26,6 @@ public class ScheduleCreateReqDto {
   
   @NotBlank(message = "측정 목적을 선택하세요.")
   private String measurementType;
+  
+  private List<Long> measurementIds;
 }

@@ -9,9 +9,7 @@ public interface IScheduleService {
   List<ScheduleTableViewDto> getList();
   List<ScheduleResDto> getListByStack(Long stackId, List<ScheduleStatus> status);
   ScheduleDetailResDto getSchedule(Long scheduleId);
-  ScheduleResDto register(
-      ScheduleCreateReqDto scheduleCreateReqDto,
-      List<SchedulePollutantCreateReqDto> schedulePollutantCreateReqDtos);
+  ScheduleResDto register(ScheduleCreateReqDto scheduleCreateReqDto);
   void addMeasurement(Long scheduleId, List<SchedulePollutantCreateReqDto> dto);
   ScheduleResDto update(Long scheduleId, ScheduleUpdateReqDto dto);
   ScheduleResDto updateStatus(Long scheduleId, ScheduleStatusUpdateReqDto dto);

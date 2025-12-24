@@ -1,13 +1,13 @@
 
 package com.project.easywork.client.domain.persistance;
 
-import com.project.easywork.client.domain.dto.stack.StackUpdateRequestDto;
 import com.project.easywork.client.domain.Grade;
 import com.project.easywork.client.domain.Shape;
 import com.project.easywork.client.domain.Orientation;
 import com.project.easywork.schedule.domain.persistance.Schedule;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
@@ -18,13 +18,20 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Entity
 @Getter
 @Setter
-@ToString
-@Table(name = "stack")
+@NoArgsConstructor
+@Table(
+    name = "stack",
+    uniqueConstraints = {
+        @UniqueConstraint(
+            name = "uk_workplace_name",
+            columnNames = {"workplace_id", "name"}
+        )
+    }
+)
 public class Stack {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -88,35 +95,7 @@ public class Stack {
   @ToString.Exclude
   private List<Schedule> schedules = new ArrayList<>();
   
-  public void update(StackUpdateRequestDto dto) {
-    Optional.ofNullable(dto.getName())
-        .filter(name -> !name.isBlank())
-        .ifPresent(this::setName);
-    
-    Optional.ofNullable(dto.getSemsNumber())
-        .filter(sems -> !sems.isBlank())
-        .ifPresent(this::setSemsNumber);
-    
-    Optional.ofNullable(dto.getGrade())
-        .ifPresent(this::setGrade);
-    
-    Optional.ofNullable(dto.getHeight())
-        .ifPresent(this::setHeight);
-    
-    Optional.ofNullable(dto.getHorizontalLength())
-        .ifPresent(this::setHorizontalLength);
-    
-    Optional.ofNullable(dto.getVerticalLength())
-        .ifPresent(this::setVerticalLength);
-    
-    Optional.ofNullable(dto.getShape())
-        .ifPresent(this::setShape);
-    
-    Optional.ofNullable(dto.getOrientation())
-        .ifPresent(this::setOrientation);
-    
-    Optional.ofNullable(dto.getRemark())
-        .filter(remark -> !remark.isBlank())
-        .ifPresent(this::setRemark);
+  public void attachWorkplace(Workplace workplace) {
+    this.workplace = workplace;
   }
 }

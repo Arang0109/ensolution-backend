@@ -9,6 +9,8 @@ public interface ITargetDataService {
   
   Target save(Target target);
   
+  List<Target> saveAll(List<Target> targets);
+  
   void deleteById(Long targetId);
   
   List<Target> findAll();

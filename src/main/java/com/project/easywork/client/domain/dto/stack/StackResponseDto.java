@@ -8,11 +8,8 @@ import lombok.*;
 
 import java.time.LocalDate;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
 @Builder
-@ToString
+@Getter
 public class StackResponseDto {
   @Schema(
       description = "측정공 ID (PK)",

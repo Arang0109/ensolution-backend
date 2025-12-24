@@ -1,14 +1,13 @@
 package com.project.easywork.client.service.impl;
 
-import com.project.easywork.client.domain.dto.prevention.PreventionResponseDto;
 import com.project.easywork.client.domain.dto.stack.*;
-import com.project.easywork.client.domain.dto.stack_measurement.StackMeasurementResponseDto;
 import com.project.easywork.client.domain.persistance.Stack;
-import com.project.easywork.client.service.IPreventionService;
-import com.project.easywork.client.service.IStackMeasurementService;
+import com.project.easywork.client.domain.persistance.Workplace;
 import com.project.easywork.client.service_data.IStackDataService;
 import com.project.easywork.client.mapper.StackMapper;
 import com.project.easywork.client.service.IStackService;
+import com.project.easywork.client.validator.StackValidator;
+import com.project.easywork.common.resolver.DomainEntityResolver;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,29 +19,32 @@ import java.util.List;
 @Transactional
 public class StackService implements IStackService {
   
-  private final IPreventionService preventionService;
-  private final IStackMeasurementService stackMeasurementService;
-  
   private final IStackDataService stackDataService;
   private final StackMapper stackMapper;
   
+  private final StackValidator stackValidator;
+  private final DomainEntityResolver domainEntityResolver;
+  
   @Override
-  public StackResponseDto registerStack(StackCreateRequestDto requestDto) {
-    Stack stack = stackMapper.toEntityFromStackCreateDto(requestDto);
+  public StackResponseDto registerStack(StackCreateRequestDto dto) {
+    stackValidator.validateForCreate(dto);
+    Workplace workplace = domainEntityResolver
+        .getWorkplaceOrThrow(
+            dto.getWorkplaceId()
+        );
+    
+    Stack stack = stackMapper
+        .toEntity(dto);
+    stack.attachWorkplace(workplace);
+    
     return stackMapper.toDto(stackDataService.save(stack));
   }
   
   @Override
   @Transactional(readOnly = true)
   public StackDetailResponseDto getStack(Long stackId) {
-    StackResponseDto stack = stackMapper.toDto(stackDataService.findById(stackId));
-    List<PreventionResponseDto> preventions = preventionService.getPreventionsByStack(stackId);
-    List<StackMeasurementResponseDto> stackMeasurements = stackMeasurementService.getStackMeasurementsByStack(stackId);
-    return StackDetailResponseDto.builder()
-        .stack(stack)
-        .preventions(preventions)
-        .stackMeasurements(stackMeasurements)
-        .build();
+    Stack stack = domainEntityResolver.getStackOrThrow(stackId);
+    return stackMapper.toDetailDto(stack);
   }
   
   @Override
@@ -52,14 +54,16 @@ public class StackService implements IStackService {
   }
   
   @Override
-  public StackResponseDto updateStack(Long stackId, StackUpdateRequestDto requestDto) {
-    Stack stack = stackDataService.findById(stackId);
-    stack.update(requestDto);
+  public StackResponseDto updateStack(Long stackId, StackUpdateRequestDto dto) {
+    stackValidator.validateForUpdate(stackId, dto);
+    Stack stack = domainEntityResolver.getStackOrThrow(stackId);
+    stackMapper.updateStack(dto, stack);
     return stackMapper.toDto(stack);
   }
   
   @Override
   public void removeStack(Long stackId) {
+    domainEntityResolver.getStackOrThrow(stackId);
     stackDataService.deleteById(stackId);
   }
 }

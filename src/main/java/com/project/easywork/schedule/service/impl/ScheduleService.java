@@ -2,21 +2,28 @@ package com.project.easywork.schedule.service.impl;
 
 import com.project.easywork.agency.domain.entity.Team;
 import com.project.easywork.agency.service_data.ITeamDataService;
+import com.project.easywork.client.domain.dto.stack.StackDetailResponseDto;
 import com.project.easywork.client.domain.persistance.Stack;
 import com.project.easywork.client.mapper.CompanyMapper;
 import com.project.easywork.client.mapper.WorkplaceMapper;
 import com.project.easywork.client.service.IStackService;
 import com.project.easywork.client.service_data.IStackDataService;
+import com.project.easywork.common.exception.CustomException;
+import com.project.easywork.common.exception.ErrorCode;
+import com.project.easywork.common.util.measurePoint.MeasurePointStrategy;
+import com.project.easywork.common.util.measurePoint.MeasurePointStrategyFactory;
 import com.project.easywork.schedule.domain.ScheduleStatus;
 import com.project.easywork.measurement.service.IMeasurementService;
 import com.project.easywork.schedule.domain.dto.*;
 import com.project.easywork.schedule.domain.persistance.Schedule;
+import com.project.easywork.schedule.domain.persistance.SchedulePollutant;
 import com.project.easywork.schedule.mapper.ScheduleMapper;
 import com.project.easywork.schedule.mapper.SchedulePollutantMapper;
 import com.project.easywork.schedule.service.IScheduleService;
 import com.project.easywork.schedule.service_data.IScheduleDataService;
 import com.project.easywork.schedule.service_data.ISchedulePollutantDataService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -71,16 +78,30 @@ public class ScheduleService implements IScheduleService {
   }
   
   @Override
-  public ScheduleResDto register(
-      ScheduleCreateReqDto scheduleCreateReqDto,
-      List<SchedulePollutantCreateReqDto> pollutantDtos) {
-    Schedule schedule = scheduleMapper.toEntityFromScheduleCreateDto(scheduleCreateReqDto);
-    
-    pollutantDtos.stream()
-        .map(schedulePollutantMapper::toEntity)
-        .forEach(schedule::addPollutant);
+  public ScheduleResDto register(ScheduleCreateReqDto scheduleCreateReqDto) {
+    Stack stack = stackDataService.findById(scheduleCreateReqDto.getStackId());
+    Team team = teamDataService.findById(scheduleCreateReqDto.getTeamId());
+    Schedule schedule = scheduleMapper.toEntity(scheduleCreateReqDto);
+    schedule.attachStack(stack);
+    schedule.attachTeam(team);
     
     schedule = scheduleDataService.save(schedule);
+    Long scheduleId = schedule.getId();
+    
+    List<SchedulePollutantCreateReqDto> linkDtos =
+        scheduleCreateReqDto.getMeasurementIds().stream()
+            .map(measurementId ->
+                SchedulePollutantCreateReqDto.builder()
+                    .scheduleId(scheduleId)
+                    .stackMeasurementId(measurementId)
+                    .build()
+            )
+            .toList();
+    
+    List<SchedulePollutant> schedulePollutants =
+        schedulePollutantMapper.toEntityList(linkDtos);
+    
+    schedulePollutantDataService.saveAll(schedulePollutants);
     
     measurementService.createDraft(schedule.getId());
     
@@ -108,7 +129,6 @@ public class ScheduleService implements IScheduleService {
     Team team = null;
     if (dto.getTeamId() != null) team = teamDataService.findById(dto.getTeamId());
     
-    schedule.update(stack, team, dto);
     return scheduleMapper.toDto(scheduleDataService.save(schedule));
   }
   

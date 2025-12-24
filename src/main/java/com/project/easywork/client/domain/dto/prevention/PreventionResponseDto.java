@@ -5,11 +5,8 @@ import lombok.*;
 
 import java.time.LocalDate;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
 @Builder
-@ToString
+@Getter
 public class PreventionResponseDto {
   @Schema(
       description = "방지시설 ID (PK)",

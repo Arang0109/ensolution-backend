@@ -5,11 +5,10 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
+@Builder
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
-@ToString
 public class FacilityCreateRequestDto {
   @Schema(description = "배출시설", example = "도장시설(데드너)")
   @NotBlank(message = "필수 입력")

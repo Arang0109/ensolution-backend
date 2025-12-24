@@ -7,6 +7,7 @@ import com.project.easywork.schedule.domain.persistance.Schedule;
 import com.project.easywork.schedule.repository.ScheduleRepository;
 import com.project.easywork.schedule.service_data.IScheduleDataService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -33,7 +34,11 @@ public class ScheduleDataService implements IScheduleDataService {
   
   @Override
   public Schedule save(Schedule schedule) {
-    return scheduleRepository.save(schedule);
+    try {
+      return scheduleRepository.save(schedule);
+    } catch (DataIntegrityViolationException e) {
+      throw new CustomException(ErrorCode.SCHEDULE_ALREADY_EXISTS, "이미 해당 사업장·팀·측정일에 등록된 일정이 존재합니다.");
+    }
   }
   
   @Override

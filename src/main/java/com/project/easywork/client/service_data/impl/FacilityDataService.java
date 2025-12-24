@@ -26,6 +26,11 @@ public class FacilityDataService implements IFacilityDataService {
   }
   
   @Override
+  public List<Facility> saveAll(List<Facility> facilities) {
+    return facilityRepository.saveAll(facilities);
+  }
+  
+  @Override
   public void deleteById(Long facilityId) {
     facilityRepository.deleteById(facilityId);
   }

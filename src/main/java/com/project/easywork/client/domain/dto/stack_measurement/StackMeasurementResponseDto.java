@@ -7,11 +7,8 @@ import lombok.*;
 
 import java.time.LocalDate;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
 @Builder
-@ToString
+@Getter
 public class StackMeasurementResponseDto {
   @Schema(
       description = "시설 내 측정물질 ID (PK)",
