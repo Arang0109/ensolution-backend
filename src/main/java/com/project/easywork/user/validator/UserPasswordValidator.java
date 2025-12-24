@@ -1,4 +1,4 @@
-package com.project.easywork.client.validator;
+package com.project.easywork.user.validator;
 
 import com.project.easywork.common.exception.CustomException;
 import com.project.easywork.common.exception.ErrorCode;

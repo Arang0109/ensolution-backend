@@ -9,4 +9,10 @@ import java.util.List;
 @Repository
 public interface StackRepository extends JpaRepository<Stack, Long> {
   List<Stack> findStacksByWorkplaceId(Long workplaceId);
+  
+  boolean existsByWorkplaceIdAndName(Long workplaceId, String name);
+  boolean existsByNameAndIdNot(String name, Long stackId);
+  
+  boolean existsBySemsNumber(String semsNumber);
+  boolean existsBySemsNumberAndIdNot(String semsNumber, Long stackId);
 }

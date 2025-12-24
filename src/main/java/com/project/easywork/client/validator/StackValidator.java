@@ -1,8 +1,8 @@
 package com.project.easywork.client.validator;
 
-import com.project.easywork.client.domain.dto.company.CompanyCreateRequestDto;
-import com.project.easywork.client.domain.dto.company.CompanyUpdateRequestDto;
-import com.project.easywork.client.repository.CompanyRepository;
+import com.project.easywork.client.domain.dto.stack.StackCreateRequestDto;
+import com.project.easywork.client.domain.dto.stack.StackUpdateRequestDto;
+import com.project.easywork.client.repository.StackRepository;
 import com.project.easywork.common.exception.CustomException;
 import com.project.easywork.common.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
@@ -10,35 +10,33 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class CompanyValidator {
+public class StackValidator {
   
-  private final CompanyRepository companyRepository;
+  private final StackRepository stackRepository;
   
-  public void validateForCreate(CompanyCreateRequestDto dto) {
+  public void validateForCreate(StackCreateRequestDto dto) {
     validateDuplicate(
         dto.getName(),
-        companyRepository::existsByName,
-        "이미 존재하는 의뢰업체입니다."
+        value -> stackRepository
+            .existsByWorkplaceIdAndName(
+                dto.getWorkplaceId(),
+                value
+            ),
+        "이미 존재하는 사업장입니다."
     );
     
     validateDuplicate(
-        dto.getBizNumber(),
-        companyRepository::existsByBizNumber,
-        "이미 존재하는 사업자번호입니다."
+        dto.getSemsNumber(),
+        stackRepository::existsBySemsNumber,
+        "이미 존재하는 Sems 번호입니다."
     );
   }
   
-  public void validateForUpdate(Long id, CompanyUpdateRequestDto dto) {
+  public void validateForUpdate(Long stackId, StackUpdateRequestDto dto) {
     validateDuplicateForUpdate(
-        dto.getName(),
-        value -> companyRepository.existsByNameAndIdNot(value, id),
-        "이미 존재하는 의뢰업체입니다."
-    );
-    
-    validateDuplicateForUpdate(
-        dto.getBizNumber(),
-        value -> companyRepository.existsByBizNumberAndIdNot(value, id),
-        "이미 존재하는 사업자번호입니다."
+        dto.getSemsNumber(),
+        value -> stackRepository.existsBySemsNumberAndIdNot(value, stackId),
+        "이미 존재하는 Sems 번호입니다."
     );
   }
   

@@ -18,7 +18,15 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "stack_measurement")
+@Table(
+    name = "stack_measurement",
+    uniqueConstraints = {
+        @UniqueConstraint(
+            name = "uk_stack_pollutant",
+            columnNames = {"stack_id", "pollutant_id"}
+        )
+    }
+)
 public class StackMeasurement {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

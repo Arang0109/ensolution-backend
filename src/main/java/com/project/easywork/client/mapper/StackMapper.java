@@ -5,10 +5,7 @@ import com.project.easywork.client.domain.dto.stack.StackDetailResponseDto;
 import com.project.easywork.client.domain.dto.stack.StackResponseDto;
 import com.project.easywork.client.domain.dto.stack.StackUpdateRequestDto;
 import com.project.easywork.client.domain.persistance.Stack;
-import org.mapstruct.Builder;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
+import org.mapstruct.*;
 
 import java.util.List;
 
@@ -31,5 +28,8 @@ public interface StackMapper {
   
   List<StackResponseDto> toDtoList(List<Stack> stacks);
   
+  @BeanMapping(
+      nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE
+  )
   void updateStack(StackUpdateRequestDto dto, @MappingTarget Stack stack);
 }

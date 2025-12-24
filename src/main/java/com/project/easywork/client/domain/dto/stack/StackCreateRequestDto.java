@@ -4,9 +4,7 @@ import com.project.easywork.client.domain.Grade;
 import com.project.easywork.client.domain.Orientation;
 import com.project.easywork.client.domain.Shape;
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
 import lombok.*;
 
 @Builder
@@ -51,6 +49,8 @@ public class StackCreateRequestDto {
   private Orientation orientation;
   
   @Schema(description = "표준산소 농도(%)")
+  @Min(value = 0, message = "0 이상의 값을 입력해주세요.")
+  @Max(value = 21, message = "21 이하의 값을 입력해주세요.")
   private Double standardOxygen;
   
   @Schema(description = "비고", example = "특이사항 없음")

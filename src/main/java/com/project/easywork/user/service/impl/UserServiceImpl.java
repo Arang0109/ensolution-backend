@@ -1,7 +1,7 @@
 package com.project.easywork.user.service.impl;
 
 import com.project.easywork.auth.security.CustomUserDetails;
-import com.project.easywork.client.validator.UserPasswordValidator;
+import com.project.easywork.user.validator.UserPasswordValidator;
 import com.project.easywork.user.domain.dto.PasswordUpdateDto;
 import com.project.easywork.user.domain.dto.UserCreateDto;
 import com.project.easywork.user.domain.entity.User;
@@ -10,7 +10,7 @@ import com.project.easywork.user.service_data.IUserDataService;
 import com.project.easywork.user.domain.dto.UserResponseDto;
 import com.project.easywork.user.domain.dto.UserUpdateDto;
 import com.project.easywork.user.service.UserService;
-import com.project.easywork.client.validator.UserValidator;
+import com.project.easywork.user.validator.UserValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;

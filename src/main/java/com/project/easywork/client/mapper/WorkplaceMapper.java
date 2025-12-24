@@ -26,6 +26,9 @@ public interface WorkplaceMapper {
   
   List<WorkplaceResponseDto> toDtoList(List<Workplace> workplaces);
   
+  @BeanMapping(
+      nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE
+  )
   void updateWorkplace(
       WorkplaceUpdateRequestDto dto,
       @MappingTarget Workplace workplace

@@ -23,7 +23,15 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "stack")
+@Table(
+    name = "stack",
+    uniqueConstraints = {
+        @UniqueConstraint(
+            name = "uk_workplace_name",
+            columnNames = {"workplace_id", "name"}
+        )
+    }
+)
 public class Stack {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

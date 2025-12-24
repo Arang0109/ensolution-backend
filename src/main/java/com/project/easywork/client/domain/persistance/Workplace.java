@@ -19,7 +19,15 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "workplace")
+@Table(
+    name = "workplace",
+    uniqueConstraints = {
+        @UniqueConstraint(
+            name = "uk_company_name",
+            columnNames = {"company_id", "name"}
+        )
+    }
+)
 public class Workplace {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -69,5 +77,9 @@ public class Workplace {
   
   public void attachCompany(Company company) {
     this.company = company;
+  }
+  
+  public Workplace orElseThrow(Object o) {
+    return null;
   }
 }

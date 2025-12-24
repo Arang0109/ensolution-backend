@@ -2,6 +2,7 @@ package com.project.easywork.client.domain.dto.stack_measurement;
 
 import com.project.easywork.client.domain.Cycle;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -27,5 +28,6 @@ public class StackMeasurementCreateRequestDto {
   
   @Schema(description = "허용 기준치", example = "40")
   @Min(value = 0, message = "0 이상의 값을 입력해주세요.")
+  @Max(value = 100, message = "100 이하의 값을 입력해주세요.")
   private Double allowance;
 }
