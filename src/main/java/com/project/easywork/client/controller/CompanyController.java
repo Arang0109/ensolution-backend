@@ -36,7 +36,6 @@ public class CompanyController {
   @Operation(summary = "의뢰업체 목록 조회 API", description = "전체 의뢰업체 목록을 조회합니다.")
   @GetMapping()
   public ResponseEntity<ApiResponse<List<CompanyResponseDto>>> getList() {
-    System.out.println("companyService.getCompanies() : " + companyService.getCompanies());
     return ResponseEntity.ok().body(ApiResponse.success(companyService.getCompanies()));
   }
   
