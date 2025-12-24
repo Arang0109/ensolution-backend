@@ -30,11 +30,7 @@ public class PreventionService implements IPreventionService {
   private final IStackDataService stackDataService;
   private final IPreventionDataService preventionDataService;
   private final PreventionMapper preventionMapper;
-  private final FacilityMapper facilityMapper;
-  private final IFacilityDataService facilityDataService;
   private final IFacilityService facilityService;
-  private final TargetMapper targetMapper;
-  private final ITargetDataService targetDataService;
   private final ITargetService targetService;
   
   @Override

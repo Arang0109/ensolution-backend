@@ -14,11 +14,7 @@ import java.util.List;
 
 @Mapper(
     componentModel = "spring",
-    builder = @Builder(),
-    uses = {
-        StackMapper.class,
-        TeamMapper.class
-    }
+    builder = @Builder()
 )
 public interface ScheduleMapper {
   Schedule toEntity(ScheduleCreateReqDto dto);
