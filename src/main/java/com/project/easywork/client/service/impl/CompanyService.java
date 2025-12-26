@@ -33,7 +33,7 @@ public class CompanyService implements ICompanyService {
     companyValidator.validateForCreate(dto);
     
     Company company = companyMapper.toEntity(dto);
-    return companyMapper.toDto(company);
+    return companyMapper.toDto(companyDataService.save(company));
   }
   
   @Override

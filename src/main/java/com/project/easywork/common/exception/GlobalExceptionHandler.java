@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -24,6 +25,23 @@ public class GlobalExceptionHandler {
     return ResponseEntity
         .status(HttpStatus.UNAUTHORIZED)
         .body(ApiResponse.error("아이디 또는 비밀번호가 일치하지 않습니다."));
+  }
+  
+  @ExceptionHandler(HttpMessageNotReadableException.class)
+  public ResponseEntity<ApiResponse<Void>> handleHttpMessageNotReadable(
+      HttpMessageNotReadableException ex
+  ) {
+    String message = "요청 본문의 JSON 형식이 올바르지 않습니다.";
+    
+    // Jackson 파싱 에러 상세 분기 (선택)
+    Throwable cause = ex.getCause();
+    if (cause instanceof com.fasterxml.jackson.core.JsonParseException jp) {
+      message = "JSON 문법 오류: " + jp.getOriginalMessage();
+    }
+    
+    return ResponseEntity
+        .badRequest()
+        .body(ApiResponse.error(message));
   }
   
   // UNIQUE/FK 충돌 예외처리
