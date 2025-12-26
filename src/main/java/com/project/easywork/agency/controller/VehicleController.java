@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Tag(name = "Workplace", description = "측정대상 사업장 관련 API")
+@Tag(name = "Vehicle", description = "차량 관련 API")
 @SecurityRequirement(name = "bearerAuth")
 @RestController
 @RequestMapping("/api/vehicles")

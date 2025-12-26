@@ -33,8 +33,7 @@ public class StackService implements IStackService {
             dto.getWorkplaceId()
         );
     
-    Stack stack = stackMapper
-        .toEntity(dto);
+    Stack stack = stackMapper.toEntity(dto);
     stack.attachWorkplace(workplace);
     
     return stackMapper.toDto(stackDataService.save(stack));

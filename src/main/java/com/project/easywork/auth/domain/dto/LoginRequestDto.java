@@ -11,6 +11,6 @@ import lombok.*;
 public class LoginRequestDto {
   @Schema(description = "회원 아이디", example = "kmsq321")
   private String username;
-  @Schema(description = "비밀번호", example = "rkdalstn!123")
+  @Schema(description = "비밀번호", example = "rkdalstn!12")
   private String password;
 }

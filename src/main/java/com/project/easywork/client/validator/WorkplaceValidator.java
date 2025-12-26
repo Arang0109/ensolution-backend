@@ -18,7 +18,7 @@ public class WorkplaceValidator {
     validateDuplicate(
         dto.getName(),
         workplaceRepository::existsByName,
-        "이미 존재하는 의뢰업체입니다."
+        "이미 존재하는 사업장입니다."
     );
     
     validateDuplicate(
@@ -32,7 +32,7 @@ public class WorkplaceValidator {
     validateDuplicateForUpdate(
         dto.getName(),
         value -> workplaceRepository.existsByNameAndIdNot(value, id),
-        "이미 존재하는 의뢰업체입니다."
+        "이미 존재하는 사업장입니다."
     );
     
     validateDuplicateForUpdate(
