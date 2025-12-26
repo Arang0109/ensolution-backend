@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -13,8 +12,8 @@ import org.hibernate.annotations.OnDeleteAction;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "schedule_pollutant")
-public class SchedulePollutant {
+@Table(name = "schedule_measurement")
+public class ScheduleMeasurement {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(nullable = false, unique = true)
@@ -23,13 +22,11 @@ public class SchedulePollutant {
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "schedule_id")
   @OnDelete(action = OnDeleteAction.CASCADE)
-  @ToString.Exclude
   private Schedule schedule;
   
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "stack_measurement_id")
   @OnDelete(action = OnDeleteAction.CASCADE)
-  @ToString.Exclude
   private StackMeasurement stackMeasurement;
   
   public void attachSchedule(Schedule schedule) {

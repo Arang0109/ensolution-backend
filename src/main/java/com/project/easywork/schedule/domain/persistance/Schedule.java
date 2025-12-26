@@ -50,7 +50,7 @@ public class Schedule {
   private LocalDate createdAt;
   
   @OneToMany(mappedBy = "schedule", cascade = CascadeType.ALL, orphanRemoval = true)
-  private List<SchedulePollutant> pollutants = new ArrayList<>();
+  private List<ScheduleMeasurement> pollutants = new ArrayList<>();
   
   public void attachStack(Stack stack) {
     this.stack = stack;
@@ -64,13 +64,13 @@ public class Schedule {
     this.status = dto.getStatus();
   }
   
-  public void addPollutant(SchedulePollutant pollutant) {
+  public void addPollutant(ScheduleMeasurement pollutant) {
     if (pollutant == null) return;
     
     pollutants.add(pollutant);
   }
   
-  public void addPollutants(List<SchedulePollutant> pollutants) {
+  public void addPollutants(List<ScheduleMeasurement> pollutants) {
     if (pollutants == null) return;
     pollutants.forEach(this::addPollutant);
   }

@@ -2,35 +2,26 @@ package com.project.easywork.schedule.service.impl;
 
 import com.project.easywork.agency.domain.entity.Team;
 import com.project.easywork.agency.service_data.ITeamDataService;
-import com.project.easywork.client.domain.dto.stack.StackDetailResponseDto;
 import com.project.easywork.client.domain.persistance.Stack;
 import com.project.easywork.client.mapper.CompanyMapper;
 import com.project.easywork.client.mapper.WorkplaceMapper;
 import com.project.easywork.client.service.IStackService;
 import com.project.easywork.client.service_data.IStackDataService;
-import com.project.easywork.common.exception.CustomException;
-import com.project.easywork.common.exception.ErrorCode;
 import com.project.easywork.common.resolver.DomainEntityResolver;
-import com.project.easywork.common.util.measurePoint.MeasurePointStrategy;
-import com.project.easywork.common.util.measurePoint.MeasurePointStrategyFactory;
 import com.project.easywork.schedule.domain.ScheduleStatus;
 import com.project.easywork.measurement.service.IMeasurementService;
 import com.project.easywork.schedule.domain.dto.*;
 import com.project.easywork.schedule.domain.persistance.Schedule;
-import com.project.easywork.schedule.domain.persistance.SchedulePollutant;
 import com.project.easywork.schedule.mapper.ScheduleMapper;
-import com.project.easywork.schedule.mapper.SchedulePollutantMapper;
+import com.project.easywork.schedule.mapper.ScheduleMeasurementMapper;
 import com.project.easywork.schedule.service.IScheduleService;
 import com.project.easywork.schedule.service_data.IScheduleDataService;
-import com.project.easywork.schedule.service_data.ISchedulePollutantDataService;
+import com.project.easywork.schedule.service_data.IScheduleMeasurementDataService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -38,7 +29,7 @@ import java.util.stream.Collectors;
 public class ScheduleService implements IScheduleService {
   
   private final IScheduleDataService scheduleDataService;
-  private final ISchedulePollutantDataService schedulePollutantDataService;
+  private final IScheduleMeasurementDataService schedulePollutantDataService;
   private final IStackDataService stackDataService;
   private final ITeamDataService teamDataService;
   
@@ -46,7 +37,7 @@ public class ScheduleService implements IScheduleService {
   private final IMeasurementService measurementService;
   
   private final ScheduleMapper scheduleMapper;
-  private final SchedulePollutantMapper schedulePollutantMapper;
+  private final ScheduleMeasurementMapper scheduleMeasurementMapper;
   private final CompanyMapper companyMapper;
   private final WorkplaceMapper workplaceMapper;
   
@@ -76,7 +67,7 @@ public class ScheduleService implements IScheduleService {
         .workplace(workplaceMapper.toDto(schedule.getStack().getWorkplace()))
         .company(companyMapper.toDto(schedule.getStack().getWorkplace().getCompany()))
         .stack(stackService.getStack(schedule.getStack().getId()))
-        .measurements(schedulePollutantMapper.toDtoList(schedule.getPollutants()))
+        .measurements(scheduleMeasurementMapper.toDtoList(schedule.getPollutants()))
         .build();
   }
   
@@ -96,11 +87,11 @@ public class ScheduleService implements IScheduleService {
   }
   
   @Override
-  public void addMeasurement(Long scheduleId, List<SchedulePollutantCreateReqDto> dtos) {
+  public void addMeasurement(Long scheduleId, List<ScheduleMeasurementCreateReqDto> dtos) {
     Schedule schedule = scheduleDataService.findById(scheduleId);
     
     dtos.stream()
-        .map(schedulePollutantMapper::toEntity)
+        .map(scheduleMeasurementMapper::toEntity)
         .forEach(schedule::addPollutant);
     
     scheduleDataService.save(schedule);

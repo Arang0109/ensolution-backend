@@ -14,7 +14,7 @@ import java.util.List;
 @ToString
 public class ScheduleDetailResDto {
   private ScheduleResDto schedule;
-  private List<SchedulePollutantResDto> measurements;
+  private List<ScheduleMeasurementResDto> measurements;
   private StackDetailResponseDto stack;
   private WorkplaceResponseDto workplace;
   private CompanyResponseDto company;

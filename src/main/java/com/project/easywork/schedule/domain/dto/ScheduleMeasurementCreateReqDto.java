@@ -7,7 +7,7 @@ import lombok.*;
 @Getter
 @Builder
 @ToString
-public class SchedulePollutantCreateReqDto {
+public class ScheduleMeasurementCreateReqDto {
   private Long scheduleId;
   private Long stackMeasurementId;
 }

@@ -71,7 +71,7 @@ public class ScheduleController {
   @PostMapping("/{scheduleId}/measurements")
   public ResponseEntity<ApiResponse<Void>> addMeasurement(
       @PathVariable Long scheduleId,
-      @Valid @RequestBody List<SchedulePollutantCreateReqDto> request
+      @Valid @RequestBody List<ScheduleMeasurementCreateReqDto> request
   ) {
     scheduleService.addMeasurement(scheduleId, request);
     return ResponseEntity.ok().body(ApiResponse.success());
