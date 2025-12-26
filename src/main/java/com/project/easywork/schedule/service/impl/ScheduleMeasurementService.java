@@ -2,6 +2,7 @@ package com.project.easywork.schedule.service.impl;
 
 import com.project.easywork.schedule.domain.dto.ScheduleMeasurementCreateReqDto;
 import com.project.easywork.schedule.domain.dto.ScheduleMeasurementResDto;
+import com.project.easywork.schedule.domain.persistance.Schedule;
 import com.project.easywork.schedule.domain.persistance.ScheduleMeasurement;
 import com.project.easywork.schedule.mapper.ScheduleMeasurementMapper;
 import com.project.easywork.schedule.service.IScheduleMeasurementService;

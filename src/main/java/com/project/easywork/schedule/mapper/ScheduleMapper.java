@@ -1,19 +1,13 @@
 package com.project.easywork.schedule.mapper;
 
-import com.project.easywork.agency.mapper.TeamMapper;
-import com.project.easywork.client.domain.persistance.StackMeasurement;
+import com.project.easywork.client.mapper.CompanyMapper;
 import com.project.easywork.client.mapper.StackMapper;
 import com.project.easywork.client.mapper.StackMeasurementMapper;
-import com.project.easywork.schedule.domain.dto.ScheduleCreateReqDto;
-import com.project.easywork.schedule.domain.dto.ScheduleDetailResDto;
-import com.project.easywork.schedule.domain.dto.ScheduleResDto;
-import com.project.easywork.schedule.domain.dto.ScheduleTableViewDto;
+import com.project.easywork.client.mapper.WorkplaceMapper;
+import com.project.easywork.schedule.domain.dto.*;
 import com.project.easywork.schedule.domain.persistance.Schedule;
 import com.project.easywork.schedule.domain.persistance.ScheduleMeasurement;
-import org.mapstruct.Builder;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.Named;
+import org.mapstruct.*;
 
 import java.util.List;
 
@@ -21,7 +15,10 @@ import java.util.List;
     componentModel = "spring",
     builder = @Builder(),
     uses = {
-        StackMeasurementMapper.class
+        StackMeasurementMapper.class,
+        StackMapper.class,
+        WorkplaceMapper.class,
+        CompanyMapper.class
     }
 )
 public interface ScheduleMapper {
@@ -32,6 +29,9 @@ public interface ScheduleMapper {
   ScheduleResDto toDto(Schedule schedule);
   
   @Mapping(source = ".", target = "schedule")
+  @Mapping(source = "stack", target = "stack")
+  @Mapping(source = "stack.workplace", target = "workplace")
+  @Mapping(source = "stack.workplace.company", target = "company")
   ScheduleDetailResDto toDetailDto(Schedule schedule);
   
   @Mapping(target = "stackName", source = "stack.name")
@@ -43,6 +43,13 @@ public interface ScheduleMapper {
   
   List<ScheduleResDto> toDtoList(List<Schedule> schedules);
   List<ScheduleTableViewDto> toTableList(List<Schedule> schedules);
+  
+  @BeanMapping(
+      nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE
+  )
+  @Mapping(target = "stack", ignore = true)
+  @Mapping(target = "team", ignore = true)
+  void updateSchedule(ScheduleUpdateReqDto dto, @MappingTarget Schedule schedule);
   
   @Named("toPollutantNames")
   default List<String> toPollutantNames(List<ScheduleMeasurement> measurements) {

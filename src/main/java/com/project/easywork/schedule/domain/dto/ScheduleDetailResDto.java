@@ -11,7 +11,6 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Builder
-@ToString
 public class ScheduleDetailResDto {
   private ScheduleResDto schedule;
   private List<ScheduleMeasurementResDto> measurements;
