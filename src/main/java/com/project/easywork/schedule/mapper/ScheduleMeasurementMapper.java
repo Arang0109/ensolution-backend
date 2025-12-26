@@ -18,6 +18,9 @@ import java.util.List;
     }
 )
 public interface ScheduleMeasurementMapper {
+  
+  @Mapping(source = "scheduleId", target = "schedule.id")
+  @Mapping(source = "stackMeasurementId", target = "stackMeasurement.id")
   ScheduleMeasurement toEntity(ScheduleMeasurementCreateReqDto dto);
   
   @Mapping(target = "scheduleId", source = "schedule.id")
@@ -25,5 +28,6 @@ public interface ScheduleMeasurementMapper {
   ScheduleMeasurementResDto toDto(ScheduleMeasurement scheduleMeasurement);
   
   List<ScheduleMeasurementResDto> toDtoList(List<ScheduleMeasurement> scheduleMeasurements);
+  
   List<ScheduleMeasurement> toEntityList(List<ScheduleMeasurementCreateReqDto> scheduleMeasurementCreateReqDtos);
 }

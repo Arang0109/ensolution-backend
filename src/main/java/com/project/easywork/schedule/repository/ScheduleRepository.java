@@ -17,15 +17,16 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
     FROM Schedule s
     JOIN FETCH s.team t
     JOIN FETCH s.stack st
-    """)
+    order by s.measureDate desc
+  """)
   List<Schedule> findAllWithTeamAndStack();
   @Query("""
-  select s from Schedule s
-  join fetch s.stack st
-  join fetch st.workplace w
-  join fetch w.company c
-  where s.id = :id
-""")
+    select s from Schedule s
+    join fetch s.stack st
+    join fetch st.workplace w
+    join fetch w.company c
+    where s.id = :id
+  """)
   Optional<Schedule> findDetailById(Long id);
   List<Schedule> findSchedulesByStackIdAndStatusIn(Long stackId, List<ScheduleStatus> status);
   
