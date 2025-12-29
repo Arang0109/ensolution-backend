@@ -20,13 +20,13 @@ public class GasDensityCalculateStep implements MeasurementStep {
     
     BigDecimal moisture = BigDecimal.valueOf(context.getMoistureRatio());
     
-    BigDecimal gasDensity = GasCalculator.toActualDensity(
-        GasCalculator.calGasDensity(avgO2, avgCo2, avgCo, moisture),
-        BigDecimal.valueOf(d.getMeasurement().exhaustGas().gasTemperature()),
-        BigDecimal.valueOf(context.getAtmospherePressure() + context.getStaticPressure())
-    );
+//    BigDecimal gasDensity = GasCalculator.toActualDensity(
+//        GasCalculator.calGasDensity(avgO2, avgCo2, avgCo, moisture),
+//        BigDecimal.valueOf(d.getMeasurement().exhaustGas().gasTemperature()),
+//        BigDecimal.valueOf(context.getAtmospherePressure() + context.getStaticPressure())
+//    );
     
-    context.setGasDensity(gasDensity.doubleValue());
+//    context.setGasDensity(gasDensity.doubleValue());
     
     // 산소 보정
     BigDecimal avgO2Rounded = avgO2.setScale(1, RoundingMode.HALF_UP);

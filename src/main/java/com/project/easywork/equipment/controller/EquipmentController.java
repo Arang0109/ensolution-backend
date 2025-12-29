@@ -1,11 +1,9 @@
 package com.project.easywork.equipment.controller;
 
 import com.project.easywork.common.api.ApiResponse;
-import com.project.easywork.equipment.domain.dto.EquipmentCalibrationDateUpdateDto;
-import com.project.easywork.equipment.domain.dto.EquipmentCreateReqDto;
-import com.project.easywork.equipment.domain.dto.EquipmentResDto;
-import com.project.easywork.equipment.domain.dto.EquipmentUpdateReqDto;
+import com.project.easywork.equipment.domain.dto.*;
 import com.project.easywork.equipment.service.IEquipmentService;
+import com.project.easywork.equipment.service.IPitotTubeService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -24,6 +22,7 @@ import java.util.List;
 public class EquipmentController {
   
   private final IEquipmentService equipmentService;
+  private final IPitotTubeService pitotTubeService;
   
   @Operation(
       summary = "측정장비 등록 API",
@@ -40,6 +39,12 @@ public class EquipmentController {
   @GetMapping()
   public ResponseEntity<ApiResponse<List<EquipmentResDto>>> getList() {
     return ResponseEntity.ok().body(ApiResponse.success(equipmentService.getList()));
+  }
+  
+  @Operation(summary = "피토우관 목록 조회 API", description = "전체 측정장비 목록을 조회합니다.")
+  @GetMapping("/pitot")
+  public ResponseEntity<ApiResponse<PitotTubeTableViewDto>> getListForPitot() {
+    return ResponseEntity.ok().body(ApiResponse.success(pitotTubeService.getList()));
   }
   
   @Operation(summary = "측정장비 상세 조회 API", description = "해당 측정장비의 상세정보를 조회합니다.")

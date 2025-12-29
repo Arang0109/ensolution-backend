@@ -6,11 +6,8 @@ import java.util.List;
 
 public record ExhaustGasCommandDto(
     
-    DynamicPressure dynamicPressure,
-    StaticPressure staticPressure,
-    
-    @Schema(description = "배출가스 온도(℃)", example = "121.3")
-    Double gasTemperature,
+    @Schema(description = "측정점별 배출가스온도, 동압, 정압 데이터")
+    List<MeasurementPoint> measurementPoints,
     
     @Schema(description = "표준산소농도(%)", example = "20.9")
     Double standardOxygen,
@@ -32,23 +29,35 @@ public record ExhaustGasCommandDto(
     
 ) {
   
-  public record DynamicPressure(
+  public record MeasurementPoint(
       
-      @Schema(description = "동압", example = "21.2")
-      Double pressure,
+      DynamicPressure dynamicPressure,
+      StaticPressure staticPressure,
       
-      @Schema(description = "압력 단위", example = "mmH2O")
-      String unit
+      @Schema(description = "배출가스 온도(℃)", example = "121.3")
+      Double gasTemperature
       
-  ) {}
+  ) {
+    
+    public record DynamicPressure(
+        
+        @Schema(description = "동압", example = "21.2")
+        Double pressure,
+        
+        @Schema(description = "압력 단위", example = "mmH2O")
+        String unit
+    
+    ) {}
+    
+    public record StaticPressure(
+        
+        @Schema(description = "정압", example = "-12.4")
+        Double pressure,
+        
+        @Schema(description = "압력 단위", example = "mmH2O")
+        String unit
+    
+    ) {}
+  }
   
-  public record StaticPressure(
-      
-      @Schema(description = "정압", example = "-12.4")
-      Double pressure,
-      
-      @Schema(description = "압력 단위", example = "mmH2O")
-      String unit
-      
-  ) {}
 }
