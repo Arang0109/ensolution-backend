@@ -15,15 +15,15 @@ public class PressureConvertStep implements MeasurementStep {
         PressureUnit.from(d.getMeasurement().weather().pressure().unit())
     );
     
-    Double staticPressure = PressureConverter.toMmHg(
-        d.getMeasurement().exhaustGas().staticPressure().pressure(),
-        PressureUnit.from(d.getMeasurement().exhaustGas().staticPressure().unit())
-    );
-    
-    Double dynamicPressure = PressureConverter.toMmHg(
-        d.getMeasurement().exhaustGas().dynamicPressure().pressure(),
-        PressureUnit.from(d.getMeasurement().exhaustGas().dynamicPressure().unit())
-    );
+//    Double staticPressure = PressureConverter.toMmHg(
+//        d.getMeasurement().exhaustGas().measurementPoints().staticPressure().pressure(),
+//        PressureUnit.from(d.getMeasurement().exhaustGas().MeasurementPoint.staticPressure().unit())
+//    );
+//
+//    Double dynamicPressure = PressureConverter.toMmHg(
+//        d.getMeasurement().exhaustGas().dynamicPressure().pressure(),
+//        PressureUnit.from(d.getMeasurement().exhaustGas().dynamicPressure().unit())
+//    );
     
     Double gasEquipGaugePressure = PressureConverter.toMmHg(
         d.getMeasurement().moisture().gasMeterGaugePressure(),
@@ -31,8 +31,8 @@ public class PressureConvertStep implements MeasurementStep {
     );
     
     context.setAtmospherePressure(weather);
-    context.setStaticPressure(staticPressure);
-    context.setDynamicPressure(dynamicPressure);
+//    context.setStaticPressure(staticPressure);
+//    context.setDynamicPressure(dynamicPressure);
     context.setGasMeterGaugePressure(gasEquipGaugePressure);
   }
 }

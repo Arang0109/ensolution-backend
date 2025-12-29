@@ -10,6 +10,6 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
 @Mapper(componentModel = "spring")
 public interface ExhaustGasMapper {
   ExhaustGasDocument toDocument(ExhaustGasCommandDto dto);
-  ExhaustGasDocument.DynamicPressureDocument toDocument(ExhaustGasCommandDto.DynamicPressure dto);
-  ExhaustGasDocument.StaticPressureDocument toDocument(ExhaustGasCommandDto.StaticPressure dto);
+  ExhaustGasDocument.DynamicPressureDocument toDocument(ExhaustGasCommandDto.MeasurementPoint.DynamicPressure dto);
+  ExhaustGasDocument.StaticPressureDocument toDocument(ExhaustGasCommandDto.MeasurementPoint.StaticPressure dto);
 }
