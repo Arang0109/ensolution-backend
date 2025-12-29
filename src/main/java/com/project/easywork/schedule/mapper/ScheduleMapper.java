@@ -15,6 +15,7 @@ import java.util.List;
     componentModel = "spring",
     builder = @Builder(),
     uses = {
+        ScheduleMeasurementMapper.class,
         StackMeasurementMapper.class,
         StackMapper.class,
         WorkplaceMapper.class,

@@ -65,7 +65,13 @@ public class Schedule {
   }
   
   public void addMeasurement(ScheduleMeasurement measurement) {
+    
+    if (this.measurements.contains(measurement)) {
+      return;
+    }
+    
     if (measurement == null) return;
+    measurement.attachSchedule(this);
     this.measurements.add(measurement);
   }
   
