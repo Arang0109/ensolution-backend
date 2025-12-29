@@ -9,7 +9,7 @@ import lombok.*;
 @Getter
 @Builder
 @ToString
-public class SchedulePollutantResDto {
+public class ScheduleMeasurementResDto {
   @Schema(
       description = "일정 ID (PK)",
       accessMode = Schema.AccessMode.READ_ONLY)

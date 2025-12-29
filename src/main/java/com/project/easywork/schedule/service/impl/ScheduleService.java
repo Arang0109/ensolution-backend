@@ -1,36 +1,22 @@
 package com.project.easywork.schedule.service.impl;
 
 import com.project.easywork.agency.domain.entity.Team;
-import com.project.easywork.agency.service_data.ITeamDataService;
-import com.project.easywork.client.domain.dto.stack.StackDetailResponseDto;
 import com.project.easywork.client.domain.persistance.Stack;
-import com.project.easywork.client.mapper.CompanyMapper;
-import com.project.easywork.client.mapper.WorkplaceMapper;
-import com.project.easywork.client.service.IStackService;
-import com.project.easywork.client.service_data.IStackDataService;
-import com.project.easywork.common.exception.CustomException;
-import com.project.easywork.common.exception.ErrorCode;
 import com.project.easywork.common.resolver.DomainEntityResolver;
-import com.project.easywork.common.util.measurePoint.MeasurePointStrategy;
-import com.project.easywork.common.util.measurePoint.MeasurePointStrategyFactory;
 import com.project.easywork.schedule.domain.ScheduleStatus;
 import com.project.easywork.measurement.service.IMeasurementService;
 import com.project.easywork.schedule.domain.dto.*;
 import com.project.easywork.schedule.domain.persistance.Schedule;
-import com.project.easywork.schedule.domain.persistance.SchedulePollutant;
 import com.project.easywork.schedule.mapper.ScheduleMapper;
-import com.project.easywork.schedule.mapper.SchedulePollutantMapper;
+import com.project.easywork.schedule.mapper.ScheduleMeasurementMapper;
+import com.project.easywork.schedule.service.IScheduleMeasurementService;
 import com.project.easywork.schedule.service.IScheduleService;
 import com.project.easywork.schedule.service_data.IScheduleDataService;
-import com.project.easywork.schedule.service_data.ISchedulePollutantDataService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -38,19 +24,35 @@ import java.util.stream.Collectors;
 public class ScheduleService implements IScheduleService {
   
   private final IScheduleDataService scheduleDataService;
-  private final ISchedulePollutantDataService schedulePollutantDataService;
-  private final IStackDataService stackDataService;
-  private final ITeamDataService teamDataService;
+  private final ScheduleMapper scheduleMapper;
   
-  private final IStackService stackService;
+  private final IScheduleMeasurementService scheduleMeasurementService;
+  private final ScheduleMeasurementMapper scheduleMeasurementMapper;
   private final IMeasurementService measurementService;
   
-  private final ScheduleMapper scheduleMapper;
-  private final SchedulePollutantMapper schedulePollutantMapper;
-  private final CompanyMapper companyMapper;
-  private final WorkplaceMapper workplaceMapper;
-  
   private final DomainEntityResolver domainEntityResolver;
+  
+  @Override
+  public ScheduleResDto register(ScheduleCreateReqDto scheduleCreateReqDto) {
+    Stack stack = domainEntityResolver.getStackOrThrow(scheduleCreateReqDto.getStackId());
+    Team team = domainEntityResolver.getTeamOrThrow(scheduleCreateReqDto.getTeamId());
+    
+    Schedule schedule = scheduleMapper.toEntity(scheduleCreateReqDto);
+    schedule.attachStack(stack);
+    schedule.attachTeam(team);
+    
+    schedule = scheduleDataService.save(schedule);
+    
+    Long scheduleId = schedule.getId();
+    
+    List<Long> measurementIds = scheduleCreateReqDto.getMeasurementIds();
+    
+    scheduleMeasurementService.registerAll(scheduleId, measurementIds);
+    
+    measurementService.createDraft(scheduleId);
+    
+    return scheduleMapper.toDto(schedule);
+  }
   
   @Override
   @Transactional(readOnly = true)
@@ -70,38 +72,16 @@ public class ScheduleService implements IScheduleService {
   @Transactional(readOnly = true)
   public ScheduleDetailResDto getSchedule(Long scheduleId) {
     Schedule schedule = scheduleDataService.findDetailById(scheduleId);
-    
-    return ScheduleDetailResDto.builder()
-        .schedule(scheduleMapper.toDto(schedule))
-        .workplace(workplaceMapper.toDto(schedule.getStack().getWorkplace()))
-        .company(companyMapper.toDto(schedule.getStack().getWorkplace().getCompany()))
-        .stack(stackService.getStack(schedule.getStack().getId()))
-        .measurements(schedulePollutantMapper.toDtoList(schedule.getPollutants()))
-        .build();
+    return scheduleMapper.toDetailDto(schedule);
   }
   
   @Override
-  public ScheduleResDto register(ScheduleCreateReqDto scheduleCreateReqDto) {
-    Stack stack = domainEntityResolver.getStackOrThrow(scheduleCreateReqDto.getStackId());
-    Team team = teamDataService.findById(scheduleCreateReqDto.getTeamId());
-    Schedule schedule = scheduleMapper.toEntity(scheduleCreateReqDto);
-    schedule.attachStack(stack);
-    schedule.attachTeam(team);
-    
-    schedule = scheduleDataService.save(schedule);
-    
-    measurementService.createDraft(schedule.getId());
-    
-    return scheduleMapper.toDto(schedule);
-  }
-  
-  @Override
-  public void addMeasurement(Long scheduleId, List<SchedulePollutantCreateReqDto> dtos) {
+  public void addMeasurements(Long scheduleId, List<ScheduleMeasurementCreateReqDto> dtos) {
     Schedule schedule = scheduleDataService.findById(scheduleId);
     
-    dtos.stream()
-        .map(schedulePollutantMapper::toEntity)
-        .forEach(schedule::addPollutant);
+    schedule.addMeasurements(
+        scheduleMeasurementMapper.toEntityList(dtos)
+    );
     
     scheduleDataService.save(schedule);
   }
@@ -109,21 +89,26 @@ public class ScheduleService implements IScheduleService {
   @Override
   public ScheduleResDto update(Long scheduleId, ScheduleUpdateReqDto dto) {
     Schedule schedule = scheduleDataService.findById(scheduleId);
+    scheduleMapper.updateSchedule(dto, schedule);
     
-    Stack stack = null;
-    if (dto.getStackId() != null) stack = stackDataService.findById(dto.getStackId());
+    if (dto.getStackId() != null) {
+      Stack stack = domainEntityResolver.getStackOrThrow(dto.getStackId());
+      schedule.attachStack(stack);
+    }
     
-    Team team = null;
-    if (dto.getTeamId() != null) team = teamDataService.findById(dto.getTeamId());
+    if (dto.getTeamId() != null) {
+      Team team = domainEntityResolver.getTeamOrThrow(dto.getTeamId());
+      schedule.attachTeam(team);
+    }
     
-    return scheduleMapper.toDto(scheduleDataService.save(schedule));
+    return scheduleMapper.toDto(schedule);
   }
   
   @Override
   public ScheduleResDto updateStatus(Long scheduleId, ScheduleStatusUpdateReqDto dto) {
     Schedule schedule = scheduleDataService.findById(scheduleId);
     schedule.updateStatus(dto);
-    return scheduleMapper.toDto(scheduleDataService.save(schedule));
+    return scheduleMapper.toDto(schedule);
   }
   
   @Override
