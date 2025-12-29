@@ -6,7 +6,6 @@ import lombok.*;
 @AllArgsConstructor
 @Getter
 @Builder
-@ToString
 public class ScheduleMeasurementCreateReqDto {
   private Long scheduleId;
   private Long stackMeasurementId;

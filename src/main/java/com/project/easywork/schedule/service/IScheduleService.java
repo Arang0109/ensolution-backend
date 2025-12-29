@@ -10,7 +10,7 @@ public interface IScheduleService {
   List<ScheduleResDto> getListByStack(Long stackId, List<ScheduleStatus> status);
   ScheduleDetailResDto getSchedule(Long scheduleId);
   ScheduleResDto register(ScheduleCreateReqDto scheduleCreateReqDto);
-  void addMeasurement(Long scheduleId, List<ScheduleMeasurementCreateReqDto> dto);
+  void addMeasurements(Long scheduleId, List<ScheduleMeasurementCreateReqDto> dto);
   ScheduleResDto update(Long scheduleId, ScheduleUpdateReqDto dto);
   ScheduleResDto updateStatus(Long scheduleId, ScheduleStatusUpdateReqDto dto);
   void delete(Long scheduleId);

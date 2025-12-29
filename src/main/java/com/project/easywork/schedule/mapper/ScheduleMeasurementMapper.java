@@ -4,9 +4,7 @@ import com.project.easywork.client.mapper.StackMeasurementMapper;
 import com.project.easywork.schedule.domain.dto.ScheduleMeasurementCreateReqDto;
 import com.project.easywork.schedule.domain.dto.ScheduleMeasurementResDto;
 import com.project.easywork.schedule.domain.persistance.ScheduleMeasurement;
-import org.mapstruct.Builder;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
+import org.mapstruct.*;
 
 import java.util.List;
 
@@ -19,8 +17,8 @@ import java.util.List;
 )
 public interface ScheduleMeasurementMapper {
   
-  @Mapping(source = "scheduleId", target = "schedule.id")
   @Mapping(source = "stackMeasurementId", target = "stackMeasurement.id")
+  @Mapping(source = "scheduleId", target = "schedule.id")
   ScheduleMeasurement toEntity(ScheduleMeasurementCreateReqDto dto);
   
   @Mapping(target = "scheduleId", source = "schedule.id")
@@ -29,5 +27,7 @@ public interface ScheduleMeasurementMapper {
   
   List<ScheduleMeasurementResDto> toDtoList(List<ScheduleMeasurement> scheduleMeasurements);
   
-  List<ScheduleMeasurement> toEntityList(List<ScheduleMeasurementCreateReqDto> scheduleMeasurementCreateReqDtos);
+  List<ScheduleMeasurement> toEntityList(
+      List<ScheduleMeasurementCreateReqDto> dtos
+  );
 }

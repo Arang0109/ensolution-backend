@@ -76,7 +76,7 @@ public class ScheduleService implements IScheduleService {
   }
   
   @Override
-  public void addMeasurement(Long scheduleId, List<ScheduleMeasurementCreateReqDto> dtos) {
+  public void addMeasurements(Long scheduleId, List<ScheduleMeasurementCreateReqDto> dtos) {
     Schedule schedule = scheduleDataService.findById(scheduleId);
     
     schedule.addMeasurements(

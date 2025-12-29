@@ -73,7 +73,7 @@ public class ScheduleController {
       @PathVariable Long scheduleId,
       @Valid @RequestBody List<ScheduleMeasurementCreateReqDto> request
   ) {
-    scheduleService.addMeasurement(scheduleId, request);
+    scheduleService.addMeasurements(scheduleId, request);
     return ResponseEntity.ok().body(ApiResponse.success());
   }
   

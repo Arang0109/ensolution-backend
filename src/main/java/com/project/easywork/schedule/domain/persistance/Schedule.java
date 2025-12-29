@@ -66,8 +66,7 @@ public class Schedule {
   
   public void addMeasurement(ScheduleMeasurement measurement) {
     if (measurement == null) return;
-    
-    measurements.add(measurement);
+    this.measurements.add(measurement);
   }
   
   public void addMeasurements(List<ScheduleMeasurement> measurements) {
