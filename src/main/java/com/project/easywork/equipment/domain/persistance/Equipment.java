@@ -1,5 +1,6 @@
 package com.project.easywork.equipment.domain.persistance;
 
+import com.project.easywork.equipment.domain.EquipType;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -33,6 +34,9 @@ public class Equipment {
   @Column(name = "equipment_name", length = 100)
   private String equipmentName;
   
+  @Enumerated(EnumType.STRING)
+  private EquipType type;
+  
   // 가격
   @Column(name = "price", precision = 12, scale = 2)
   private BigDecimal price;
@@ -60,6 +64,12 @@ public class Equipment {
   // 교정 주기 (월 단위 예시)
   @Column(name = "calibration_cycle")
   private Integer calibrationCycle;
+  
+  @Column(name = "dH")
+  private Double dh;
+  
+  @Column(name = "Yd")
+  private Double yd;
   
   // 비고
   @Lob
