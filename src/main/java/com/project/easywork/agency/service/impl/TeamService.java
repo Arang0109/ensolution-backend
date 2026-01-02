@@ -48,19 +48,7 @@ public class TeamService implements ITeamService {
   @Override
   @Transactional(readOnly = true)
   public TeamDetailResponseDto get(Long id) {
-    TeamResponseDto team = teamMapper.toDto(teamDataService.findById(id));
-    List<UserResponseDto> users = userMapper.toDtoList(
-        userDataService.findUsersByTeamId(id)
-    );
-    List<VehicleResponseDto> vehicles = vehicleMapper.toDtoList(
-        vehicleDataService.findVehiclesByTeamId(id)
-    );
-    
-    return TeamDetailResponseDto.builder()
-        .team(team)
-        .users(users)
-        .vehicles(vehicles)
-        .build();
+    return teamMapper.toDetailDto(teamDataService.findById(id));
   }
   
   @Override public TeamResponseDto update(Long id, TeamUpdateRequestDto dto) {
