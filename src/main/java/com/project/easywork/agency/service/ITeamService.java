@@ -13,4 +13,7 @@ public interface ITeamService {
   TeamResponseDto register(TeamCreateRequestDto dto);
   TeamResponseDto update(Long teamId, TeamUpdateRequestDto dto);
   void delete(Long teamId);
+  
+  TeamResponseDto updateParticularEquip(Long teamId, Long equipmentId);
+  TeamResponseDto updatePitotTube(Long teamId, Long pitotTubeId);
 }

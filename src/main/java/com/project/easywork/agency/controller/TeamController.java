@@ -1,9 +1,6 @@
 package com.project.easywork.agency.controller;
 
-import com.project.easywork.agency.domain.dto.TeamCreateRequestDto;
-import com.project.easywork.agency.domain.dto.TeamDetailResponseDto;
-import com.project.easywork.agency.domain.dto.TeamResponseDto;
-import com.project.easywork.agency.domain.dto.TeamUpdateRequestDto;
+import com.project.easywork.agency.domain.dto.*;
 import com.project.easywork.agency.service.ITeamService;
 import com.project.easywork.common.api.ApiResponse;
 import io.swagger.v3.oas.annotations.Operation;
@@ -53,6 +50,26 @@ public class TeamController {
           @Valid @RequestBody TeamUpdateRequestDto request
       ) {
     return ResponseEntity.ok(ApiResponse.success(teamService.update(teamId, request)));
+  }
+  
+  @Operation(summary = "측정팀 장비 등록/삭제 API")
+  @PatchMapping("/{teamId}/particular-equip")
+  public ResponseEntity<ApiResponse<TeamResponseDto>> updateParticularEquip
+      (
+          @PathVariable Long teamId,
+          @RequestBody ParticularEquipUpdateRequestDto request
+      ) {
+    return ResponseEntity.ok(ApiResponse.success(teamService.updateParticularEquip(teamId, request.getEquipmentId())));
+  }
+  
+  @Operation(summary = "측정팀 피토우관 등록/삭제 API")
+  @PatchMapping("/{teamId}/pitotTube")
+  public ResponseEntity<ApiResponse<TeamResponseDto>> updatePitotTube
+      (
+          @PathVariable Long teamId,
+          @RequestBody PitotTubeUpdateRequestDto request
+      ) {
+    return ResponseEntity.ok(ApiResponse.success(teamService.updatePitotTube(teamId, request.getPitotTubeId())));
   }
   
   @Operation(summary = "측정팀 삭제 API", description = "측정팀 정보를 데이터베이스에서 삭제합니다.")

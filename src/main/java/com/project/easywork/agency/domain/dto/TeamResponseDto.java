@@ -2,6 +2,8 @@ package com.project.easywork.agency.domain.dto;
 
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -11,4 +13,6 @@ public class TeamResponseDto {
   private String name;
   private Long particularEquipId;
   private Long pitotTubeId;
+  private LocalDateTime createdAt;
+  private LocalDateTime modifiedAt;
 }

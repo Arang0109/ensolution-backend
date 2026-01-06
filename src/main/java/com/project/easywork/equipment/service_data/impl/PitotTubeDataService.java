@@ -15,6 +15,11 @@ public class PitotTubeDataService implements IPitotTubeDataService {
   private final PitotTubeRepository pitotTubeRepository;
   
   @Override
+  public PitotTube findById(Long pitotTubeId) {
+    return pitotTubeRepository.findById(pitotTubeId).orElseThrow();
+  }
+  
+  @Override
   public List<PitotTube> findAll() {
     return pitotTubeRepository.findAll();
   }
