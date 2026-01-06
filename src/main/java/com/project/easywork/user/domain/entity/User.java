@@ -3,6 +3,7 @@ package com.project.easywork.user.domain.entity;
 import com.project.easywork.agency.domain.entity.Team;
 import com.project.easywork.user.domain.Active;
 import com.project.easywork.common.domain.BaseEntity;
+import com.project.easywork.user.domain.dto.UserUpdateDto;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -90,18 +91,12 @@ public class User extends BaseEntity {
   /* =========================
    * Profile Logic
    * ========================= */
-  public void updateProfile(
-      String name,
-      String email,
-      String department,
-      String grade,
-      String phoneNumber
-  ) {
-    if (name != null) this.name = name;
-    if (email != null) this.email = email;
-    if (department != null) this.department = department;
-    if (grade != null) this.grade = grade;
-    if (phoneNumber != null) this.phoneNumber = phoneNumber;
+  public void updateProfile(UserUpdateDto dto) {
+    if (name != null) this.name = dto.getName();
+    if (email != null) this.email = dto.getEmail();
+    if (department != null) this.department = dto.getDepartment();
+    if (grade != null) this.grade = dto.getGrade();
+    if (phoneNumber != null) this.phoneNumber = dto.getPhoneNumber();
   }
   
   public void changePassword(String encodedPassword) {

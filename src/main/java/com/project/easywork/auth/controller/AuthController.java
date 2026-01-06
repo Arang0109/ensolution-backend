@@ -8,7 +8,7 @@ import com.project.easywork.auth.security.CustomUserDetails;
 import com.project.easywork.auth.service.RefreshTokenService;
 import com.project.easywork.user.domain.dto.UserCreateDto;
 import com.project.easywork.user.domain.dto.UserResponseDto;
-import com.project.easywork.user.service.UserService;
+import com.project.easywork.user.service.IUserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -36,7 +36,7 @@ import java.util.concurrent.TimeUnit;
 public class AuthController {
   
   private final RefreshTokenService refreshTokenService;
-  private final UserService userService;
+  private final IUserService IUserService;
   
   private final AuthenticationManager authenticationManager;
   private final JwtTokenProvider jwtTokenProvider;
@@ -47,7 +47,7 @@ public class AuthController {
       (
           @Valid @RequestBody UserCreateDto request
       ) {
-    return ResponseEntity.ok().body(ApiResponse.success(userService.register(request)));
+    return ResponseEntity.ok().body(ApiResponse.success(IUserService.register(request)));
   }
   
   @Operation(summary = "로그인 API", description = "회원 로그인을 수행합니다.")

@@ -8,11 +8,12 @@ import com.project.easywork.user.domain.dto.UserUpdateDto;
 
 import java.util.List;
 
-public interface UserService {
+public interface IUserService {
   List<UserResponseDto> findAll();
   UserResponseDto getProfileByUsername(String username);
   UserResponseDto register(UserCreateDto dto);
-  UserResponseDto update(UserUpdateDto dto);
+  UserResponseDto update(Long userId, UserUpdateDto dto);
   void removeUser(CustomUserDetails userDetails);
   UserResponseDto updatePassword(Long userId, PasswordUpdateDto dto);
+  UserResponseDto updateTeam(Long userId, Long teamId);
 }
