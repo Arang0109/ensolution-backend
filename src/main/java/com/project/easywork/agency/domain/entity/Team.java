@@ -36,7 +36,7 @@ public class Team {
   
   @OneToMany(mappedBy = "team", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
   @ToString.Exclude
-  private List<User> users = new ArrayList<>();
+  private List<User> members = new ArrayList<>();
   
   @OneToMany(mappedBy = "team", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
   @ToString.Exclude
