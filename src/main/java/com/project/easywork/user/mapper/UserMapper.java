@@ -14,11 +14,12 @@ import java.util.List;
     builder = @Builder()
 )
 public interface UserMapper {
-  @Mapping(target = "password", ignore = true)
-  @Mapping(target = "team", ignore = true)
+  @Mapping(ignore = true, target = "password")
+  @Mapping(ignore = true, target = "team")
   User toEntity(UserCreateDto dto);
   
-  @Mapping(target = "teamId", source = "team.id")
+  @Mapping(source = "team.id", target = "teamId")
+  @Mapping(source = "team.name", target = "teamName")
   UserResponseDto toDto(User user);
   
   List<UserResponseDto> toDtoList(List<User> users);
