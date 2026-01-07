@@ -1,5 +1,6 @@
 package com.project.easywork.equipment.domain.dto;
 
+import com.project.easywork.equipment.domain.EquipType;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
@@ -21,6 +22,7 @@ public class EquipmentResDto {
   private String serialNumber;
   private String modelName;
   private String equipmentName;
+  private EquipType type;
   private BigDecimal price;
   private String manufacturer;
   private String originCountry;
@@ -28,6 +30,8 @@ public class EquipmentResDto {
   private Boolean isAvailable;
   private LocalDate calibrationDate;
   private Integer calibrationCycle;
+  private Double dh;
+  private Double yd;
   
   private String remark;
 }

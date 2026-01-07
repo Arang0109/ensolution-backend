@@ -15,10 +15,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @ToString(exclude = "password")
-public class UserCreateDto {
-  @Schema(description = "팀 ID (FK)")
-  private Long teamId;
-  
+public class UserCreateD {
   @Schema(description = "회원 아이디", example = "test01")
   @NotBlank(message = "필수 입력")
   @Size(min = 4, max = 20, message = "아이디는 4~20자여야 합니다.")

@@ -1,6 +1,6 @@
 package com.project.easywork.user.validator;
 
-import com.project.easywork.user.domain.dto.UserCreateDto;
+import com.project.easywork.user.domain.dto.UserCreateD;
 import com.project.easywork.common.exception.CustomException;
 import com.project.easywork.common.exception.ErrorCode;
 import com.project.easywork.user.repository.UserRepository;
@@ -13,7 +13,7 @@ public class UserValidator {
   
   private final UserRepository userRepository;
   
-  public void validate(UserCreateDto dto) {
+  public void validate(UserCreateD dto) {
     validateDuplicateEmail(dto.getEmail());
     validateDuplicatePhoneNumber(dto.getPhoneNumber());
     validateDuplicateUsername(dto.getUsername());

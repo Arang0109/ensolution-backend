@@ -1,38 +1,92 @@
 package com.project.easywork.agency.domain.entity;
 
-import com.project.easywork.agency.domain.dto.TeamUpdateRequestDto;
+import com.project.easywork.agency.domain.dto.TeamUpdateD;
+import com.project.easywork.common.domain.BaseEntity;
+import com.project.easywork.equipment.domain.EquipType;
+import com.project.easywork.equipment.domain.persistance.Equipment;
+import com.project.easywork.equipment.domain.persistance.PitotTube;
 import com.project.easywork.user.domain.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@SuperBuilder(toBuilder = true)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Entity
 @Getter
-@Setter
 @Table(name = "team")
-public class Team {
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(nullable = false, unique = true)
-  private Long id;
+public class Team extends BaseEntity {
   
+  /* =========================
+   * Relations
+   * ========================= */
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "particular_equip_id")
+  private Equipment particularEquip;
+  
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "pitot_tube_id")
+  private PitotTube pitotTube;
+  
+  @OneToMany(mappedBy = "team", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+  @ToString.Exclude
+  private List<User> members = new ArrayList<>();
+  
+  /* =========================
+   * Columns
+   * ========================= */
   @Column(nullable = false, length = 100)
   private String name;
   
-  @OneToMany(mappedBy = "team", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-  @ToString.Exclude
-  private List<User> users = new ArrayList<>();
+  @Column(name = "vehicle_number", length = 100)
+  private String vehicleNumber;
   
-  @OneToMany(mappedBy = "team", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-  @ToString.Exclude
-  private List<Vehicle> vehicles = new ArrayList<>();
+  /* =========================
+   * Relation Logic
+   * ========================= */
+  private void attachParticularEquip(Equipment equipment) {
+    if (equipment == null) {
+      this.particularEquip = null;
+      return;
+    }
+    
+    if (!equipment.getType().equals(EquipType.PARTICULAR)) return;
+    
+    this.particularEquip = equipment;
+  }
   
-  public void update(TeamUpdateRequestDto dto) {
+  private void attachPitotTube(PitotTube pitotTube) {
+    if (pitotTube == null) {
+      this.pitotTube = null;
+      return;
+    }
+    
+    this.pitotTube = pitotTube;
+  }
+  
+  public void changeParticularEquip(Equipment equipment) {
+    attachParticularEquip(equipment);
+  }
+  
+  public void changePitotTube(PitotTube pitotTube) {
+    attachPitotTube(pitotTube);
+  }
+  
+  /* =========================
+   * Team Logic
+   * ========================= */
+  public void update(TeamUpdateD dto) {
     Optional.ofNullable(dto.getName())
         .filter(str -> !str.isBlank())
-        .ifPresent(this::setName);
+        .ifPresent(name -> this.name = name);
+    
+    Optional.ofNullable(dto.getVehicleNumber())
+        .filter(str -> !str.isBlank())
+        .ifPresent(number -> this.vehicleNumber = number);
   }
 }

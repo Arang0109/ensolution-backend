@@ -3,6 +3,7 @@ package com.project.easywork.user.domain.entity;
 import com.project.easywork.agency.domain.entity.Team;
 import com.project.easywork.user.domain.Active;
 import com.project.easywork.common.domain.BaseEntity;
+import com.project.easywork.user.domain.dto.UserUpdateD;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -21,12 +22,26 @@ import java.util.Set;
 @Table(name = "users")
 public class User extends BaseEntity {
   
+  /* =========================
+   * Relations
+   * ========================= */
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "team_id")
   @OnDelete(action = OnDeleteAction.SET_NULL)
   @ToString.Exclude
   private Team team;
   
+  @ManyToMany(fetch = FetchType.LAZY)
+  @JoinTable(
+      name = "user_role",
+      joinColumns = @JoinColumn(name = "user_id"),
+      inverseJoinColumns = @JoinColumn(name = "role_id"))
+  @Builder.Default
+  private Set<Role> roles = new HashSet<>();
+  
+  /* =========================
+   * Columns
+   * ========================= */
   @Column(nullable = false, unique = true, length = 20)
   private String username;
   
@@ -46,33 +61,58 @@ public class User extends BaseEntity {
   @Column(nullable = false)
   private String email;
   
-  @Column(name = "phone_number", nullable = false, unique = true, length = 11)
+  @Column(nullable = false, unique = true, length = 11)
   private String phoneNumber;
   
-  @Column(name = "birth_date", nullable = false)
+  @Column(nullable = false)
   private LocalDate birthDate;
   
   @Enumerated(EnumType.STRING)
   @Column(nullable = false, length = 10)
   private Active active = Active.ACTIVE;
   
-  @ManyToMany(fetch = FetchType.LAZY)
-  @JoinTable(
-      name = "user_role",
-      joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-      inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
-  @Builder.Default
-  private Set<Role> roles = new HashSet<>();
+  /* =========================
+   * Relation Logic
+   * ========================= */
+  private void attachTeam(Team team) {
+    if (this.team != null) {
+      this.team.getMembers().remove(this);
+    }
+    this.team = team;
+    if (team != null) {
+      team.getMembers().add(this);
+    }
+  }
   
-  public void updateProfile(String name, String email, String department, String grade, String phoneNumber) {
-    if (name != null) this.name = name;
-    if (email != null) this.email = email;
-    if (department != null) this.department = department;
-    if (grade != null) this.grade = grade;
-    if (phoneNumber != null) this.phoneNumber = phoneNumber;
+  public void changeTeam(Team team) {
+    attachTeam(team);
+  }
+  
+  /* =========================
+   * Profile Logic
+   * ========================= */
+  public void updateProfile(UserUpdateD dto) {
+    if (name != null) this.name = dto.getName();
+    if (email != null) this.email = dto.getEmail();
+    if (department != null) this.department = dto.getDepartment();
+    if (grade != null) this.grade = dto.getGrade();
+    if (phoneNumber != null) this.phoneNumber = dto.getPhoneNumber();
   }
   
   public void changePassword(String encodedPassword) {
     this.password = encodedPassword;
+  }
+  
+  /* =========================
+   * Role Logic
+   * ========================= */
+  public void addRole(Role role) {
+    if (role == null) return;
+    this.roles.add(role);
+  }
+  
+  public void removeRole(Role role) {
+    if (role == null) return;
+    this.roles.remove(role);
   }
 }
