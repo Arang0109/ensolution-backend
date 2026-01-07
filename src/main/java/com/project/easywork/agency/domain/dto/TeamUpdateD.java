@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-public class PitotTubeUpdateRequestDto {
-  private Long pitotTubeId;
+public class TeamUpdateD {
+  private String name;
+  private String vehicleNumber;
 }

@@ -6,6 +6,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-public class TeamCreateRequestDto {
+public class TeamCreateD {
   @NotBlank(message = "필수 입력")  private String name;
+  private String vehicleNumber;
 }

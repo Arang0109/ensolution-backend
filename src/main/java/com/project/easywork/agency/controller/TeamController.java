@@ -24,50 +24,50 @@ public class TeamController {
   
   @Operation(summary = "측정팀 등록 API", description = "새로운 측정팀 정보를 데이터베이스에 저장합니다.")
   @PostMapping()
-  public ResponseEntity<ApiResponse<TeamResponseDto>> register(
-      @Valid @RequestBody TeamCreateRequestDto request
+  public ResponseEntity<ApiResponse<TeamD>> register(
+      @Valid @RequestBody TeamCreateD request
   ) {
     return ResponseEntity.ok().body(ApiResponse.success(teamService.register(request)));
   }
   
   @Operation(summary = "측정팀 목록 조회 API", description = "전체 측정팀 목록을 조회합니다.")
   @GetMapping()
-  public ResponseEntity<ApiResponse<List<TeamResponseDto>>> getList() {
+  public ResponseEntity<ApiResponse<List<TeamD>>> getList() {
     return ResponseEntity.ok().body(ApiResponse.success(teamService.getList()));
   }
   
   @Operation(summary = "측정팀 조회 API", description = "해당 측정팀의 상세정보를 조회합니다.")
   @GetMapping("/{teamId}")
-  public ResponseEntity<ApiResponse<TeamDetailResponseDto>> get(@PathVariable Long teamId) {
+  public ResponseEntity<ApiResponse<TeamDetailD>> get(@PathVariable Long teamId) {
     return ResponseEntity.ok().body(ApiResponse.success(teamService.get(teamId)));
   }
   
   @Operation(summary = "측정팀 수정 API", description = "해당 측정팀의 상세정보를 수정합니다.")
   @PatchMapping("/{teamId}")
-  public ResponseEntity<ApiResponse<TeamResponseDto>> update
+  public ResponseEntity<ApiResponse<TeamD>> update
       (
           @PathVariable Long teamId,
-          @Valid @RequestBody TeamUpdateRequestDto request
+          @Valid @RequestBody TeamUpdateD request
       ) {
     return ResponseEntity.ok(ApiResponse.success(teamService.update(teamId, request)));
   }
   
   @Operation(summary = "측정팀 장비 등록/삭제 API")
   @PatchMapping("/{teamId}/particular-equip")
-  public ResponseEntity<ApiResponse<TeamResponseDto>> updateParticularEquip
+  public ResponseEntity<ApiResponse<TeamD>> updateParticularEquip
       (
           @PathVariable Long teamId,
-          @RequestBody ParticularEquipUpdateRequestDto request
+          @RequestBody ParticularEquipChangeD request
       ) {
     return ResponseEntity.ok(ApiResponse.success(teamService.updateParticularEquip(teamId, request.getEquipmentId())));
   }
   
   @Operation(summary = "측정팀 피토우관 등록/삭제 API")
   @PatchMapping("/{teamId}/pitotTube")
-  public ResponseEntity<ApiResponse<TeamResponseDto>> updatePitotTube
+  public ResponseEntity<ApiResponse<TeamD>> updatePitotTube
       (
           @PathVariable Long teamId,
-          @RequestBody PitotTubeUpdateRequestDto request
+          @RequestBody PitotTubeChangeD request
       ) {
     return ResponseEntity.ok(ApiResponse.success(teamService.updatePitotTube(teamId, request.getPitotTubeId())));
   }

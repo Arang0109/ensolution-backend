@@ -7,6 +7,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-public class ParticularEquipUpdateRequestDto {
+public class ParticularEquipChangeD {
   private Long equipmentId; // null 허용
 }

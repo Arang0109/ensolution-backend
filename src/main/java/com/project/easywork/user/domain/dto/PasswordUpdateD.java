@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-public class PasswordUpdateDto {
+public class PasswordUpdateD {
   @NotBlank(message = "현재 비밀번호는 필수 입력입니다.")
   private String currentPassword;
   

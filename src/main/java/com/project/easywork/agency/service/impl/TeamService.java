@@ -33,7 +33,7 @@ public class TeamService implements ITeamService {
   private final EntityManager entityManager;
   
   @Override
-  public TeamResponseDto register(TeamCreateRequestDto dto) {
+  public TeamD register(TeamCreateD dto) {
     teamValidator.validate(dto);
     
     Team team = teamMapper.toEntity(dto);
@@ -43,18 +43,17 @@ public class TeamService implements ITeamService {
   
   @Override
   @Transactional(readOnly = true)
-  public List<TeamResponseDto> getList() {
+  public List<TeamD> getList() {
     return teamMapper.toDtoList(teamDataService.findAll());
   }
   
   @Override
   @Transactional(readOnly = true)
-  public TeamDetailResponseDto get(Long id) {
+  public TeamDetailD get(Long id) {
     return teamMapper.toDetailDto(teamDataService.findById(id));
   }
   
-  @Override public TeamResponseDto update(Long id, TeamUpdateRequestDto dto) {
-    teamValidator.validate(dto);
+  @Override public TeamD update(Long id, TeamUpdateD dto) {
     Team team = teamDataService.findById(id);
     team.update(dto);
     
@@ -64,7 +63,7 @@ public class TeamService implements ITeamService {
   }
   
   @Override
-  public TeamResponseDto updateParticularEquip(Long teamId, @Nullable Long equipmentId) {
+  public TeamD updateParticularEquip(Long teamId, @Nullable Long equipmentId) {
     Team team = teamDataService.findById(teamId);
     
     Equipment equipment = equipmentId == null
@@ -79,7 +78,7 @@ public class TeamService implements ITeamService {
   }
   
   @Override
-  public TeamResponseDto updatePitotTube(Long teamId, @Nullable Long pitotTubeId) {
+  public TeamD updatePitotTube(Long teamId, @Nullable Long pitotTubeId) {
     Team team = teamDataService.findById(teamId);
     
     PitotTube pitotTube = pitotTubeId == null

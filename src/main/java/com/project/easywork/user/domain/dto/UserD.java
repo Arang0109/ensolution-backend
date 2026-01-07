@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 @Getter
-public class UserResponseDto {
+public class UserD {
   private String username;
   private Long teamId;
   private String teamName;

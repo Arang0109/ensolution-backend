@@ -1,7 +1,7 @@
 package com.project.easywork.user.mapper;
 
-import com.project.easywork.user.domain.dto.UserCreateDto;
-import com.project.easywork.user.domain.dto.UserResponseDto;
+import com.project.easywork.user.domain.dto.UserCreateD;
+import com.project.easywork.user.domain.dto.UserD;
 import com.project.easywork.user.domain.entity.User;
 import org.mapstruct.Builder;
 import org.mapstruct.Mapper;
@@ -16,11 +16,11 @@ import java.util.List;
 public interface UserMapper {
   @Mapping(ignore = true, target = "password")
   @Mapping(ignore = true, target = "team")
-  User toEntity(UserCreateDto dto);
+  User toEntity(UserCreateD dto);
   
   @Mapping(source = "team.id", target = "teamId")
   @Mapping(source = "team.name", target = "teamName")
-  UserResponseDto toDto(User user);
+  UserD toDto(User user);
   
-  List<UserResponseDto> toDtoList(List<User> users);
+  List<UserD> toDtoList(List<User> users);
 }

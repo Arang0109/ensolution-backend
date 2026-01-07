@@ -1,9 +1,9 @@
 package com.project.easywork.user.controller;
 
 import com.project.easywork.common.api.ApiResponse;
-import com.project.easywork.user.domain.dto.PasswordUpdateDto;
-import com.project.easywork.user.domain.dto.UserResponseDto;
-import com.project.easywork.user.domain.dto.UserUpdateDto;
+import com.project.easywork.user.domain.dto.PasswordUpdateD;
+import com.project.easywork.user.domain.dto.UserD;
+import com.project.easywork.user.domain.dto.UserUpdateD;
 import com.project.easywork.auth.security.CustomUserDetails;
 import com.project.easywork.user.service.IUserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -26,27 +26,27 @@ public class UserController {
   
   @Operation(summary = "프로필 조회 API", description = "개인 프로필을 조회합니다.")
   @GetMapping("/me")
-  public ResponseEntity<ApiResponse<UserResponseDto>> get(@AuthenticationPrincipal CustomUserDetails userDetails) {
+  public ResponseEntity<ApiResponse<UserD>> get(@AuthenticationPrincipal CustomUserDetails userDetails) {
     String username = userDetails.getUsername();
     return ResponseEntity.ok().body(ApiResponse.success(userService.getProfileByUsername(username)));
   }
   
   @Operation(summary = "프로필 수정 API", description = "개인 프로필을 수정합니다.")
   @PatchMapping("/me")
-  public ResponseEntity<ApiResponse<UserResponseDto>> update
+  public ResponseEntity<ApiResponse<UserD>> update
       (
           @AuthenticationPrincipal CustomUserDetails userDetails,
-          @Valid @RequestBody UserUpdateDto request
+          @Valid @RequestBody UserUpdateD request
       ) {
     return ResponseEntity.ok().body(ApiResponse.success(userService.update(userDetails.getUser().getId(), request)));
   }
   
   @Operation(summary = "비밀번호 변경 API", description = "비밀번호를 수정합니다.")
   @PatchMapping("/me/password")
-  public ResponseEntity<ApiResponse<UserResponseDto>> updatePassword
+  public ResponseEntity<ApiResponse<UserD>> updatePassword
       (
           @AuthenticationPrincipal CustomUserDetails userDetails,
-          @Valid @RequestBody PasswordUpdateDto request
+          @Valid @RequestBody PasswordUpdateD request
       ) {
     return ResponseEntity.ok().body(
         ApiResponse.success(userService.updatePassword(userDetails.getUser().getId(), request)));
@@ -54,7 +54,7 @@ public class UserController {
   
   @Operation(summary = "팀 변경 API", description = "해당 사용자의 팀을 변경합니다.")
   @PatchMapping("/me/team")
-  public ResponseEntity<ApiResponse<UserResponseDto>> updateTeam
+  public ResponseEntity<ApiResponse<UserD>> updateTeam
       (
           @AuthenticationPrincipal CustomUserDetails userDetails,
           @RequestBody Long teamId

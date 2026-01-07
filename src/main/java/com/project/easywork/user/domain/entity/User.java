@@ -3,7 +3,7 @@ package com.project.easywork.user.domain.entity;
 import com.project.easywork.agency.domain.entity.Team;
 import com.project.easywork.user.domain.Active;
 import com.project.easywork.common.domain.BaseEntity;
-import com.project.easywork.user.domain.dto.UserUpdateDto;
+import com.project.easywork.user.domain.dto.UserUpdateD;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -91,7 +91,7 @@ public class User extends BaseEntity {
   /* =========================
    * Profile Logic
    * ========================= */
-  public void updateProfile(UserUpdateDto dto) {
+  public void updateProfile(UserUpdateD dto) {
     if (name != null) this.name = dto.getName();
     if (email != null) this.email = dto.getEmail();
     if (department != null) this.department = dto.getDepartment();

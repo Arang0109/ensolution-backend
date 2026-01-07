@@ -7,7 +7,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-public class UserUpdateDto {
+public class UserUpdateD {
   private String grade;
   private String department;
   private String name;

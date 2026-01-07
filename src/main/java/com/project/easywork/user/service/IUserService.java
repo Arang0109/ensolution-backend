@@ -1,19 +1,19 @@
 package com.project.easywork.user.service;
 
 import com.project.easywork.auth.security.CustomUserDetails;
-import com.project.easywork.user.domain.dto.PasswordUpdateDto;
-import com.project.easywork.user.domain.dto.UserCreateDto;
-import com.project.easywork.user.domain.dto.UserResponseDto;
-import com.project.easywork.user.domain.dto.UserUpdateDto;
+import com.project.easywork.user.domain.dto.PasswordUpdateD;
+import com.project.easywork.user.domain.dto.UserCreateD;
+import com.project.easywork.user.domain.dto.UserD;
+import com.project.easywork.user.domain.dto.UserUpdateD;
 
 import java.util.List;
 
 public interface IUserService {
-  List<UserResponseDto> findAll();
-  UserResponseDto getProfileByUsername(String username);
-  UserResponseDto register(UserCreateDto dto);
-  UserResponseDto update(Long userId, UserUpdateDto dto);
+  List<UserD> findAll();
+  UserD getProfileByUsername(String username);
+  UserD register(UserCreateD dto);
+  UserD update(Long userId, UserUpdateD dto);
   void removeUser(CustomUserDetails userDetails);
-  UserResponseDto updatePassword(Long userId, PasswordUpdateDto dto);
-  UserResponseDto updateTeam(Long userId, Long teamId);
+  UserD updatePassword(Long userId, PasswordUpdateD dto);
+  UserD updateTeam(Long userId, Long teamId);
 }

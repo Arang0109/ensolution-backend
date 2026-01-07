@@ -1,19 +1,19 @@
 package com.project.easywork.agency.service;
 
-import com.project.easywork.agency.domain.dto.TeamCreateRequestDto;
-import com.project.easywork.agency.domain.dto.TeamDetailResponseDto;
-import com.project.easywork.agency.domain.dto.TeamResponseDto;
-import com.project.easywork.agency.domain.dto.TeamUpdateRequestDto;
+import com.project.easywork.agency.domain.dto.TeamCreateD;
+import com.project.easywork.agency.domain.dto.TeamDetailD;
+import com.project.easywork.agency.domain.dto.TeamD;
+import com.project.easywork.agency.domain.dto.TeamUpdateD;
 
 import java.util.List;
 
 public interface ITeamService {
-  List<TeamResponseDto> getList();
-  TeamDetailResponseDto get(Long teamId);
-  TeamResponseDto register(TeamCreateRequestDto dto);
-  TeamResponseDto update(Long teamId, TeamUpdateRequestDto dto);
+  List<TeamD> getList();
+  TeamDetailD get(Long teamId);
+  TeamD register(TeamCreateD dto);
+  TeamD update(Long teamId, TeamUpdateD dto);
   void delete(Long teamId);
   
-  TeamResponseDto updateParticularEquip(Long teamId, Long equipmentId);
-  TeamResponseDto updatePitotTube(Long teamId, Long pitotTubeId);
+  TeamD updateParticularEquip(Long teamId, Long equipmentId);
+  TeamD updatePitotTube(Long teamId, Long pitotTubeId);
 }
