@@ -1,8 +1,8 @@
 package com.project.easywork.schedule.domain.dto;
 
-import com.project.easywork.client.domain.dto.company.CompanyResponseDto;
+import com.project.easywork.client.domain.dto.company.CompanyD;
 import com.project.easywork.client.domain.dto.stack.StackDetailResponseDto;
-import com.project.easywork.client.domain.dto.workplace.WorkplaceResponseDto;
+import com.project.easywork.client.domain.dto.workplace.WorkplaceD;
 import lombok.*;
 
 import java.util.List;
@@ -15,8 +15,8 @@ public class ScheduleDetailResDto {
   private ScheduleResDto schedule;
   private List<ScheduleMeasurementResDto> measurements;
   private StackDetailResponseDto stack;
-  private WorkplaceResponseDto workplace;
-  private CompanyResponseDto company;
+  private WorkplaceD workplace;
+  private CompanyD company;
   
   private Integer measurementPoint;
 }

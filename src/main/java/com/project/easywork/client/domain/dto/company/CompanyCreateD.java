@@ -9,7 +9,7 @@ import lombok.*;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CompanyCreateRequestDto {
+public class CompanyCreateD {
   
   @Schema(description = "측정대행 의뢰업체", example = "테스트 의뢰업체")
   @NotBlank(message = "필수 입력")

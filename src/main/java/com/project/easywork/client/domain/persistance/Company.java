@@ -1,25 +1,22 @@
 package com.project.easywork.client.domain.persistance;
 
+import com.project.easywork.client.domain.dto.company.CompanyUpdateD;
+import com.project.easywork.common.domain.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
+import lombok.experimental.SuperBuilder;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
+@SuperBuilder(toBuilder = true)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Entity
 @Getter
-@Setter
-@NoArgsConstructor
 @Table(name = "company")
-public class Company {
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(nullable = false, unique = true)
-  private Long id;
-  
+public class Company extends BaseEntity {
   @Column(nullable = false, length = 100)
   private String name;
   
@@ -35,15 +32,27 @@ public class Company {
   @Column(columnDefinition = "LONGTEXT")
   private String remark;
   
-  @CreationTimestamp
-  @Column(name = "created_at", nullable = false)
-  private LocalDate createdAt;
-  
-  @UpdateTimestamp
-  @Column(name = "modified_at", nullable = false)
-  private LocalDate modifiedAt;
-  
   @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true)
   @ToString.Exclude
   private List<Workplace> workplaces = new ArrayList<>();
+  
+  public void update(CompanyUpdateD dto) {
+    CompanyBuilder<?, ?> builder = this.toBuilder();
+    
+    Optional.ofNullable(dto.getName()).filter(name -> !name.isBlank()).ifPresent(builder::name);
+    Optional.ofNullable(dto.getAddress()).filter(address -> !address.isBlank()).ifPresent(builder::address);
+    Optional.ofNullable(dto.getCeoName()).filter(ceoName -> !ceoName.isBlank()).ifPresent(builder::ceoName);
+    Optional.ofNullable(dto.getBizNumber()).filter(bizNumber -> !bizNumber.isBlank()).ifPresent(builder::bizNumber);
+    Optional.ofNullable(dto.getRemark()).ifPresent(builder::remark);
+    
+    apply(builder.build());
+  }
+  
+  private void apply(Company company) {
+    this.name = company.name;
+    this.address = company.address;
+    this.ceoName = company.ceoName;
+    this.bizNumber = company.bizNumber;
+    this.remark = company.remark;
+  }
 }

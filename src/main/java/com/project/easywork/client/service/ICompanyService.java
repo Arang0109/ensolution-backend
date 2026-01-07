@@ -1,16 +1,16 @@
 package com.project.easywork.client.service;
 
-import com.project.easywork.client.domain.dto.company.CompanyCreateRequestDto;
-import com.project.easywork.client.domain.dto.company.CompanyDetailResponseDto;
-import com.project.easywork.client.domain.dto.company.CompanyResponseDto;
-import com.project.easywork.client.domain.dto.company.CompanyUpdateRequestDto;
+import com.project.easywork.client.domain.dto.company.CompanyCreateD;
+import com.project.easywork.client.domain.dto.company.CompanyDetailD;
+import com.project.easywork.client.domain.dto.company.CompanyD;
+import com.project.easywork.client.domain.dto.company.CompanyUpdateD;
 
 import java.util.List;
 
 public interface ICompanyService {
-  CompanyResponseDto registerCompany(CompanyCreateRequestDto requestDto);
-  CompanyDetailResponseDto getCompany(Long companyId);
-  List<CompanyResponseDto> getCompanies();
-  CompanyResponseDto updateCompany(Long companyId, CompanyUpdateRequestDto requestDto);
+  CompanyD registerCompany(CompanyCreateD requestDto);
+  CompanyDetailD getCompany(Long companyId);
+  List<CompanyD> getCompanies();
+  CompanyD updateCompany(Long companyId, CompanyUpdateD requestDto);
   void removeCompany(Long companyId);
 }

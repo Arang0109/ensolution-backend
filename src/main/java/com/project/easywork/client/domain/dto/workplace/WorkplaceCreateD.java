@@ -10,7 +10,7 @@ import lombok.*;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class WorkplaceCreateRequestDto {
+public class WorkplaceCreateD {
   @Schema(description = "측정대상 사업장", example = "테스트 사업장")
   @NotBlank(message = "필수 입력")
   private String name;

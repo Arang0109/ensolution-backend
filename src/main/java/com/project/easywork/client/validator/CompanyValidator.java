@@ -1,7 +1,7 @@
 package com.project.easywork.client.validator;
 
-import com.project.easywork.client.domain.dto.company.CompanyCreateRequestDto;
-import com.project.easywork.client.domain.dto.company.CompanyUpdateRequestDto;
+import com.project.easywork.client.domain.dto.company.CompanyCreateD;
+import com.project.easywork.client.domain.dto.company.CompanyUpdateD;
 import com.project.easywork.client.repository.CompanyRepository;
 import com.project.easywork.common.exception.CustomException;
 import com.project.easywork.common.exception.ErrorCode;
@@ -14,7 +14,7 @@ public class CompanyValidator {
   
   private final CompanyRepository companyRepository;
   
-  public void validateForCreate(CompanyCreateRequestDto dto) {
+  public void validateForCreate(CompanyCreateD dto) {
     validateDuplicate(
         dto.getName(),
         companyRepository::existsByName,
@@ -28,7 +28,7 @@ public class CompanyValidator {
     );
   }
   
-  public void validateForUpdate(Long id, CompanyUpdateRequestDto dto) {
+  public void validateForUpdate(Long id, CompanyUpdateD dto) {
     validateDuplicateForUpdate(
         dto.getName(),
         value -> companyRepository.existsByNameAndIdNot(value, id),
