@@ -8,7 +8,7 @@ import lombok.*;
 @Getter
 @Setter
 @ToString
-public class LoginRequestDto {
+public class LoginRequestD {
   @Schema(description = "회원 아이디", example = "kmsq321")
   private String username;
   @Schema(description = "비밀번호", example = "rkdalstn!12")

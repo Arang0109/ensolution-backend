@@ -1,7 +1,7 @@
 package com.project.easywork.auth.controller;
 
-import com.project.easywork.auth.domain.dto.LoginRequestDto;
-import com.project.easywork.auth.domain.dto.LoginResponseDto;
+import com.project.easywork.auth.domain.dto.LoginRequestD;
+import com.project.easywork.auth.domain.dto.LoginResponseD;
 import com.project.easywork.common.api.ApiResponse;
 import com.project.easywork.auth.security.JwtTokenProvider;
 import com.project.easywork.auth.security.CustomUserDetails;
@@ -52,9 +52,9 @@ public class AuthController {
   
   @Operation(summary = "로그인 API", description = "회원 로그인을 수행합니다.")
   @PostMapping("/login")
-  public ResponseEntity<ApiResponse<LoginResponseDto>> login
+  public ResponseEntity<ApiResponse<LoginResponseD>> login
       (
-          @RequestBody LoginRequestDto request,
+          @RequestBody LoginRequestD request,
           HttpServletResponse httpResponse
       ) {
     Authentication authentication = authenticationManager.authenticate(
@@ -86,7 +86,7 @@ public class AuthController {
         .map(auth -> auth.replace("ROLE_", "")) // "ADMIN" (Optional)
         .toList();
     
-    LoginResponseDto responseDto = new LoginResponseDto(
+    LoginResponseD responseDto = new LoginResponseD(
         accessToken,
         userDetails.getUsername(),
         roles);

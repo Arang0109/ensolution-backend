@@ -9,7 +9,7 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
-public class LoginResponseDto {
+public class LoginResponseD {
   private String accessToken;
   private String username;
   private List<String> roles;

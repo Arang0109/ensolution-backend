@@ -7,6 +7,6 @@ import lombok.*;
 @Getter
 @Setter
 @ToString
-public class TokenRequestDto {
+public class TokenD {
   private String refreshToken;
 }

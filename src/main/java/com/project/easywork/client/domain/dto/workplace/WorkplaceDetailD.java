@@ -10,7 +10,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class WorkplaceDetailResponseDto {
-  private WorkplaceResponseDto workplace;
+public class WorkplaceDetailD {
+  private WorkplaceD workplace;
   private List<StackResponseDto> stacks = new ArrayList<>();
 }

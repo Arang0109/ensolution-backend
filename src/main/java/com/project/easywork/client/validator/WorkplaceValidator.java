@@ -1,7 +1,7 @@
 package com.project.easywork.client.validator;
 
-import com.project.easywork.client.domain.dto.workplace.WorkplaceCreateRequestDto;
-import com.project.easywork.client.domain.dto.workplace.WorkplaceUpdateRequestDto;
+import com.project.easywork.client.domain.dto.workplace.WorkplaceCreateD;
+import com.project.easywork.client.domain.dto.workplace.WorkplaceUpdateD;
 import com.project.easywork.client.repository.WorkplaceRepository;
 import com.project.easywork.common.exception.CustomException;
 import com.project.easywork.common.exception.ErrorCode;
@@ -14,7 +14,7 @@ public class WorkplaceValidator {
   
   private final WorkplaceRepository workplaceRepository;
   
-  public void validateForCreate(WorkplaceCreateRequestDto dto) {
+  public void validateForCreate(WorkplaceCreateD dto) {
     validateDuplicate(
         dto.getName(),
         workplaceRepository::existsByName,
@@ -28,7 +28,7 @@ public class WorkplaceValidator {
     );
   }
   
-  public void validateForUpdate(Long id, WorkplaceUpdateRequestDto dto) {
+  public void validateForUpdate(Long id, WorkplaceUpdateD dto) {
     validateDuplicateForUpdate(
         dto.getName(),
         value -> workplaceRepository.existsByNameAndIdNot(value, id),

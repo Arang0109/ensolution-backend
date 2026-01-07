@@ -1,18 +1,18 @@
-package com.project.easywork.client.domain.dto.workplace;
+package com.project.easywork.client.domain.dto.company;
 
-import com.project.easywork.client.domain.Grade;
 import jakarta.validation.constraints.Pattern;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-@Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class WorkplaceUpdateRequestDto {
+@Getter
+public class CompanyUpdateD {
   private String name;
   private String address;
+  private String ceoName;
   @Pattern(regexp = "^\\d{10}$", message = "사업자번호는 10자리 숫자여야 합니다.")
   private String bizNumber;
-  private String businessCategory;
-  private Grade grade;
   private String remark;
 }

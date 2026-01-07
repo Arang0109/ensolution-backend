@@ -1,5 +1,6 @@
-package com.project.easywork.client.domain.dto.company;
+package com.project.easywork.client.domain.dto.workplace;
 
+import com.project.easywork.client.domain.Grade;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
@@ -7,16 +8,18 @@ import java.time.LocalDate;
 
 @Builder
 @Getter
-public class CompanyResponseDto {
+public class WorkplaceD {
   @Schema(
-      description = "의뢰업체 ID (PK)",
+      description = "사업장 ID (PK)",
       accessMode = Schema.AccessMode.READ_ONLY)
   private Long id;
   
+  private String companyId;
   private String name;
   private String address;
-  private String ceoName;
   private String bizNumber;
+  private String businessCategory;
+  private Grade grade;
   private String remark;
   
   @Schema(description = "생성날짜") private LocalDate createdAt;
