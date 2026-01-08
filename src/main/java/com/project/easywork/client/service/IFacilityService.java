@@ -1,20 +1,20 @@
 package com.project.easywork.client.service;
 
-import com.project.easywork.client.domain.dto.facility.FacilityCreateRequestDto;
-import com.project.easywork.client.domain.dto.facility.FacilityResponseDto;
-import com.project.easywork.client.domain.dto.facility.FacilityUpdateRequestDto;
+import com.project.easywork.client.domain.dto.facility.FacilityCreateD;
+import com.project.easywork.client.domain.dto.facility.FacilityD;
+import com.project.easywork.client.domain.dto.facility.FacilityUpdateD;
 import com.project.easywork.client.domain.persistance.Prevention;
 
 import java.util.List;
 
 public interface IFacilityService {
-  FacilityResponseDto registerFacility(FacilityCreateRequestDto requestDto);
+  FacilityD registerFacility(FacilityCreateD requestDto);
   
-  List<FacilityResponseDto> registerFacilities(List<FacilityCreateRequestDto> requestDtos, Prevention prevention);
+  List<FacilityD> registerFacilities(List<FacilityCreateD> requestDtos, Prevention prevention);
   
-  List<FacilityResponseDto> getFacilities();
+  List<FacilityD> getFacilities();
   
-  FacilityResponseDto updateFacility(Long facilityId, FacilityUpdateRequestDto requestDto);
+  FacilityD updateFacility(Long facilityId, FacilityUpdateD requestDto);
   
   void removeFacility(Long facilityId);
 }

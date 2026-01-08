@@ -1,14 +1,15 @@
 package com.project.easywork.client.service.impl;
 
-import com.project.easywork.client.domain.dto.facility.FacilityCreateRequestDto;
-import com.project.easywork.client.domain.dto.facility.FacilityResponseDto;
-import com.project.easywork.client.domain.dto.facility.FacilityUpdateRequestDto;
+import com.project.easywork.client.domain.dto.facility.FacilityCreateD;
+import com.project.easywork.client.domain.dto.facility.FacilityD;
+import com.project.easywork.client.domain.dto.facility.FacilityUpdateD;
 import com.project.easywork.client.domain.persistance.Facility;
 import com.project.easywork.client.domain.persistance.Prevention;
 import com.project.easywork.client.mapper.FacilityMapper;
 import com.project.easywork.client.service.IFacilityService;
 import com.project.easywork.client.service_data.IFacilityDataService;
 import com.project.easywork.common.resolver.DomainEntityResolver;
+import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,9 +25,10 @@ public class FacilityService implements IFacilityService {
   private final FacilityMapper facilityMapper;
   
   private final DomainEntityResolver domainEntityResolver;
+  private final EntityManager entityManager;
   
   @Override
-  public FacilityResponseDto registerFacility(FacilityCreateRequestDto requestDto) {
+  public FacilityD registerFacility(FacilityCreateD requestDto) {
     
     Prevention prevention = domainEntityResolver.getPreventionOrThrow(requestDto.getPreventionId());
     Facility facility = facilityMapper.toEntity(requestDto);
@@ -36,7 +38,7 @@ public class FacilityService implements IFacilityService {
   }
   
   @Override
-  public List<FacilityResponseDto> registerFacilities(List<FacilityCreateRequestDto> requestDtos, Prevention prevention) {
+  public List<FacilityD> registerFacilities(List<FacilityCreateD> requestDtos, Prevention prevention) {
     if (requestDtos == null || requestDtos.isEmpty()) {
       return List.of();
     }
@@ -56,14 +58,17 @@ public class FacilityService implements IFacilityService {
   
   @Override
   @Transactional(readOnly = true)
-  public List<FacilityResponseDto> getFacilities() {
+  public List<FacilityD> getFacilities() {
     return facilityMapper.toDtoList(facilityDataService.findAll());
   }
   
   @Override
-  public FacilityResponseDto updateFacility(Long facilityId, FacilityUpdateRequestDto requestDto) {
+  public FacilityD updateFacility(Long facilityId, FacilityUpdateD dto) {
     Facility facility = domainEntityResolver.getFacilityOrThrow(facilityId);
-    facilityMapper.updateFacility(requestDto, facility);
+    facility.update(dto);
+    
+    entityManager.flush();
+    
     return facilityMapper.toDto(facility);
   }
   

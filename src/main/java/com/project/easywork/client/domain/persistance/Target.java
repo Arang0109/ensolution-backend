@@ -1,27 +1,22 @@
 package com.project.easywork.client.domain.persistance;
 
+import com.project.easywork.client.domain.dto.target.TargetUpdateD;
+import com.project.easywork.common.domain.BaseEntity;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-import org.hibernate.annotations.UpdateTimestamp;
 
-import java.time.LocalDate;
+import java.util.Optional;
 
+@SuperBuilder(toBuilder = true)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Entity
 @Getter
-@Setter
-@NoArgsConstructor
 @Table(name = "target")
-public class Target {
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(nullable = false, unique = true)
-  private Long id;
-  
+public class Target extends BaseEntity {
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "prevention_id")
   @OnDelete(action = OnDeleteAction.CASCADE)
@@ -33,15 +28,25 @@ public class Target {
   @Column(name = "removal_efficiency")
   private Double removalEfficiency;
   
-  @CreationTimestamp
-  @Column(name = "created_at", nullable = false)
-  private LocalDate createdAt;
-  
-  @UpdateTimestamp
-  @Column(name = "modified_at", nullable = false)
-  private LocalDate modifiedAt;
-  
   public void attachPrevention(Prevention prevention) {
     this.prevention = prevention;
+    prevention.getTargets().add(this);
+  }
+  
+  public void update(TargetUpdateD dto) {
+    TargetBuilder<?, ?> builder = toBuilder();
+    
+    Optional.ofNullable(dto.getTargetSubstance())
+        .ifPresent(v -> this.targetSubstance = v);
+    
+    Optional.ofNullable(dto.getRemovalEfficiency())
+        .ifPresent(v -> this.removalEfficiency = v);
+    
+    apply(builder.build());
+  }
+  
+  private void apply(Target target) {
+    this.targetSubstance = target.getTargetSubstance();
+    this.removalEfficiency = target.getRemovalEfficiency();
   }
 }

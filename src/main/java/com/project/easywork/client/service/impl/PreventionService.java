@@ -9,6 +9,7 @@ import com.project.easywork.client.service.IPreventionService;
 import com.project.easywork.client.service.ITargetService;
 import com.project.easywork.client.service_data.IPreventionDataService;
 import com.project.easywork.common.resolver.DomainEntityResolver;
+import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,9 +27,10 @@ public class PreventionService implements IPreventionService {
   private final ITargetService targetService;
   
   private final DomainEntityResolver domainEntityResolver;
+  private final EntityManager entityManager;
   
   @Override
-  public PreventionDetailResponseDto registerPreventionBundle(PreventionBundleCreateRequestDto requestDto) {
+  public PreventionDetailD registerPreventionBundle(PreventionBundleCreateD requestDto) {
     
     // stack 엔티티 불러오기 -> prevention 연관 엔티티 설정 -> 저장
     Stack stack = domainEntityResolver.getStackOrThrow(requestDto.getPrevention().getStackId());
@@ -55,27 +57,30 @@ public class PreventionService implements IPreventionService {
   
   @Override
   @Transactional(readOnly = true)
-  public PreventionDetailResponseDto getPrevention(Long preventionId) {
+  public PreventionDetailD getPrevention(Long preventionId) {
     Prevention prevention = domainEntityResolver.getPreventionOrThrow(preventionId);
     return preventionMapper.toDetailDto(prevention);
   }
   
   @Override
   @Transactional(readOnly = true)
-  public List<PreventionResponseDto> getPreventions() {
+  public List<PreventionD> getPreventions() {
     return preventionMapper.toDtoList(preventionDataService.findAll());
   }
   
   @Override
-  public List<PreventionResponseDto> getPreventionsByStack(Long stackId) {
+  public List<PreventionD> getPreventionsByStack(Long stackId) {
     return preventionMapper
         .toDtoList(preventionDataService.findPreventionsByStackId(stackId));
   }
   
   @Override
-  public PreventionResponseDto updatePrevention(Long preventionId, PreventionUpdateRequestDto requestDto) {
+  public PreventionD updatePrevention(Long preventionId, PreventionUpdateD dto) {
     Prevention prevention = domainEntityResolver.getPreventionOrThrow(preventionId);
-    preventionMapper.updatePrevention(requestDto, prevention);
+    prevention.update(dto);
+    
+    entityManager.flush();
+    
     return preventionMapper.toDto(prevention);
   }
   

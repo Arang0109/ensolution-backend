@@ -1,28 +1,23 @@
 
 package com.project.easywork.client.domain.persistance;
 
+import com.project.easywork.client.domain.dto.facility.FacilityUpdateD;
+import com.project.easywork.common.domain.BaseEntity;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-import org.hibernate.annotations.UpdateTimestamp;
 
-import java.time.LocalDate;
+import java.util.Optional;
 
+@SuperBuilder(toBuilder = true)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Entity
 @Getter
-@Setter
-@NoArgsConstructor
 @Table(name = "facility")
-public class Facility {
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(nullable = false, unique = true)
-  private Long id;
-  
+public class Facility extends BaseEntity {
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "prevention_id")
   @OnDelete(action = OnDeleteAction.CASCADE)
@@ -46,15 +41,38 @@ public class Facility {
   @Column(columnDefinition = "LONGTEXT")
   private String remark;
   
-  @CreationTimestamp
-  @Column(name = "created_at", nullable = false)
-  private LocalDate createdAt;
-  
-  @UpdateTimestamp
-  @Column(name = "modified_at", nullable = false)
-  private LocalDate modifiedAt;
-  
   public void attachPrevention(Prevention prevention) {
     this.prevention = prevention;
+    prevention.getFacilities().add(this);
+  }
+  
+  public void update(FacilityUpdateD dto) {
+    FacilityBuilder<?, ?> builder = toBuilder();
+    
+    Optional.ofNullable(dto.getName())
+            .ifPresent(v -> this.name = v);
+    
+    Optional.ofNullable(dto.getFuelUsage())
+        .ifPresent(v -> this.fuelUsage = v);
+    
+    Optional.ofNullable(dto.getItemOutput())
+        .ifPresent(v -> this.itemOutput = v);
+    
+    Optional.ofNullable(dto.getFuelInput())
+        .ifPresent(v -> this.fuelInput = v);
+    
+    Optional.ofNullable(dto.getFuelType())
+        .ifPresent(v -> this.fuelType = v);
+    
+    apply(builder.build());
+  }
+  
+  private void apply(Facility facility) {
+    this.name = facility.getName();
+    this.fuelUsage = facility.getFuelUsage();
+    this.itemOutput = facility.getItemOutput();
+    this.fuelInput = facility.getFuelInput();
+    this.fuelType = facility.getFuelType();
+    this.remark = facility.getRemark();
   }
 }

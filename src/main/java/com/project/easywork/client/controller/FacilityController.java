@@ -1,8 +1,8 @@
 package com.project.easywork.client.controller;
 
-import com.project.easywork.client.domain.dto.facility.FacilityCreateRequestDto;
-import com.project.easywork.client.domain.dto.facility.FacilityResponseDto;
-import com.project.easywork.client.domain.dto.facility.FacilityUpdateRequestDto;
+import com.project.easywork.client.domain.dto.facility.FacilityCreateD;
+import com.project.easywork.client.domain.dto.facility.FacilityD;
+import com.project.easywork.client.domain.dto.facility.FacilityUpdateD;
 import com.project.easywork.client.service.IFacilityService;
 import com.project.easywork.common.api.ApiResponse;
 import io.swagger.v3.oas.annotations.Operation;
@@ -24,19 +24,19 @@ public class FacilityController {
   
   @Operation(summary = "배출시설 등록 API", description = "새로운 배출시설 정보를 데이터베이스에 저장합니다.")
   @PostMapping()
-  public ResponseEntity<ApiResponse<FacilityResponseDto>> register
+  public ResponseEntity<ApiResponse<FacilityD>> register
       (
-          @Valid @RequestBody FacilityCreateRequestDto request
+          @Valid @RequestBody FacilityCreateD request
       ) {
     return ResponseEntity.ok().body(ApiResponse.success(facilityService.registerFacility(request)));
   }
   
   @Operation(summary = "배출시설 수정 API", description = "해당 배출시설의 상세정보를 수정합니다.")
   @PatchMapping("/{facilityId}")
-  public ResponseEntity<ApiResponse<FacilityResponseDto>> update
+  public ResponseEntity<ApiResponse<FacilityD>> update
       (
           @PathVariable Long facilityId,
-          @Valid @RequestBody FacilityUpdateRequestDto request
+          @Valid @RequestBody FacilityUpdateD request
       ) {
     return ResponseEntity.ok().body(ApiResponse.success(facilityService.updateFacility(facilityId, request)));
   }

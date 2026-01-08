@@ -3,12 +3,11 @@ package com.project.easywork.client.domain.dto.facility;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class FacilityUpdateRequestDto {
+public class FacilityUpdateD {
   private String name;
   private String fuelUsage;
   private String itemOutput;

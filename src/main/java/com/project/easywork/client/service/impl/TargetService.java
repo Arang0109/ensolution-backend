@@ -1,8 +1,8 @@
 package com.project.easywork.client.service.impl;
 
-import com.project.easywork.client.domain.dto.target.TargetCreateRequestDto;
-import com.project.easywork.client.domain.dto.target.TargetResponseDto;
-import com.project.easywork.client.domain.dto.target.TargetUpdateRequestDto;
+import com.project.easywork.client.domain.dto.target.TargetCreateD;
+import com.project.easywork.client.domain.dto.target.TargetD;
+import com.project.easywork.client.domain.dto.target.TargetUpdateD;
 import com.project.easywork.client.domain.persistance.Prevention;
 import com.project.easywork.client.domain.persistance.Target;
 import com.project.easywork.client.mapper.TargetMapper;
@@ -10,6 +10,7 @@ import com.project.easywork.client.service.ITargetService;
 import com.project.easywork.client.service_data.IPreventionDataService;
 import com.project.easywork.client.service_data.ITargetDataService;
 import com.project.easywork.common.resolver.DomainEntityResolver;
+import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,14 +22,15 @@ import java.util.List;
 @Transactional
 public class TargetService implements ITargetService {
   
-  private final IPreventionDataService preventionDataService;
   private final ITargetDataService targetDataService;
   private final TargetMapper targetMapper;
   
   private final DomainEntityResolver domainEntityResolver;
   
+  private final EntityManager entityManager;
+  
   @Override
-  public TargetResponseDto registerTarget(TargetCreateRequestDto requestDto) {
+  public TargetD registerTarget(TargetCreateD requestDto) {
     
     Prevention prevention = domainEntityResolver.getPreventionOrThrow(requestDto.getPreventionId());
     Target target = targetMapper.toEntity(requestDto);
@@ -38,7 +40,7 @@ public class TargetService implements ITargetService {
   }
   
   @Override
-  public List<TargetResponseDto> registerTargets(List<TargetCreateRequestDto> requestDtos, Prevention prevention) {
+  public List<TargetD> registerTargets(List<TargetCreateD> requestDtos, Prevention prevention) {
     if (requestDtos == null || requestDtos.isEmpty()) {
       return List.of();
     }
@@ -58,14 +60,17 @@ public class TargetService implements ITargetService {
   
   @Override
   @Transactional(readOnly = true)
-  public List<TargetResponseDto> getTargets() {
+  public List<TargetD> getTargets() {
     return targetMapper.toDtoList(targetDataService.findAll());
   }
   
   @Override
-  public TargetResponseDto updateTarget(Long targetId, TargetUpdateRequestDto requestDto) {
+  public TargetD updateTarget(Long targetId, TargetUpdateD dto) {
     Target target = domainEntityResolver.getTargetOrThrow(targetId);
-    targetMapper.updateTarget(requestDto, target);
+    target.update(dto);
+    
+    entityManager.flush();
+    
     return targetMapper.toDto(target);
   }
   

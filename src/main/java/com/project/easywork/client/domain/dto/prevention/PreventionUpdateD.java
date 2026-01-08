@@ -5,7 +5,7 @@ import lombok.*;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class PreventionUpdateRequestDto {
+public class PreventionUpdateD {
   private String name;
   private String remark;
 }

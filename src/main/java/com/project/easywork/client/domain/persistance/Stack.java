@@ -124,8 +124,8 @@ public class Stack extends BaseEntity {
   }
   
   private void apply(Stack stack) {
-    this.name = stack.name;
-    this.semsNumber = stack.semsNumber;
+    this.name = stack.getName();
+    this.semsNumber = stack.getSemsNumber();
     this.grade = stack.getGrade();
     this.height = stack.getHeight();
     this.horizontalLength = stack.getHorizontalLength();

@@ -9,7 +9,7 @@ import lombok.*;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class FacilityCreateRequestDto {
+public class FacilityCreateD {
   @Schema(description = "배출시설", example = "도장시설(데드너)")
   @NotBlank(message = "필수 입력")
   private String name;

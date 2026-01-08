@@ -1,28 +1,25 @@
 
 package com.project.easywork.client.domain.persistance;
 
+import com.project.easywork.client.domain.dto.prevention.PreventionUpdateD;
+import com.project.easywork.common.domain.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-import org.hibernate.annotations.UpdateTimestamp;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
+@SuperBuilder(toBuilder = true)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Entity
 @Getter
-@Setter
-@NoArgsConstructor
 @Table(name = "prevention")
-public class Prevention {
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(nullable = false, unique = true)
-  private Long id;
-  
+public class Prevention extends BaseEntity {
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "stack_id")
   @OnDelete(action = OnDeleteAction.CASCADE)
@@ -34,14 +31,6 @@ public class Prevention {
   @Column(columnDefinition = "LONGTEXT")
   private String remark;
   
-  @CreationTimestamp
-  @Column(name = "created_at", nullable = false)
-  private LocalDate createdAt;
-  
-  @UpdateTimestamp
-  @Column(name = "modified_at", nullable = false)
-  private LocalDate modifiedAt;
-  
   @OneToMany(mappedBy = "prevention", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<Target> targets = new ArrayList<>();
   
@@ -50,5 +39,23 @@ public class Prevention {
   
   public void attachStack(Stack stack) {
     this.stack = stack;
+    stack.getPreventions().add(this);
+  }
+  
+  public void update(PreventionUpdateD dto) {
+    PreventionBuilder<?, ?> builder = this.toBuilder();
+    
+    Optional.ofNullable(dto.getName())
+        .ifPresent(v -> this.name = v);
+    
+    Optional.ofNullable(dto.getRemark())
+        .ifPresent(v -> this.remark = v);
+    
+    apply(builder.build());
+  }
+  
+  private void apply(Prevention prevention) {
+    this.name = prevention.getName();
+    this.remark = prevention.getRemark();
   }
 }
