@@ -1,7 +1,7 @@
 package com.project.easywork.client.domain.dto.stack_measurement;
 
 import com.project.easywork.client.domain.Cycle;
-import com.project.easywork.pollutant.domain.dto.PollutantResponseDto;
+import com.project.easywork.pollutant.domain.dto.PollutantD;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
@@ -16,7 +16,7 @@ public class StackMeasurementResponseDto {
   private Long id;
   
   private Long stackId;
-  private PollutantResponseDto pollutant;
+  private PollutantD pollutant;
   private Cycle cycle;
   private Double allowance;
   
