@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class StackUpdateRequestDto {
+public class StackUpdateD {
   private String name;
   private String semsNumber;
   private Grade grade;

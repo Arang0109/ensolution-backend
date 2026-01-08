@@ -1,9 +1,9 @@
 package com.project.easywork.schedule.service.impl;
 
 import com.project.easywork.agency.domain.entity.Team;
+import com.project.easywork.client.domain.dto.stack.MeasurementHistoryD;
 import com.project.easywork.client.domain.persistance.Stack;
 import com.project.easywork.common.resolver.DomainEntityResolver;
-import com.project.easywork.schedule.domain.ScheduleStatus;
 import com.project.easywork.measurement.service.IMeasurementService;
 import com.project.easywork.schedule.domain.dto.*;
 import com.project.easywork.schedule.domain.persistance.Schedule;
@@ -62,9 +62,9 @@ public class ScheduleService implements IScheduleService {
   
   @Override
   @Transactional(readOnly = true)
-  public List<ScheduleResDto> getListByStack(Long stackId, List<ScheduleStatus> status) {
-    return scheduleMapper.toDtoList(
-        scheduleDataService.findSchedulesByStackIdAndStatusIn(stackId, status)
+  public List<MeasurementHistoryD> getListByStack(Long stackId) {
+    return scheduleMapper.toMeasurementHistory(
+        scheduleDataService.findCompletedByStackId(stackId)
     );
   }
   

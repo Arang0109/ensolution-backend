@@ -1,9 +1,9 @@
 package com.project.easywork.client.mapper;
 
-import com.project.easywork.client.domain.dto.stack.StackCreateRequestDto;
-import com.project.easywork.client.domain.dto.stack.StackDetailResponseDto;
-import com.project.easywork.client.domain.dto.stack.StackResponseDto;
-import com.project.easywork.client.domain.dto.stack.StackUpdateRequestDto;
+import com.project.easywork.client.domain.dto.stack.StackCreateD;
+import com.project.easywork.client.domain.dto.stack.StackDetailD;
+import com.project.easywork.client.domain.dto.stack.StackD;
+import com.project.easywork.client.domain.dto.stack.StackUpdateD;
 import com.project.easywork.client.domain.persistance.Stack;
 import org.mapstruct.*;
 
@@ -18,18 +18,13 @@ import java.util.List;
     }
 )
 public interface StackMapper {
-  Stack toEntity(StackCreateRequestDto dto);
+  Stack toEntity(StackCreateD dto);
   
   @Mapping(source = "workplace.id", target = "workplaceId")
-  StackResponseDto toDto(Stack stack);
+  StackD toDto(Stack stack);
   
   @Mapping(source = ".", target = "stack")
-  StackDetailResponseDto toDetailDto(Stack stack);
+  StackDetailD toDetailDto(Stack stack);
   
-  List<StackResponseDto> toDtoList(List<Stack> stacks);
-  
-  @BeanMapping(
-      nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE
-  )
-  void updateStack(StackUpdateRequestDto dto, @MappingTarget Stack stack);
+  List<StackD> toDtoList(List<Stack> stacks);
 }

@@ -40,14 +40,6 @@ public class ScheduleController {
     return ResponseEntity.ok().body(ApiResponse.success(scheduleService.getList()));
   }
   
-  @Operation(summary = "측정시설 지난 일정 조회 API", description = "해당 측정시설에서 이미 완료된 측정일정 목록을 조회합니다.")
-  @GetMapping("/stacks/{stackId}")
-  public ResponseEntity<ApiResponse<List<ScheduleResDto>>> getListByStack(
-      @PathVariable Long stackId,
-      @RequestParam(required = false) List<ScheduleStatus> status) {
-    return ResponseEntity.ok(ApiResponse.success(scheduleService.getListByStack(stackId, status)));
-  }
-  
   @Operation(summary = "측정일정 상세 조회 API", description = "해당 측정일정의 상세정보를 조회합니다.")
   @GetMapping("/{scheduleId}")
   public ResponseEntity<ApiResponse<ScheduleDetailResDto>> get(

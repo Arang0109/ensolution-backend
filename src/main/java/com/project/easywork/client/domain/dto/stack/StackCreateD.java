@@ -11,7 +11,7 @@ import lombok.*;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class StackCreateRequestDto {
+public class StackCreateD {
   @Schema(description = "측정공", example = "stack_000")
   @NotBlank(message = "필수 입력")
   private String name;

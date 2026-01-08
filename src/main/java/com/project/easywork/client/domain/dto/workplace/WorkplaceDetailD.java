@@ -1,6 +1,6 @@
 package com.project.easywork.client.domain.dto.workplace;
 
-import com.project.easywork.client.domain.dto.stack.StackResponseDto;
+import com.project.easywork.client.domain.dto.stack.StackD;
 import lombok.*;
 
 import java.util.ArrayList;
@@ -12,5 +12,5 @@ import java.util.List;
 @AllArgsConstructor
 public class WorkplaceDetailD {
   private WorkplaceD workplace;
-  private List<StackResponseDto> stacks = new ArrayList<>();
+  private List<StackD> stacks = new ArrayList<>();
 }

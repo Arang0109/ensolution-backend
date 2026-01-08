@@ -64,6 +64,7 @@ public class Workplace extends BaseEntity {
   
   public void attachCompany(Company company) {
     this.company = company;
+    company.getWorkplaces().add(this);
   }
   
   public void update(WorkplaceUpdateD dto) {

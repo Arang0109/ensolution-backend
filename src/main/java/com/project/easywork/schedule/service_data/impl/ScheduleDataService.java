@@ -55,7 +55,7 @@ public class ScheduleDataService implements IScheduleDataService {
   }
   
   @Override
-  public List<Schedule> findSchedulesByStackIdAndStatusIn(Long stackId, List<ScheduleStatus> status) {
-    return scheduleRepository.findSchedulesByStackIdAndStatusIn(stackId, status);
+  public List<Schedule> findCompletedByStackId(Long stackId) {
+    return scheduleRepository.findByStackIdAndStatus(stackId, ScheduleStatus.COMPLETED);
   }
 }

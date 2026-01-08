@@ -1,9 +1,11 @@
 package com.project.easywork.schedule.mapper;
 
+import com.project.easywork.client.domain.dto.stack.MeasurementHistoryD;
 import com.project.easywork.client.mapper.CompanyMapper;
 import com.project.easywork.client.mapper.StackMapper;
 import com.project.easywork.client.mapper.StackMeasurementMapper;
 import com.project.easywork.client.mapper.WorkplaceMapper;
+import com.project.easywork.measurement.pipeline.domain.Measurement;
 import com.project.easywork.schedule.domain.dto.*;
 import com.project.easywork.schedule.domain.persistance.Schedule;
 import com.project.easywork.schedule.domain.persistance.ScheduleMeasurement;
@@ -35,6 +37,12 @@ public interface ScheduleMapper {
   @Mapping(source = "stack.workplace.company", target = "company")
   ScheduleDetailResDto toDetailDto(Schedule schedule);
   
+  @Mapping(source = "id", target = "scheduleId")
+  @Mapping(source = "measureDate", target = "measureDate")
+  @Mapping(source = "team.name", target = "teamName")
+  @Mapping(target = "measurements", source = "measurements", qualifiedByName = "toPollutantNames")
+  MeasurementHistoryD toMeasurementHistoryDto(Schedule schedule);
+  
   @Mapping(target = "stackName", source = "stack.name")
   @Mapping(target = "workplaceName", source = "stack.workplace.name")
   @Mapping(target = "companyName", source = "stack.workplace.company.name")
@@ -44,6 +52,7 @@ public interface ScheduleMapper {
   
   List<ScheduleResDto> toDtoList(List<Schedule> schedules);
   List<ScheduleTableViewDto> toTableList(List<Schedule> schedules);
+  List<MeasurementHistoryD> toMeasurementHistory(List<Schedule> schedules);
   
   @BeanMapping(
       nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE
