@@ -4,12 +4,11 @@ import com.project.easywork.equipment.domain.EquipType;
 import com.project.easywork.equipment.domain.dto.EquipUpdateD;
 import jakarta.persistence.*;
 import lombok.*;
-import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-@SuperBuilder(toBuilder = true)
+@Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Entity
