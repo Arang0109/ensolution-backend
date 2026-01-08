@@ -28,6 +28,8 @@ public class PreventionService implements IPreventionService {
   
   private final DomainEntityResolver domainEntityResolver;
   
+  private final EntityManager entityManager;
+  
   @Override
   public PreventionDetailD registerPreventionBundle(PreventionBundleCreateD dto) {
     
@@ -68,6 +70,8 @@ public class PreventionService implements IPreventionService {
     prevention.update(dto.getPrevention());
     prevention.updateFacilities(dto.getFacilities());
     prevention.updateTargets(dto.getTargets());
+    
+    entityManager.flush();
     
     return preventionMapper.toDetailDto(prevention);
   }

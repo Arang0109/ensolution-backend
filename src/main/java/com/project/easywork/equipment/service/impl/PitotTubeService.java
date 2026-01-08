@@ -1,7 +1,7 @@
 package com.project.easywork.equipment.service.impl;
 
-import com.project.easywork.equipment.domain.dto.PitotTubeDetailResponseDto;
-import com.project.easywork.equipment.domain.dto.PitotTubeTableViewDto;
+import com.project.easywork.equipment.domain.dto.PitotDetailD;
+import com.project.easywork.equipment.domain.dto.PitotTableViewD;
 import com.project.easywork.equipment.domain.persistance.PitotTube;
 import com.project.easywork.equipment.mapper.PitotTubeMapper;
 import com.project.easywork.equipment.service.IPitotTubeService;
@@ -21,15 +21,15 @@ public class PitotTubeService implements IPitotTubeService {
   private final PitotTubeMapper pitotTubeMapper;
   
   @Override
-  public PitotTubeTableViewDto getList() {
+  public PitotTableViewD getList() {
     
     List<PitotTube> pitotTubeList = pitotTubeDataService.findAll();
-    List<PitotTubeDetailResponseDto> pitotTubeDetailResponseDtos =
+    List<PitotDetailD> pitotDetailDS =
         pitotTubeMapper.toDetailDtoList(pitotTubeList);
     
     
-    return PitotTubeTableViewDto.builder()
-        .pitotTubeList(pitotTubeDetailResponseDtos)
+    return PitotTableViewD.builder()
+        .pitotTubeList(pitotDetailDS)
         .build();
   }
 }

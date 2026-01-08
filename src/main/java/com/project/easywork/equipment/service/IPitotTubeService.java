@@ -1,7 +1,7 @@
 package com.project.easywork.equipment.service;
 
-import com.project.easywork.equipment.domain.dto.PitotTubeTableViewDto;
+import com.project.easywork.equipment.domain.dto.PitotTableViewD;
 
 public interface IPitotTubeService {
-  PitotTubeTableViewDto getList();
+  PitotTableViewD getList();
 }

@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Getter
 @ToString
-public class EquipmentCreateReqDto {
+public class EquipCreateD {
   
   @Schema(
       description = "장비 관리번호(회사 내부에서 사용하는 고유 번호)",

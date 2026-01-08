@@ -12,7 +12,7 @@ import java.time.LocalDate;
 @Getter
 @Builder
 @ToString
-public class EquipmentResDto {
+public class EquipD {
   @Schema(
       description = "장비 ID (PK)",
       accessMode = Schema.AccessMode.READ_ONLY)

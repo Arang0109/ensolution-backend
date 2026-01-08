@@ -2,14 +2,15 @@ package com.project.easywork.equipment.domain.dto;
 
 import lombok.*;
 
+import java.math.BigDecimal;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Builder
 @ToString
-public class PitotTubeResponseDto {
+public class PitotCoefficientD {
   private Long id;
-  private String type;
-  private String modelName;
-  private String equipmentName;
+  private BigDecimal velocity;
+  private BigDecimal coefficient;
 }
