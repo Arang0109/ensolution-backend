@@ -1,5 +1,6 @@
 package com.project.easywork.client.service.impl;
 
+import com.project.easywork.client.domain.dto.stack.MeasurementListD;
 import com.project.easywork.client.domain.dto.stack_measurement.StackMeasurementCreateD;
 import com.project.easywork.client.domain.dto.stack_measurement.StackMeasurementD;
 import com.project.easywork.client.domain.dto.stack_measurement.StackMeasurementUpdateD;
@@ -48,8 +49,8 @@ public class StackMeasurementService implements IStackMeasurementService {
   }
   
   @Override
-  public List<StackMeasurementD> getStackMeasurementsByStack(Long stackId) {
-    return stackMeasurementMapper.toDtoList(stackMeasurementDataService.findStackMeasurementsByStackId(stackId));
+  public List<MeasurementListD> getStackMeasurementsByStack(Long stackId) {
+    return stackMeasurementMapper.toMeasurementDtoList(stackMeasurementDataService.findStackMeasurementsByStackId(stackId));
   }
   
   @Override

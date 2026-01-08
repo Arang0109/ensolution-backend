@@ -50,7 +50,7 @@ public class StackController {
   
   @Operation(summary = "측정시설의 측정항목 목록 조회 API", description = "해당 측정시설에 등록된 측정항목 목록을 조회합니다.")
   @GetMapping("/{stackId}/measurements")
-  public ResponseEntity<ApiResponse<List<StackMeasurementD>>> getMeasurementsByStack(@PathVariable Long stackId) {
+  public ResponseEntity<ApiResponse<List<MeasurementListD>>> getMeasurementsByStack(@PathVariable Long stackId) {
     return ResponseEntity.ok(ApiResponse.success(stackMeasurementService.getStackMeasurementsByStack(stackId)));
   }
   
