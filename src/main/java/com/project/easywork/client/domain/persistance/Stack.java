@@ -10,15 +10,10 @@ import com.project.easywork.schedule.domain.persistance.Schedule;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @SuperBuilder(toBuilder = true)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -38,7 +33,6 @@ public class Stack extends BaseEntity {
   
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "workplace_id")
-  @OnDelete(action = OnDeleteAction.CASCADE)
   @ToString.Exclude
   private Workplace workplace;
   
@@ -88,51 +82,36 @@ public class Stack extends BaseEntity {
   }
   
   public void update(StackUpdateD dto) {
-    StackBuilder<?, ?> builder = this.toBuilder();
-    
-    Optional.ofNullable(dto.getName())
-        .ifPresent(v -> this.name = v);
-    
-    Optional.ofNullable(dto.getSemsNumber())
-        .ifPresent(v -> this.semsNumber = v);
-    
-    Optional.ofNullable(dto.getGrade())
-        .ifPresent(v -> this.grade = v);
-    
-    Optional.ofNullable(dto.getHeight())
-        .ifPresent(v -> this.height = v);
-    
-    Optional.ofNullable(dto.getHorizontalLength())
-        .ifPresent(v -> this.horizontalLength = v);
-    
-    Optional.ofNullable(dto.getVerticalLength())
-        .ifPresent(v -> this.verticalLength = v);
-    
-    Optional.ofNullable(dto.getShape())
-        .ifPresent(v -> this.shape = v);
-    
-    Optional.ofNullable(dto.getOrientation())
-        .ifPresent(v -> this.orientation = v);
-    
-    Optional.ofNullable(dto.getStandardOxygen())
-        .ifPresent(v -> this.standardOxygen = v);
-    
-    Optional.ofNullable(dto.getRemark())
-        .ifPresent(v -> this.remark = v);
-    
-    apply(builder.build());
+    if (dto.getName() != null) {
+      this.name = dto.getName();
+    }
+    if (dto.getSemsNumber() != null) {
+      this.semsNumber = dto.getSemsNumber();
+    }
+    if (dto.getGrade() != null) {
+      this.grade = dto.getGrade();
+    }
+    if (dto.getHeight() != null) {
+      this.height = dto.getHeight();
+    }
+    if (dto.getHorizontalLength() != null) {
+      this.horizontalLength = dto.getHorizontalLength();
+    }
+    if (dto.getVerticalLength() != null) {
+      this.verticalLength = dto.getVerticalLength();
+    }
+    if (dto.getShape() != null) {
+      this.shape = dto.getShape();
+    }
+    if (dto.getOrientation() != null) {
+      this.orientation = dto.getOrientation();
+    }
+    if (dto.getStandardOxygen() != null) {
+      this.standardOxygen = dto.getStandardOxygen();
+    }
+    if (dto.getRemark() != null) {
+      this.remark = dto.getRemark();
+    }
   }
   
-  private void apply(Stack stack) {
-    this.name = stack.getName();
-    this.semsNumber = stack.getSemsNumber();
-    this.grade = stack.getGrade();
-    this.height = stack.getHeight();
-    this.horizontalLength = stack.getHorizontalLength();
-    this.verticalLength = stack.getVerticalLength();
-    this.shape = stack.getShape();
-    this.orientation = stack.getOrientation();
-    this.standardOxygen = stack.getStandardOxygen();
-    this.remark = stack.getRemark();
-  }
 }

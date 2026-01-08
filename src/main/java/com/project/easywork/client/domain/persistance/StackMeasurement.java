@@ -7,10 +7,6 @@ import com.project.easywork.pollutant.domain.persistance.Pollutant;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-
-import java.util.Optional;
 
 @SuperBuilder(toBuilder = true)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -30,12 +26,10 @@ public class StackMeasurement extends BaseEntity {
   
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "stack_id")
-  @OnDelete(action = OnDeleteAction.CASCADE)
   private Stack stack;
   
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "pollutant_id")
-  @OnDelete(action = OnDeleteAction.CASCADE)
   private Pollutant pollutant;
   
   @Enumerated(EnumType.STRING)
@@ -56,19 +50,11 @@ public class StackMeasurement extends BaseEntity {
   }
   
   public void update(StackMeasurementUpdateD dto) {
-    StackMeasurementBuilder<?, ?> builder = this.toBuilder();
-    
-    Optional.ofNullable(dto.getCycle())
-        .ifPresent(v -> this.cycle = v);
-    
-    Optional.ofNullable(dto.getAllowance())
-        .ifPresent(v -> this.allowance = v);
-    
-    apply(builder.build());
-  }
-  
-  private void apply(StackMeasurement stackMeasurement) {
-    this.cycle = stackMeasurement.cycle;
-    this.allowance = stackMeasurement.allowance;
+    if (dto.getCycle() != null) {
+      this.cycle = dto.getCycle();
+    }
+    if (dto.getAllowance() != null) {
+      this.allowance = dto.getAllowance();
+    }
   }
 }

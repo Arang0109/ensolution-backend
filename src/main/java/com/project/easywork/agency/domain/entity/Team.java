@@ -12,7 +12,6 @@ import lombok.experimental.SuperBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @SuperBuilder(toBuilder = true)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -81,12 +80,12 @@ public class Team extends BaseEntity {
    * Team Logic
    * ========================= */
   public void update(TeamUpdateD dto) {
-    Optional.ofNullable(dto.getName())
-        .filter(str -> !str.isBlank())
-        .ifPresent(name -> this.name = name);
+    if (dto.getName() != null && !dto.getName().isBlank()) {
+      this.name = dto.getName();
+    }
     
-    Optional.ofNullable(dto.getVehicleNumber())
-        .filter(str -> !str.isBlank())
-        .ifPresent(number -> this.vehicleNumber = number);
+    if (dto.getVehicleNumber() != null && !dto.getVehicleNumber().isBlank()) {
+      this.vehicleNumber = dto.getVehicleNumber();
+    }
   }
 }

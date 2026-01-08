@@ -6,10 +6,7 @@ import com.project.easywork.common.domain.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -31,7 +28,6 @@ import java.util.Optional;
 public class Workplace extends BaseEntity {
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "company_id")
-  @OnDelete(action = OnDeleteAction.CASCADE)
   @ToString.Exclude
   private Company company;
   
@@ -64,24 +60,29 @@ public class Workplace extends BaseEntity {
   }
   
   public void update(WorkplaceUpdateD dto) {
-    WorkplaceBuilder<?, ?> builder = this.toBuilder();
     
-    Optional.ofNullable(dto.getName()).filter(name -> !name.isBlank()).ifPresent(builder::name);
-    Optional.ofNullable(dto.getAddress()).filter(address -> !address.isBlank()).ifPresent(builder::address);
-    Optional.ofNullable(dto.getBizNumber()).filter(bizNumber -> !bizNumber.isBlank()).ifPresent(builder::bizNumber);
-    Optional.ofNullable(dto.getBusinessCategory()).filter(category -> !category.isBlank()).ifPresent(builder::businessCategory);
-    Optional.ofNullable(dto.getGrade()).ifPresent(builder::grade);
-    Optional.ofNullable(dto.getRemark()).ifPresent(builder::remark);
+    if (dto.getName() != null && !dto.getName().isBlank()) {
+      this.name = dto.getName();
+    }
     
-    apply(builder.build());
-  }
-  
-  private void apply(Workplace workplace) {
-    this.name = workplace.name;
-    this.address = workplace.address;
-    this.bizNumber = workplace.bizNumber;
-    this.businessCategory = workplace.businessCategory;
-    this.grade = workplace.grade;
-    this.remark = workplace.remark;
+    if (dto.getAddress() != null && !dto.getAddress().isBlank()) {
+      this.address = dto.getAddress();
+    }
+    
+    if (dto.getBizNumber() != null && !dto.getBizNumber().isBlank()) {
+      this.bizNumber = dto.getBizNumber();
+    }
+    
+    if (dto.getBusinessCategory() != null && !dto.getBusinessCategory().isBlank()) {
+      this.businessCategory = dto.getBusinessCategory();
+    }
+    
+    if (dto.getGrade() != null) {
+      this.grade = dto.getGrade();
+    }
+    
+    if (dto.getRemark() != null) {
+      this.remark = dto.getRemark();
+    }
   }
 }

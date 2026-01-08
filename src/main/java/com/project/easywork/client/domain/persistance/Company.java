@@ -37,22 +37,25 @@ public class Company extends BaseEntity {
   private List<Workplace> workplaces = new ArrayList<>();
   
   public void update(CompanyUpdateD dto) {
-    CompanyBuilder<?, ?> builder = this.toBuilder();
     
-    Optional.ofNullable(dto.getName()).filter(name -> !name.isBlank()).ifPresent(builder::name);
-    Optional.ofNullable(dto.getAddress()).filter(address -> !address.isBlank()).ifPresent(builder::address);
-    Optional.ofNullable(dto.getCeoName()).filter(ceoName -> !ceoName.isBlank()).ifPresent(builder::ceoName);
-    Optional.ofNullable(dto.getBizNumber()).filter(bizNumber -> !bizNumber.isBlank()).ifPresent(builder::bizNumber);
-    Optional.ofNullable(dto.getRemark()).ifPresent(builder::remark);
+    if (dto.getName() != null && !dto.getName().isBlank()) {
+      this.name = dto.getName();
+    }
     
-    apply(builder.build());
-  }
-  
-  private void apply(Company company) {
-    this.name = company.name;
-    this.address = company.address;
-    this.ceoName = company.ceoName;
-    this.bizNumber = company.bizNumber;
-    this.remark = company.remark;
+    if (dto.getAddress() != null && !dto.getAddress().isBlank()) {
+      this.address = dto.getAddress();
+    }
+    
+    if (dto.getCeoName() != null && !dto.getCeoName().isBlank()) {
+      this.ceoName = dto.getCeoName();
+    }
+    
+    if (dto.getBizNumber() != null && !dto.getBizNumber().isBlank()) {
+      this.bizNumber = dto.getBizNumber();
+    }
+    
+    if (dto.getRemark() != null) {
+      this.remark = dto.getRemark();
+    }
   }
 }
