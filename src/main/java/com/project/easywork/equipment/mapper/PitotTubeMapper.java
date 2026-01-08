@@ -17,7 +17,6 @@ import java.util.List;
     }
 )
 public interface PitotTubeMapper {
-  
   PitotD toDto(PitotTube pitotTube);
   
   @Mapping(source = ".", target = "pitotTube")

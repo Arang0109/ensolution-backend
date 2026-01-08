@@ -12,7 +12,6 @@ import java.util.List;
     builder = @Builder()
 )
 public interface PitotTubeCoefficientMapper {
-  
   PitotCoefficientD toDto(PitotTubeCoefficient pitotTubeCoefficient);
   List<PitotCoefficientD> toDtoList(List<PitotTubeCoefficient> dtos);
 }

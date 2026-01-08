@@ -1,11 +1,10 @@
 package com.project.easywork.client.controller;
 
 import com.project.easywork.client.domain.dto.stack.*;
-import com.project.easywork.client.domain.dto.stack_measurement.StackMeasurementD;
 import com.project.easywork.client.service.IStackMeasurementService;
 import com.project.easywork.common.api.ApiResponse;
 import com.project.easywork.client.service.IStackService;
-import com.project.easywork.schedule.service.IScheduleService;
+import com.project.easywork.plan.service.IPlanService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -24,7 +23,7 @@ import java.util.List;
 public class StackController {
   
   private final IStackService stackService;
-  private final IScheduleService scheduleService;
+  private final IPlanService scheduleService;
   private final IStackMeasurementService stackMeasurementService;
   
   @Operation(summary = "측정시설 등록 API", description = "새로운 측정시설 정보를 데이터베이스에 저장합니다.")

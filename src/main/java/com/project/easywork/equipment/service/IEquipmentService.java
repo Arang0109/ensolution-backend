@@ -9,6 +9,7 @@ import java.util.List;
 
 public interface IEquipmentService {
   List<EquipD> getList();
+  List<EquipD> getListByParticular();
   EquipD getEquipment(Long equipmentId);
   EquipD register(EquipCreateD dto);
   EquipD update(Long equipmentId, EquipUpdateD dto);

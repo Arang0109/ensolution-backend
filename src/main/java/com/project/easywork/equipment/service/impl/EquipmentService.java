@@ -1,5 +1,6 @@
 package com.project.easywork.equipment.service.impl;
 
+import com.project.easywork.equipment.domain.EquipType;
 import com.project.easywork.equipment.domain.dto.EquipCalibrationDateUpdateD;
 import com.project.easywork.equipment.domain.dto.EquipCreateD;
 import com.project.easywork.equipment.domain.dto.EquipD;
@@ -30,6 +31,13 @@ public class EquipmentService implements IEquipmentService {
   public List<EquipD> getList() {
     return equipmentMapper.toDtoList(
         equipmentDataService.findAll()
+    );
+  }
+  
+  @Override
+  public List<EquipD> getListByParticular() {
+    return equipmentMapper.toDtoList(
+        equipmentDataService.findByType(EquipType.PARTICULAR)
     );
   }
   

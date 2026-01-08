@@ -41,7 +41,13 @@ public class EquipmentController {
     return ResponseEntity.ok().body(ApiResponse.success(equipmentService.getList()));
   }
   
-  @Operation(summary = "피토우관 목록 조회 API", description = "전체 측정장비 목록을 조회합니다.")
+  @Operation(summary = "입자상 측정장비 목록 조회 API", description = "입자상 측정장비 목록을 조회합니다.")
+  @GetMapping("/particle")
+  public ResponseEntity<ApiResponse<List<EquipD>>> getParticleList() {
+    return ResponseEntity.ok().body(ApiResponse.success(equipmentService.getListByParticular()));
+  }
+  
+  @Operation(summary = "피토우관 목록 조회 API", description = "전체 피토우관 목록을 조회합니다.")
   @GetMapping("/pitot")
   public ResponseEntity<ApiResponse<PitotTableViewD>> getListForPitot() {
     return ResponseEntity.ok().body(ApiResponse.success(pitotTubeService.getList()));

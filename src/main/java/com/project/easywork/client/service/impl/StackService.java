@@ -8,15 +8,11 @@ import com.project.easywork.client.mapper.StackMapper;
 import com.project.easywork.client.service.IStackService;
 import com.project.easywork.client.validator.StackValidator;
 import com.project.easywork.common.resolver.DomainEntityResolver;
-import com.project.easywork.schedule.domain.ScheduleStatus;
-import com.project.easywork.schedule.service.IScheduleService;
-import com.project.easywork.schedule.service_data.IScheduleDataService;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
