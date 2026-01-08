@@ -57,7 +57,7 @@ public class PlanController {
     return ResponseEntity.ok().body(ApiResponse.success());
   }
   
-  @Operation(summary = "측정계획 수정 API", description = "해당 측정계획의 측정상태를 수정합니다.")
+  @Operation(summary = "측정상태 수정 API", description = "해당 측정계획의 측정상태를 수정합니다.")
   @PatchMapping("/{planId}/status")
   public ResponseEntity<ApiResponse<PlanD>> updateStatus
       (
