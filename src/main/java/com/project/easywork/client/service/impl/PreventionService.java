@@ -1,5 +1,6 @@
 package com.project.easywork.client.service.impl;
 
+import com.project.easywork.client.domain.dto.facility.FacilityCreateD;
 import com.project.easywork.client.domain.dto.prevention.*;
 import com.project.easywork.client.domain.persistance.Prevention;
 import com.project.easywork.client.domain.persistance.Stack;
@@ -30,29 +31,19 @@ public class PreventionService implements IPreventionService {
   private final EntityManager entityManager;
   
   @Override
-  public PreventionDetailD registerPreventionBundle(PreventionBundleCreateD requestDto) {
+  public PreventionDetailD registerPreventionBundle(PreventionBundleCreateD dto) {
     
     // stack 엔티티 불러오기 -> prevention 연관 엔티티 설정 -> 저장
-    Stack stack = domainEntityResolver.getStackOrThrow(requestDto.getPrevention().getStackId());
-    Prevention prevention = preventionMapper.toEntity(requestDto.getPrevention());
+    Stack stack = domainEntityResolver.getStackOrThrow(dto.getPrevention().getStackId());
+    
+    Prevention prevention = preventionMapper.toEntity(dto.getPrevention());
     prevention.attachStack(stack);
-    Prevention savedPrevention = preventionDataService.save(prevention);
     
-    if (requestDto.getFacilities() != null) {
-      facilityService.registerFacilities(
-          requestDto.getFacilities(),
-          savedPrevention
-      );
-    }
+    facilityService.registerFacilities(dto.getFacilities(), prevention);
     
-    if (requestDto.getTargets() != null) {
-      targetService.registerTargets(
-          requestDto.getTargets(),
-          savedPrevention
-      );
-    }
+    targetService.registerTargets(dto.getTargets(), prevention);
     
-    return preventionMapper.toDetailDto(savedPrevention);
+    return preventionMapper.toDetailDto(prevention);
   }
   
   @Override

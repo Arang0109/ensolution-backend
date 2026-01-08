@@ -38,12 +38,12 @@ public class FacilityService implements IFacilityService {
   }
   
   @Override
-  public List<FacilityD> registerFacilities(List<FacilityCreateD> requestDtos, Prevention prevention) {
-    if (requestDtos == null || requestDtos.isEmpty()) {
+  public List<FacilityD> registerFacilities(List<FacilityCreateD> dtos, Prevention prevention) {
+    if (dtos == null || dtos.isEmpty()) {
       return List.of();
     }
     
-    List<Facility> facilities = requestDtos.stream()
+    List<Facility> facilities = dtos.stream()
         .map(dto -> {
           Facility facility = facilityMapper.toEntity(dto);
           facility.attachPrevention(prevention);

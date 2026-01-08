@@ -31,9 +31,11 @@ public class Prevention extends BaseEntity {
   @Column(columnDefinition = "LONGTEXT")
   private String remark;
   
+  @Builder.Default
   @OneToMany(mappedBy = "prevention", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<Target> targets = new ArrayList<>();
   
+  @Builder.Default
   @OneToMany(mappedBy = "prevention", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<Facility> facilities = new ArrayList<>();
   
