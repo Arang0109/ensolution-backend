@@ -10,7 +10,7 @@ import java.time.LocalDate;
 
 @Builder
 @Getter
-public class StackResponseDto {
+public class StackD {
   @Schema(
       description = "측정공 ID (PK)",
       accessMode = Schema.AccessMode.READ_ONLY)

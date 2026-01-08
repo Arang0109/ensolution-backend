@@ -1,30 +1,20 @@
 package com.project.easywork.client.domain.persistance;
 
+import com.project.easywork.client.domain.dto.target.TargetUpdateD;
+import com.project.easywork.common.domain.BaseEntity;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-import org.hibernate.annotations.UpdateTimestamp;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
-import java.time.LocalDate;
-
+@SuperBuilder(toBuilder = true)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Entity
 @Getter
-@Setter
-@NoArgsConstructor
 @Table(name = "target")
-public class Target {
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(nullable = false, unique = true)
-  private Long id;
-  
+public class Target extends BaseEntity {
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "prevention_id")
-  @OnDelete(action = OnDeleteAction.CASCADE)
   private Prevention prevention;
   
   @Column(name = "target_substance", length = 100)
@@ -33,15 +23,30 @@ public class Target {
   @Column(name = "removal_efficiency")
   private Double removalEfficiency;
   
-  @CreationTimestamp
-  @Column(name = "created_at", nullable = false)
-  private LocalDate createdAt;
-  
-  @UpdateTimestamp
-  @Column(name = "modified_at", nullable = false)
-  private LocalDate modifiedAt;
+  public static Target create(TargetUpdateD dto, Prevention prevention) {
+    Target target = Target.builder()
+        .targetSubstance(dto.getTargetSubstance())
+        .removalEfficiency(dto.getRemovalEfficiency())
+        .build();
+    
+    target.attachPrevention(prevention);
+    return target;
+  }
   
   public void attachPrevention(Prevention prevention) {
     this.prevention = prevention;
+  }
+  
+  public void detachPrevention() {
+    this.prevention = null;
+  }
+  
+  public void update(TargetUpdateD dto) {
+    if (dto.getTargetSubstance() != null) {
+      this.targetSubstance = dto.getTargetSubstance();
+    }
+    if (dto.getRemovalEfficiency() != null) {
+      this.removalEfficiency = dto.getRemovalEfficiency();
+    }
   }
 }

@@ -1,23 +1,22 @@
 package com.project.easywork.client.domain.persistance;
 
 import com.project.easywork.client.domain.Cycle;
+import com.project.easywork.client.domain.dto.stack_measurement.StackMeasurementUpdateD;
+import com.project.easywork.common.domain.BaseEntity;
 import com.project.easywork.pollutant.domain.persistance.Pollutant;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-import org.hibernate.annotations.CreationTimestamp;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-import org.hibernate.annotations.UpdateTimestamp;
 
-import java.time.LocalDate;
+import java.util.Optional;
 
+@SuperBuilder(toBuilder = true)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Entity
 @Getter
-@Setter
-@NoArgsConstructor
 @Table(
     name = "stack_measurement",
     uniqueConstraints = {
@@ -27,11 +26,7 @@ import java.time.LocalDate;
         )
     }
 )
-public class StackMeasurement {
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(nullable = false, unique = true)
-  private Long id;
+public class StackMeasurement extends BaseEntity {
   
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "stack_id")
@@ -50,19 +45,30 @@ public class StackMeasurement {
   @Column()
   private Double allowance;
   
-  @CreationTimestamp
-  @Column(name = "created_at", nullable = false)
-  private LocalDate createdAt;
-  
-  @UpdateTimestamp
-  @Column(name = "modified_at", nullable = false)
-  private LocalDate modifiedAt;
-  
   public void attachStack(Stack stack) {
     this.stack = stack;
+    stack.getStackMeasurements().add(this);
   }
   
   public void attachPollutant(Pollutant pollutant) {
     this.pollutant = pollutant;
+    pollutant.getStackMeasurements().add(this);
+  }
+  
+  public void update(StackMeasurementUpdateD dto) {
+    StackMeasurementBuilder<?, ?> builder = this.toBuilder();
+    
+    Optional.ofNullable(dto.getCycle())
+        .ifPresent(v -> this.cycle = v);
+    
+    Optional.ofNullable(dto.getAllowance())
+        .ifPresent(v -> this.allowance = v);
+    
+    apply(builder.build());
+  }
+  
+  private void apply(StackMeasurement stackMeasurement) {
+    this.cycle = stackMeasurement.cycle;
+    this.allowance = stackMeasurement.allowance;
   }
 }

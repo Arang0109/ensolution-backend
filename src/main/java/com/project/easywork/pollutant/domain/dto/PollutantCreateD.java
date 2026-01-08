@@ -1,23 +1,21 @@
 package com.project.easywork.pollutant.domain.dto;
 
 import com.project.easywork.pollutant.domain.Phase;
-import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.Min;
 import lombok.*;
 
 @Builder
 @Getter
-public class PollutantResponseDto {
-  @Schema(
-      description = "측정물질 ID (PK)",
-      accessMode = Schema.AccessMode.READ_ONLY)
-  private Long id;
-  
+@NoArgsConstructor
+@AllArgsConstructor
+public class PollutantCreateD {
   private String nameKr;
   private String nameEn;
   private String method;
   private Phase phase;
   private String equipmentName;
   private String testMethodName;
+  @Min(value = 0, message = "0 이상의 값을 입력해주세요.")
   private Double samplingTime;
   private String samplingVolume;
 }

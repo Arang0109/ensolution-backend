@@ -1,8 +1,8 @@
 package com.project.easywork.client.mapper;
 
-import com.project.easywork.client.domain.dto.stack_measurement.StackMeasurementCreateRequestDto;
-import com.project.easywork.client.domain.dto.stack_measurement.StackMeasurementResponseDto;
-import com.project.easywork.client.domain.dto.stack_measurement.StackMeasurementUpdateRequestDto;
+import com.project.easywork.client.domain.dto.stack.MeasurementListD;
+import com.project.easywork.client.domain.dto.stack_measurement.StackMeasurementCreateD;
+import com.project.easywork.client.domain.dto.stack_measurement.StackMeasurementD;
 import com.project.easywork.client.domain.persistance.StackMeasurement;
 import com.project.easywork.pollutant.mapper.PollutantMapper;
 import org.mapstruct.*;
@@ -17,17 +17,16 @@ import java.util.List;
     }
 )
 public interface StackMeasurementMapper {
-  StackMeasurement toEntity(StackMeasurementCreateRequestDto dto);
+  StackMeasurement toEntity(StackMeasurementCreateD dto);
   
-  @Mapping(target = "stackId", source = "stack.id")
-  StackMeasurementResponseDto toDto(StackMeasurement stackMeasurement);
+  @Mapping(source = "stack.id", target = "stackId")
+  StackMeasurementD toDto(StackMeasurement stackMeasurement);
   
-  List<StackMeasurementResponseDto> toDtoList(List<StackMeasurement> stackMeasurements);
+  @Mapping(source = "pollutant.id", target = "pollutantId")
+  @Mapping(source = "pollutant.nameKr", target = "nameKr")
+  @Mapping(source = "pollutant.nameEn", target = "nameEn")
+  MeasurementListD toMeasurementDto(StackMeasurement stackMeasurement);
   
-  @BeanMapping(
-      nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE
-  )
-  void updateStackMeasurement(
-      StackMeasurementUpdateRequestDto dto, @MappingTarget StackMeasurement stackMeasurement
-  );
+  List<StackMeasurementD> toDtoList(List<StackMeasurement> stackMeasurements);
+  List<MeasurementListD> toMeasurementDtoList(List<StackMeasurement> stackMeasurements);
 }

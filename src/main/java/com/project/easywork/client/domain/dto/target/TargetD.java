@@ -1,4 +1,4 @@
-package com.project.easywork.client.domain.dto.facility;
+package com.project.easywork.client.domain.dto.target;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
@@ -7,20 +7,16 @@ import java.time.LocalDate;
 
 @Builder
 @Getter
-public class FacilityResponseDto {
+public class TargetD {
   
   @Schema(
-      description = "배출시설 ID (PK)",
+      description = "대상물질 ID (PK)",
       accessMode = Schema.AccessMode.READ_ONLY)
   private Long id;
   
   private Long preventionId;
-  private String name;
-  private String fuelUsage;
-  private String itemOutput;
-  private String fuelInput;
-  private String fuelType;
-  private String remark;
+  private String targetSubstance;
+  private Double removalEfficiency;
   
   @Schema(description = "생성날짜") private LocalDate createdAt;
   @Schema(description = "수정날짜") private LocalDate modifiedAt;

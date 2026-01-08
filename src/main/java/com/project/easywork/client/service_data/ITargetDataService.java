@@ -9,11 +9,7 @@ public interface ITargetDataService {
   
   Target save(Target target);
   
-  List<Target> saveAll(List<Target> targets);
-  
-  void deleteById(Long targetId);
+  void saveAll(List<Target> targets);
   
   List<Target> findAll();
-  
-  List<Target> findTargetsByPreventionId(Long preventionId);
 }

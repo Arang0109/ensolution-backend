@@ -28,7 +28,7 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
     where s.id = :id
   """)
   Optional<Schedule> findDetailById(Long id);
-  List<Schedule> findSchedulesByStackIdAndStatusIn(Long stackId, List<ScheduleStatus> status);
+  List<Schedule> findByStackIdAndStatus(Long stackId, ScheduleStatus status);
   
   Long stack(Stack stack);
 }

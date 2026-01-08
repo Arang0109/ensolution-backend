@@ -1,7 +1,6 @@
 package com.project.easywork.client.domain.dto.target;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
@@ -10,7 +9,7 @@ import lombok.*;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class TargetCreateRequestDto {
+public class TargetCreateD {
   
   @Schema(description = "방지시설 ID (FK)", example = "1")
   @NotNull(message = "필수 입력")

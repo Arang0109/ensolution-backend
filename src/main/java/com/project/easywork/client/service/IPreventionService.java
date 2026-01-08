@@ -5,10 +5,10 @@ import com.project.easywork.client.domain.dto.prevention.*;
 import java.util.List;
 
 public interface IPreventionService {
-  PreventionDetailResponseDto registerPreventionBundle(PreventionBundleCreateRequestDto requestDto);
-  PreventionDetailResponseDto getPrevention(Long preventionId);
-  List<PreventionResponseDto> getPreventions();
-  List<PreventionResponseDto> getPreventionsByStack(Long stackId);
-  PreventionResponseDto updatePrevention(Long preventionId, PreventionUpdateRequestDto requestDto);
+  PreventionDetailD registerPreventionBundle(PreventionBundleCreateD requestDto);
+  PreventionDetailD getPrevention(Long preventionId);
+  List<PreventionD> getPreventions();
+  List<PreventionD> getPreventionsByStack(Long stackId);
+  PreventionDetailD updatePrevention(Long preventionId, PreventionBundleUpdateD requestDto);
   void removePrevention(Long preventionId);
 }

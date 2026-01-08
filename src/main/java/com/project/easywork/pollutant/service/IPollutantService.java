@@ -1,15 +1,15 @@
 package com.project.easywork.pollutant.service;
 
-import com.project.easywork.pollutant.domain.dto.PollutantCreateRequestDto;
-import com.project.easywork.pollutant.domain.dto.PollutantResponseDto;
-import com.project.easywork.pollutant.domain.dto.PollutantUpdateRequestDto;
+import com.project.easywork.pollutant.domain.dto.PollutantCreateD;
+import com.project.easywork.pollutant.domain.dto.PollutantD;
+import com.project.easywork.pollutant.domain.dto.PollutantUpdateD;
 
 import java.util.List;
 
 public interface IPollutantService {
-  PollutantResponseDto registerPollutant(PollutantCreateRequestDto requestDto);
-  PollutantResponseDto getPollutant(Long pollutantId);
-  List<PollutantResponseDto> getPollutants();
-  PollutantResponseDto updatePollutant(Long pollutantId, PollutantUpdateRequestDto requestDto);
+  PollutantD registerPollutant(PollutantCreateD requestDto);
+  PollutantD getPollutant(Long pollutantId);
+  List<PollutantD> getPollutants();
+  PollutantD updatePollutant(Long pollutantId, PollutantUpdateD requestDto);
   void removePollutant(Long pollutantId);
 }

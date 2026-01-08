@@ -1,13 +1,13 @@
 package com.project.easywork.schedule.service;
 
-import com.project.easywork.schedule.domain.ScheduleStatus;
+import com.project.easywork.client.domain.dto.stack.MeasurementHistoryD;
 import com.project.easywork.schedule.domain.dto.*;
 
 import java.util.List;
 
 public interface IScheduleService {
   List<ScheduleTableViewDto> getList();
-  List<ScheduleResDto> getListByStack(Long stackId, List<ScheduleStatus> status);
+  List<MeasurementHistoryD> getListByStack(Long stackId);
   ScheduleDetailResDto getSchedule(Long scheduleId);
   ScheduleResDto register(ScheduleCreateReqDto scheduleCreateReqDto);
   void addMeasurements(Long scheduleId, List<ScheduleMeasurementCreateReqDto> dto);

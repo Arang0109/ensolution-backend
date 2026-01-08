@@ -2,18 +2,19 @@ package com.project.easywork.pollutant.domain.persistance;
 
 import com.project.easywork.client.domain.persistance.StackMeasurement;
 import com.project.easywork.pollutant.domain.Phase;
-import com.project.easywork.pollutant.domain.dto.PollutantUpdateRequestDto;
+import com.project.easywork.pollutant.domain.dto.PollutantUpdateD;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Builder(toBuilder = true)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Entity
 @Getter
-@Setter
 @Table(name = "pollutant")
 public class Pollutant {
   @Id
@@ -48,4 +49,45 @@ public class Pollutant {
   
   @OneToMany(mappedBy = "pollutant", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<StackMeasurement> stackMeasurements = new ArrayList<>();
+  
+  public void update(PollutantUpdateD dto) {
+    PollutantBuilder builder = this.toBuilder();
+    
+    Optional.ofNullable(dto.getNameKr())
+        .ifPresent(v -> this.nameKr = v);
+    
+    Optional.ofNullable(dto.getNameEn())
+        .ifPresent(v -> this.nameEn = v);
+    
+    Optional.ofNullable(dto.getMethod())
+        .ifPresent(v -> this.method = v);
+    
+    Optional.ofNullable(dto.getPhase())
+        .ifPresent(v -> this.phase = v);
+    
+    Optional.ofNullable(dto.getEquipmentName())
+        .ifPresent(v -> this.equipmentName = v);
+    
+    Optional.ofNullable(dto.getTestMethodName())
+        .ifPresent(v -> this.testMethodName = v);
+    
+    Optional.ofNullable(dto.getSamplingTime())
+        .ifPresent(v -> this.samplingTime = v);
+    
+    Optional.ofNullable(dto.getSamplingVolume())
+        .ifPresent(v -> this.samplingVolume = v);
+    
+    apply(builder.build());
+  }
+  
+  private void apply(Pollutant pollutant) {
+    Optional.ofNullable(nameKr).ifPresent(v -> pollutant.nameKr = v);
+    Optional.ofNullable(nameEn).ifPresent(v -> pollutant.nameEn = v);
+    Optional.ofNullable(method).ifPresent(v -> pollutant.method = v);
+    Optional.ofNullable(phase).ifPresent(v -> pollutant.phase = v);
+    Optional.ofNullable(equipmentName).ifPresent(v -> pollutant.equipmentName = v);
+    Optional.ofNullable(testMethodName).ifPresent(v -> pollutant.testMethodName = v);
+    Optional.ofNullable(samplingTime).ifPresent(v -> pollutant.samplingTime = v);
+    Optional.ofNullable(samplingVolume).ifPresent(v -> pollutant.samplingVolume = v);
+  }
 }

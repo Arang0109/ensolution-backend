@@ -58,12 +58,9 @@ public class Workplace extends BaseEntity {
   @ToString.Exclude
   private List<Stack> stacks = new ArrayList<>();
   
-  @OneToMany(mappedBy = "workplace", cascade = CascadeType.ALL, orphanRemoval = true)
-  @ToString.Exclude
-  private List<Manager> managers = new ArrayList<>();
-  
   public void attachCompany(Company company) {
     this.company = company;
+    company.getWorkplaces().add(this);
   }
   
   public void update(WorkplaceUpdateD dto) {
