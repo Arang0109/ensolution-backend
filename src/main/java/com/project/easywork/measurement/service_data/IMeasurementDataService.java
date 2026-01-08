@@ -5,9 +5,9 @@ import com.project.easywork.measurement.dto.document.MeasurementDocument;
 public interface IMeasurementDataService {
   MeasurementDocument findById(String objectId);
   
-  MeasurementDocument findByScheduleId(Long scheduleId);
+  MeasurementDocument findByPlanId(Long planId);
   
   MeasurementDocument save(MeasurementDocument doc);
   
-  void deleteByScheduleId(Long scheduleId);
+  void deleteByPlanId(Long planId);
 }

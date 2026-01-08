@@ -21,22 +21,22 @@ public class MeasurementController {
   private final IMeasurementService measurementService;
   
   @Operation(summary = "측정 데이터 업데이트 API", description = "측정 데이터를 업데이트합니다.")
-  @PutMapping("/{scheduleId}/draft")
+  @PutMapping("/{planId}/draft")
   public ResponseEntity<ApiResponse<Void>> updateDraft(
-      @PathVariable Long scheduleId,
+      @PathVariable Long planId,
       @RequestBody MeasurementDraftUpdateCommandDto request
   ) {
-    measurementService.updateDraft(scheduleId, request);
+    measurementService.updateDraft(planId, request);
     return ResponseEntity.ok().body(ApiResponse.success());
   }
   
   @Operation(summary = "측정 데이터 저장 API", description = "측정 데이터를 저장합니다.")
-  @PostMapping("/{scheduleId}/completed")
+  @PostMapping("/{planId}/completed")
   public ResponseEntity<ApiResponse<Void>> saveDocument(
-      @PathVariable Long scheduleId,
+      @PathVariable Long planId,
       @RequestBody MeasurementCommandDto request
   ) {
-    measurementService.saveDocument(scheduleId, request);
+    measurementService.saveDocument(planId, request);
     return ResponseEntity.ok().body(ApiResponse.success());
   }
 }

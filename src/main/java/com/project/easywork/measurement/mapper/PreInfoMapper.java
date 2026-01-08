@@ -8,11 +8,11 @@ import org.mapstruct.Mapper;
 public interface PreInfoMapper {
   PreInfoDocument toDocument(PreInfoCommandDto dto);
   
-  PreInfoDocument.PreInfoCompanyDocument toDocument(PreInfoCommandDto.PreInfoCompany dto);
-  PreInfoDocument.PreInfoWorkplaceDocument toDocument(PreInfoCommandDto.PreInfoWorkplace dto);
-  PreInfoDocument.PreInfoStackDocument toDocument(PreInfoCommandDto.PreInfoStack dto);
-  PreInfoDocument.PreInfoPreventionDocument toDocument(PreInfoCommandDto.PreInfoPrevention dto);
-  PreInfoDocument.PreInfoFacilityDocument toDocument(PreInfoCommandDto.PreInfoFacility dto);
-  PreInfoDocument.PreInfoTargetDocument toDocument(PreInfoCommandDto.PreInfoTarget dto);
+  PreInfoDocument.CompanyDocument toDocument(PreInfoCommandDto.PreInfoCompany dto);
+  PreInfoDocument.WorkplaceDocument toDocument(PreInfoCommandDto.PreInfoWorkplace dto);
+  PreInfoDocument.StackDocument toDocument(PreInfoCommandDto.PreInfoStack dto);
+  PreInfoDocument.PreventionDocument toDocument(PreInfoCommandDto.PreInfoPrevention dto);
+  PreInfoDocument.FacilityDocument toDocument(PreInfoCommandDto.PreInfoFacility dto);
+  PreInfoDocument.TargetDocument toDocument(PreInfoCommandDto.PreInfoTarget dto);
 }
 

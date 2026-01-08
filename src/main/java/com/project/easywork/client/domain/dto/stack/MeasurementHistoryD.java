@@ -13,7 +13,7 @@ import java.util.List;
 @Getter
 @Builder
 public class MeasurementHistoryD {
-  private Long scheduleId;
+  private Long planId;
   private LocalDate measureDate;
   private String teamName;
   private List<String> measurements;

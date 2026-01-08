@@ -6,12 +6,11 @@ import com.project.easywork.client.domain.Shape;
 import com.project.easywork.client.domain.Orientation;
 import com.project.easywork.client.domain.dto.stack.StackUpdateD;
 import com.project.easywork.common.domain.BaseEntity;
-import com.project.easywork.schedule.domain.persistance.Schedule;
+import com.project.easywork.plan.domain.persistance.Plan;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -74,7 +73,7 @@ public class Stack extends BaseEntity {
   private List<StackMeasurement> stackMeasurements = new ArrayList<>();
   
   @OneToMany(mappedBy = "stack")
-  private List<Schedule> schedules = new ArrayList<>();
+  private List<Plan> plans = new ArrayList<>();
   
   public void attachWorkplace(Workplace workplace) {
     this.workplace = workplace;
