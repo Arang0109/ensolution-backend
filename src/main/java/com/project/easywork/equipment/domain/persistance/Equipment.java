@@ -1,16 +1,19 @@
 package com.project.easywork.equipment.domain.persistance;
 
 import com.project.easywork.equipment.domain.EquipType;
+import com.project.easywork.equipment.domain.dto.EquipUpdateD;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+@SuperBuilder(toBuilder = true)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Entity
 @Getter
-@Setter
 @Table(name = "equipment")
 public class Equipment {
   @Id
@@ -74,6 +77,23 @@ public class Equipment {
   // 비고
   @Lob
   private String remark;
+  
+  public void update(EquipUpdateD dto) {
+    if (dto.getManagementNumber() != null) this.managementNumber = dto.getManagementNumber();
+    if (dto.getSerialNumber() != null) this.serialNumber = dto.getSerialNumber();
+    if (dto.getModelName() != null) this.modelName = dto.getModelName();
+    if (dto.getEquipmentName() != null) this.equipmentName = dto.getEquipmentName();
+    if (dto.getType() != null) this.type = dto.getType();
+    if (dto.getPrice() != null) this.price = dto.getPrice();
+    if (dto.getManufacturer() != null) this.manufacturer = dto.getManufacturer();
+    if (dto.getOriginCountry() != null) this.originCountry = dto.getOriginCountry();
+    if (dto.getPurchaseDate() != null) this.purchaseDate = dto.getPurchaseDate();
+    if (dto.getCalibrationDate() != null) this.calibrationDate = dto.getCalibrationDate();
+    if (dto.getCalibrationCycle() != null) this.calibrationCycle = dto.getCalibrationCycle();
+    if (dto.getDh() != null) this.dh = dto.getDh();
+    if (dto.getYd() != null) this.yd = dto.getYd();
+    if (dto.getRemark() != null) this.remark = dto.getRemark();
+  }
   
   public void toggleAvailable() {
     this.isAvailable = !this.isAvailable;

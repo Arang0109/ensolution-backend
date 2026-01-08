@@ -11,6 +11,6 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Getter
 @ToString
-public class EquipmentCalibrationDateUpdateDto {
+public class EquipCalibrationDateUpdateD {
   private LocalDate calibrationDate;
 }

@@ -29,27 +29,27 @@ public class EquipmentController {
       description = "새로운 측정장비 정보를 데이터베이스에 저장합니다."
   )
   @PostMapping()
-  public ResponseEntity<ApiResponse<EquipmentResDto>> register(
-      @Valid @RequestBody EquipmentCreateReqDto request
+  public ResponseEntity<ApiResponse<EquipD>> register(
+      @Valid @RequestBody EquipCreateD request
   ) {
     return ResponseEntity.ok().body(ApiResponse.success(equipmentService.register(request)));
   }
   
   @Operation(summary = "측정장비 목록 조회 API", description = "전체 측정장비 목록을 조회합니다.")
   @GetMapping()
-  public ResponseEntity<ApiResponse<List<EquipmentResDto>>> getList() {
+  public ResponseEntity<ApiResponse<List<EquipD>>> getList() {
     return ResponseEntity.ok().body(ApiResponse.success(equipmentService.getList()));
   }
   
   @Operation(summary = "피토우관 목록 조회 API", description = "전체 측정장비 목록을 조회합니다.")
   @GetMapping("/pitot")
-  public ResponseEntity<ApiResponse<PitotTubeTableViewDto>> getListForPitot() {
+  public ResponseEntity<ApiResponse<PitotTableViewD>> getListForPitot() {
     return ResponseEntity.ok().body(ApiResponse.success(pitotTubeService.getList()));
   }
   
   @Operation(summary = "측정장비 상세 조회 API", description = "해당 측정장비의 상세정보를 조회합니다.")
   @GetMapping("/{equipmentId}")
-  public ResponseEntity<ApiResponse<EquipmentResDto>> get(
+  public ResponseEntity<ApiResponse<EquipD>> get(
       @PathVariable Long equipmentId
   ) {
     return ResponseEntity.ok().body(ApiResponse.success(equipmentService.getEquipment(equipmentId)));
@@ -57,10 +57,10 @@ public class EquipmentController {
   
   @Operation(summary = "측정장비 수정 API", description = "해당 측정장비의 상세정보를 수정합니다.")
   @PatchMapping("/{equipmentId}")
-  public ResponseEntity<ApiResponse<EquipmentResDto>> update
+  public ResponseEntity<ApiResponse<EquipD>> update
       (
           @PathVariable Long equipmentId,
-          @Valid @RequestBody EquipmentUpdateReqDto request
+          @Valid @RequestBody EquipUpdateD request
       ) {
     
     return ResponseEntity.ok().body(ApiResponse.success(equipmentService.update(equipmentId, request)));
@@ -68,9 +68,9 @@ public class EquipmentController {
   
   @Operation(summary = "측정장비 교정날짜 업데이트 API", description = "해당 측정장비의 교정날짜를 업데이트합니다.")
   @PatchMapping("/{equipmentId}/calibration")
-  public ResponseEntity<ApiResponse<EquipmentResDto>> updateCalibrationDate(
+  public ResponseEntity<ApiResponse<EquipD>> updateCalibrationDate(
       @PathVariable Long equipmentId,
-      @Valid @RequestBody EquipmentCalibrationDateUpdateDto request) {
+      @Valid @RequestBody EquipCalibrationDateUpdateD request) {
     return ResponseEntity.ok().body(ApiResponse.success(equipmentService.updateCalibrationDate(equipmentId, request)));
   }
   

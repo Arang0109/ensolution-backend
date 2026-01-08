@@ -1,27 +1,21 @@
 package com.project.easywork.equipment.mapper;
 
-import com.project.easywork.equipment.domain.dto.EquipmentCreateReqDto;
-import com.project.easywork.equipment.domain.dto.EquipmentResDto;
-import com.project.easywork.equipment.domain.dto.EquipmentUpdateReqDto;
+import com.project.easywork.equipment.domain.dto.EquipCreateD;
+import com.project.easywork.equipment.domain.dto.EquipD;
+import com.project.easywork.equipment.domain.dto.EquipUpdateD;
 import com.project.easywork.equipment.domain.persistance.Equipment;
 import org.mapstruct.*;
 
 import java.util.List;
 
 @Mapper(
-    componentModel = "spring", builder = @Builder(),
-    unmappedTargetPolicy = ReportingPolicy.IGNORE,
-    nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    componentModel = "spring",
+    builder = @Builder()
+)
 public interface EquipmentMapper {
+  EquipD toDto(Equipment equipment);
   
-  EquipmentResDto toDto(Equipment equipment);
+  Equipment toEntity(EquipCreateD dto);
   
-  Equipment toEntity(EquipmentCreateReqDto dto);
-  
-  List<EquipmentResDto> toDtoList(List<Equipment> equipments);
-  
-  void updateFromDto(
-      EquipmentUpdateReqDto dto,
-      @MappingTarget Equipment equipment
-  );
+  List<EquipD> toDtoList(List<Equipment> equipments);
 }

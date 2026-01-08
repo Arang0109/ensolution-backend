@@ -9,6 +9,6 @@ import java.util.List;
 @Getter
 @Builder
 @ToString
-public class PitotTubeTableViewDto {
-  List<PitotTubeDetailResponseDto> pitotTubeList;
+public class PitotTableViewD {
+  List<PitotDetailD> pitotTubeList;
 }

@@ -9,7 +9,7 @@ import java.util.List;
 @Getter
 @Builder
 @ToString
-public class PitotTubeDetailResponseDto {
-  private PitotTubeResponseDto pitotTube;
-  List<PitotTubeCoefficientResponseDto> coefficientList;
+public class PitotDetailD {
+  private PitotD pitotTube;
+  List<PitotCoefficientD> coefficientList;
 }
