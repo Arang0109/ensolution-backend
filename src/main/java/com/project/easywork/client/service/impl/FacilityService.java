@@ -25,22 +25,11 @@ public class FacilityService implements IFacilityService {
   private final FacilityMapper facilityMapper;
   
   private final DomainEntityResolver domainEntityResolver;
-  private final EntityManager entityManager;
   
   @Override
-  public FacilityD registerFacility(FacilityCreateD requestDto) {
-    
-    Prevention prevention = domainEntityResolver.getPreventionOrThrow(requestDto.getPreventionId());
-    Facility facility = facilityMapper.toEntity(requestDto);
-    facility.attachPrevention(prevention);
-    
-    return facilityMapper.toDto(facilityDataService.save(facility));
-  }
-  
-  @Override
-  public List<FacilityD> registerFacilities(List<FacilityCreateD> dtos, Prevention prevention) {
+  public void registerFacilities(List<FacilityCreateD> dtos, Prevention prevention) {
     if (dtos == null || dtos.isEmpty()) {
-      return List.of();
+      return;
     }
     
     List<Facility> facilities = dtos.stream()
@@ -51,9 +40,7 @@ public class FacilityService implements IFacilityService {
         })
         .toList();
     
-    return facilityDataService.saveAll(facilities).stream()
-        .map(facilityMapper::toDto)
-        .toList();
+    facilityDataService.saveAll(facilities);
   }
   
   @Override
@@ -63,18 +50,9 @@ public class FacilityService implements IFacilityService {
   }
   
   @Override
-  public FacilityD updateFacility(Long facilityId, FacilityUpdateD dto) {
+  public void removeFacility(Long preventionId, Long facilityId) {
+    Prevention prevention = domainEntityResolver.getPreventionOrThrow(preventionId);
     Facility facility = domainEntityResolver.getFacilityOrThrow(facilityId);
-    facility.update(dto);
-    
-    entityManager.flush();
-    
-    return facilityMapper.toDto(facility);
-  }
-  
-  @Override
-  public void removeFacility(Long facilityId) {
-    domainEntityResolver.getFacilityOrThrow(facilityId);
-    facilityDataService.deleteById(facilityId);
+    prevention.removeFacility(facility);
   }
 }

@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class FacilityUpdateD {
+  private Long id;
   private String name;
   private String fuelUsage;
   private String itemOutput;

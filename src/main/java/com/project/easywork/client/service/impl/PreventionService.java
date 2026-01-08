@@ -1,6 +1,5 @@
 package com.project.easywork.client.service.impl;
 
-import com.project.easywork.client.domain.dto.facility.FacilityCreateD;
 import com.project.easywork.client.domain.dto.prevention.*;
 import com.project.easywork.client.domain.persistance.Prevention;
 import com.project.easywork.client.domain.persistance.Stack;
@@ -28,7 +27,6 @@ public class PreventionService implements IPreventionService {
   private final ITargetService targetService;
   
   private final DomainEntityResolver domainEntityResolver;
-  private final EntityManager entityManager;
   
   @Override
   public PreventionDetailD registerPreventionBundle(PreventionBundleCreateD dto) {
@@ -40,7 +38,6 @@ public class PreventionService implements IPreventionService {
     prevention.attachStack(stack);
     
     facilityService.registerFacilities(dto.getFacilities(), prevention);
-    
     targetService.registerTargets(dto.getTargets(), prevention);
     
     return preventionMapper.toDetailDto(prevention);
@@ -66,13 +63,13 @@ public class PreventionService implements IPreventionService {
   }
   
   @Override
-  public PreventionD updatePrevention(Long preventionId, PreventionUpdateD dto) {
+  public PreventionDetailD updatePrevention(Long preventionId, PreventionBundleUpdateD dto) {
     Prevention prevention = domainEntityResolver.getPreventionOrThrow(preventionId);
-    prevention.update(dto);
+    prevention.update(dto.getPrevention());
+    prevention.updateFacilities(dto.getFacilities());
+    prevention.updateTargets(dto.getTargets());
     
-    entityManager.flush();
-    
-    return preventionMapper.toDto(prevention);
+    return preventionMapper.toDetailDto(prevention);
   }
   
   @Override

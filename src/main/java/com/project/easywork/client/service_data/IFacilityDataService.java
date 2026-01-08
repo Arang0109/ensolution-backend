@@ -9,11 +9,7 @@ public interface IFacilityDataService {
   
   Facility save(Facility facility);
   
-  List<Facility> saveAll(List<Facility> facilities);
-  
-  void deleteById(Long facilityId);
+  void saveAll(List<Facility> facilities);
   
   List<Facility> findAll();
-  
-  List<Facility> findFacilitiesByPreventionId(Long preventionId);
 }

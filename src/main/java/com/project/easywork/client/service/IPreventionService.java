@@ -9,6 +9,6 @@ public interface IPreventionService {
   PreventionDetailD getPrevention(Long preventionId);
   List<PreventionD> getPreventions();
   List<PreventionD> getPreventionsByStack(Long stackId);
-  PreventionD updatePrevention(Long preventionId, PreventionUpdateD requestDto);
+  PreventionDetailD updatePrevention(Long preventionId, PreventionBundleUpdateD requestDto);
   void removePrevention(Long preventionId);
 }

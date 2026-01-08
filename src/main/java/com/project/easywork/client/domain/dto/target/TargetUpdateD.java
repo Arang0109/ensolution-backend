@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TargetUpdateD {
+  private Long id;
   private String targetSubstance;
   private Double removalEfficiency;
 }

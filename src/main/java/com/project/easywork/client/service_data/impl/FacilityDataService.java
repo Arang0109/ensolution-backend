@@ -25,22 +25,12 @@ public class FacilityDataService implements IFacilityDataService {
   }
   
   @Override
-  public List<Facility> saveAll(List<Facility> facilities) {
-    return facilityRepository.saveAll(facilities);
-  }
-  
-  @Override
-  public void deleteById(Long facilityId) {
-    facilityRepository.deleteById(facilityId);
+  public void saveAll(List<Facility> facilities) {
+    facilityRepository.saveAll(facilities);
   }
   
   @Override
   public List<Facility> findAll() {
     return facilityRepository.findAll();
-  }
-  
-  @Override
-  public List<Facility> findFacilitiesByPreventionId(Long preventionId) {
-    return facilityRepository.findFacilitiesByPreventionId(preventionId);
   }
 }

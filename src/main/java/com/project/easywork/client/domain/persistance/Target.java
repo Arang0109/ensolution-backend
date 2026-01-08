@@ -5,10 +5,6 @@ import com.project.easywork.common.domain.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-
-import java.util.Optional;
 
 @SuperBuilder(toBuilder = true)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -19,7 +15,6 @@ import java.util.Optional;
 public class Target extends BaseEntity {
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "prevention_id")
-  @OnDelete(action = OnDeleteAction.CASCADE)
   private Prevention prevention;
   
   @Column(name = "target_substance", length = 100)
@@ -28,25 +23,30 @@ public class Target extends BaseEntity {
   @Column(name = "removal_efficiency")
   private Double removalEfficiency;
   
+  public static Target create(TargetUpdateD dto, Prevention prevention) {
+    Target target = Target.builder()
+        .targetSubstance(dto.getTargetSubstance())
+        .removalEfficiency(dto.getRemovalEfficiency())
+        .build();
+    
+    target.attachPrevention(prevention);
+    return target;
+  }
+  
   public void attachPrevention(Prevention prevention) {
     this.prevention = prevention;
-    prevention.getTargets().add(this);
+  }
+  
+  public void detachPrevention() {
+    this.prevention = null;
   }
   
   public void update(TargetUpdateD dto) {
-    TargetBuilder<?, ?> builder = toBuilder();
-    
-    Optional.ofNullable(dto.getTargetSubstance())
-        .ifPresent(v -> this.targetSubstance = v);
-    
-    Optional.ofNullable(dto.getRemovalEfficiency())
-        .ifPresent(v -> this.removalEfficiency = v);
-    
-    apply(builder.build());
-  }
-  
-  private void apply(Target target) {
-    this.targetSubstance = target.getTargetSubstance();
-    this.removalEfficiency = target.getRemovalEfficiency();
+    if (dto.getTargetSubstance() != null) {
+      this.targetSubstance = dto.getTargetSubstance();
+    }
+    if (dto.getRemovalEfficiency() != null) {
+      this.removalEfficiency = dto.getRemovalEfficiency();
+    }
   }
 }
