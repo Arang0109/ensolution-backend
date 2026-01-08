@@ -25,6 +25,7 @@ public class MeasurementDocument {
   @Indexed
   private Long planId;
   private MeasurementStatus status;
+  private String vehicleNumber;
   
   private PreInfoDocument preInfo;
   private WeatherDocument weather;

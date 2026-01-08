@@ -30,12 +30,6 @@ public interface PlanMapper {
   @Mapping(target = "teamId", source = "team.id")
   PlanD toDto(Plan plan);
   
-  @Mapping(source = ".", target = "plan")
-  @Mapping(source = "stack", target = "stack")
-  @Mapping(source = "stack.workplace", target = "workplace")
-  @Mapping(source = "stack.workplace.company", target = "company")
-  PlanDetailD toDetailDto(Plan plan);
-  
   @Mapping(source = "id", target = "planId")
   @Mapping(source = "measureDate", target = "measureDate")
   @Mapping(source = "team.name", target = "teamName")
