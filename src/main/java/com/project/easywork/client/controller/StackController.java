@@ -1,6 +1,8 @@
 package com.project.easywork.client.controller;
 
 import com.project.easywork.client.domain.dto.stack.*;
+import com.project.easywork.client.domain.dto.stack_measurement.StackMeasurementD;
+import com.project.easywork.client.service.IStackMeasurementService;
 import com.project.easywork.common.api.ApiResponse;
 import com.project.easywork.client.service.IStackService;
 import com.project.easywork.schedule.service.IScheduleService;
@@ -23,6 +25,7 @@ public class StackController {
   
   private final IStackService stackService;
   private final IScheduleService scheduleService;
+  private final IStackMeasurementService stackMeasurementService;
   
   @Operation(summary = "측정시설 등록 API", description = "새로운 측정시설 정보를 데이터베이스에 저장합니다.")
   @PostMapping()
@@ -45,10 +48,15 @@ public class StackController {
     return ResponseEntity.ok().body(ApiResponse.success(stackService.getStack(stackId)));
   }
   
+  @Operation(summary = "측정시설의 측정항목 목록 조회 API", description = "해당 측정시설에 등록된 측정항목 목록을 조회합니다.")
+  @GetMapping("/{stackId}/measurements")
+  public ResponseEntity<ApiResponse<List<StackMeasurementD>>> getMeasurementsByStack(@PathVariable Long stackId) {
+    return ResponseEntity.ok(ApiResponse.success(stackMeasurementService.getStackMeasurementsByStack(stackId)));
+  }
+  
   @Operation(summary = "측정시설 완료일정 조회 API", description = "해당 측정시설의 완료된 측정일정 목록을 조회합니다.")
   @GetMapping("/{stackId}/history")
-  public ResponseEntity<ApiResponse<List<MeasurementHistoryD>>> getListByStack(
-      @PathVariable Long stackId) {
+  public ResponseEntity<ApiResponse<List<MeasurementHistoryD>>> getHistoryByStack(@PathVariable Long stackId) {
     return ResponseEntity.ok(ApiResponse.success(scheduleService.getListByStack(stackId)));
   }
   

@@ -9,7 +9,7 @@ import java.time.LocalDate;
 
 @Builder
 @Getter
-public class StackMeasurementResponseDto {
+public class StackMeasurementD {
   @Schema(
       description = "시설 내 측정물질 ID (PK)",
       accessMode = Schema.AccessMode.READ_ONLY)

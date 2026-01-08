@@ -1,15 +1,15 @@
 package com.project.easywork.client.service;
 
-import com.project.easywork.client.domain.dto.stack_measurement.StackMeasurementCreateRequestDto;
-import com.project.easywork.client.domain.dto.stack_measurement.StackMeasurementResponseDto;
-import com.project.easywork.client.domain.dto.stack_measurement.StackMeasurementUpdateRequestDto;
+import com.project.easywork.client.domain.dto.stack_measurement.StackMeasurementCreateD;
+import com.project.easywork.client.domain.dto.stack_measurement.StackMeasurementD;
+import com.project.easywork.client.domain.dto.stack_measurement.StackMeasurementUpdateD;
 
 import java.util.List;
 
 public interface IStackMeasurementService {
-  StackMeasurementResponseDto registerStackMeasurement(StackMeasurementCreateRequestDto dto);
-  StackMeasurementResponseDto getStackMeasurement(Long id);
-  List<StackMeasurementResponseDto> getStackMeasurementsByStack(Long stackId);
-  StackMeasurementResponseDto updateStackMeasurement(Long id, StackMeasurementUpdateRequestDto dto);
+  StackMeasurementD registerStackMeasurement(StackMeasurementCreateD dto);
+  StackMeasurementD getStackMeasurement(Long id);
+  List<StackMeasurementD> getStackMeasurementsByStack(Long stackId);
+  StackMeasurementD updateStackMeasurement(Long id, StackMeasurementUpdateD dto);
   void removeStackMeasurement(Long id);
 }

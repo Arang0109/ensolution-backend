@@ -1,6 +1,6 @@
 package com.project.easywork.schedule.domain.dto;
 
-import com.project.easywork.client.domain.dto.stack_measurement.StackMeasurementResponseDto;
+import com.project.easywork.client.domain.dto.stack_measurement.StackMeasurementD;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
@@ -16,5 +16,5 @@ public class ScheduleMeasurementResDto {
   private Long id;
   
   private Long scheduleId;
-  private StackMeasurementResponseDto stackMeasurement;
+  private StackMeasurementD stackMeasurement;
 }

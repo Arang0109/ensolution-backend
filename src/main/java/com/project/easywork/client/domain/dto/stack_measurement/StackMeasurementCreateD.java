@@ -11,7 +11,7 @@ import lombok.*;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class StackMeasurementCreateRequestDto {
+public class StackMeasurementCreateD {
   @Schema(description = "측정시설 ID (FK)", example = "1")
   @NotNull(message = "필수 입력")
   private Long stackId;
