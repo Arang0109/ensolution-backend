@@ -2,15 +2,16 @@ package com.project.easywork.equipment.domain.persistance;
 
 import com.project.easywork.equipment.domain.PitotType;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Builder
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Entity
 @Getter
-@Setter
 @Table(name = "pitot_tube")
 public class PitotTube {
   @Id

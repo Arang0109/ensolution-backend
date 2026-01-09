@@ -1,7 +1,7 @@
 package com.project.easywork.client.validator;
 
-import com.project.easywork.client.domain.dto.stack.StackCreateRequestDto;
-import com.project.easywork.client.domain.dto.stack.StackUpdateRequestDto;
+import com.project.easywork.client.domain.dto.stack.StackCreateD;
+import com.project.easywork.client.domain.dto.stack.StackUpdateD;
 import com.project.easywork.client.repository.StackRepository;
 import com.project.easywork.common.exception.CustomException;
 import com.project.easywork.common.exception.ErrorCode;
@@ -14,7 +14,7 @@ public class StackValidator {
   
   private final StackRepository stackRepository;
   
-  public void validateForCreate(StackCreateRequestDto dto) {
+  public void validateForCreate(StackCreateD dto) {
     validateDuplicate(
         dto.getName(),
         value -> stackRepository
@@ -32,7 +32,7 @@ public class StackValidator {
     );
   }
   
-  public void validateForUpdate(Long stackId, StackUpdateRequestDto dto) {
+  public void validateForUpdate(Long stackId, StackUpdateD dto) {
     validateDuplicateForUpdate(
         dto.getSemsNumber(),
         value -> stackRepository.existsBySemsNumberAndIdNot(value, stackId),

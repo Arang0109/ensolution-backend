@@ -1,16 +1,13 @@
 package com.project.easywork.client.service;
 
-import com.project.easywork.client.domain.dto.stack.StackCreateRequestDto;
-import com.project.easywork.client.domain.dto.stack.StackDetailResponseDto;
-import com.project.easywork.client.domain.dto.stack.StackResponseDto;
-import com.project.easywork.client.domain.dto.stack.StackUpdateRequestDto;
+import com.project.easywork.client.domain.dto.stack.*;
 
 import java.util.List;
 
 public interface IStackService {
-  StackResponseDto registerStack(StackCreateRequestDto dto);
-  StackDetailResponseDto getStack(Long id);
-  List<StackResponseDto> getStacks();
-  StackResponseDto updateStack(Long id, StackUpdateRequestDto dto);
+  StackD registerStack(StackCreateD dto);
+  StackDetailD getStack(Long id);
+  List<StackD> getStacks();
+  StackD updateStack(Long id, StackUpdateD dto);
   void removeStack(Long id);
 }

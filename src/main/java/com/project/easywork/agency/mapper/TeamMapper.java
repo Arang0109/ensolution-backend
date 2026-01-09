@@ -1,17 +1,31 @@
 package com.project.easywork.agency.mapper;
 
-import com.project.easywork.agency.domain.dto.TeamCreateRequestDto;
-import com.project.easywork.agency.domain.dto.TeamResponseDto;
+import com.project.easywork.agency.domain.dto.TeamCreateD;
+import com.project.easywork.agency.domain.dto.TeamDetailD;
+import com.project.easywork.agency.domain.dto.TeamD;
 import com.project.easywork.agency.domain.entity.Team;
+import com.project.easywork.user.mapper.UserMapper;
 import org.mapstruct.Builder;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring", builder = @Builder)
+@Mapper(
+    componentModel = "spring",
+    builder = @Builder,
+    uses = {
+        UserMapper.class
+    })
 public interface TeamMapper {
-  Team toEntity(TeamCreateRequestDto dto);
-  TeamResponseDto toDto(Team team);
+  Team toEntity(TeamCreateD dto);
   
-  List<TeamResponseDto> toDtoList(List<Team> teams);
+  @Mapping(source = "particularEquip.id", target = "particularEquipId")
+  @Mapping(source = "pitotTube.id", target = "pitotTubeId")
+  TeamD toDto(Team team);
+  
+  @Mapping(source = ".", target = "team")
+  TeamDetailD toDetailDto(Team team);
+  
+  List<TeamD> toDtoList(List<Team> teams);
 }

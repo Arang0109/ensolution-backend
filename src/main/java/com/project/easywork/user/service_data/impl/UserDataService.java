@@ -17,19 +17,12 @@ public class UserDataService implements IUserDataService {
   private final UserRepository userRepository;
   
   @Override
-  @Transactional
   public List<User> findAll() {
     return userRepository.findAll();
   }
   
   @Override
-  @Transactional
   public User save(User user) {
-    return userRepository.save(user);
-  }
-  
-  @Override
-  public User update(User user) {
     return userRepository.save(user);
   }
   

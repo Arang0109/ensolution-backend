@@ -3,26 +3,30 @@ package com.project.easywork.measurement.dto.document.input;
 import com.project.easywork.client.domain.Grade;
 import com.project.easywork.client.domain.Orientation;
 import com.project.easywork.client.domain.Shape;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Getter
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class PreInfoDocument {
   
-  private PreInfoCompanyDocument company;
-  private PreInfoWorkplaceDocument workplace;
-  private PreInfoStackDocument stack;
-  private List<PreInfoPreventionDocument> preventions;
+  private CompanyDocument company;
+  private WorkplaceDocument workplace;
+  private StackDocument stack;
+  private List<PreventionDocument> preventions;
   
   // ------------------------------------
   // 회사 정보
   // ------------------------------------
   @Getter
   @Builder
-  public static class PreInfoCompanyDocument {
+  public static class CompanyDocument {
     private Long id;
     private String name;
     private String ceoName;
@@ -34,7 +38,7 @@ public class PreInfoDocument {
   // ------------------------------------
   @Getter
   @Builder
-  public static class PreInfoWorkplaceDocument {
+  public static class WorkplaceDocument {
     private Long id;
     private String name;
     private String address;
@@ -48,7 +52,7 @@ public class PreInfoDocument {
   // ------------------------------------
   @Getter
   @Builder
-  public static class PreInfoStackDocument {
+  public static class StackDocument {
     private Long id;
     private String name;
     private String semsNumber;
@@ -66,10 +70,10 @@ public class PreInfoDocument {
   // ------------------------------------
   @Getter
   @Builder
-  public static class PreInfoPreventionDocument {
+  public static class PreventionDocument {
     private String name;
-    private List<PreInfoFacilityDocument> facilities;
-    private List<PreInfoTargetDocument> targets;
+    private List<FacilityDocument> facilities;
+    private List<TargetDocument> targets;
   }
   
   // ------------------------------------
@@ -77,7 +81,7 @@ public class PreInfoDocument {
   // ------------------------------------
   @Getter
   @Builder
-  public static class PreInfoFacilityDocument {
+  public static class FacilityDocument {
     private String name;
     private String fuelUsage;
     private String itemOutput;
@@ -90,7 +94,7 @@ public class PreInfoDocument {
   // ------------------------------------
   @Getter
   @Builder
-  public static class PreInfoTargetDocument {
+  public static class TargetDocument {
     private String targetSubstance;
     private Double removalEfficiency;
   }

@@ -8,6 +8,7 @@ import com.project.easywork.client.mapper.StackMapper;
 import com.project.easywork.client.service.IStackService;
 import com.project.easywork.client.validator.StackValidator;
 import com.project.easywork.common.resolver.DomainEntityResolver;
+import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,11 +26,13 @@ public class StackService implements IStackService {
   private final StackValidator stackValidator;
   private final DomainEntityResolver domainEntityResolver;
   
+  private final EntityManager entityManager;
+  
   @Override
-  public StackResponseDto registerStack(StackCreateRequestDto dto) {
+  public StackD registerStack(StackCreateD dto) {
     stackValidator.validateForCreate(dto);
-    Workplace workplace = domainEntityResolver
-        .getWorkplaceOrThrow(
+    Workplace workplace = domainEntityResolver.getWorkplaceOrThrow
+        (
             dto.getWorkplaceId()
         );
     
@@ -41,22 +44,25 @@ public class StackService implements IStackService {
   
   @Override
   @Transactional(readOnly = true)
-  public StackDetailResponseDto getStack(Long stackId) {
+  public StackDetailD getStack(Long stackId) {
     Stack stack = domainEntityResolver.getStackOrThrow(stackId);
     return stackMapper.toDetailDto(stack);
   }
   
   @Override
   @Transactional(readOnly = true)
-  public List<StackResponseDto> getStacks() {
+  public List<StackD> getStacks() {
     return stackMapper.toDtoList(stackDataService.findAll());
   }
   
   @Override
-  public StackResponseDto updateStack(Long stackId, StackUpdateRequestDto dto) {
+  public StackD updateStack(Long stackId, StackUpdateD dto) {
     stackValidator.validateForUpdate(stackId, dto);
     Stack stack = domainEntityResolver.getStackOrThrow(stackId);
-    stackMapper.updateStack(dto, stack);
+    stack.update(dto);
+    
+    entityManager.flush();
+    
     return stackMapper.toDto(stack);
   }
   

@@ -1,16 +1,17 @@
 package com.project.easywork.equipment.domain.persistance;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import java.math.BigDecimal;
 
+@Builder
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Entity
 @Getter
-@Setter
 @Table(name = "pitot_tube_coefficient")
 public class PitotTubeCoefficient {
   @Id
@@ -28,6 +29,4 @@ public class PitotTubeCoefficient {
   
   @Column(precision = 4, scale = 3, nullable = false)
   private BigDecimal coefficient;
-  
-  public void attachPitotTube(PitotTube pitotTube) { this.pitotTube = pitotTube; }
 }

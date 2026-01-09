@@ -8,6 +8,6 @@ import java.util.Optional;
 
 @Repository
 public interface MeasurementRepository extends MongoRepository<MeasurementDocument, String> {
-  Optional<MeasurementDocument> findByScheduleId(Long scheduleId);
-  void deleteByScheduleId(Long scheduleId);
+  Optional<MeasurementDocument> findByPlanId(Long planId);
+  void deleteByPlanId(Long planId);
 }

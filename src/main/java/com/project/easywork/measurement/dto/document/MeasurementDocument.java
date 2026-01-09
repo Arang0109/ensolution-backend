@@ -14,16 +14,18 @@ import java.time.LocalDateTime;
 
 @Document("measurements")
 @Getter
-@Setter
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class MeasurementDocument {
   
   @Id
   private String id;
   
   @Indexed
-  private Long scheduleId;
+  private Long planId;
   private MeasurementStatus status;
+  private String vehicleNumber;
   
   private PreInfoDocument preInfo;
   private WeatherDocument weather;
@@ -37,4 +39,29 @@ public class MeasurementDocument {
   
   @LastModifiedDate
   private LocalDateTime updatedAt;
+  
+  public void updatePreInfo(PreInfoDocument preInfo) {
+    this.preInfo = preInfo;
+  }
+  
+  public void updateWeather(WeatherDocument weather) {
+    this.weather = weather;
+  }
+  
+  public void updateMoisture(MoistureDocument moisture) {
+    this.moisture = moisture;
+  }
+  
+  public void updateExhaustGas(ExhaustGasDocument exhaustGas) {
+    this.exhaustGas = exhaustGas;
+  }
+  
+  public void complete(MeasurementResultDocument result) {
+    this.result = result;
+    this.status = MeasurementStatus.COMPLETED;
+  }
+  
+  public boolean isDraft() {
+    return this.status == MeasurementStatus.DRAFT;
+  }
 }

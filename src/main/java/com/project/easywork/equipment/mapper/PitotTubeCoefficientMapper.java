@@ -1,6 +1,6 @@
 package com.project.easywork.equipment.mapper;
 
-import com.project.easywork.equipment.domain.dto.PitotTubeCoefficientResponseDto;
+import com.project.easywork.equipment.domain.dto.PitotCoefficientD;
 import com.project.easywork.equipment.domain.persistance.PitotTubeCoefficient;
 import org.mapstruct.Builder;
 import org.mapstruct.Mapper;
@@ -12,7 +12,6 @@ import java.util.List;
     builder = @Builder()
 )
 public interface PitotTubeCoefficientMapper {
-  
-  PitotTubeCoefficientResponseDto toDto(PitotTubeCoefficient pitotTubeCoefficient);
-  List<PitotTubeCoefficientResponseDto> toDtoList(List<PitotTubeCoefficient> dtos);
+  PitotCoefficientD toDto(PitotTubeCoefficient pitotTubeCoefficient);
+  List<PitotCoefficientD> toDtoList(List<PitotTubeCoefficient> dtos);
 }

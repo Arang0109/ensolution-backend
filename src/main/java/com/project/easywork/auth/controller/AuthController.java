@@ -1,14 +1,14 @@
 package com.project.easywork.auth.controller;
 
-import com.project.easywork.auth.domain.dto.LoginRequestDto;
-import com.project.easywork.auth.domain.dto.LoginResponseDto;
+import com.project.easywork.auth.domain.dto.LoginRequestD;
+import com.project.easywork.auth.domain.dto.LoginResponseD;
 import com.project.easywork.common.api.ApiResponse;
 import com.project.easywork.auth.security.JwtTokenProvider;
 import com.project.easywork.auth.security.CustomUserDetails;
 import com.project.easywork.auth.service.RefreshTokenService;
-import com.project.easywork.user.domain.dto.UserCreateDto;
-import com.project.easywork.user.domain.dto.UserResponseDto;
-import com.project.easywork.user.service.UserService;
+import com.project.easywork.user.domain.dto.UserCreateD;
+import com.project.easywork.user.domain.dto.UserD;
+import com.project.easywork.user.service.IUserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -36,25 +36,25 @@ import java.util.concurrent.TimeUnit;
 public class AuthController {
   
   private final RefreshTokenService refreshTokenService;
-  private final UserService userService;
+  private final IUserService IUserService;
   
   private final AuthenticationManager authenticationManager;
   private final JwtTokenProvider jwtTokenProvider;
   
   @Operation(summary = "회원가입 API", description = "새로운 회원 정보를 데이터베이스에 저장합니다.")
   @PostMapping("/register")
-  public ResponseEntity<ApiResponse<UserResponseDto>> register
+  public ResponseEntity<ApiResponse<UserD>> register
       (
-          @Valid @RequestBody UserCreateDto request
+          @Valid @RequestBody UserCreateD request
       ) {
-    return ResponseEntity.ok().body(ApiResponse.success(userService.register(request)));
+    return ResponseEntity.ok().body(ApiResponse.success(IUserService.register(request)));
   }
   
   @Operation(summary = "로그인 API", description = "회원 로그인을 수행합니다.")
   @PostMapping("/login")
-  public ResponseEntity<ApiResponse<LoginResponseDto>> login
+  public ResponseEntity<ApiResponse<LoginResponseD>> login
       (
-          @RequestBody LoginRequestDto request,
+          @RequestBody LoginRequestD request,
           HttpServletResponse httpResponse
       ) {
     Authentication authentication = authenticationManager.authenticate(
@@ -86,7 +86,7 @@ public class AuthController {
         .map(auth -> auth.replace("ROLE_", "")) // "ADMIN" (Optional)
         .toList();
     
-    LoginResponseDto responseDto = new LoginResponseDto(
+    LoginResponseD responseDto = new LoginResponseD(
         accessToken,
         userDetails.getUsername(),
         roles);

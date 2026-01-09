@@ -20,8 +20,8 @@ public class MeasurementDataService implements IMeasurementDataService {
   }
   
   @Override
-  public MeasurementDocument findByScheduleId(Long scheduleId) {
-    return measurementRepository.findByScheduleId(scheduleId).orElseThrow(
+  public MeasurementDocument findByPlanId(Long planId) {
+    return measurementRepository.findByPlanId(planId).orElseThrow(
         () -> new IllegalArgumentException("Measurement not found")
     );
   }
@@ -32,7 +32,7 @@ public class MeasurementDataService implements IMeasurementDataService {
   }
   
   @Override
-  public void deleteByScheduleId(Long scheduleId) {
-    measurementRepository.deleteByScheduleId(scheduleId);
+  public void deleteByPlanId(Long planId) {
+    measurementRepository.deleteByPlanId(planId);
   }
 }

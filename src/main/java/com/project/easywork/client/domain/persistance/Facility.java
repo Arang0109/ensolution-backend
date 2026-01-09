@@ -1,31 +1,21 @@
 
 package com.project.easywork.client.domain.persistance;
 
+import com.project.easywork.client.domain.dto.facility.FacilityUpdateD;
+import com.project.easywork.common.domain.BaseEntity;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-import org.hibernate.annotations.UpdateTimestamp;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
-import java.time.LocalDate;
-
+@SuperBuilder(toBuilder = true)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Entity
 @Getter
-@Setter
-@NoArgsConstructor
 @Table(name = "facility")
-public class Facility {
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(nullable = false, unique = true)
-  private Long id;
-  
+public class Facility extends BaseEntity {
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "prevention_id")
-  @OnDelete(action = OnDeleteAction.CASCADE)
   private Prevention prevention;
   
   @Column(nullable = false, length = 100)
@@ -46,15 +36,46 @@ public class Facility {
   @Column(columnDefinition = "LONGTEXT")
   private String remark;
   
-  @CreationTimestamp
-  @Column(name = "created_at", nullable = false)
-  private LocalDate createdAt;
-  
-  @UpdateTimestamp
-  @Column(name = "modified_at", nullable = false)
-  private LocalDate modifiedAt;
+  public static Facility create(FacilityUpdateD dto, Prevention prevention) {
+    Facility facility = Facility.builder()
+        .name(dto.getName())                // 필수
+        .fuelUsage(dto.getFuelUsage())
+        .itemOutput(dto.getItemOutput())
+        .fuelInput(dto.getFuelInput())
+        .fuelType(dto.getFuelType())
+        .remark(dto.getRemark())
+        .build();
+    
+    facility.attachPrevention(prevention);
+    return facility;
+  }
   
   public void attachPrevention(Prevention prevention) {
     this.prevention = prevention;
+  }
+  
+  public void detachPrevention() {
+    this.prevention = null;
+  }
+  
+  public void update(FacilityUpdateD dto) {
+    if (dto.getName() != null) {
+      this.name = dto.getName();
+    }
+    if (dto.getFuelUsage() != null) {
+      this.fuelUsage = dto.getFuelUsage();
+    }
+    if (dto.getItemOutput() != null) {
+      this.itemOutput = dto.getItemOutput();
+    }
+    if (dto.getFuelInput() != null) {
+      this.fuelInput = dto.getFuelInput();
+    }
+    if (dto.getFuelType() != null) {
+      this.fuelType = dto.getFuelType();
+    }
+    if (dto.getRemark() != null) {
+      this.remark = dto.getRemark();
+    }
   }
 }

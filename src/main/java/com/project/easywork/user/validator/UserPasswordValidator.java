@@ -2,7 +2,7 @@ package com.project.easywork.user.validator;
 
 import com.project.easywork.common.exception.CustomException;
 import com.project.easywork.common.exception.ErrorCode;
-import com.project.easywork.user.domain.dto.PasswordUpdateDto;
+import com.project.easywork.user.domain.dto.PasswordUpdateD;
 import com.project.easywork.user.domain.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -14,7 +14,7 @@ public class UserPasswordValidator {
   
   private final PasswordEncoder passwordEncoder;
   
-  public void validate(User user, PasswordUpdateDto dto) {
+  public void validate(User user, PasswordUpdateD dto) {
     if (!passwordEncoder.matches(dto.getCurrentPassword(), user.getPassword())) {
       throw new CustomException(ErrorCode.BAD_REQUEST, "현재 비밀번호가 올바르지 않습니다.");
     }

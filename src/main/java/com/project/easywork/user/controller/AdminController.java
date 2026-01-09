@@ -1,8 +1,8 @@
 package com.project.easywork.user.controller;
 
 import com.project.easywork.common.api.ApiResponse;
-import com.project.easywork.user.domain.dto.UserResponseDto;
-import com.project.easywork.user.service.UserService;
+import com.project.easywork.user.domain.dto.UserD;
+import com.project.easywork.user.service.IUserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -22,12 +22,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AdminController {
   
-  private final UserService userService;
+  private final IUserService IUserService;
   
   @Operation(summary = "전체 회원조회 API", description = "전체 회원 목록을 조회합니다.")
   @PreAuthorize("hasRole('ADMIN')")
   @GetMapping("/users")
-  public ResponseEntity<ApiResponse<List<UserResponseDto>>> getList() {
-    return ResponseEntity.ok(ApiResponse.success(userService.findAll()));
+  public ResponseEntity<ApiResponse<List<UserD>>> getList() {
+    return ResponseEntity.ok(ApiResponse.success(IUserService.findAll()));
   }
 }

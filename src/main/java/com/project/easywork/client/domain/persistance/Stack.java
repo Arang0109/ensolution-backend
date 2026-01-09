@@ -4,25 +4,21 @@ package com.project.easywork.client.domain.persistance;
 import com.project.easywork.client.domain.Grade;
 import com.project.easywork.client.domain.Shape;
 import com.project.easywork.client.domain.Orientation;
-import com.project.easywork.schedule.domain.persistance.Schedule;
+import com.project.easywork.client.domain.dto.stack.StackUpdateD;
+import com.project.easywork.common.domain.BaseEntity;
+import com.project.easywork.plan.domain.persistance.Plan;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-import org.hibernate.annotations.UpdateTimestamp;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuperBuilder(toBuilder = true)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Entity
 @Getter
-@Setter
-@NoArgsConstructor
 @Table(
     name = "stack",
     uniqueConstraints = {
@@ -32,15 +28,10 @@ import java.util.List;
         )
     }
 )
-public class Stack {
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(nullable = false, unique = true)
-  private Long id;
+public class Stack extends BaseEntity {
   
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "workplace_id")
-  @OnDelete(action = OnDeleteAction.CASCADE)
   @ToString.Exclude
   private Workplace workplace;
   
@@ -75,14 +66,6 @@ public class Stack {
   @Column(columnDefinition = "LONGTEXT")
   private String remark;
   
-  @CreationTimestamp
-  @Column(name = "created_at", nullable = false)
-  private LocalDate createdAt;
-  
-  @UpdateTimestamp
-  @Column(name = "modified_at", nullable = false)
-  private LocalDate modifiedAt;
-  
   @OneToMany(mappedBy = "stack", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<Prevention> preventions = new ArrayList<>();
   
@@ -90,9 +73,44 @@ public class Stack {
   private List<StackMeasurement> stackMeasurements = new ArrayList<>();
   
   @OneToMany(mappedBy = "stack")
-  private List<Schedule> schedules = new ArrayList<>();
+  private List<Plan> plans = new ArrayList<>();
   
   public void attachWorkplace(Workplace workplace) {
     this.workplace = workplace;
+    workplace.getStacks().add(this);
   }
+  
+  public void update(StackUpdateD dto) {
+    if (dto.getName() != null) {
+      this.name = dto.getName();
+    }
+    if (dto.getSemsNumber() != null) {
+      this.semsNumber = dto.getSemsNumber();
+    }
+    if (dto.getGrade() != null) {
+      this.grade = dto.getGrade();
+    }
+    if (dto.getHeight() != null) {
+      this.height = dto.getHeight();
+    }
+    if (dto.getHorizontalLength() != null) {
+      this.horizontalLength = dto.getHorizontalLength();
+    }
+    if (dto.getVerticalLength() != null) {
+      this.verticalLength = dto.getVerticalLength();
+    }
+    if (dto.getShape() != null) {
+      this.shape = dto.getShape();
+    }
+    if (dto.getOrientation() != null) {
+      this.orientation = dto.getOrientation();
+    }
+    if (dto.getStandardOxygen() != null) {
+      this.standardOxygen = dto.getStandardOxygen();
+    }
+    if (dto.getRemark() != null) {
+      this.remark = dto.getRemark();
+    }
+  }
+  
 }

@@ -1,8 +1,8 @@
 package com.project.easywork.pollutant.mapper;
 
-import com.project.easywork.pollutant.domain.dto.PollutantCreateRequestDto;
-import com.project.easywork.pollutant.domain.dto.PollutantResponseDto;
-import com.project.easywork.pollutant.domain.dto.PollutantUpdateRequestDto;
+import com.project.easywork.pollutant.domain.dto.PollutantCreateD;
+import com.project.easywork.pollutant.domain.dto.PollutantD;
+import com.project.easywork.pollutant.domain.dto.PollutantUpdateD;
 import com.project.easywork.pollutant.domain.persistance.Pollutant;
 import org.mapstruct.*;
 
@@ -13,13 +13,9 @@ import java.util.List;
     builder = @Builder()
 )
 public interface PollutantMapper {
-  Pollutant toEntityFromPollutantCreateDto(PollutantCreateRequestDto dto);
-  PollutantResponseDto toDto(Pollutant pollutant);
+  Pollutant toEntity(PollutantCreateD dto);
   
-  List<PollutantResponseDto> toDtoList(List<Pollutant> pollutants);
+  PollutantD toDto(Pollutant pollutant);
   
-  @BeanMapping(
-      nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE
-  )
-  void updatePollutant(PollutantUpdateRequestDto dto, @MappingTarget Pollutant pollutant);
+  List<PollutantD> toDtoList(List<Pollutant> pollutants);
 }
