@@ -1,23 +1,20 @@
 package com.project.easywork.agency.domain.entity;
 
-import com.project.easywork.agency.domain.dto.TeamUpdateD;
-import com.project.easywork.common.domain.BaseEntity;
 import com.project.easywork.equipment.domain.EquipType;
 import com.project.easywork.equipment.domain.persistance.Equipment;
 import com.project.easywork.equipment.domain.persistance.PitotTube;
+import com.project.easywork.agency.domain.dto.TeamUpdateD;
+import com.project.easywork.common.domain.BaseEntity;
 import com.project.easywork.user.domain.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
-import lombok.experimental.SuperBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@SuperBuilder(toBuilder = true)
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Entity
 @Getter
+@Setter
 @Table(name = "team")
 public class Team extends BaseEntity {
   
