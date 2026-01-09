@@ -4,7 +4,9 @@ import com.project.easywork.agency.domain.entity.Team;
 import com.project.easywork.client.domain.dto.stack.MeasurementHistoryD;
 import com.project.easywork.client.domain.persistance.Stack;
 import com.project.easywork.common.resolver.DomainEntityResolver;
+import com.project.easywork.measurement.dto.document.MeasurementDocument;
 import com.project.easywork.measurement.service.IMeasurementService;
+import com.project.easywork.measurement.service_data.IMeasurementDataService;
 import com.project.easywork.plan.domain.dto.*;
 import com.project.easywork.plan.domain.persistance.Plan;
 import com.project.easywork.plan.mapper.PlanMapper;
@@ -12,7 +14,6 @@ import com.project.easywork.plan.mapper.PlanMeasurementMapper;
 import com.project.easywork.plan.service.IPlanMeasurementService;
 import com.project.easywork.plan.service.IPlanService;
 import com.project.easywork.plan.service_data.IPlanDataService;
-import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +26,7 @@ import java.util.List;
 public class PlanService implements IPlanService {
   
   private final IPlanDataService planDataService;
+  private final IMeasurementDataService measurementDataService;
   private final PlanMapper planMapper;
   
   private final IPlanMeasurementService scheduleMeasurementService;
@@ -32,8 +34,6 @@ public class PlanService implements IPlanService {
   private final IMeasurementService measurementService;
   
   private final DomainEntityResolver domainEntityResolver;
-  
-  private final EntityManager entityManager;
   
   @Override
   public PlanD register(PlanCreateBundleD dto) {
@@ -75,7 +75,19 @@ public class PlanService implements IPlanService {
   @Transactional(readOnly = true)
   public PlanDetailD getPlan(Long planId) {
     Plan plan = planDataService.findDetailById(planId);
-    return planMapper.toDetailDto(plan);
+    MeasurementDocument doc =
+        measurementDataService.findByPlanId(planId);
+    
+    return PlanDetailD.builder()
+        .plan(planMapper.toDto(plan))
+        .status(doc.getStatus())
+        .vehicleNumber(doc.getVehicleNumber())
+        .preInfo(doc.getPreInfo())
+        .weather(doc.getWeather())
+        .moisture(doc.getMoisture())
+        .exhaustGas(doc.getExhaustGas())
+        .result(doc.getResult())
+        .build();
   }
   
   @Override

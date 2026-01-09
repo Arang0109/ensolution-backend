@@ -30,6 +30,7 @@ public class MeasurementDocumentFactory {
     return MeasurementDocument.builder()
         .planId(planId)
         .status(MeasurementStatus.DRAFT)
+        .vehicleNumber(dto.getVehicleNumber())
         .preInfo(buildPreInfo(company, workplace, stack, preventions))
         .build();
   }
