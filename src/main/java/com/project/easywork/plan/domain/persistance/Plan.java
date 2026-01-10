@@ -4,7 +4,7 @@ import com.project.easywork.agency.domain.entity.Team;
 import com.project.easywork.client.domain.persistance.Stack;
 import com.project.easywork.client.domain.persistance.StackMeasurement;
 import com.project.easywork.plan.domain.PlanStatus;
-import com.project.easywork.plan.domain.dto.MeasurementItemsCreateD;
+import com.project.easywork.plan.domain.dto.MeasurementItemsUpdateD;
 import com.project.easywork.plan.domain.dto.StatusUpdateD;
 import jakarta.persistence.*;
 import lombok.*;
@@ -68,7 +68,7 @@ public class Plan {
   }
   
   public void replaceMeasurements(
-      List<MeasurementItemsCreateD> newMeasurements,
+      List<MeasurementItemsUpdateD> newMeasurements,
       Function<Long, StackMeasurement> resolver
   ) {
     Map<Long, PlanMeasurement> existing =
@@ -81,7 +81,7 @@ public class Plan {
     
     this.measurements.clear();
     
-    for (MeasurementItemsCreateD dto : newMeasurements) {
+    for (MeasurementItemsUpdateD dto : newMeasurements) {
       PlanMeasurement pm = existing.getOrDefault(dto.getStackMeasurementId(), new PlanMeasurement());
       
       pm.attachPlan(this);

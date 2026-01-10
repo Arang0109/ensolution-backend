@@ -51,7 +51,7 @@ public class PlanController {
   @PostMapping("/{planId}/measurements")
   public ResponseEntity<ApiResponse<Void>> addMeasurement(
       @PathVariable Long planId,
-      @Valid @RequestBody List<MeasurementItemsCreateD> request
+      @Valid @RequestBody List<MeasurementItemsUpdateD> request
   ) {
     planService.replaceMeasurements(planId, request);
     return ResponseEntity.ok().body(ApiResponse.success());

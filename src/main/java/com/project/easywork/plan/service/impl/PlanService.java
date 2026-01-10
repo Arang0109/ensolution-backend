@@ -95,7 +95,7 @@ public class PlanService implements IPlanService {
   }
   
   @Override
-  public void replaceMeasurements(Long planId, List<MeasurementItemsCreateD> dtos) {
+  public void replaceMeasurements(Long planId, List<MeasurementItemsUpdateD> dtos) {
     Plan plan = planDataService.findById(planId);
     
     plan.replaceMeasurements(
