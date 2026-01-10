@@ -28,7 +28,15 @@ public class PlanMeasurement {
     this.plan = plan;
   }
   
-  public void attachStackMeasurement(StackMeasurement stackMeasurement) {
-    this.stackMeasurement = stackMeasurement;
+  public void attachStackMeasurement(StackMeasurement stackMeasurement) {this.stackMeasurement = stackMeasurement;}
+  
+  public Long getStackMeasurementId() {
+    return this.stackMeasurement != null ? this.stackMeasurement.getId() : null;
+  }
+  
+  public void update(PlanMeasurement source) {
+    if (source.stackMeasurement != null) {
+      this.stackMeasurement = source.stackMeasurement;
+    }
   }
 }

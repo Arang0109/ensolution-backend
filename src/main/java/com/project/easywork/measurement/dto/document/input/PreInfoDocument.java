@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -25,6 +26,27 @@ public class PreInfoDocument {
   
   private String particularEquipmentName;
   private String pitotTubeName;
+  
+  public void addMeasurementItems(List<StackMeasurementDocument> items) {
+    if (this.measurementItems == null) {
+      this.measurementItems = new ArrayList<>();
+    }
+    this.measurementItems.addAll(items);
+  }
+  
+  public void merge(PreInfoDocument doc) {
+    if (doc.measureDate != null) this.measureDate = doc.measureDate;
+    if (doc.measurementType != null) this.measurementType = doc.measurementType;
+    if (doc.teamName != null) this.teamName = doc.teamName;
+    if (doc.vehicleNumber != null) this.vehicleNumber = doc.vehicleNumber;
+    if (doc.engineers != null) this.engineers = doc.engineers;
+    if (doc.particularEquipmentName != null) this.particularEquipmentName = doc.particularEquipmentName;
+    if (doc.pitotTubeName != null) this.pitotTubeName = doc.pitotTubeName;
+  }
+  
+  public void replaceMeasurementItems(List<StackMeasurementDocument> items) {
+    this.measurementItems = new ArrayList<>(items);
+  }
   
   @Getter
   @Builder

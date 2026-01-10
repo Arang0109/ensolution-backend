@@ -11,6 +11,7 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Document("measurements")
 @Getter
@@ -40,24 +41,50 @@ public class MeasurementDocument {
   @LastModifiedDate
   private LocalDateTime updatedAt;
   
-  public void updatePreInfo(PreInfoDocument preInfo) {
-    this.preInfo = preInfo;
+  public void addMeasurementItems(List<PreInfoDocument.StackMeasurementDocument> items) {
+    if (this.preInfo == null) {
+      throw new IllegalStateException("PreInfoDocument가 먼저 생성되어야 합니다.");
+    }
+    this.preInfo.addMeasurementItems(items);
   }
   
-  public void updateClient(ClientDocument client) {
-    this.client = client;
+  public void replaceMeasurementItems(List<PreInfoDocument.StackMeasurementDocument> items) {
+    if (this.preInfo == null) {
+      throw new IllegalStateException("PreInfoDocument가 먼저 생성되어야 합니다.");
+    }
+    this.preInfo.replaceMeasurementItems(items);
+  }
+  
+  public void updatePreInfo(PreInfoDocument preInfo) {
+    if (this.preInfo == null) {
+      this.preInfo = preInfo;
+    } else {
+      this.preInfo.merge(preInfo);
+    }
   }
   
   public void updateWeather(WeatherDocument weather) {
-    this.weather = weather;
+    if (this.weather == null) {
+      this.weather = weather;
+    } else {
+      this.weather.merge(weather);
+    }
   }
   
   public void updateMoisture(MoistureDocument moisture) {
-    this.moisture = moisture;
+    if (this.moisture == null) {
+      this.moisture = moisture;
+    } else {
+      this.moisture.merge(moisture);
+    }
   }
   
   public void updateExhaustGas(ExhaustGasDocument exhaustGas) {
-    this.exhaustGas = exhaustGas;
+    if (this.exhaustGas == null) {
+      this.exhaustGas = exhaustGas;
+    } else {
+      this.exhaustGas.merge(exhaustGas);
+    }
   }
   
   public void complete(MeasurementResultDocument result) {

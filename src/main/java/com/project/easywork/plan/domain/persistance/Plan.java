@@ -2,7 +2,9 @@ package com.project.easywork.plan.domain.persistance;
 
 import com.project.easywork.agency.domain.entity.Team;
 import com.project.easywork.client.domain.persistance.Stack;
+import com.project.easywork.client.domain.persistance.StackMeasurement;
 import com.project.easywork.plan.domain.PlanStatus;
+import com.project.easywork.plan.domain.dto.MeasurementItemsUpdateD;
 import com.project.easywork.plan.domain.dto.StatusUpdateD;
 import jakarta.persistence.*;
 import lombok.*;
@@ -11,6 +13,9 @@ import org.hibernate.annotations.CreationTimestamp;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -62,19 +67,28 @@ public class Plan {
     this.status = dto.getStatus();
   }
   
-  public void updateMeasurement(PlanMeasurement measurement) {
+  public void replaceMeasurements(
+      List<MeasurementItemsUpdateD> newMeasurements,
+      Function<Long, StackMeasurement> resolver
+  ) {
+    Map<Long, PlanMeasurement> existing =
+        this.measurements.stream()
+            .filter(pm -> pm.getStackMeasurement() != null)
+            .collect(Collectors.toMap(
+                pm -> pm.getStackMeasurement().getId(),
+                Function.identity()
+            ));
     
-    if (this.measurements.contains(measurement)) {
-      return;
+    this.measurements.clear();
+    
+    for (MeasurementItemsUpdateD dto : newMeasurements) {
+      PlanMeasurement pm = existing.getOrDefault(dto.getStackMeasurementId(), new PlanMeasurement());
+      
+      pm.attachPlan(this);
+      StackMeasurement sm = resolver.apply(dto.getStackMeasurementId());
+      pm.attachStackMeasurement(sm);
+      
+      this.measurements.add(pm);
     }
-    
-    if (measurement == null) return;
-    measurement.attachPlan(this);
-    this.measurements.add(measurement);
-  }
-  
-  public void updateMeasurements(List<PlanMeasurement> measurements) {
-    if (measurements == null) return;
-    measurements.forEach(this::updateMeasurement);
   }
 }

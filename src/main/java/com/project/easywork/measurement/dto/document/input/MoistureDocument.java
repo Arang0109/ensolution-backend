@@ -39,6 +39,42 @@ public class MoistureDocument {
     return value == null ? null : value.setScale(scale, RoundingMode.HALF_UP);
   }
   
+  public void merge(MoistureDocument source) {
+    if (source == null) return;
+    
+    if (source.weight != null) {
+      if (this.weight == null) {
+        this.weight = source.weight;
+      } else {
+        this.weight = this.weight.merge(source.weight);
+      }
+    }
+    
+    if (source.gasMeterTemperature != null) {
+      if (this.gasMeterTemperature == null) {
+        this.gasMeterTemperature = source.gasMeterTemperature;
+      } else {
+        this.gasMeterTemperature = this.gasMeterTemperature.merge(source.gasMeterTemperature);
+      }
+    }
+    
+    if (source.dryGasVolume != null) {
+      if (this.dryGasVolume == null) {
+        this.dryGasVolume = source.dryGasVolume;
+      } else {
+        this.dryGasVolume = this.dryGasVolume.merge(source.dryGasVolume);
+      }
+    }
+    
+    if (source.suctionVelocity != null) {
+      this.suctionVelocity = source.suctionVelocity;
+    }
+    
+    if (source.gasMeterGaugePressure != null) {
+      this.gasMeterGaugePressure = source.gasMeterGaugePressure;
+    }
+  }
+  
   // ------------------------
   // 흡습병 무게
   // ------------------------
@@ -55,6 +91,15 @@ public class MoistureDocument {
       return this.toBuilder()
           .before(scale(before, 2))
           .after(scale(after, 2))
+          .build();
+    }
+    
+    public WeightDocument merge(WeightDocument source) {
+      if (source == null) return this;
+      
+      return this.toBuilder()
+          .before(source.before != null ? source.before : this.before)
+          .after(source.after != null ? source.after : this.after)
           .build();
     }
   }
@@ -77,6 +122,15 @@ public class MoistureDocument {
           .out(scale(out, 1))
           .build();
     }
+    
+    public GasMeterTemperatureDocument merge(GasMeterTemperatureDocument source) {
+      if (source == null) return this;
+      
+      return this.toBuilder()
+          .in(source.in != null ? source.in : this.in)
+          .out(source.out != null ? source.out : this.out)
+          .build();
+    }
   }
   
   // ------------------------
@@ -95,6 +149,15 @@ public class MoistureDocument {
       return this.toBuilder()
           .before(scale(before, 3))
           .after(scale(after, 3))
+          .build();
+    }
+    
+    public DryGasVolumeDocument merge(DryGasVolumeDocument source) {
+      if (source == null) return this;
+      
+      return this.toBuilder()
+          .before(source.before != null ? source.before : this.before)
+          .after(source.after != null ? source.after : this.after)
           .build();
     }
   }

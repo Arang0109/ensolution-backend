@@ -2,10 +2,11 @@ package com.project.easywork.measurement.service.impl;
 
 import com.project.easywork.measurement.dto.MeasurementDraftUpdateCommandDto;
 import com.project.easywork.measurement.dto.document.MeasurementDocument;
-import com.project.easywork.measurement.mapper.ExhaustGasMapper;
-import com.project.easywork.measurement.mapper.MoistureMapper;
-import com.project.easywork.measurement.mapper.ClientMapper;
-import com.project.easywork.measurement.mapper.WeatherMapper;
+import com.project.easywork.measurement.dto.document.input.ExhaustGasDocument;
+import com.project.easywork.measurement.dto.document.input.MoistureDocument;
+import com.project.easywork.measurement.dto.document.input.PreInfoDocument;
+import com.project.easywork.measurement.dto.document.input.WeatherDocument;
+import com.project.easywork.measurement.mapper.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class MeasurementDraftUpdater {
   
+  private final PreInfoMapper preInfoMapper;
   private final ClientMapper clientMapper;
   private final WeatherMapper weatherMapper;
   private final MoistureMapper moistureMapper;
@@ -27,16 +29,49 @@ public class MeasurementDraftUpdater {
     }
     
     if (request.preInfo() != null) {
-      doc.updateClient(clientMapper.toDocument(request.preInfo()));
+      PreInfoDocument newDoc = preInfoMapper.toDocument(request.preInfo());
+      
+      if (doc.getPreInfo() == null) {
+        doc.updatePreInfo(newDoc);   // 최초 생성
+      } else {
+        doc.getPreInfo().merge(newDoc); // 부분 업데이트
+      }
     }
+    
     if (request.weather() != null) {
-      doc.updateWeather(weatherMapper.toDocument(request.weather()));
+      WeatherDocument newDoc = weatherMapper
+          .toDocument(request.weather())
+          .normalize();
+      
+      if (doc.getWeather() == null) {
+        doc.updateWeather(newDoc);
+      } else {
+        doc.getWeather().merge(newDoc);
+      }
     }
+    
     if (request.moisture() != null) {
-      doc.updateMoisture(moistureMapper.toDocument(request.moisture()));
+      MoistureDocument newDoc = moistureMapper
+          .toDocument(request.moisture())
+          .normalize();
+      
+      if (doc.getMoisture() == null) {
+        doc.updateMoisture(newDoc);
+      } else {
+        doc.getMoisture().merge(newDoc);
+      }
     }
+    
     if (request.exhaustGas() != null) {
-      doc.updateExhaustGas(exhaustGasMapper.toDocument(request.exhaustGas()));
+      ExhaustGasDocument newDoc = exhaustGasMapper
+          .toDocument(request.exhaustGas())
+          .normalize();
+      
+      if (doc.getExhaustGas() == null) {
+        doc.updateExhaustGas(newDoc);
+      } else {
+        doc.getExhaustGas().merge(newDoc);
+      }
     }
   }
 }
