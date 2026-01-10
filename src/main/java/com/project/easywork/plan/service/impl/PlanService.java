@@ -108,6 +108,7 @@ public class PlanService implements IPlanService {
   }
   
   @Override
+  
   public void delete(Long planId) {
     planDataService.deleteById(planId);
     measurementService.deleteDraft(planId);

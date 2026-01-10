@@ -29,8 +29,13 @@ public record ClientCommandDto(
   @Schema(description = "의뢰기관 정보")
   public record PreInfoCompany(
       
+      Long companyId,
+      
       @Schema(description = "의뢰업체명", example = "㈜오션환경")
       String companyName,
+      
+      Long workplaceId,
+      
       @Schema(description = "사업장명", example = "부산 공장 1")
       String workplaceName,
       
@@ -57,7 +62,7 @@ public record ClientCommandDto(
   public record PreInfoStack(
       
       @Schema(description = "측정시설 ID", example = "998")
-      Long id,
+      Long stackId,
       
       @Schema(description = "측정시설 이름", example = "1번 굴뚝")
       String name,

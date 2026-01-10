@@ -26,7 +26,9 @@ public class ClientDocument {
   @Getter
   @Builder
   public static class CompanyDocument {
+    private Long companyId;
     private String companyName;
+    private Long workplaceId;
     private String workplaceName;
     private String bizNumber;
     private String ceoName;
@@ -41,6 +43,7 @@ public class ClientDocument {
   @Getter
   @Builder
   public static class StackDocument {
+    private Long stackId;
     private String name;
     private String semsNumber;
     private Grade grade;
@@ -58,6 +61,7 @@ public class ClientDocument {
   @Getter
   @Builder
   public static class PreventionDocument {
+    private Long preventionId;
     private String name;
     private List<FacilityDocument> facilities;
     private List<TargetDocument> targets;
@@ -69,6 +73,7 @@ public class ClientDocument {
   @Getter
   @Builder
   public static class FacilityDocument {
+    private Long facilityId;
     private String name;
     private String fuelUsage;
     private String itemOutput;
@@ -82,6 +87,7 @@ public class ClientDocument {
   @Getter
   @Builder
   public static class TargetDocument {
+    private Long targetId;
     private String targetSubstance;
     private Double removalEfficiency;
   }

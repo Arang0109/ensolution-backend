@@ -90,7 +90,9 @@ public class MeasurementDocumentFactory {
   
   private ClientDocument.CompanyDocument buildCompany(MeasurementSnapshot s) {
     return ClientDocument.CompanyDocument.builder()
+        .companyId(s.company().getId())
         .companyName(safe(s.company().getName()))
+        .workplaceId(s.workplace().getId())
         .workplaceName(safe(s.workplace().getName()))
         .bizNumber(safe(s.workplace().getBizNumber()))
         .ceoName(safe(s.company().getCeoName()))
@@ -102,6 +104,7 @@ public class MeasurementDocumentFactory {
   
   private ClientDocument.StackDocument buildStack(MeasurementSnapshot s) {
     return ClientDocument.StackDocument.builder()
+        .stackId(s.stack().getId())
         .name(s.stack().getName())
         .semsNumber(s.stack().getSemsNumber())
         .grade(s.stack().getGrade())
@@ -120,6 +123,7 @@ public class MeasurementDocumentFactory {
     for (Prevention p : safeList(s.preventions())) {
       docs.add(
           ClientDocument.PreventionDocument.builder()
+              .preventionId(p.getId())
               .name(safe(p.getName()))
               .facilities(buildFacilities(p))
               .targets(buildTargets(p))
@@ -136,6 +140,7 @@ public class MeasurementDocumentFactory {
     for (Facility f : safeList(p.getFacilities())) {
       facilities.add(
           ClientDocument.FacilityDocument.builder()
+              .facilityId(f.getId())
               .name(safe(f.getName()))
               .fuelUsage(safe(f.getFuelUsage()))
               .itemOutput(safe(f.getItemOutput()))
@@ -154,6 +159,7 @@ public class MeasurementDocumentFactory {
     for (Target t : safeList(p.getTargets())) {
       targets.add(
           ClientDocument.TargetDocument.builder()
+              .targetId(t.getId())
               .targetSubstance(safe(t.getTargetSubstance()))
               .removalEfficiency(t.getRemovalEfficiency())
               .build()
