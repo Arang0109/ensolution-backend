@@ -5,34 +5,24 @@ import com.project.easywork.common.domain.PressureUnit;
 import com.project.easywork.measurement.pipeline.domain.Measurement;
 import com.project.easywork.measurement.pipeline.context.MeasurementContext;
 
+import java.math.BigDecimal;
+
 public class PressureConvertStep implements MeasurementStep {
   @Override
   public void execute(MeasurementContext context) {
     Measurement d = context.getDomain();
     
-    Double weather = PressureConverter.toMmHg(
+    BigDecimal atmospherePressure = PressureConverter.toMmHg(
         d.getMeasurement().weather().pressure().pressure(),
         PressureUnit.from(d.getMeasurement().weather().pressure().unit())
     );
     
-//    Double staticPressure = PressureConverter.toMmHg(
-//        d.getMeasurement().exhaustGas().measurementPoints().staticPressure().pressure(),
-//        PressureUnit.from(d.getMeasurement().exhaustGas().MeasurementPoint.staticPressure().unit())
-//    );
-//
-//    Double dynamicPressure = PressureConverter.toMmHg(
-//        d.getMeasurement().exhaustGas().dynamicPressure().pressure(),
-//        PressureUnit.from(d.getMeasurement().exhaustGas().dynamicPressure().unit())
-//    );
-    
-    Double gasEquipGaugePressure = PressureConverter.toMmHg(
+    BigDecimal gasEquipGaugePressure = PressureConverter.toMmHg(
         d.getMeasurement().moisture().gasMeterGaugePressure(),
         PressureUnit.MMH2O
     );
     
-    context.setAtmospherePressure(weather);
-//    context.setStaticPressure(staticPressure);
-//    context.setDynamicPressure(dynamicPressure);
+    context.setAtmospherePressure(atmospherePressure);
     context.setGasMeterGaugePressure(gasEquipGaugePressure);
   }
 }

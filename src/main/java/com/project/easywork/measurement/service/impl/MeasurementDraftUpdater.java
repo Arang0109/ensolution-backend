@@ -1,11 +1,10 @@
 package com.project.easywork.measurement.service.impl;
 
 import com.project.easywork.measurement.dto.MeasurementDraftUpdateCommandDto;
-import com.project.easywork.measurement.dto.MeasurementStatus;
 import com.project.easywork.measurement.dto.document.MeasurementDocument;
 import com.project.easywork.measurement.mapper.ExhaustGasMapper;
 import com.project.easywork.measurement.mapper.MoistureMapper;
-import com.project.easywork.measurement.mapper.PreInfoMapper;
+import com.project.easywork.measurement.mapper.ClientMapper;
 import com.project.easywork.measurement.mapper.WeatherMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -14,7 +13,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class MeasurementDraftUpdater {
   
-  private final PreInfoMapper preInfoMapper;
+  private final ClientMapper clientMapper;
   private final WeatherMapper weatherMapper;
   private final MoistureMapper moistureMapper;
   private final ExhaustGasMapper exhaustGasMapper;
@@ -28,7 +27,7 @@ public class MeasurementDraftUpdater {
     }
     
     if (request.preInfo() != null) {
-      doc.updatePreInfo(preInfoMapper.toDocument(request.preInfo()));
+      doc.updateClient(clientMapper.toDocument(request.preInfo()));
     }
     if (request.weather() != null) {
       doc.updateWeather(weatherMapper.toDocument(request.weather()));

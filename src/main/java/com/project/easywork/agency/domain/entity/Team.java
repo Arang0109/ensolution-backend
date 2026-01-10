@@ -8,13 +8,16 @@ import com.project.easywork.common.domain.BaseEntity;
 import com.project.easywork.user.domain.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@SuperBuilder(toBuilder = true)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Entity
 @Getter
-@Setter
 @Table(name = "team")
 public class Team extends BaseEntity {
   

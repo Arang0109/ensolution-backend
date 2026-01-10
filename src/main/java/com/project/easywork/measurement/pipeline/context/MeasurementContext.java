@@ -6,6 +6,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
+import java.util.List;
+
 @Getter
 @Setter
 public class MeasurementContext {
@@ -13,20 +16,19 @@ public class MeasurementContext {
   private final Measurement domain;
   
   // 1. PressureConvertStep
-  private Double atmospherePressure;
-  private Double staticPressure;
-  private Double dynamicPressure;
-  private Double gasMeterGaugePressure;
+  private BigDecimal atmospherePressure;
+  private BigDecimal gasMeterGaugePressure;
   
   // 2. MoistureCalculateStep
-  private Double moistureRatio;
+  private BigDecimal moistureRatio;
   
   // 3. GasDensityCalculateStep
-  private Double gasDensity;
+  private BigDecimal gasDensity;
   
   // 4.
-  private Double oxygenCorrected;
+  private BigDecimal oxygenCorrected;
   private Integer pointCount;
+  private List<BigDecimal> circularAxisCoords;
   
   private MeasurementResultDocument result;
   

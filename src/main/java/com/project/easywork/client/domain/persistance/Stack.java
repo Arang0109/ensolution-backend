@@ -11,6 +11,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,14 +46,14 @@ public class Stack extends BaseEntity {
   @Column(length = 10)
   private Grade grade;
   
-  @Column(length = 10)
-  private Double height;
+  @Column(precision = 10, scale = 1)
+  private BigDecimal height;
   
-  @Column(name ="horizontal_length")
-  private Double horizontalLength;
+  @Column(name = "horizontal_length", precision = 10, scale = 3)
+  private BigDecimal horizontalLength;
   
-  @Column(name ="vertical_length")
-  private Double verticalLength;
+  @Column(name = "vertical_length", precision = 10, scale = 3)
+  private BigDecimal verticalLength;
   
   @Enumerated(EnumType.STRING)
   private Shape shape;
@@ -60,8 +61,8 @@ public class Stack extends BaseEntity {
   @Enumerated(EnumType.STRING)
   private Orientation orientation;
   
-  @Column(name = "standard_oxygen")
-  private Double standardOxygen;
+  @Column(name = "standard_oxygen", precision = 5, scale = 1)
+  private BigDecimal standardOxygen;
   
   @Column(columnDefinition = "LONGTEXT")
   private String remark;

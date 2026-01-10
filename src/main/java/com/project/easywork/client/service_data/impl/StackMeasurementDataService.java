@@ -20,6 +20,11 @@ public class StackMeasurementDataService implements IStackMeasurementDataService
   }
   
   @Override
+  public List<StackMeasurement> findByIdIn(List<Long> ids) {
+    return stackMeasurementRepository.findByIdIn(ids);
+  }
+  
+  @Override
   public StackMeasurement save(StackMeasurement stackMeasurement) {
     return stackMeasurementRepository.save(stackMeasurement);
   }

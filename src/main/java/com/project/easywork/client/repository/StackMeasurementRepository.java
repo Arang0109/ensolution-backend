@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface StackMeasurementRepository extends JpaRepository<StackMeasurement, Long> {
   List<StackMeasurement> findStackMeasurementsByStackId(Long stackId);
+  List<StackMeasurement> findByIdIn(List<Long> ids);
 }

@@ -6,7 +6,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 public record MeasurementCommandDto(
     
     @Schema(description = "사전 정보 (회사, 사업장, 굴뚝, 방지시설 등)")
-    PreInfoCommandDto preInfo,
+    ClientCommandDto preInfo,
     
     @Schema(description = "기상 정보")
     WeatherCommandDto weather,

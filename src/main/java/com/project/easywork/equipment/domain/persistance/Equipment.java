@@ -67,11 +67,11 @@ public class Equipment {
   @Column(name = "calibration_cycle")
   private Integer calibrationCycle;
   
-  @Column(name = "dH")
-  private Double dh;
+  @Column(name = "dH", precision = 10, scale = 4)
+  private BigDecimal dh;
   
-  @Column(name = "Yd")
-  private Double yd;
+  @Column(name = "Yd", precision = 10, scale = 4)
+  private BigDecimal yd;
   
   // 비고
   @Lob

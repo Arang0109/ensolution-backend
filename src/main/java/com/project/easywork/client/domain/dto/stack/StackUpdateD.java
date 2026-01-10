@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
@@ -14,11 +16,11 @@ public class StackUpdateD {
   private String name;
   private String semsNumber;
   private Grade grade;
-  private Double height;
-  private Double horizontalLength;
-  private Double verticalLength;
+  private BigDecimal height;
+  private BigDecimal horizontalLength;
+  private BigDecimal verticalLength;
   private Shape shape;
   private Orientation orientation;
-  private Double standardOxygen;
+  private BigDecimal standardOxygen;
   private String remark;
 }

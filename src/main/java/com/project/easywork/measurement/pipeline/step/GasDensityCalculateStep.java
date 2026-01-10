@@ -9,46 +9,60 @@ import java.math.RoundingMode;
 
 public class GasDensityCalculateStep implements MeasurementStep {
   
+  private static final BigDecimal TWENTY_ONE = new BigDecimal("21.0");
+  private static final BigDecimal TWENTY_POINT_NINE = new BigDecimal("20.9");
+  private static final BigDecimal ONE = BigDecimal.ONE;
+  
   @Override
   public void execute(MeasurementContext context) {
     
     Measurement d = context.getDomain();
     
-    BigDecimal avgO2 = GasCalculator.avg(d.getMeasurement().exhaustGas().o2Concentration());
+    // 평균 농도
+    BigDecimal avgO2  = GasCalculator.avg(d.getMeasurement().exhaustGas().o2Concentration());
     BigDecimal avgCo2 = GasCalculator.avg(d.getMeasurement().exhaustGas().co2Concentration());
-    BigDecimal avgCo = GasCalculator.avg(d.getMeasurement().exhaustGas().coConcentration());
+    BigDecimal avgCo  = GasCalculator.avg(d.getMeasurement().exhaustGas().coConcentration());
     
-    BigDecimal moisture = BigDecimal.valueOf(context.getMoistureRatio());
+    // 수분량
+    BigDecimal moisture = context.getMoistureRatio();
+
+    /*
+    // 가스 밀도 계산부 (나중에 BigDecimal 버전으로 복구 권장)
+    BigDecimal gasDensity = GasCalculator.toActualDensity(
+        GasCalculator.calGasDensity(avgO2, avgCo2, avgCo, moisture),
+        d.getMeasurement().exhaustGas().gasTemperature(),
+        context.getAtmospherePressure().add(context.getStaticPressure())
+    );
+    context.setGasDensity(gasDensity);
+    */
     
-//    BigDecimal gasDensity = GasCalculator.toActualDensity(
-//        GasCalculator.calGasDensity(avgO2, avgCo2, avgCo, moisture),
-//        BigDecimal.valueOf(d.getMeasurement().exhaustGas().gasTemperature()),
-//        BigDecimal.valueOf(context.getAtmospherePressure() + context.getStaticPressure())
-//    );
+    // ------------------------
+    // 산소 보정 계산
+    // ------------------------
     
-//    context.setGasDensity(gasDensity.doubleValue());
-    
-    // 산소 보정
+    // 평균 산소농도 반올림 (소수 1자리)
     BigDecimal avgO2Rounded = avgO2.setScale(1, RoundingMode.HALF_UP);
-    context.setOxygenCorrected(1.0);
     
-    Double standardO2 = d.getMeasurement().exhaustGas().standardOxygen();
+    // 기본값 1.0
+    context.setOxygenCorrected(BigDecimal.ONE);
     
-    if (standardO2 != null && standardO2 > 0) {
+    BigDecimal standardO2 = d.getMeasurement().preInfo().stack().standardOxygen();
+    
+    if (standardO2 != null && standardO2.compareTo(BigDecimal.ZERO) > 0) {
       
-      // rule 1: avgO2 >= 20.9 이면 무조건 1.0
-      if (standardO2 >= 20.9) {
-        context.setOxygenCorrected(1.0);
+      // rule 1: 기준산소 >= 20.9 → 무조건 1
+      if (standardO2.compareTo(TWENTY_POINT_NINE) >= 0) {
+        context.setOxygenCorrected(ONE);
         return;
       }
       
-      // rule 2: 계산 적용
-      BigDecimal numerator = BigDecimal.valueOf(21.0 - standardO2);
-      BigDecimal denominator = BigDecimal.valueOf(21.0).subtract(avgO2Rounded);
+      // rule 2: (21 - 기준산소) / (21 - 평균산소)
+      BigDecimal numerator = TWENTY_ONE.subtract(standardO2);
+      BigDecimal denominator = TWENTY_ONE.subtract(avgO2Rounded);
       
       BigDecimal corrected = numerator.divide(denominator, 6, RoundingMode.HALF_UP);
       
-      context.setOxygenCorrected(corrected.doubleValue());
+      context.setOxygenCorrected(corrected);
     }
   }
 }
