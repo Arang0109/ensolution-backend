@@ -3,8 +3,11 @@ package com.project.easywork.plan.service.impl;
 import com.project.easywork.agency.domain.entity.Team;
 import com.project.easywork.client.domain.dto.stack.MeasurementHistoryD;
 import com.project.easywork.client.domain.persistance.Stack;
+import com.project.easywork.client.domain.persistance.StackMeasurement;
+import com.project.easywork.client.service_data.IStackMeasurementDataService;
 import com.project.easywork.common.resolver.DomainEntityResolver;
 import com.project.easywork.measurement.dto.document.MeasurementDocument;
+import com.project.easywork.measurement.dto.document.input.PreInfoDocument;
 import com.project.easywork.measurement.service.IMeasurementService;
 import com.project.easywork.measurement.service_data.IMeasurementDataService;
 import com.project.easywork.plan.domain.dto.*;
@@ -27,6 +30,7 @@ public class PlanService implements IPlanService {
   
   private final IPlanDataService planDataService;
   private final IMeasurementDataService measurementDataService;
+  private final IStackMeasurementDataService stackMeasurementDataService;
   private final PlanMapper planMapper;
   
   private final IPlanMeasurementService scheduleMeasurementService;
@@ -82,6 +86,7 @@ public class PlanService implements IPlanService {
         .plan(planMapper.toDto(plan))
         .status(doc.getStatus())
         .preInfo(doc.getPreInfo())
+        .client(doc.getClient())
         .weather(doc.getWeather())
         .moisture(doc.getMoisture())
         .exhaustGas(doc.getExhaustGas())
@@ -90,14 +95,35 @@ public class PlanService implements IPlanService {
   }
   
   @Override
-  public void addMeasurements(Long planId, List<MeasurementItemsCreateD> dtos) {
+  public void replaceMeasurements(Long planId, List<MeasurementItemsCreateD> dtos) {
     Plan plan = planDataService.findById(planId);
     
-    plan.updateMeasurements(
-        planMeasurementMapper.toEntityList(dtos)
+    plan.replaceMeasurements(
+        dtos,
+        stackMeasurementDataService::findById
     );
     
-    planDataService.save(plan);
+    MeasurementDocument doc = measurementDataService.findByPlanId(planId);
+    
+    List<PreInfoDocument.StackMeasurementDocument> stackDocs =
+        dtos.stream()
+            .map(dto -> {
+              StackMeasurement sm = stackMeasurementDataService
+                  .findById(dto.getStackMeasurementId());
+              
+              return PreInfoDocument.StackMeasurementDocument.builder()
+                  .stackMeasurementId(sm.getId())
+                  .pollutantId(sm.getPollutant().getId())
+                  .pollutantNameKr(sm.getPollutant().getNameKr())
+                  .pollutantNameEn(sm.getPollutant().getNameEn())
+                  .cycle(sm.getCycle())
+                  .allowance(sm.getAllowance())
+                  .build();
+            })
+            .toList();
+    
+    doc.replaceMeasurementItems(stackDocs);
+    measurementDataService.save(doc);
   }
   
   @Override

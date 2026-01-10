@@ -10,7 +10,7 @@ public interface IPlanService {
   List<MeasurementHistoryD> getListByStack(Long stackId);
   PlanDetailD getPlan(Long planId);
   PlanD register(PlanCreateBundleD dto);
-  void addMeasurements(Long planId, List<MeasurementItemsCreateD> dto);
+  void replaceMeasurements(Long planId, List<MeasurementItemsCreateD> dto);
   PlanD updateStatus(Long planId, StatusUpdateD dto);
   void delete(Long planId);
 }

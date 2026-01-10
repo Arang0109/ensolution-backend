@@ -11,6 +11,7 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Document("measurements")
 @Getter
@@ -39,6 +40,20 @@ public class MeasurementDocument {
   
   @LastModifiedDate
   private LocalDateTime updatedAt;
+  
+  public void addMeasurementItems(List<PreInfoDocument.StackMeasurementDocument> items) {
+    if (this.preInfo == null) {
+      throw new IllegalStateException("PreInfoDocument가 먼저 생성되어야 합니다.");
+    }
+    this.preInfo.addMeasurementItems(items);
+  }
+  
+  public void replaceMeasurementItems(List<PreInfoDocument.StackMeasurementDocument> items) {
+    if (this.preInfo == null) {
+      throw new IllegalStateException("PreInfoDocument가 먼저 생성되어야 합니다.");
+    }
+    this.preInfo.replaceMeasurementItems(items);
+  }
   
   public void updatePreInfo(PreInfoDocument preInfo) {
     this.preInfo = preInfo;

@@ -53,7 +53,7 @@ public class PlanController {
       @PathVariable Long planId,
       @Valid @RequestBody List<MeasurementItemsCreateD> request
   ) {
-    planService.addMeasurements(planId, request);
+    planService.replaceMeasurements(planId, request);
     return ResponseEntity.ok().body(ApiResponse.success());
   }
   
