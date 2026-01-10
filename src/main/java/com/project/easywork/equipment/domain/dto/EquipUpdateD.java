@@ -22,7 +22,7 @@ public class EquipUpdateD {
   private LocalDate purchaseDate;
   private LocalDate calibrationDate;
   private Integer calibrationCycle;
-  private Double dh;
-  private Double yd;
+  private BigDecimal dh;
+  private BigDecimal yd;
   private String remark;
 }

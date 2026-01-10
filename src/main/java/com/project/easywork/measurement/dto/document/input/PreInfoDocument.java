@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -33,6 +34,6 @@ public class PreInfoDocument {
     private String pollutantNameKr;
     private String pollutantNameEn;
     private Cycle cycle;
-    private Double allowance;
+    private BigDecimal allowance;
   }
 }

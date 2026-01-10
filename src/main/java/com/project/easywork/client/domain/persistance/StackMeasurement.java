@@ -8,6 +8,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import java.math.BigDecimal;
+
 @SuperBuilder(toBuilder = true)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
@@ -36,8 +38,8 @@ public class StackMeasurement extends BaseEntity {
   @Column()
   private Cycle cycle;
   
-  @Column()
-  private Double allowance;
+  @Column(precision = 10, scale = 1)
+  private BigDecimal allowance;
   
   public void attachStack(Stack stack) {
     this.stack = stack;

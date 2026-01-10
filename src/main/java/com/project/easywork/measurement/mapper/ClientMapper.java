@@ -9,9 +9,9 @@ public interface ClientMapper {
   ClientDocument toDocument(ClientCommandDto dto);
   
   ClientDocument.CompanyDocument toDocument(ClientCommandDto.PreInfoCompany company);
-  ClientDocument.StackDocument toDocument(ClientCommandDto.PreInfoStack dto);
-  ClientDocument.PreventionDocument toDocument(ClientCommandDto.PreInfoPrevention dto);
-  ClientDocument.FacilityDocument toDocument(ClientCommandDto.PreInfoFacility dto);
-  ClientDocument.TargetDocument toDocument(ClientCommandDto.PreInfoTarget dto);
+  ClientDocument.StackDocument toDocument(ClientCommandDto.PreInfoStack stack);
+  ClientDocument.PreventionDocument toDocument(ClientCommandDto.PreInfoPrevention prevention);
+  ClientDocument.FacilityDocument toDocument(ClientCommandDto.PreInfoFacility facility);
+  ClientDocument.TargetDocument toDocument(ClientCommandDto.PreInfoTarget target);
 }
 

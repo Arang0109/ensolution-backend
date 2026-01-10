@@ -5,6 +5,7 @@ import com.project.easywork.client.domain.Orientation;
 import com.project.easywork.client.domain.Shape;
 import io.swagger.v3.oas.annotations.media.Schema;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Schema(description = "측정 전 사전 정보 입력 DTO")
@@ -74,13 +75,13 @@ public record ClientCommandDto(
       Grade grade,
       
       @Schema(description = "굴뚝 높이(m)", example = "20.5")
-      Double height,
+      BigDecimal height,
       
       @Schema(description = "수평 길이(m)", example = "1.0")
-      Double horizontalLength,
+      BigDecimal horizontalLength,
       
       @Schema(description = "수직 길이(m)", example = "1.0")
-      Double verticalLength,
+      BigDecimal verticalLength,
       
       @Schema(description = "굴뚝 형상 (사각/원형)", example = "CIRCULAR")
       Shape shape,
@@ -89,7 +90,7 @@ public record ClientCommandDto(
       Orientation orientation,
       
       @Schema(description = "표준산소농도 (%)", example = "21.0")
-      Double standardOxygen
+      BigDecimal standardOxygen
   ) {}
   
   // ------------------------
@@ -140,6 +141,6 @@ public record ClientCommandDto(
       String targetSubstance,
       
       @Schema(description = "제거효율(%)", example = "99.0")
-      Double removalEfficiency
+      BigDecimal removalEfficiency
   ) {}
 }

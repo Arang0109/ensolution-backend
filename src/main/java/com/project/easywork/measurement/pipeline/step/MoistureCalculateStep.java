@@ -14,38 +14,47 @@ public class MoistureCalculateStep implements MeasurementStep {
     
     Measurement d = context.getDomain();
     
-    BigDecimal diffWeight = BigDecimal.valueOf(
+    // 흡수병 무게 차이
+    BigDecimal diffWeight =
         d.getMeasurement().moisture().weight().after()
-            - d.getMeasurement().moisture().weight().before()
-    );
+            .subtract(d.getMeasurement().moisture().weight().before());
     
-    BigDecimal diffVolume = BigDecimal.valueOf(
+    // 부피 차이
+    BigDecimal diffVolume =
         d.getMeasurement().moisture().dryGasVolume().after()
-            - d.getMeasurement().moisture().dryGasVolume().before()
-    );
+            .subtract(d.getMeasurement().moisture().dryGasVolume().before());
     
-    BigDecimal avgTemp = BigDecimal.valueOf(
-        (d.getMeasurement().moisture().gasMeterTemperature().in()
-            + d.getMeasurement().moisture().gasMeterTemperature().out()) / 2.0
-    );
+    // 평균 온도
+    BigDecimal avgTemp =
+        d.getMeasurement().moisture().gasMeterTemperature().in()
+            .add(d.getMeasurement().moisture().gasMeterTemperature().out())
+            .divide(BigDecimal.valueOf(2), 6, RoundingMode.HALF_UP);
     
-    BigDecimal pressure = BigDecimal.valueOf(context.getAtmospherePressure())
-        .add(BigDecimal.valueOf(context.getGasMeterGaugePressure()));
+    // 압력 = 대기압 + 게이지압
+    BigDecimal pressure =
+        context.getAtmospherePressure()
+            .add(context.getGasMeterGaugePressure());
     
-    BigDecimal standardGasVolume = GasCalculator.toActualDensity(
-        diffVolume, avgTemp, pressure
-    );
+    // 표준 가스 부피
+    BigDecimal standardGasVolume =
+        GasCalculator.toActualDensity(diffVolume, avgTemp, pressure);
     
-    BigDecimal diffWeightToVolume = diffWeight
-        .multiply(BigDecimal.valueOf(22.4))
-        .divide(BigDecimal.valueOf(18), 10, RoundingMode.HALF_UP);
+    // 무게 → 부피 변환
+    BigDecimal diffWeightToVolume =
+        diffWeight
+            .multiply(BigDecimal.valueOf(22.4))
+            .divide(BigDecimal.valueOf(18), 10, RoundingMode.HALF_UP);
     
-    BigDecimal denominator = standardGasVolume.add(diffWeightToVolume);
+    // 분모
+    BigDecimal denominator =
+        standardGasVolume.add(diffWeightToVolume);
     
-    BigDecimal moistureContent = diffWeightToVolume
-        .divide(denominator, 6, RoundingMode.HALF_UP)
-        .multiply(BigDecimal.valueOf(100));
+    // 수분 함량(%)
+    BigDecimal moistureContent =
+        diffWeightToVolume
+            .divide(denominator, 6, RoundingMode.HALF_UP)
+            .multiply(BigDecimal.valueOf(100));
     
-    context.setMoistureRatio(moistureContent.doubleValue());
+    context.setMoistureRatio(moistureContent);
   }
 }

@@ -6,6 +6,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import java.math.BigDecimal;
+
 @SuperBuilder(toBuilder = true)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
@@ -20,8 +22,8 @@ public class Target extends BaseEntity {
   @Column(name = "target_substance", length = 100)
   private String targetSubstance;
   
-  @Column(name = "removal_efficiency")
-  private Double removalEfficiency;
+  @Column(name = "removal_efficiency", precision = 4, scale = 1)
+  private BigDecimal removalEfficiency;
   
   public static Target create(TargetUpdateD dto, Prevention prevention) {
     Target target = Target.builder()
