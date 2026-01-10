@@ -56,23 +56,35 @@ public class MeasurementDocument {
   }
   
   public void updatePreInfo(PreInfoDocument preInfo) {
-    this.preInfo = preInfo;
-  }
-  
-  public void updateClient(ClientDocument client) {
-    this.client = client;
+    if (this.preInfo == null) {
+      this.preInfo = preInfo;
+    } else {
+      this.preInfo.merge(preInfo);
+    }
   }
   
   public void updateWeather(WeatherDocument weather) {
-    this.weather = weather;
+    if (this.weather == null) {
+      this.weather = weather;
+    } else {
+      this.weather.merge(weather);
+    }
   }
   
   public void updateMoisture(MoistureDocument moisture) {
-    this.moisture = moisture;
+    if (this.moisture == null) {
+      this.moisture = moisture;
+    } else {
+      this.moisture.merge(moisture);
+    }
   }
   
   public void updateExhaustGas(ExhaustGasDocument exhaustGas) {
-    this.exhaustGas = exhaustGas;
+    if (this.exhaustGas == null) {
+      this.exhaustGas = exhaustGas;
+    } else {
+      this.exhaustGas.merge(exhaustGas);
+    }
   }
   
   public void complete(MeasurementResultDocument result) {

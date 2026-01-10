@@ -22,6 +22,33 @@ public class WeatherDocument {
   @Field(targetType = FieldType.DECIMAL128)
   private BigDecimal windSpeed;
   
+  public void merge(WeatherDocument doc) {
+    if (doc == null) return;
+    
+    if (doc.pressure != null) {
+      if (this.pressure == null) {
+        this.pressure = doc.pressure;
+      } else {
+        this.pressure = this.pressure.merge(doc.pressure);
+      }
+    }
+    
+    if (doc.weatherCondition != null)
+      this.weatherCondition = doc.weatherCondition;
+    
+    if (doc.temperature != null)
+      this.temperature = doc.temperature;
+    
+    if (doc.humidity != null)
+      this.humidity = doc.humidity;
+    
+    if (doc.windDirection != null)
+      this.windDirection = doc.windDirection;
+    
+    if (doc.windSpeed != null)
+      this.windSpeed = doc.windSpeed;
+  }
+  
   public WeatherDocument normalize() {
     return this.toBuilder()
         .pressure(pressure != null ? pressure.normalize() : null)
@@ -42,6 +69,15 @@ public class WeatherDocument {
     @Field(targetType = FieldType.DECIMAL128)
     private BigDecimal pressure;
     private String unit;
+    
+    public WeatherPressureDocument merge(WeatherPressureDocument doc) {
+      if (doc == null) return this;
+      
+      return this.toBuilder()
+          .pressure(doc.pressure != null ? doc.pressure : this.pressure)
+          .unit(doc.unit != null ? doc.unit : this.unit)
+          .build();
+    }
     
     public WeatherPressureDocument normalize() {
       return this.toBuilder()

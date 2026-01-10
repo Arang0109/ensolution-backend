@@ -26,6 +26,25 @@ public class ExhaustGasDocument {
         .build();
   }
   
+  public void merge(ExhaustGasDocument source) {
+    if (source == null) return;
+    
+    if (source.o2Concentration != null)
+      this.o2Concentration = source.o2Concentration;
+    
+    if (source.co2Concentration != null)
+      this.co2Concentration = source.co2Concentration;
+    
+    if (source.coConcentration != null)
+      this.coConcentration = source.coConcentration;
+    
+    if (source.noxConcentration != null)
+      this.noxConcentration = source.noxConcentration;
+    
+    if (source.soxConcentration != null)
+      this.soxConcentration = source.soxConcentration;
+  }
+  
   private static List<BigDecimal> scale(List<BigDecimal> value) {
     if (value == null) {
       return null;
