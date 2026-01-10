@@ -27,7 +27,7 @@ public class MeasurementContext {
   
   // 4.
   private BigDecimal oxygenCorrected;
-  private Integer pointCount;
+  private Integer measurementPointCnt;
   private List<BigDecimal> circularAxisCoords;
   
   private MeasurementResultDocument result;

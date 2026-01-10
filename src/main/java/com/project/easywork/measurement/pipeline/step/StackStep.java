@@ -30,14 +30,14 @@ public class StackStep implements MeasurementStep {
       case RECTANGULAR -> {
         strategy = MeasurePointStrategyFactory.of("rectangle");
         int pointCount = strategy.calculate(diameter, height);
-        context.setPointCount(pointCount);
+        context.setMeasurementPointCnt(pointCount);
         context.setCircularAxisCoords(null); // 원형이 아니면 좌표 없음
       }
       
       case CIRCULAR -> {
         strategy = MeasurePointStrategyFactory.of("circle");
         int pointCount = strategy.calculate(diameter);
-        context.setPointCount(pointCount);
+        context.setMeasurementPointCnt(pointCount);
         
         // 좌표 계산
         int n = (pointCount == 1) ? 1 : pointCount / 4;

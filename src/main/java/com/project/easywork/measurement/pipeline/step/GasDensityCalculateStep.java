@@ -26,15 +26,9 @@ public class GasDensityCalculateStep implements MeasurementStep {
     // 수분량
     BigDecimal moisture = context.getMoistureRatio();
 
-    /*
-    // 가스 밀도 계산부 (나중에 BigDecimal 버전으로 복구 권장)
-    BigDecimal gasDensity = GasCalculator.toActualDensity(
-        GasCalculator.calGasDensity(avgO2, avgCo2, avgCo, moisture),
-        d.getMeasurement().exhaustGas().gasTemperature(),
-        context.getAtmospherePressure().add(context.getStaticPressure())
-    );
+    // 가스 밀도 계산부
+    BigDecimal gasDensity = GasCalculator.calGasDensity(avgO2, avgCo2, avgCo, moisture);
     context.setGasDensity(gasDensity);
-    */
     
     // ------------------------
     // 산소 보정 계산

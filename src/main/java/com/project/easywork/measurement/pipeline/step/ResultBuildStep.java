@@ -14,7 +14,6 @@ public class ResultBuildStep implements MeasurementStep {
         .moistureRatio(context.getMoistureRatio()) // or 2
         .gasDensity(context.getGasDensity())
         .oxygenCorrected(context.getOxygenCorrected())
-        .pointCount(context.getPointCount())
         .build();
     
     context.setResult(result);

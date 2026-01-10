@@ -21,9 +21,9 @@ public class GasCalculator {
   
   /**
    * 실제 밀도 보정
-   * V_actual = V_std × (273 / (273 + T)) × (P / 760)
+   * V_std = V_actual × (273 / (273 + T)) × (P / 760)
    */
-  public static BigDecimal toActualDensity(BigDecimal gasVolume,
+  public static BigDecimal toStandardDensity(BigDecimal gasVolume,
                                            BigDecimal temp,
                                            BigDecimal pressure) {
     
@@ -62,19 +62,16 @@ public class GasCalculator {
   }
   
   /**
-   * 혼합가스 밀도 계산
-   *
-   * ρ = Σ (분자량 / 22.4) × (성분비율)
-   * 성분비율은 % 단위로 들어온다고 가정
+   * 습식 가스밀도 계산
    */
   public static BigDecimal calGasDensity(BigDecimal o2,
                                          BigDecimal co2,
                                          BigDecimal co,
                                          BigDecimal moisture) {
     
-    // N2 = 100 - (O2 + CO2 + CO + H2O)
+    // N2 = 100 - (O2 + CO2 + CO)
     BigDecimal n2 = BD_100.subtract(
-        o2.add(co2).add(co).add(moisture)
+        o2.add(co2).add(co)
     );
     
     BigDecimal result = BigDecimal.ZERO;
@@ -92,6 +89,10 @@ public class GasCalculator {
     result = result.add(
         MOL_N2.divide(STD_AIR_VOLUME, 10, RoundingMode.HALF_UP)
             .multiply(n2.divide(BD_100, 10, RoundingMode.HALF_UP))
+    );
+    
+    result = result.multiply(
+        BD_100.subtract(moisture).divide(BD_100, 10, RoundingMode.HALF_UP)
     );
     
     result = result.add(
