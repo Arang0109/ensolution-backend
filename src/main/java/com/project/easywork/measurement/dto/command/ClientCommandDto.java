@@ -8,13 +8,10 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.List;
 
 @Schema(description = "측정 전 사전 정보 입력 DTO")
-public record PreInfoCommandDto(
+public record ClientCommandDto(
     
-    @Schema(description = "의뢰업체 정보")
+    @Schema(description = "의뢰기관 정보")
     PreInfoCompany company,
-    
-    @Schema(description = "사업장 정보")
-    PreInfoWorkplace workplace,
     
     @Schema(description = "측정시설 정보")
     PreInfoStack stack,
@@ -27,41 +24,24 @@ public record PreInfoCommandDto(
 ) {
   
   // ------------------------
-  // 회사 정보
+  // 의뢰기관 정보
   // ------------------------
-  @Schema(description = "의뢰업체 정보")
+  @Schema(description = "의뢰기관 정보")
   public record PreInfoCompany(
       
-      @Schema(description = "의뢰업체 ID", example = "123")
-      Long id,
-      
       @Schema(description = "의뢰업체명", example = "㈜오션환경")
-      String name,
+      String companyName,
+      @Schema(description = "사업장명", example = "부산 공장 1")
+      String workplaceName,
+      
+      @Schema(description = "사업자 번호", example = "123-45-67890")
+      String bizNumber,
       
       @Schema(description = "대표자명", example = "홍길동")
       String ceoName,
       
-      @Schema(description = "사업자 번호", example = "123-45-67890")
-      String bizNumber
-  ) {}
-  
-  // ------------------------
-  // 사업장 정보
-  // ------------------------
-  @Schema(description = "사업장 정보")
-  public record PreInfoWorkplace(
-      
-      @Schema(description = "사업장 ID", example = "51")
-      Long id,
-      
-      @Schema(description = "사업장명", example = "부산 공장 1")
-      String name,
-      
       @Schema(description = "주소", example = "부산시 사하구...")
       String address,
-      
-      @Schema(description = "사업자번호", example = "123-45-67890")
-      String bizNumber,
       
       @Schema(description = "업종", example = "제조업")
       String businessCategory,

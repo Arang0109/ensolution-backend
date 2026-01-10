@@ -4,6 +4,7 @@ import com.project.easywork.measurement.dto.document.result.MeasurementResultDoc
 import com.project.easywork.measurement.dto.MeasurementDraftUpdateCommandDto;
 import com.project.easywork.measurement.dto.command.MeasurementCommandDto;
 import com.project.easywork.measurement.dto.document.MeasurementDocument;
+import com.project.easywork.measurement.service.IMeasurementQueryService;
 import com.project.easywork.measurement.service.IMeasurementService;
 import com.project.easywork.measurement.service_data.IMeasurementDataService;
 import com.project.easywork.plan.domain.dto.PlanCreateBundleD;
@@ -17,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class MeasurementService implements IMeasurementService {
   
   private final IMeasurementDataService measurementDataService;
+  private final IMeasurementQueryService measurementQueryService;
   
   private final MeasurementDocumentFactory documentFactory;
   private final MeasurementDraftUpdater draftUpdater;
@@ -24,7 +26,12 @@ public class MeasurementService implements IMeasurementService {
   
   @Override
   public void createDraft(Long planId, PlanCreateBundleD dto) {
-    MeasurementDocument doc = documentFactory.createDraft(planId, dto);
+    
+    MeasurementDocument doc = documentFactory.createDraft(
+        planId,
+        dto.getPlan(),
+        measurementQueryService.loadSnapshot(dto)
+    );
     measurementDataService.save(doc);
   }
   

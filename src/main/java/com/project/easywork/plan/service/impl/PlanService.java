@@ -81,7 +81,6 @@ public class PlanService implements IPlanService {
     return PlanDetailD.builder()
         .plan(planMapper.toDto(plan))
         .status(doc.getStatus())
-        .vehicleNumber(doc.getVehicleNumber())
         .preInfo(doc.getPreInfo())
         .weather(doc.getWeather())
         .moisture(doc.getMoisture())

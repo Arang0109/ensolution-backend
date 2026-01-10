@@ -25,9 +25,9 @@ public class MeasurementDocument {
   @Indexed
   private Long planId;
   private MeasurementStatus status;
-  private String vehicleNumber;
   
   private PreInfoDocument preInfo;
+  private ClientDocument client;
   private WeatherDocument weather;
   private MoistureDocument moisture;
   private ExhaustGasDocument exhaustGas;
@@ -42,6 +42,10 @@ public class MeasurementDocument {
   
   public void updatePreInfo(PreInfoDocument preInfo) {
     this.preInfo = preInfo;
+  }
+  
+  public void updateClient(ClientDocument client) {
+    this.client = client;
   }
   
   public void updateWeather(WeatherDocument weather) {

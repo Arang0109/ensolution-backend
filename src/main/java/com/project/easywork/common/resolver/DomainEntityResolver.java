@@ -6,8 +6,14 @@ import com.project.easywork.client.domain.persistance.*;
 import com.project.easywork.client.service_data.*;
 import com.project.easywork.common.exception.CustomException;
 import com.project.easywork.common.exception.ErrorCode;
+import com.project.easywork.equipment.domain.persistance.Equipment;
+import com.project.easywork.equipment.domain.persistance.PitotTube;
+import com.project.easywork.equipment.service_data.IEquipmentDataService;
+import com.project.easywork.equipment.service_data.IPitotTubeDataService;
 import com.project.easywork.pollutant.domain.persistance.Pollutant;
 import com.project.easywork.pollutant.service_data.IPollutantDataService;
+import com.project.easywork.user.domain.entity.User;
+import com.project.easywork.user.service_data.IUserDataService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -15,6 +21,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class DomainEntityResolver {
   
+  private final IUserDataService userDataService;
   private final ICompanyDataService companyDataService;
   private final IWorkplaceDataService workplaceDataService;
   private final IStackDataService stackDataService;
@@ -24,6 +31,16 @@ public class DomainEntityResolver {
   private final IFacilityDataService facilityDataService;
   private final ITargetDataService targetDataService;
   private final ITeamDataService teamDataService;
+  private final IEquipmentDataService equipmentDataService;
+  private final IPitotTubeDataService pitotTubeDataService;
+  
+  public User getUserOrThrow(Long userId) {
+    User user = userDataService.findById(userId);
+    if (user == null) {
+      throw new CustomException(ErrorCode.NOT_FOUND, "해당 유저를 찾을 수 없습니다.");
+    }
+    return user;
+  }
   
   public Company getCompanyOrThrow(Long companyId) {
     Company company = companyDataService.findById(companyId);
@@ -95,6 +112,22 @@ public class DomainEntityResolver {
       throw new CustomException(ErrorCode.NOT_FOUND, "해당 팀을 찾을 수 없습니다.");
     }
     return team;
+  }
+  
+  public Equipment getEquipmentOrThrow(Long equipmentId) {
+    Equipment equipment = equipmentDataService.findById(equipmentId);
+    if(equipment == null) {
+      throw new CustomException(ErrorCode.NOT_FOUND, "해당 장비를 찾을 수 없습니다.");
+    }
+    return equipment;
+  }
+  
+  public PitotTube getPitotTubeOrThrow(Long pitotTubeId) {
+    PitotTube pitotTube = pitotTubeDataService.findById(pitotTubeId);
+    if(pitotTube == null) {
+      throw new CustomException(ErrorCode.NOT_FOUND, "해당 피토우관을 찾을 수 없습니다.");
+    }
+    return pitotTube;
   }
   
   
