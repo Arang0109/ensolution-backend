@@ -12,6 +12,7 @@ import lombok.*;
 public class PlanDetailD {
   private PlanD plan;
   private MeasurementStatus status;
+  private Integer measurementPointCnt;
   
   private PreInfoDocument preInfo;
   private ClientDocument client;

@@ -7,6 +7,11 @@ import com.project.easywork.measurement.pipeline.context.MeasurementContext;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
+/**
+ * 수분량 계산
+ * | ( ( 22.4 / 18 ) * diffWeight ) /                                                     | * 100
+ * | ( diffVolume * ( 273 / 273 + T ) * ( P / 760 ) ) + ( ( 22.4 / 18 ) * diffWeight )    |
+ */
 public class MoistureCalculateStep implements MeasurementStep {
   
   @Override
@@ -37,7 +42,7 @@ public class MoistureCalculateStep implements MeasurementStep {
     
     // 표준 가스 부피
     BigDecimal standardGasVolume =
-        GasCalculator.toActualDensity(diffVolume, avgTemp, pressure);
+        GasCalculator.toStandardDensity(diffVolume, avgTemp, pressure);
     
     // 무게 → 부피 변환
     BigDecimal diffWeightToVolume =

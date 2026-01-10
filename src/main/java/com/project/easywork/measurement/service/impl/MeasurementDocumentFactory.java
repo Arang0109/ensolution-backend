@@ -1,6 +1,8 @@
 package com.project.easywork.measurement.service.impl;
 
 import com.project.easywork.client.domain.persistance.*;
+import com.project.easywork.common.util.measurePoint.MeasurePointStrategy;
+import com.project.easywork.common.util.measurePoint.MeasurePointStrategyFactory;
 import com.project.easywork.measurement.dto.MeasurementStatus;
 import com.project.easywork.measurement.dto.document.MeasurementDocument;
 import com.project.easywork.measurement.dto.document.input.ClientDocument;
@@ -22,9 +24,21 @@ public class MeasurementDocumentFactory {
     return MeasurementDocument.builder()
         .planId(planId)
         .status(MeasurementStatus.DRAFT)
+        .measurementPointCnt(calMeasurementPointCnt(s))
         .preInfo(buildPreInfo(plan, s))
         .client(buildClient(plan, s))
         .build();
+  }
+  
+  private Integer calMeasurementPointCnt(MeasurementSnapshot s) {
+    MeasurePointStrategy strategy = MeasurePointStrategyFactory.of(
+        s.stack().getShape().toString()
+    );
+    
+    return strategy.calculate(
+        s.stack().getHorizontalLength(),
+        s.stack().getVerticalLength()
+    );
   }
   
   private PreInfoDocument buildPreInfo(PlanCreateD plan, MeasurementSnapshot s) {

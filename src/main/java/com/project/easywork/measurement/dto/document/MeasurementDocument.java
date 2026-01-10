@@ -27,11 +27,15 @@ public class MeasurementDocument {
   private Long planId;
   private MeasurementStatus status;
   
+  private Integer measurementPointCnt;
+  
   private PreInfoDocument preInfo;
   private ClientDocument client;
   private WeatherDocument weather;
   private MoistureDocument moisture;
   private ExhaustGasDocument exhaustGas;
+  
+  private List<MeasurementPointDocument> measurementPoints;
   
   private MeasurementResultDocument result;
   

@@ -19,8 +19,6 @@ public class MeasurementResultDocument {
   private BigDecimal gasDensity;
   private BigDecimal oxygenCorrected;
   
-  private Integer pointCount;
-  
   public MeasurementResultDocument normalize() {
     return this.toBuilder()
         .atmospherePressure(scale(atmospherePressure, 1))
@@ -30,7 +28,6 @@ public class MeasurementResultDocument {
         .moistureRatio(scale(moistureRatio, 2))
         .gasDensity(scale(gasDensity, 3))
         .oxygenCorrected(scale(oxygenCorrected, 1))
-        .pointCount(pointCount)
         .build();
   }
   
