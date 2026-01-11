@@ -1,5 +1,6 @@
 package com.project.easywork.measurement.service.impl;
 
+import com.project.easywork.client.domain.Shape;
 import com.project.easywork.client.domain.persistance.*;
 import com.project.easywork.common.util.measurePoint.MeasurePointStrategy;
 import com.project.easywork.common.util.measurePoint.MeasurePointStrategyFactory;
@@ -14,6 +15,7 @@ import com.project.easywork.plan.domain.dto.PlanCreateD;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,14 +36,43 @@ public class MeasurementDocumentFactory {
   }
   
   private Integer calMeasurementPointCnt(MeasurementSnapshot s) {
-    MeasurePointStrategy strategy = MeasurePointStrategyFactory.of(
-        s.stack().getShape().toString()
-    );
+    Shape stackShape = s.stack().getShape();
+    BigDecimal horizontal = s.stack().getHorizontalLength();
+    BigDecimal vertical   = s.stack().getVerticalLength();
     
-    return strategy.calculate(
-        s.stack().getHorizontalLength(),
-        s.stack().getVerticalLength()
-    );
+    // Draft 단계 기본값
+    if (stackShape == null || stackShape == Shape.OTHER) {
+      return 1;
+    }
+    
+    MeasurePointStrategy strategy;
+    
+    switch (stackShape) {
+      case RECTANGULAR -> {
+        if (horizontal == null || vertical == null) {
+          return 1;
+        }
+        
+        strategy = MeasurePointStrategyFactory.of("rectangle");
+        return strategy.calculate(horizontal, vertical);
+      }
+      
+      case CIRCULAR -> {
+        if (horizontal == null) { // 지름 하나만 있으면 됨
+          return 1;
+        }
+        
+        strategy = MeasurePointStrategyFactory.of("circular");
+        int point = strategy.calculate(horizontal);
+        
+        // 간소화 규칙 적용
+        return point == 1 ? 1 : point / 4;
+      }
+      
+      default -> {
+        return 1;
+      }
+    }
   }
   
   private PreInfoDoc buildPreInfo(PlanCreateD plan, MeasurementSnapshot s) {
@@ -61,6 +92,7 @@ public class MeasurementDocumentFactory {
         .vehicleNumber(safe(s.vehicleNumber()))
         .engineers(engineers)
         .measurementItems(buildStackMeasurements(s))
+        .simplifiedMeasurement(true)
         .build();
   }
   

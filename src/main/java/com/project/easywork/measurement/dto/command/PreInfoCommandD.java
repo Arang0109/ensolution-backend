@@ -8,5 +8,7 @@ public record PreInfoCommandD(
     String measurementType,
     String teamName,
     String vehicleNumber,
-    List<String> engineers
+    List<String> engineers,
+    
+    boolean simplifiedMeasurement
 ) {}

@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @NoArgsConstructor
@@ -24,5 +25,5 @@ public class PlanCreateD {
   @NotBlank(message = "측정용도를 선택하세요.")
   private String measurementType;
   
-  private List<Long> measurementIds;
+  private List<Long> measurementIds = new ArrayList<>();
 }

@@ -22,6 +22,8 @@ public class PreInfoDoc {
   private String vehicleNumber;
   private List<String> engineers;
   
+  private boolean simplifiedMeasurement;
+  
   private List<StackMeasurementDoc> measurementItems;
   
   public void addMeasurementItems(List<StackMeasurementDoc> items) {
