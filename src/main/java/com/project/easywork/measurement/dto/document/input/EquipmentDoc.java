@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @Getter
-@Builder
+@Builder(toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
 public class EquipmentDoc {
@@ -40,7 +40,7 @@ public class EquipmentDoc {
   }
   
   @Getter
-  @Builder
+  @Builder(toBuilder = true)
   public static class ParticularEquipmentDoc {
     private Long particularEquipmentId;
     private String modelName;
@@ -51,7 +51,7 @@ public class EquipmentDoc {
   }
   
   @Getter
-  @Builder
+  @Builder(toBuilder = true)
   public static class PitotTubeDoc {
     private Long pitotTubeId;
     private String modelName;
@@ -60,7 +60,7 @@ public class EquipmentDoc {
     private List<CoefficientDoc> coefficients;
     
     @Getter
-    @Builder
+    @Builder(toBuilder = true)
     public static class CoefficientDoc {
       private Long coefficientId;
       private BigDecimal velocity;

@@ -68,7 +68,7 @@ public class MeasurementDoc {
     }
   }
   
-  public void updateEquipment(EquipmentDoc equipment) {
+  public void changeEquipment(EquipmentDoc equipment) {
     if (this.equipment == null) {
       this.equipment = equipment;
     } else {

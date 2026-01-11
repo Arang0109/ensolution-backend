@@ -39,4 +39,24 @@ public class MeasurementController {
     measurementService.saveDocument(planId, request);
     return ResponseEntity.ok().body(ApiResponse.success());
   }
+  
+  @Operation(summary = "입자상 측정장비 변경 API", description = "입자상 측정장비를 변경합니다.")
+  @PostMapping("/{planId}/equipment")
+  public ResponseEntity<ApiResponse<Void>> changeParticularEquipment(
+      @PathVariable Long planId,
+      @RequestBody Long equipmentId
+  ) {
+    measurementService.changeEquipment(planId, equipmentId);
+    return ResponseEntity.ok().body(ApiResponse.success());
+  }
+  
+  @Operation(summary = "피토우관 변경 API", description = "피토우관을 변경합니다.")
+  @PostMapping("/{planId}/pitot-tube")
+  public ResponseEntity<ApiResponse<Void>> changePitotTube(
+      @PathVariable Long planId,
+      @RequestBody Long pitotTubeId
+  ) {
+    measurementService.changePitotTube(planId, pitotTubeId);
+    return ResponseEntity.ok().body(ApiResponse.success());
+  }
 }

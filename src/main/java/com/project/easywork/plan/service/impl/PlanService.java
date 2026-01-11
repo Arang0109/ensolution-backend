@@ -6,7 +6,13 @@ import com.project.easywork.client.domain.persistance.Stack;
 import com.project.easywork.client.domain.persistance.StackMeasurement;
 import com.project.easywork.client.service_data.IStackMeasurementDataService;
 import com.project.easywork.common.resolver.DomainEntityResolver;
+import com.project.easywork.equipment.domain.persistance.Equipment;
+import com.project.easywork.equipment.domain.persistance.PitotTube;
+import com.project.easywork.equipment.domain.persistance.PitotTubeCoefficient;
+import com.project.easywork.equipment.service_data.IEquipmentDataService;
+import com.project.easywork.equipment.service_data.IPitotTubeDataService;
 import com.project.easywork.measurement.dto.document.MeasurementDoc;
+import com.project.easywork.measurement.dto.document.input.EquipmentDoc;
 import com.project.easywork.measurement.dto.document.input.PreInfoDoc;
 import com.project.easywork.measurement.service.IMeasurementService;
 import com.project.easywork.measurement.service_data.IMeasurementDataService;
@@ -34,8 +40,8 @@ public class PlanService implements IPlanService {
   private final PlanMapper planMapper;
   
   private final IPlanMeasurementService scheduleMeasurementService;
-  private final PlanMeasurementMapper planMeasurementMapper;
   private final IMeasurementService measurementService;
+  
   
   private final DomainEntityResolver domainEntityResolver;
   
