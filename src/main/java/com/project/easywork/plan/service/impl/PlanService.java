@@ -6,8 +6,14 @@ import com.project.easywork.client.domain.persistance.Stack;
 import com.project.easywork.client.domain.persistance.StackMeasurement;
 import com.project.easywork.client.service_data.IStackMeasurementDataService;
 import com.project.easywork.common.resolver.DomainEntityResolver;
-import com.project.easywork.measurement.dto.document.MeasurementDocument;
-import com.project.easywork.measurement.dto.document.input.PreInfoDocument;
+import com.project.easywork.equipment.domain.persistance.Equipment;
+import com.project.easywork.equipment.domain.persistance.PitotTube;
+import com.project.easywork.equipment.domain.persistance.PitotTubeCoefficient;
+import com.project.easywork.equipment.service_data.IEquipmentDataService;
+import com.project.easywork.equipment.service_data.IPitotTubeDataService;
+import com.project.easywork.measurement.dto.document.MeasurementDoc;
+import com.project.easywork.measurement.dto.document.input.EquipmentDoc;
+import com.project.easywork.measurement.dto.document.input.PreInfoDoc;
 import com.project.easywork.measurement.service.IMeasurementService;
 import com.project.easywork.measurement.service_data.IMeasurementDataService;
 import com.project.easywork.plan.domain.dto.*;
@@ -34,8 +40,8 @@ public class PlanService implements IPlanService {
   private final PlanMapper planMapper;
   
   private final IPlanMeasurementService scheduleMeasurementService;
-  private final PlanMeasurementMapper planMeasurementMapper;
   private final IMeasurementService measurementService;
+  
   
   private final DomainEntityResolver domainEntityResolver;
   
@@ -79,7 +85,7 @@ public class PlanService implements IPlanService {
   @Transactional(readOnly = true)
   public PlanDetailD getPlan(Long planId) {
     Plan plan = planDataService.findDetailById(planId);
-    MeasurementDocument doc =
+    MeasurementDoc doc =
         measurementDataService.findByPlanId(planId);
     
     return PlanDetailD.builder()
@@ -87,6 +93,7 @@ public class PlanService implements IPlanService {
         .status(doc.getStatus())
         .measurementPointCnt(doc.getMeasurementPointCnt())
         .preInfo(doc.getPreInfo())
+        .equipment(doc.getEquipment())
         .client(doc.getClient())
         .weather(doc.getWeather())
         .moisture(doc.getMoisture())
@@ -104,15 +111,15 @@ public class PlanService implements IPlanService {
         stackMeasurementDataService::findById
     );
     
-    MeasurementDocument doc = measurementDataService.findByPlanId(planId);
+    MeasurementDoc doc = measurementDataService.findByPlanId(planId);
     
-    List<PreInfoDocument.StackMeasurementDocument> stackDocs =
+    List<PreInfoDoc.StackMeasurementDoc> stackDocs =
         dtos.stream()
             .map(dto -> {
               StackMeasurement sm = stackMeasurementDataService
                   .findById(dto.getStackMeasurementId());
               
-              return PreInfoDocument.StackMeasurementDocument.builder()
+              return PreInfoDoc.StackMeasurementDoc.builder()
                   .stackMeasurementId(sm.getId())
                   .pollutantId(sm.getPollutant().getId())
                   .pollutantNameKr(sm.getPollutant().getNameKr())

@@ -19,10 +19,10 @@ public class StackStep implements MeasurementStep {
   public void execute(MeasurementContext context) {
     
     Measurement d = context.getDomain();
-    Shape stackShape = d.getMeasurement().preInfo().stack().shape();
+    Shape stackShape = d.getMeasurement().client().stack().shape();
     
-    BigDecimal diameter = d.getMeasurement().preInfo().stack().horizontalLength();
-    BigDecimal height   = d.getMeasurement().preInfo().stack().verticalLength();
+    BigDecimal diameter = d.getMeasurement().client().stack().horizontalLength();
+    BigDecimal height   = d.getMeasurement().client().stack().verticalLength();
     
     MeasurePointStrategy strategy;
     

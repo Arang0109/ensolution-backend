@@ -16,13 +16,13 @@ import java.util.List;
 @Builder(toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class ClientDocument {
+public class ClientDoc {
   
-  private CompanyDocument company;
-  private StackDocument stack;
-  private List<PreventionDocument> preventions;
+  private CompanyDoc company;
+  private StackDoc stack;
+  private List<PreventionDoc> preventions;
   
-  public ClientDocument normalize() {
+  public ClientDoc normalize() {
     return this.toBuilder()
         .company(company)
         .stack(stack != null ? stack.normalize() : null)
@@ -44,7 +44,7 @@ public class ClientDocument {
   // ------------------------------------
   @Getter
   @Builder
-  public static class CompanyDocument {
+  public static class CompanyDoc {
     private Long companyId;
     private String companyName;
     private Long workplaceId;
@@ -61,7 +61,7 @@ public class ClientDocument {
   // ------------------------------------
   @Getter
   @Builder(toBuilder = true)
-  public static class StackDocument {
+  public static class StackDoc {
     private Long stackId;
     private String name;
     private String semsNumber;
@@ -73,7 +73,7 @@ public class ClientDocument {
     private Orientation orientation;
     private BigDecimal standardOxygen;
     
-    public StackDocument normalize() {
+    public StackDoc normalize() {
       return this.toBuilder()
           .stackId(stackId)
           .name(name)
@@ -94,13 +94,13 @@ public class ClientDocument {
   // ------------------------------------
   @Getter
   @Builder(toBuilder = true)
-  public static class PreventionDocument {
+  public static class PreventionDoc {
     private Long preventionId;
     private String name;
-    private List<FacilityDocument> facilities;
-    private List<TargetDocument> targets;
+    private List<FacilityDoc> facilities;
+    private List<TargetDoc> targets;
     
-    public PreventionDocument normalize() {
+    public PreventionDoc normalize() {
       return this.toBuilder()
           .preventionId(preventionId)
           .name(name)
@@ -122,7 +122,7 @@ public class ClientDocument {
   // ------------------------------------
   @Getter
   @Builder
-  public static class FacilityDocument {
+  public static class FacilityDoc {
     private Long facilityId;
     private String name;
     private String fuelUsage;
@@ -136,12 +136,12 @@ public class ClientDocument {
   // ------------------------------------
   @Getter
   @Builder(toBuilder = true)
-  public static class TargetDocument {
+  public static class TargetDoc {
     private Long targetId;
     private String targetSubstance;
     private BigDecimal removalEfficiency;
     
-    public TargetDocument normalize() {
+    public TargetDoc normalize() {
       return this.toBuilder()
           .targetId(targetId)
           .targetSubstance(targetSubstance)

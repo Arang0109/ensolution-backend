@@ -5,7 +5,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.math.BigDecimal;
 
 @Schema(description = "기상 정보 입력 DTO")
-public record WeatherCommandDto(
+public record WeatherCommandD(
     
     @Schema(description = "대기압 정보 (값 + 단위)")
     WeatherPressure pressure,

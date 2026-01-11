@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 
 @Getter
 @Builder(toBuilder = true)
-public class MeasurementPointDocument {
+public class MeasurementPointDoc {
   // ===== 입력 영역 =====
   private BigDecimal gasTemperature;        // 배출가스 온도
   private BigDecimal dynamicPressure;       // 동압

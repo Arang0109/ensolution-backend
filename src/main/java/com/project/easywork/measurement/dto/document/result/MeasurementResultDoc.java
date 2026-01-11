@@ -8,7 +8,7 @@ import java.math.RoundingMode;
 
 @Getter
 @Builder(toBuilder = true)
-public class MeasurementResultDocument {
+public class MeasurementResultDoc {
   
   private BigDecimal atmospherePressure;
   private BigDecimal staticPressure;
@@ -19,7 +19,7 @@ public class MeasurementResultDocument {
   private BigDecimal gasDensity;
   private BigDecimal oxygenCorrected;
   
-  public MeasurementResultDocument normalize() {
+  public MeasurementResultDoc normalize() {
     return this.toBuilder()
         .atmospherePressure(scale(atmospherePressure, 1))
         .staticPressure(scale(staticPressure, 1))

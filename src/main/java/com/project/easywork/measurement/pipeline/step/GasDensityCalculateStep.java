@@ -40,7 +40,7 @@ public class GasDensityCalculateStep implements MeasurementStep {
     // 기본값 1.0
     context.setOxygenCorrected(BigDecimal.ONE);
     
-    BigDecimal standardO2 = d.getMeasurement().preInfo().stack().standardOxygen();
+    BigDecimal standardO2 = d.getMeasurement().client().stack().standardOxygen();
     
     if (standardO2 != null && standardO2.compareTo(BigDecimal.ZERO) > 0) {
       

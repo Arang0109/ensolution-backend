@@ -9,7 +9,7 @@ import java.math.RoundingMode;
 
 @Getter
 @Builder(toBuilder = true)
-public class WeatherDocument {
+public class WeatherDoc {
   
   private WeatherPressureDocument pressure;
   
@@ -22,7 +22,7 @@ public class WeatherDocument {
   @Field(targetType = FieldType.DECIMAL128)
   private BigDecimal windSpeed;
   
-  public void merge(WeatherDocument doc) {
+  public void merge(WeatherDoc doc) {
     if (doc == null) return;
     
     if (doc.pressure != null) {
@@ -49,7 +49,7 @@ public class WeatherDocument {
       this.windSpeed = doc.windSpeed;
   }
   
-  public WeatherDocument normalize() {
+  public WeatherDoc normalize() {
     return this.toBuilder()
         .pressure(pressure != null ? pressure.normalize() : null)
         .temperature(scale(temperature))

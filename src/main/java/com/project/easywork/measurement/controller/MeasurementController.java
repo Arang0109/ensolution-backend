@@ -1,8 +1,8 @@
 package com.project.easywork.measurement.controller;
 
 import com.project.easywork.common.api.ApiResponse;
-import com.project.easywork.measurement.dto.MeasurementDraftUpdateCommandDto;
-import com.project.easywork.measurement.dto.command.MeasurementCommandDto;
+import com.project.easywork.measurement.dto.DraftUpdateCommandD;
+import com.project.easywork.measurement.dto.command.MeasurementCommandD;
 import com.project.easywork.measurement.service.IMeasurementService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -24,7 +24,7 @@ public class MeasurementController {
   @PutMapping("/{planId}/draft")
   public ResponseEntity<ApiResponse<Void>> updateDraft(
       @PathVariable Long planId,
-      @RequestBody MeasurementDraftUpdateCommandDto request
+      @RequestBody DraftUpdateCommandD request
   ) {
     measurementService.updateDraft(planId, request);
     return ResponseEntity.ok().body(ApiResponse.success());
@@ -34,9 +34,29 @@ public class MeasurementController {
   @PostMapping("/{planId}/completed")
   public ResponseEntity<ApiResponse<Void>> saveDocument(
       @PathVariable Long planId,
-      @RequestBody MeasurementCommandDto request
+      @RequestBody MeasurementCommandD request
   ) {
     measurementService.saveDocument(planId, request);
+    return ResponseEntity.ok().body(ApiResponse.success());
+  }
+  
+  @Operation(summary = "입자상 측정장비 변경 API", description = "입자상 측정장비를 변경합니다.")
+  @PostMapping("/{planId}/equipment")
+  public ResponseEntity<ApiResponse<Void>> changeParticularEquipment(
+      @PathVariable Long planId,
+      @RequestBody Long equipmentId
+  ) {
+    measurementService.changeEquipment(planId, equipmentId);
+    return ResponseEntity.ok().body(ApiResponse.success());
+  }
+  
+  @Operation(summary = "피토우관 변경 API", description = "피토우관을 변경합니다.")
+  @PostMapping("/{planId}/pitot-tube")
+  public ResponseEntity<ApiResponse<Void>> changePitotTube(
+      @PathVariable Long planId,
+      @RequestBody Long pitotTubeId
+  ) {
+    measurementService.changePitotTube(planId, pitotTubeId);
     return ResponseEntity.ok().body(ApiResponse.success());
   }
 }

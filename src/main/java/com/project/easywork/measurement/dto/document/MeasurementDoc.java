@@ -2,7 +2,7 @@ package com.project.easywork.measurement.dto.document;
 
 import com.project.easywork.measurement.dto.MeasurementStatus;
 import com.project.easywork.measurement.dto.document.input.*;
-import com.project.easywork.measurement.dto.document.result.MeasurementResultDocument;
+import com.project.easywork.measurement.dto.document.result.MeasurementResultDoc;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
@@ -18,7 +18,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class MeasurementDocument {
+public class MeasurementDoc {
   
   @Id
   private String id;
@@ -29,15 +29,16 @@ public class MeasurementDocument {
   
   private Integer measurementPointCnt;
   
-  private PreInfoDocument preInfo;
-  private ClientDocument client;
-  private WeatherDocument weather;
-  private MoistureDocument moisture;
-  private ExhaustGasDocument exhaustGas;
+  private PreInfoDoc preInfo;
+  private EquipmentDoc equipment;
+  private ClientDoc client;
+  private WeatherDoc weather;
+  private MoistureDoc moisture;
+  private ExhaustGasDoc exhaustGas;
   
-  private List<MeasurementPointDocument> measurementPoints;
+  private List<MeasurementPointDoc> measurementPoints;
   
-  private MeasurementResultDocument result;
+  private MeasurementResultDoc result;
   
   @CreatedDate
   private LocalDateTime createdAt;
@@ -45,21 +46,21 @@ public class MeasurementDocument {
   @LastModifiedDate
   private LocalDateTime updatedAt;
   
-  public void addMeasurementItems(List<PreInfoDocument.StackMeasurementDocument> items) {
+  public void addMeasurementItems(List<PreInfoDoc.StackMeasurementDoc> items) {
     if (this.preInfo == null) {
       throw new IllegalStateException("PreInfoDocument가 먼저 생성되어야 합니다.");
     }
     this.preInfo.addMeasurementItems(items);
   }
   
-  public void replaceMeasurementItems(List<PreInfoDocument.StackMeasurementDocument> items) {
+  public void replaceMeasurementItems(List<PreInfoDoc.StackMeasurementDoc> items) {
     if (this.preInfo == null) {
       throw new IllegalStateException("PreInfoDocument가 먼저 생성되어야 합니다.");
     }
     this.preInfo.replaceMeasurementItems(items);
   }
   
-  public void updatePreInfo(PreInfoDocument preInfo) {
+  public void updatePreInfo(PreInfoDoc preInfo) {
     if (this.preInfo == null) {
       this.preInfo = preInfo;
     } else {
@@ -67,7 +68,15 @@ public class MeasurementDocument {
     }
   }
   
-  public void updateWeather(WeatherDocument weather) {
+  public void changeEquipment(EquipmentDoc equipment) {
+    if (this.equipment == null) {
+      this.equipment = equipment;
+    } else {
+      this.equipment.merge(equipment);
+    }
+  }
+  
+  public void updateWeather(WeatherDoc weather) {
     if (this.weather == null) {
       this.weather = weather;
     } else {
@@ -75,7 +84,7 @@ public class MeasurementDocument {
     }
   }
   
-  public void updateMoisture(MoistureDocument moisture) {
+  public void updateMoisture(MoistureDoc moisture) {
     if (this.moisture == null) {
       this.moisture = moisture;
     } else {
@@ -83,7 +92,7 @@ public class MeasurementDocument {
     }
   }
   
-  public void updateExhaustGas(ExhaustGasDocument exhaustGas) {
+  public void updateExhaustGas(ExhaustGasDoc exhaustGas) {
     if (this.exhaustGas == null) {
       this.exhaustGas = exhaustGas;
     } else {
@@ -91,7 +100,7 @@ public class MeasurementDocument {
     }
   }
   
-  public void complete(MeasurementResultDocument result) {
+  public void complete(MeasurementResultDoc result) {
     this.result = result;
     this.status = MeasurementStatus.COMPLETED;
   }

@@ -1,13 +1,13 @@
 package com.project.easywork.measurement.service_data;
 
-import com.project.easywork.measurement.dto.document.MeasurementDocument;
+import com.project.easywork.measurement.dto.document.MeasurementDoc;
 
 public interface IMeasurementDataService {
-  MeasurementDocument findById(String objectId);
+  MeasurementDoc findById(String objectId);
   
-  MeasurementDocument findByPlanId(Long planId);
+  MeasurementDoc findByPlanId(Long planId);
   
-  MeasurementDocument save(MeasurementDocument doc);
+  MeasurementDoc save(MeasurementDoc doc);
   
   void deleteByPlanId(Long planId);
 }
