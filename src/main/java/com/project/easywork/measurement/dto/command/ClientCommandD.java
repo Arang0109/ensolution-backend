@@ -9,16 +9,16 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @Schema(description = "측정 전 사전 정보 입력 DTO")
-public record ClientCommandDto(
+public record ClientCommandD(
     
     @Schema(description = "의뢰기관 정보")
-    PreInfoCompany company,
+    Company company,
     
     @Schema(description = "측정시설 정보")
-    PreInfoStack stack,
+    Stack stack,
     
     @Schema(description = "방지시설 목록")
-    List<PreInfoPrevention> preventions
+    List<Prevention> preventions
     
     /* stackMeasurements, team 등 추가 예정 */
 
@@ -28,7 +28,7 @@ public record ClientCommandDto(
   // 의뢰기관 정보
   // ------------------------
   @Schema(description = "의뢰기관 정보")
-  public record PreInfoCompany(
+  public record Company(
       
       Long companyId,
       
@@ -60,7 +60,7 @@ public record ClientCommandDto(
   // 굴뚝 정보
   // ------------------------
   @Schema(description = "측정시설 정보")
-  public record PreInfoStack(
+  public record Stack(
       
       @Schema(description = "측정시설 ID", example = "998")
       Long stackId,
@@ -97,23 +97,23 @@ public record ClientCommandDto(
   // 방지시설 정보
   // ------------------------
   @Schema(description = "방지시설 정보")
-  public record PreInfoPrevention(
+  public record Prevention(
       
       @Schema(description = "방지시설명", example = "세정집진시설")
       String name,
       
       @Schema(description = "시설 목록")
-      List<PreInfoFacility> facilities,
+      List<Facility> facilities,
       
       @Schema(description = "대상 오염물질 목록")
-      List<PreInfoTarget> targets
+      List<Target> targets
   ) {}
   
   // ------------------------
   // 시설 정보
   // ------------------------
   @Schema(description = "방지시설 하위 시설 정보")
-  public record PreInfoFacility(
+  public record Facility(
       
       @Schema(description = "시설명", example = "데드너")
       String name,
@@ -135,7 +135,7 @@ public record ClientCommandDto(
   // 대상 오염물질 정보
   // ------------------------
   @Schema(description = "처리 대상 오염물질 정보")
-  public record PreInfoTarget(
+  public record Target(
       
       @Schema(description = "오염물질명", example = "입자상")
       String targetSubstance,

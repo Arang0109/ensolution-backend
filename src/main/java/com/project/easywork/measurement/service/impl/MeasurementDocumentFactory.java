@@ -3,10 +3,12 @@ package com.project.easywork.measurement.service.impl;
 import com.project.easywork.client.domain.persistance.*;
 import com.project.easywork.common.util.measurePoint.MeasurePointStrategy;
 import com.project.easywork.common.util.measurePoint.MeasurePointStrategyFactory;
+import com.project.easywork.equipment.domain.persistance.PitotTubeCoefficient;
 import com.project.easywork.measurement.dto.MeasurementStatus;
-import com.project.easywork.measurement.dto.document.MeasurementDocument;
-import com.project.easywork.measurement.dto.document.input.ClientDocument;
-import com.project.easywork.measurement.dto.document.input.PreInfoDocument;
+import com.project.easywork.measurement.dto.document.MeasurementDoc;
+import com.project.easywork.measurement.dto.document.input.ClientDoc;
+import com.project.easywork.measurement.dto.document.input.EquipmentDoc;
+import com.project.easywork.measurement.dto.document.input.PreInfoDoc;
 import com.project.easywork.measurement.dto.snapshot.MeasurementSnapshot;
 import com.project.easywork.plan.domain.dto.PlanCreateD;
 import lombok.RequiredArgsConstructor;
@@ -19,14 +21,15 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MeasurementDocumentFactory {
   
-  public MeasurementDocument createDraft(Long planId, PlanCreateD plan, MeasurementSnapshot s) {
+  public MeasurementDoc createDraft(Long planId, PlanCreateD plan, MeasurementSnapshot s) {
   
-    return MeasurementDocument.builder()
+    return MeasurementDoc.builder()
         .planId(planId)
         .status(MeasurementStatus.DRAFT)
         .measurementPointCnt(calMeasurementPointCnt(s))
         .preInfo(buildPreInfo(plan, s))
-        .client(buildClient(plan, s))
+        .equipment(buildEquipment(s))
+        .client(buildClient(s))
         .build();
   }
   
@@ -41,7 +44,7 @@ public class MeasurementDocumentFactory {
     );
   }
   
-  private PreInfoDocument buildPreInfo(PlanCreateD plan, MeasurementSnapshot s) {
+  private PreInfoDoc buildPreInfo(PlanCreateD plan, MeasurementSnapshot s) {
     
     List<String> engineers = new ArrayList<>();
     if (s.senior() != null) {
@@ -51,26 +54,20 @@ public class MeasurementDocumentFactory {
       engineers.add(s.junior().getName());
     }
     
-    return PreInfoDocument.builder()
+    return PreInfoDoc.builder()
         .measureDate(plan.getMeasureDate())
         .measurementType(plan.getMeasurementType())
         .teamName(safe(s.team().getName()))
         .vehicleNumber(safe(s.vehicleNumber()))
         .engineers(engineers)
         .measurementItems(buildStackMeasurements(s))
-        .particularEquipmentName(
-            s.equipment() != null ? safe(s.equipment().getEquipmentName()) : ""
-        )
-        .pitotTubeName(
-            s.pitotTube() != null ? safe(s.pitotTube().getEquipmentName()) : ""
-        )
         .build();
   }
   
-  private List<PreInfoDocument.StackMeasurementDocument> buildStackMeasurements(
+  private List<PreInfoDoc.StackMeasurementDoc> buildStackMeasurements(
       MeasurementSnapshot s
   ) {
-    List<PreInfoDocument.StackMeasurementDocument> items = new ArrayList<>();
+    List<PreInfoDoc.StackMeasurementDoc> items = new ArrayList<>();
     
     for (StackMeasurement sm : safeList(s.measurements())) {
       
@@ -79,7 +76,7 @@ public class MeasurementDocumentFactory {
       }
       
       items.add(
-          PreInfoDocument.StackMeasurementDocument.builder()
+          PreInfoDoc.StackMeasurementDoc.builder()
               .stackMeasurementId(sm.getId())
               .pollutantId(sm.getPollutant().getId())
               .pollutantNameKr(safe(sm.getPollutant().getNameKr()))
@@ -93,17 +90,57 @@ public class MeasurementDocumentFactory {
     return items;
   }
   
+  private EquipmentDoc buildEquipment(MeasurementSnapshot s) {
+    return EquipmentDoc.builder()
+        .particularEquipment(buildParticularEquipment(s))
+        .pitotTube(buildPitotTube(s))
+        .build();
+  }
   
-  private ClientDocument buildClient(PlanCreateD plan, MeasurementSnapshot s) {
-    return ClientDocument.builder()
+  private EquipmentDoc.ParticularEquipmentDoc buildParticularEquipment(MeasurementSnapshot s) {
+    return EquipmentDoc.ParticularEquipmentDoc.builder()
+        .particularEquipmentId(s.equipment().getId())
+        .modelName(s.equipment().getModelName())
+        .equipmentName(s.equipment().getEquipmentName())
+        .deltaH(s.equipment().getDh())
+        .Yd(s.equipment().getYd())
+        .build();
+  }
+  
+  private EquipmentDoc.PitotTubeDoc buildPitotTube(MeasurementSnapshot s) {
+    return EquipmentDoc.PitotTubeDoc.builder()
+        .pitotTubeId(s.pitotTube().getId())
+        .modelName(s.pitotTube().getModelName())
+        .equipmentName(s.pitotTube().getEquipmentName())
+        .coefficients(buildCoefficientList(s))
+        .build();
+  }
+  
+  private List<EquipmentDoc.PitotTubeDoc.CoefficientDoc> buildCoefficientList(MeasurementSnapshot s) {
+    List<EquipmentDoc.PitotTubeDoc.CoefficientDoc> list = new ArrayList<>();
+    for (PitotTubeCoefficient coefficient : safeList(s.pitotTube().getPitotTubeCoefficientList())) {
+      list.add(
+          EquipmentDoc.PitotTubeDoc.CoefficientDoc.builder()
+              .coefficientId(coefficient.getId())
+              .velocity(coefficient.getVelocity())
+              .coefficient(coefficient.getCoefficient())
+              .build()
+      );
+    }
+    
+    return list;
+  }
+  
+  private ClientDoc buildClient(MeasurementSnapshot s) {
+    return ClientDoc.builder()
         .company(buildCompany(s))
         .stack(buildStack(s))
         .preventions(buildPrevention(s))
         .build();
   }
   
-  private ClientDocument.CompanyDocument buildCompany(MeasurementSnapshot s) {
-    return ClientDocument.CompanyDocument.builder()
+  private ClientDoc.CompanyDoc buildCompany(MeasurementSnapshot s) {
+    return ClientDoc.CompanyDoc.builder()
         .companyId(s.company().getId())
         .companyName(safe(s.company().getName()))
         .workplaceId(s.workplace().getId())
@@ -116,8 +153,8 @@ public class MeasurementDocumentFactory {
         .build();
   }
   
-  private ClientDocument.StackDocument buildStack(MeasurementSnapshot s) {
-    return ClientDocument.StackDocument.builder()
+  private ClientDoc.StackDoc buildStack(MeasurementSnapshot s) {
+    return ClientDoc.StackDoc.builder()
         .stackId(s.stack().getId())
         .name(s.stack().getName())
         .semsNumber(s.stack().getSemsNumber())
@@ -131,12 +168,12 @@ public class MeasurementDocumentFactory {
         .build();
   }
   
-  private List<ClientDocument.PreventionDocument> buildPrevention(MeasurementSnapshot s) {
-    List<ClientDocument.PreventionDocument> docs = new ArrayList<>();
+  private List<ClientDoc.PreventionDoc> buildPrevention(MeasurementSnapshot s) {
+    List<ClientDoc.PreventionDoc> docs = new ArrayList<>();
     
     for (Prevention p : safeList(s.preventions())) {
       docs.add(
-          ClientDocument.PreventionDocument.builder()
+          ClientDoc.PreventionDoc.builder()
               .preventionId(p.getId())
               .name(safe(p.getName()))
               .facilities(buildFacilities(p))
@@ -148,12 +185,12 @@ public class MeasurementDocumentFactory {
     return docs;
   }
   
-  private List<ClientDocument.FacilityDocument> buildFacilities(Prevention p) {
-    List<ClientDocument.FacilityDocument> facilities = new ArrayList<>();
+  private List<ClientDoc.FacilityDoc> buildFacilities(Prevention p) {
+    List<ClientDoc.FacilityDoc> facilities = new ArrayList<>();
     
     for (Facility f : safeList(p.getFacilities())) {
       facilities.add(
-          ClientDocument.FacilityDocument.builder()
+          ClientDoc.FacilityDoc.builder()
               .facilityId(f.getId())
               .name(safe(f.getName()))
               .fuelUsage(safe(f.getFuelUsage()))
@@ -167,12 +204,12 @@ public class MeasurementDocumentFactory {
     return facilities;
   }
   
-  private List<ClientDocument.TargetDocument> buildTargets(Prevention p) {
-    List<ClientDocument.TargetDocument> targets = new ArrayList<>();
+  private List<ClientDoc.TargetDoc> buildTargets(Prevention p) {
+    List<ClientDoc.TargetDoc> targets = new ArrayList<>();
     
     for (Target t : safeList(p.getTargets())) {
       targets.add(
-          ClientDocument.TargetDocument.builder()
+          ClientDoc.TargetDoc.builder()
               .targetId(t.getId())
               .targetSubstance(safe(t.getTargetSubstance()))
               .removalEfficiency(t.getRemovalEfficiency())

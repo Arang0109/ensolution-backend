@@ -9,14 +9,14 @@ import java.util.List;
 
 @Getter
 @Builder(toBuilder = true)
-public class ExhaustGasDocument {
+public class ExhaustGasDoc {
   private List<BigDecimal> o2Concentration;
   private List<BigDecimal> co2Concentration;
   private List<BigDecimal> coConcentration;
   private List<BigDecimal> noxConcentration;
   private List<BigDecimal> soxConcentration;
   
-  public ExhaustGasDocument normalize() {
+  public ExhaustGasDoc normalize() {
     return this.toBuilder()
         .o2Concentration(scale(o2Concentration))
         .co2Concentration(scale(co2Concentration))
@@ -26,7 +26,7 @@ public class ExhaustGasDocument {
         .build();
   }
   
-  public void merge(ExhaustGasDocument source) {
+  public void merge(ExhaustGasDoc source) {
     if (source == null) return;
     
     if (source.o2Concentration != null)

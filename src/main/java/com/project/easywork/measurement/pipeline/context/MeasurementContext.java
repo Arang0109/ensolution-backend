@@ -1,8 +1,7 @@
 package com.project.easywork.measurement.pipeline.context;
 
 import com.project.easywork.measurement.pipeline.domain.Measurement;
-import com.project.easywork.measurement.dto.document.result.MeasurementResultDocument;
-import lombok.AllArgsConstructor;
+import com.project.easywork.measurement.dto.document.result.MeasurementResultDoc;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -30,7 +29,7 @@ public class MeasurementContext {
   private Integer measurementPointCnt;
   private List<BigDecimal> circularAxisCoords;
   
-  private MeasurementResultDocument result;
+  private MeasurementResultDoc result;
   
   // 추가로 필요한 값들 계속 확장 가능
   public MeasurementContext(Measurement domain) {

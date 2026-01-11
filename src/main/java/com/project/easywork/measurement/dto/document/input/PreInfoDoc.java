@@ -15,42 +15,37 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class PreInfoDocument {
+public class PreInfoDoc {
   private LocalDate measureDate;
   private String measurementType;
   private String teamName;
   private String vehicleNumber;
   private List<String> engineers;
   
-  private List<StackMeasurementDocument> measurementItems;
+  private List<StackMeasurementDoc> measurementItems;
   
-  private String particularEquipmentName;
-  private String pitotTubeName;
-  
-  public void addMeasurementItems(List<StackMeasurementDocument> items) {
+  public void addMeasurementItems(List<StackMeasurementDoc> items) {
     if (this.measurementItems == null) {
       this.measurementItems = new ArrayList<>();
     }
     this.measurementItems.addAll(items);
   }
   
-  public void merge(PreInfoDocument doc) {
+  public void merge(PreInfoDoc doc) {
     if (doc.measureDate != null) this.measureDate = doc.measureDate;
     if (doc.measurementType != null) this.measurementType = doc.measurementType;
     if (doc.teamName != null) this.teamName = doc.teamName;
     if (doc.vehicleNumber != null) this.vehicleNumber = doc.vehicleNumber;
     if (doc.engineers != null) this.engineers = doc.engineers;
-    if (doc.particularEquipmentName != null) this.particularEquipmentName = doc.particularEquipmentName;
-    if (doc.pitotTubeName != null) this.pitotTubeName = doc.pitotTubeName;
   }
   
-  public void replaceMeasurementItems(List<StackMeasurementDocument> items) {
+  public void replaceMeasurementItems(List<StackMeasurementDoc> items) {
     this.measurementItems = new ArrayList<>(items);
   }
   
   @Getter
   @Builder
-  public static class StackMeasurementDocument {
+  public static class StackMeasurementDoc {
     private Long stackMeasurementId;
     private Long pollutantId;
     private String pollutantNameKr;

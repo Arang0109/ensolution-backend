@@ -1,6 +1,6 @@
 package com.project.easywork.measurement.service_data.impl;
 
-import com.project.easywork.measurement.dto.document.MeasurementDocument;
+import com.project.easywork.measurement.dto.document.MeasurementDoc;
 import com.project.easywork.measurement.repository.MeasurementRepository;
 import com.project.easywork.measurement.service_data.IMeasurementDataService;
 import lombok.RequiredArgsConstructor;
@@ -13,21 +13,21 @@ public class MeasurementDataService implements IMeasurementDataService {
   private final MeasurementRepository measurementRepository;
   
   @Override
-  public MeasurementDocument findById(String objectId) {
+  public MeasurementDoc findById(String objectId) {
     return measurementRepository.findById(objectId).orElseThrow(
         () -> new IllegalArgumentException("Measurement not found")
     );
   }
   
   @Override
-  public MeasurementDocument findByPlanId(Long planId) {
+  public MeasurementDoc findByPlanId(Long planId) {
     return measurementRepository.findByPlanId(planId).orElseThrow(
         () -> new IllegalArgumentException("Measurement not found")
     );
   }
   
   @Override
-  public MeasurementDocument save(MeasurementDocument doc) {
+  public MeasurementDoc save(MeasurementDoc doc) {
     return measurementRepository.save(doc);
   }
   

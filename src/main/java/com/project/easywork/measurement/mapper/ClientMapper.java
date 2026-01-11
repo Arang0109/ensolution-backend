@@ -1,17 +1,17 @@
 package com.project.easywork.measurement.mapper;
 
-import com.project.easywork.measurement.dto.command.ClientCommandDto;
-import com.project.easywork.measurement.dto.document.input.ClientDocument;
+import com.project.easywork.measurement.dto.command.ClientCommandD;
+import com.project.easywork.measurement.dto.document.input.ClientDoc;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public interface ClientMapper {
-  ClientDocument toDocument(ClientCommandDto dto);
+  ClientDoc toDocument(ClientCommandD dto);
   
-  ClientDocument.CompanyDocument toDocument(ClientCommandDto.PreInfoCompany company);
-  ClientDocument.StackDocument toDocument(ClientCommandDto.PreInfoStack stack);
-  ClientDocument.PreventionDocument toDocument(ClientCommandDto.PreInfoPrevention prevention);
-  ClientDocument.FacilityDocument toDocument(ClientCommandDto.PreInfoFacility facility);
-  ClientDocument.TargetDocument toDocument(ClientCommandDto.PreInfoTarget target);
+  ClientDoc.CompanyDoc toDocument(ClientCommandD.Company company);
+  ClientDoc.StackDoc toDocument(ClientCommandD.Stack stack);
+  ClientDoc.PreventionDoc toDocument(ClientCommandD.Prevention prevention);
+  ClientDoc.FacilityDoc toDocument(ClientCommandD.Facility facility);
+  ClientDoc.TargetDoc toDocument(ClientCommandD.Target target);
 }
 

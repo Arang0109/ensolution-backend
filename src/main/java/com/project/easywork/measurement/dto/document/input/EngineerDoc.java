@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @Builder
-public class EngineerDocument {
+public class EngineerDoc {
   
   private String weatherCondition;
 }

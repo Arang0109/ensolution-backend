@@ -1,13 +1,13 @@
 package com.project.easywork.measurement.mapper;
 
-import com.project.easywork.measurement.dto.command.WeatherCommandDto;
-import com.project.easywork.measurement.dto.document.input.WeatherDocument;
+import com.project.easywork.measurement.dto.command.WeatherCommandD;
+import com.project.easywork.measurement.dto.document.input.WeatherDoc;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public interface WeatherMapper {
-  WeatherDocument toDocument(WeatherCommandDto dto);
+  WeatherDoc toDocument(WeatherCommandD dto);
   
-  WeatherDocument.WeatherPressureDocument toDocument(WeatherCommandDto.WeatherPressure pressure);
+  WeatherDoc.WeatherPressureDocument toDocument(WeatherCommandD.WeatherPressure pressure);
 }
 

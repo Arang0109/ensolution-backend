@@ -5,7 +5,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.math.BigDecimal;
 import java.util.List;
 
-public record ExhaustGasCommandDto(
+public record ExhaustGasCommandD(
     
     @Schema(description = "산소농도(%)", example = "[20.9, 20.8, 20.9]")
     List<BigDecimal> o2Concentration,

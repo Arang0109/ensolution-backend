@@ -1,11 +1,8 @@
 package com.project.easywork.measurement.service.impl;
 
-import com.project.easywork.measurement.dto.MeasurementDraftUpdateCommandDto;
-import com.project.easywork.measurement.dto.document.MeasurementDocument;
-import com.project.easywork.measurement.dto.document.input.ExhaustGasDocument;
-import com.project.easywork.measurement.dto.document.input.MoistureDocument;
-import com.project.easywork.measurement.dto.document.input.PreInfoDocument;
-import com.project.easywork.measurement.dto.document.input.WeatherDocument;
+import com.project.easywork.measurement.dto.DraftUpdateCommandD;
+import com.project.easywork.measurement.dto.document.MeasurementDoc;
+import com.project.easywork.measurement.dto.document.input.*;
 import com.project.easywork.measurement.mapper.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -15,21 +12,21 @@ import org.springframework.stereotype.Component;
 public class MeasurementDraftUpdater {
   
   private final PreInfoMapper preInfoMapper;
-  private final ClientMapper clientMapper;
+  private final EquipmentDocMapper equipmentDocMapper;
   private final WeatherMapper weatherMapper;
   private final MoistureMapper moistureMapper;
   private final ExhaustGasMapper exhaustGasMapper;
   
   public void updateDraft(
-      MeasurementDocument doc,
-      MeasurementDraftUpdateCommandDto request
+      MeasurementDoc doc,
+      DraftUpdateCommandD request
   ) {
     if (!doc.isDraft()) {
       throw new IllegalStateException("Draft 상태만 수정 가능");
     }
     
     if (request.preInfo() != null) {
-      PreInfoDocument newDoc = preInfoMapper.toDocument(request.preInfo());
+      PreInfoDoc newDoc = preInfoMapper.toDocument(request.preInfo());
       
       if (doc.getPreInfo() == null) {
         doc.updatePreInfo(newDoc);   // 최초 생성
@@ -38,8 +35,18 @@ public class MeasurementDraftUpdater {
       }
     }
     
+    if (request.equipment() != null) {
+      EquipmentDoc newDoc = equipmentDocMapper.toDocument(request.equipment());
+      
+      if (doc.getEquipment() == null) {
+        doc.updateEquipment(newDoc);
+      } else {
+        doc.getEquipment().merge(newDoc);
+      }
+    }
+    
     if (request.weather() != null) {
-      WeatherDocument newDoc = weatherMapper
+      WeatherDoc newDoc = weatherMapper
           .toDocument(request.weather())
           .normalize();
       
@@ -51,7 +58,7 @@ public class MeasurementDraftUpdater {
     }
     
     if (request.moisture() != null) {
-      MoistureDocument newDoc = moistureMapper
+      MoistureDoc newDoc = moistureMapper
           .toDocument(request.moisture())
           .normalize();
       
@@ -63,7 +70,7 @@ public class MeasurementDraftUpdater {
     }
     
     if (request.exhaustGas() != null) {
-      ExhaustGasDocument newDoc = exhaustGasMapper
+      ExhaustGasDoc newDoc = exhaustGasMapper
           .toDocument(request.exhaustGas())
           .normalize();
       

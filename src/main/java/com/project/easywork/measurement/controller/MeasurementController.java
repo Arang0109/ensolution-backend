@@ -1,8 +1,8 @@
 package com.project.easywork.measurement.controller;
 
 import com.project.easywork.common.api.ApiResponse;
-import com.project.easywork.measurement.dto.MeasurementDraftUpdateCommandDto;
-import com.project.easywork.measurement.dto.command.MeasurementCommandDto;
+import com.project.easywork.measurement.dto.DraftUpdateCommandD;
+import com.project.easywork.measurement.dto.command.MeasurementCommandD;
 import com.project.easywork.measurement.service.IMeasurementService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -24,7 +24,7 @@ public class MeasurementController {
   @PutMapping("/{planId}/draft")
   public ResponseEntity<ApiResponse<Void>> updateDraft(
       @PathVariable Long planId,
-      @RequestBody MeasurementDraftUpdateCommandDto request
+      @RequestBody DraftUpdateCommandD request
   ) {
     measurementService.updateDraft(planId, request);
     return ResponseEntity.ok().body(ApiResponse.success());
@@ -34,7 +34,7 @@ public class MeasurementController {
   @PostMapping("/{planId}/completed")
   public ResponseEntity<ApiResponse<Void>> saveDocument(
       @PathVariable Long planId,
-      @RequestBody MeasurementCommandDto request
+      @RequestBody MeasurementCommandD request
   ) {
     measurementService.saveDocument(planId, request);
     return ResponseEntity.ok().body(ApiResponse.success());

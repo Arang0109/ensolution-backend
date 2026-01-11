@@ -4,21 +4,24 @@ import com.project.easywork.measurement.dto.command.*;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 @Schema(description = "측정 임시저장(초안) 업데이트 요청 DTO")
-public record MeasurementDraftUpdateCommandDto(
+public record DraftUpdateCommandD(
     
-    @Schema(description = "기초 정보")
-    PreInfoCommandDto preInfo,
+    @Schema(description = "측정계획 정보")
+    PreInfoCommandD preInfo,
+    
+    @Schema(description = "측정장비 정보")
+    EquipmentCommandD equipment,
     
     @Schema(description = "의뢰기관 정보")
-    ClientCommandDto client,
+    ClientCommandD client,
     
     @Schema(description = "기상 정보")
-    WeatherCommandDto weather,
+    WeatherCommandD weather,
     
     @Schema(description = "수분 정보")
-    MoistureCommandDto moisture,
+    MoistureCommandD moisture,
     
     @Schema(description = "배출가스 정보")
-    ExhaustGasCommandDto exhaustGas
+    ExhaustGasCommandD exhaustGas
 
 ) {}

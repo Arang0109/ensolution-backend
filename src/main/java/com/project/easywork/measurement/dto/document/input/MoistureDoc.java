@@ -10,7 +10,7 @@ import java.math.RoundingMode;
 
 @Getter
 @Builder(toBuilder = true)
-public class MoistureDocument {
+public class MoistureDoc {
   
   private WeightDocument weight;
   private GasMeterTemperatureDocument gasMeterTemperature;
@@ -25,7 +25,7 @@ public class MoistureDocument {
   /**
    * Mongo 저장 전 자릿수 정규화
    */
-  public MoistureDocument normalize() {
+  public MoistureDoc normalize() {
     return this.toBuilder()
         .suctionVelocity(scale(suctionVelocity, 1))
         .gasMeterGaugePressure(scale(gasMeterGaugePressure, 1))
@@ -39,7 +39,7 @@ public class MoistureDocument {
     return value == null ? null : value.setScale(scale, RoundingMode.HALF_UP);
   }
   
-  public void merge(MoistureDocument source) {
+  public void merge(MoistureDoc source) {
     if (source == null) return;
     
     if (source.weight != null) {

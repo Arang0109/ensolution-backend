@@ -5,7 +5,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.math.BigDecimal;
 
 @Schema(description = "수분 정보 입력 DTO")
-public record MoistureCommandDto(
+public record MoistureCommandD(
     
     @Schema(description = "흡습병 무게(g)")
     Weight weight,

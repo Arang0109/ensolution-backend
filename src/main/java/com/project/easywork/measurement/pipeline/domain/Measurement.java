@@ -9,5 +9,5 @@ import lombok.Getter;
 @Getter
 @Builder
 public class Measurement {
-  private final MeasurementCommandDto measurement;
+  private final MeasurementCommandD measurement;
 }

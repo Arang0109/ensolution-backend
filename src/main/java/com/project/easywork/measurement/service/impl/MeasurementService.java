@@ -1,9 +1,9 @@
 package com.project.easywork.measurement.service.impl;
 
-import com.project.easywork.measurement.dto.document.result.MeasurementResultDocument;
-import com.project.easywork.measurement.dto.MeasurementDraftUpdateCommandDto;
-import com.project.easywork.measurement.dto.command.MeasurementCommandDto;
-import com.project.easywork.measurement.dto.document.MeasurementDocument;
+import com.project.easywork.measurement.dto.document.result.MeasurementResultDoc;
+import com.project.easywork.measurement.dto.DraftUpdateCommandD;
+import com.project.easywork.measurement.dto.command.MeasurementCommandD;
+import com.project.easywork.measurement.dto.document.MeasurementDoc;
 import com.project.easywork.measurement.service.IMeasurementQueryService;
 import com.project.easywork.measurement.service.IMeasurementService;
 import com.project.easywork.measurement.service_data.IMeasurementDataService;
@@ -27,7 +27,7 @@ public class MeasurementService implements IMeasurementService {
   @Override
   public void createDraft(Long planId, PlanCreateBundleD dto) {
     
-    MeasurementDocument doc = documentFactory.createDraft(
+    MeasurementDoc doc = documentFactory.createDraft(
         planId,
         dto.getPlan(),
         measurementQueryService.loadSnapshot(dto)
@@ -36,8 +36,8 @@ public class MeasurementService implements IMeasurementService {
   }
   
   @Override
-  public void updateDraft(Long planId, MeasurementDraftUpdateCommandDto request) {
-    MeasurementDocument document = measurementDataService.findByPlanId(planId);
+  public void updateDraft(Long planId, DraftUpdateCommandD request) {
+    MeasurementDoc document = measurementDataService.findByPlanId(planId);
     draftUpdater.updateDraft(document, request);
     measurementDataService.save(document);
   }
@@ -48,11 +48,11 @@ public class MeasurementService implements IMeasurementService {
   }
   
   @Override
-  public void saveDocument(Long planId, MeasurementCommandDto dto) {
+  public void saveDocument(Long planId, MeasurementCommandD dto) {
     
-    MeasurementDocument doc = measurementDataService.findByPlanId(planId);
+    MeasurementDoc doc = measurementDataService.findByPlanId(planId);
     
-    MeasurementResultDocument result =
+    MeasurementResultDoc result =
         resultProcessor.process(dto);
     
     doc.complete(result);
