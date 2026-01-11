@@ -12,6 +12,7 @@ import com.project.easywork.measurement.dto.document.MeasurementDoc;
 import com.project.easywork.measurement.service.IMeasurementQueryService;
 import com.project.easywork.measurement.service.IMeasurementService;
 import com.project.easywork.measurement.service_data.IMeasurementDataService;
+import com.project.easywork.measurement.util.MeasurementPointCalculator;
 import com.project.easywork.plan.domain.dto.PlanCreateBundleD;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -33,6 +34,7 @@ public class MeasurementService implements IMeasurementService {
   private final MeasurementDocumentFactory documentFactory;
   private final MeasurementDraftUpdater draftUpdater;
   private final MeasurementResultProcessor resultProcessor;
+  private final MeasurementPointCalculator measurementPointCalculator;
   
   @Override
   public void createDraft(Long planId, PlanCreateBundleD dto) {
@@ -49,6 +51,15 @@ public class MeasurementService implements IMeasurementService {
   public void updateDraft(Long planId, DraftUpdateCommandD request) {
     MeasurementDoc document = measurementDataService.findByPlanId(planId);
     draftUpdater.updateDraft(document, request);
+    
+    document.changeMeasurementPointCnt(
+        measurementPointCalculator.calculate(
+            request.client().stack().shape(),
+            request.client().stack().horizontalLength(),
+            request.client().stack().verticalLength()
+        )
+    );
+    
     measurementDataService.save(document);
   }
   

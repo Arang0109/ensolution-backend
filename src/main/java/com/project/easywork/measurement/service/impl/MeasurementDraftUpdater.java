@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class MeasurementDraftUpdater {
   
+  private final ClientMapper clientMapper;
   private final WeatherMapper weatherMapper;
   private final MoistureMapper moistureMapper;
   private final ExhaustGasMapper exhaustGasMapper;
@@ -21,6 +22,17 @@ public class MeasurementDraftUpdater {
   ) {
     if (!doc.isDraft()) {
       throw new IllegalStateException("Draft 상태만 수정 가능");
+    }
+    
+    if (request.client() != null) {
+      ClientDoc newDoc = clientMapper
+          .toDocument(request.client())
+          .normalize();
+      if (doc.getClient() == null) {
+        doc.updateClient(newDoc);
+      } else {
+        doc.getClient().merge(newDoc);
+      }
     }
     
     if (request.weather() != null) {

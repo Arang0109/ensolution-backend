@@ -1,5 +1,6 @@
 package com.project.easywork.measurement.service.impl;
 
+import com.project.easywork.client.domain.Shape;
 import com.project.easywork.client.domain.persistance.*;
 import com.project.easywork.common.util.measurePoint.MeasurePointStrategy;
 import com.project.easywork.common.util.measurePoint.MeasurePointStrategyFactory;
@@ -10,6 +11,7 @@ import com.project.easywork.measurement.dto.document.input.ClientDoc;
 import com.project.easywork.measurement.dto.document.input.EquipmentDoc;
 import com.project.easywork.measurement.dto.document.input.PreInfoDoc;
 import com.project.easywork.measurement.dto.snapshot.MeasurementSnapshot;
+import com.project.easywork.measurement.util.MeasurementPointCalculator;
 import com.project.easywork.plan.domain.dto.PlanCreateD;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -21,27 +23,22 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MeasurementDocumentFactory {
   
+  private final MeasurementPointCalculator measurementPointCalculator;
+  
   public MeasurementDoc createDraft(Long planId, PlanCreateD plan, MeasurementSnapshot s) {
   
     return MeasurementDoc.builder()
         .planId(planId)
         .status(MeasurementStatus.DRAFT)
-        .measurementPointCnt(calMeasurementPointCnt(s))
+        .measurementPointCnt(measurementPointCalculator.calculate(
+            s.stack().getShape(),
+            s.stack().getHorizontalLength(),
+            s.stack().getVerticalLength()
+        ))
         .preInfo(buildPreInfo(plan, s))
         .equipment(buildEquipment(s))
         .client(buildClient(s))
         .build();
-  }
-  
-  private Integer calMeasurementPointCnt(MeasurementSnapshot s) {
-    MeasurePointStrategy strategy = MeasurePointStrategyFactory.of(
-        s.stack().getShape().toString()
-    );
-    
-    return strategy.calculate(
-        s.stack().getHorizontalLength(),
-        s.stack().getVerticalLength()
-    );
   }
   
   private PreInfoDoc buildPreInfo(PlanCreateD plan, MeasurementSnapshot s) {
@@ -61,6 +58,7 @@ public class MeasurementDocumentFactory {
         .vehicleNumber(safe(s.vehicleNumber()))
         .engineers(engineers)
         .measurementItems(buildStackMeasurements(s))
+        .simplifiedMeasurement(true)
         .build();
   }
   

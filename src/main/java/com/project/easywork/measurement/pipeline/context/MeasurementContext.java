@@ -29,6 +29,9 @@ public class MeasurementContext {
   private Integer measurementPointCnt;
   private List<BigDecimal> circularAxisCoords;
   
+  private BigDecimal gasVelocity;
+  private BigDecimal pitotTubeCoefficient;
+  
   private MeasurementResultDoc result;
   
   // 추가로 필요한 값들 계속 확장 가능

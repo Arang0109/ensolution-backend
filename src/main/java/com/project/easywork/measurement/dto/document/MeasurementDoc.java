@@ -60,19 +60,15 @@ public class MeasurementDoc {
     this.preInfo.replaceMeasurementItems(items);
   }
   
-  public void updatePreInfo(PreInfoDoc preInfo) {
-    if (this.preInfo == null) {
-      this.preInfo = preInfo;
-    } else {
-      this.preInfo.merge(preInfo);
-    }
+  public void changeMeasurementPointCnt(int cnt) {
+    this.measurementPointCnt = cnt;
   }
   
-  public void changeEquipment(EquipmentDoc equipment) {
-    if (this.equipment == null) {
-      this.equipment = equipment;
+  public void updateClient(ClientDoc client) {
+    if (this.client == null) {
+      this.client = client;
     } else {
-      this.equipment.merge(equipment);
+      this.client.merge(client);
     }
   }
   

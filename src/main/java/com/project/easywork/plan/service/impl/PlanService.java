@@ -2,8 +2,11 @@ package com.project.easywork.plan.service.impl;
 
 import com.project.easywork.agency.domain.entity.Team;
 import com.project.easywork.client.domain.dto.stack.MeasurementHistoryD;
+import com.project.easywork.client.domain.dto.stack.StackD;
+import com.project.easywork.client.domain.dto.stack.StackUpdateD;
 import com.project.easywork.client.domain.persistance.Stack;
 import com.project.easywork.client.domain.persistance.StackMeasurement;
+import com.project.easywork.client.service.IStackService;
 import com.project.easywork.client.service_data.IStackMeasurementDataService;
 import com.project.easywork.common.resolver.DomainEntityResolver;
 import com.project.easywork.equipment.domain.persistance.Equipment;
@@ -12,10 +15,12 @@ import com.project.easywork.equipment.domain.persistance.PitotTubeCoefficient;
 import com.project.easywork.equipment.service_data.IEquipmentDataService;
 import com.project.easywork.equipment.service_data.IPitotTubeDataService;
 import com.project.easywork.measurement.dto.document.MeasurementDoc;
+import com.project.easywork.measurement.dto.document.input.ClientDoc;
 import com.project.easywork.measurement.dto.document.input.EquipmentDoc;
 import com.project.easywork.measurement.dto.document.input.PreInfoDoc;
 import com.project.easywork.measurement.service.IMeasurementService;
 import com.project.easywork.measurement.service_data.IMeasurementDataService;
+import com.project.easywork.measurement.util.MeasurementPointCalculator;
 import com.project.easywork.plan.domain.dto.*;
 import com.project.easywork.plan.domain.persistance.Plan;
 import com.project.easywork.plan.mapper.PlanMapper;
@@ -37,11 +42,11 @@ public class PlanService implements IPlanService {
   private final IPlanDataService planDataService;
   private final IMeasurementDataService measurementDataService;
   private final IStackMeasurementDataService stackMeasurementDataService;
+  
   private final PlanMapper planMapper;
   
   private final IPlanMeasurementService scheduleMeasurementService;
   private final IMeasurementService measurementService;
-  
   
   private final DomainEntityResolver domainEntityResolver;
   

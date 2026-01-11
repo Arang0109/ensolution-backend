@@ -5,10 +5,7 @@ import com.project.easywork.measurement.dto.document.result.MeasurementResultDoc
 import com.project.easywork.measurement.pipeline.MeasurementPipeline;
 import com.project.easywork.measurement.pipeline.context.MeasurementContext;
 import com.project.easywork.measurement.pipeline.domain.Measurement;
-import com.project.easywork.measurement.pipeline.step.GasDensityCalculateStep;
-import com.project.easywork.measurement.pipeline.step.MoistureCalculateStep;
-import com.project.easywork.measurement.pipeline.step.PressureConvertStep;
-import com.project.easywork.measurement.pipeline.step.ResultBuildStep;
+import com.project.easywork.measurement.pipeline.step.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -27,6 +24,7 @@ public class MeasurementResultProcessor {
         .addStep(new PressureConvertStep())
         .addStep(new MoistureCalculateStep())
         .addStep(new GasDensityCalculateStep())
+        .addStep(new MeasurementPointStep())
         .addStep(new ResultBuildStep());
     
     pipeline.execute(context);
