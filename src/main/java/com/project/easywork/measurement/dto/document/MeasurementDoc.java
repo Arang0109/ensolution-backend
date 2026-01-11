@@ -46,13 +46,6 @@ public class MeasurementDoc {
   @LastModifiedDate
   private LocalDateTime updatedAt;
   
-  public void addMeasurementItems(List<PreInfoDoc.StackMeasurementDoc> items) {
-    if (this.preInfo == null) {
-      throw new IllegalStateException("PreInfoDocument가 먼저 생성되어야 합니다.");
-    }
-    this.preInfo.addMeasurementItems(items);
-  }
-  
   public void replaceMeasurementItems(List<PreInfoDoc.StackMeasurementDoc> items) {
     if (this.preInfo == null) {
       throw new IllegalStateException("PreInfoDocument가 먼저 생성되어야 합니다.");

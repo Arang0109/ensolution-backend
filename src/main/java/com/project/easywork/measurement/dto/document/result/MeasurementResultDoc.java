@@ -11,8 +11,6 @@ import java.math.RoundingMode;
 public class MeasurementResultDoc {
   
   private BigDecimal atmospherePressure;
-  private BigDecimal staticPressure;
-  private BigDecimal dynamicPressure;
   private BigDecimal gasMeterGaugePressure;
   
   private BigDecimal moistureRatio;
@@ -22,8 +20,6 @@ public class MeasurementResultDoc {
   public MeasurementResultDoc normalize() {
     return this.toBuilder()
         .atmospherePressure(scale(atmospherePressure, 1))
-        .staticPressure(scale(staticPressure, 1))
-        .dynamicPressure(scale(dynamicPressure, 1))
         .gasMeterGaugePressure(scale(gasMeterGaugePressure, 3))
         .moistureRatio(scale(moistureRatio, 2))
         .gasDensity(scale(gasDensity, 3))

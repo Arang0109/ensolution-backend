@@ -29,7 +29,7 @@ public class MeasurementPointCalculator {
       }
       
       case CIRCULAR -> {
-        if (horizontal == null) { // 지름 하나만 있으면 됨
+        if (horizontal == null) {
           return 1;
         }
         
