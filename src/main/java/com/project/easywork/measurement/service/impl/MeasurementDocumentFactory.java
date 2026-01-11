@@ -11,11 +11,11 @@ import com.project.easywork.measurement.dto.document.input.ClientDoc;
 import com.project.easywork.measurement.dto.document.input.EquipmentDoc;
 import com.project.easywork.measurement.dto.document.input.PreInfoDoc;
 import com.project.easywork.measurement.dto.snapshot.MeasurementSnapshot;
+import com.project.easywork.measurement.util.MeasurementPointCalculator;
 import com.project.easywork.plan.domain.dto.PlanCreateD;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,56 +23,22 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MeasurementDocumentFactory {
   
+  private final MeasurementPointCalculator measurementPointCalculator;
+  
   public MeasurementDoc createDraft(Long planId, PlanCreateD plan, MeasurementSnapshot s) {
   
     return MeasurementDoc.builder()
         .planId(planId)
         .status(MeasurementStatus.DRAFT)
-        .measurementPointCnt(calMeasurementPointCnt(s))
+        .measurementPointCnt(measurementPointCalculator.calculate(
+            s.stack().getShape(),
+            s.stack().getHorizontalLength(),
+            s.stack().getVerticalLength()
+        ))
         .preInfo(buildPreInfo(plan, s))
         .equipment(buildEquipment(s))
         .client(buildClient(s))
         .build();
-  }
-  
-  private Integer calMeasurementPointCnt(MeasurementSnapshot s) {
-    Shape stackShape = s.stack().getShape();
-    BigDecimal horizontal = s.stack().getHorizontalLength();
-    BigDecimal vertical   = s.stack().getVerticalLength();
-    
-    // Draft 단계 기본값
-    if (stackShape == null || stackShape == Shape.OTHER) {
-      return 1;
-    }
-    
-    MeasurePointStrategy strategy;
-    
-    switch (stackShape) {
-      case RECTANGULAR -> {
-        if (horizontal == null || vertical == null) {
-          return 1;
-        }
-        
-        strategy = MeasurePointStrategyFactory.of("rectangle");
-        return strategy.calculate(horizontal, vertical);
-      }
-      
-      case CIRCULAR -> {
-        if (horizontal == null) { // 지름 하나만 있으면 됨
-          return 1;
-        }
-        
-        strategy = MeasurePointStrategyFactory.of("circular");
-        int point = strategy.calculate(horizontal);
-        
-        // 간소화 규칙 적용
-        return point == 1 ? 1 : point / 4;
-      }
-      
-      default -> {
-        return 1;
-      }
-    }
   }
   
   private PreInfoDoc buildPreInfo(PlanCreateD plan, MeasurementSnapshot s) {
