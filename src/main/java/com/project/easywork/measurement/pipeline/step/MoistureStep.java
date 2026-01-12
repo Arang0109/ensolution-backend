@@ -1,6 +1,10 @@
 package com.project.easywork.measurement.pipeline.step;
 
+import com.project.easywork.common.domain.PressureUnit;
 import com.project.easywork.common.util.GasCalculator;
+import com.project.easywork.common.util.PressureConverter;
+import com.project.easywork.measurement.dto.document.MeasurementDoc;
+import com.project.easywork.measurement.dto.document.input.MoistureDoc;
 import com.project.easywork.measurement.pipeline.domain.Measurement;
 import com.project.easywork.measurement.pipeline.context.MeasurementContext;
 
@@ -12,33 +16,38 @@ import java.math.RoundingMode;
  * | ( ( 22.4 / 18 ) * diffWeight ) /                                                     | * 100
  * | ( diffVolume * ( 273 / 273 + T ) * ( P / 760 ) ) + ( ( 22.4 / 18 ) * diffWeight )    |
  */
-public class MoistureCalculateStep implements MeasurementStep {
+public class MoistureStep implements MeasurementStep {
   
   @Override
   public void execute(MeasurementContext context) {
     
-    Measurement d = context.getDomain();
+    Measurement domain = context.getDomain();
+    
+    MeasurementDoc measurement = domain.getMeasurement();
+    MoistureDoc moisture  = measurement.getMoisture();
     
     // 흡수병 무게 차이
     BigDecimal diffWeight =
-        d.getMeasurement().moisture().weight().after()
-            .subtract(d.getMeasurement().moisture().weight().before());
+        moisture.getWeight().getAfter()
+            .subtract(moisture.getWeight().getBefore());;
     
     // 부피 차이
     BigDecimal diffVolume =
-        d.getMeasurement().moisture().dryGasVolume().after()
-            .subtract(d.getMeasurement().moisture().dryGasVolume().before());
+        moisture.getDryGasVolume().getAfter()
+            .subtract(moisture.getDryGasVolume().getBefore());
     
     // 평균 온도
     BigDecimal avgTemp =
-        d.getMeasurement().moisture().gasMeterTemperature().in()
-            .add(d.getMeasurement().moisture().gasMeterTemperature().out())
+        moisture.getGasMeterTemperature().getIn()
+            .add(moisture.getGasMeterTemperature().getOut())
             .divide(BigDecimal.valueOf(2), 6, RoundingMode.HALF_UP);
     
     // 압력 = 대기압 + 게이지압
     BigDecimal pressure =
-        context.getAtmospherePressure()
-            .add(context.getGasMeterGaugePressure());
+        measurement.getWeather().getConvertedPressure()
+            .add(PressureConverter.toMmHg(
+                moisture.getGasMeterGaugePressure(),
+                PressureUnit.MMH2O));
     
     // 표준 가스 부피
     BigDecimal standardGasVolume =
@@ -60,6 +69,14 @@ public class MoistureCalculateStep implements MeasurementStep {
             .divide(denominator, 6, RoundingMode.HALF_UP)
             .multiply(BigDecimal.valueOf(100));
     
-    context.setMoistureRatio(moistureContent);
+    MoistureDoc updatedMoistureRatio = moisture.toBuilder()
+        .moistureRatio(moistureContent)
+        .build();
+    
+    MeasurementDoc updatedMeasurement = measurement.toBuilder()
+        .moisture(updatedMoistureRatio)
+        .build();
+    
+    domain.updateMeasurement(updatedMeasurement);
   }
 }

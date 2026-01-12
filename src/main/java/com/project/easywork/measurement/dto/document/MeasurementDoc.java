@@ -10,12 +10,13 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Document("measurements")
 @Getter
-@Builder
+@Builder(toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
 public class MeasurementDoc {
@@ -28,6 +29,7 @@ public class MeasurementDoc {
   private MeasurementStatus status;
   
   private Integer measurementPointCnt;
+  private List<BigDecimal> circularAxisCoords;
   
   private PreInfoDoc preInfo;
   private EquipmentDoc equipment;
@@ -38,13 +40,20 @@ public class MeasurementDoc {
   
   private List<MeasurementPointDoc> measurementPoints;
   
-  private MeasurementResultDoc result;
-  
   @CreatedDate
   private LocalDateTime createdAt;
   
   @LastModifiedDate
   private LocalDateTime updatedAt;
+  
+  public MeasurementDoc complete(MeasurementDoc doc) {
+    return this.toBuilder()
+        .weather(doc.weather)
+        .moisture(doc.moisture)
+        .exhaustGas(doc.exhaustGas)
+        .status(MeasurementStatus.COMPLETED)
+        .build();
+  }
   
   public void replaceMeasurementItems(List<PreInfoDoc.StackMeasurementDoc> items) {
     if (this.preInfo == null) {
@@ -57,41 +66,34 @@ public class MeasurementDoc {
     this.measurementPointCnt = cnt;
   }
   
-  public void updateClient(ClientDoc client) {
-    if (this.client == null) {
-      this.client = client;
-    } else {
-      this.client.merge(client);
-    }
+  public MeasurementDoc updateStackInfo(ClientDoc.StackDoc stackInfo) {
+    if (this.client == null) return this;
+    
+    ClientDoc newClient = this.client.toBuilder()
+        .stack(stackInfo)
+        .build();
+    
+    return this.toBuilder()
+        .client(newClient)
+        .build();
   }
   
-  public void updateWeather(WeatherDoc weather) {
-    if (this.weather == null) {
-      this.weather = weather;
-    } else {
-      this.weather.merge(weather);
-    }
+  public MeasurementDoc updateWeather(WeatherDoc weather) {
+    return this.toBuilder()
+        .weather(weather)
+        .build();
   }
   
-  public void updateMoisture(MoistureDoc moisture) {
-    if (this.moisture == null) {
-      this.moisture = moisture;
-    } else {
-      this.moisture.merge(moisture);
-    }
+  public MeasurementDoc updateMoisture(MoistureDoc moisture) {
+    return this.toBuilder()
+        .moisture(moisture)
+        .build();
   }
   
-  public void updateExhaustGas(ExhaustGasDoc exhaustGas) {
-    if (this.exhaustGas == null) {
-      this.exhaustGas = exhaustGas;
-    } else {
-      this.exhaustGas.merge(exhaustGas);
-    }
-  }
-  
-  public void complete(MeasurementResultDoc result) {
-    this.result = result;
-    this.status = MeasurementStatus.COMPLETED;
+  public MeasurementDoc updateExhaustGas(ExhaustGasDoc exhaustGas) {
+    return this.toBuilder()
+        .exhaustGas(exhaustGas)
+        .build();
   }
   
   public boolean isDraft() {

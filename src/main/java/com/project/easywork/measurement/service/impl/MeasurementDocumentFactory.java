@@ -1,5 +1,6 @@
 package com.project.easywork.measurement.service.impl;
 
+import ch.qos.logback.core.net.server.Client;
 import com.project.easywork.client.domain.Shape;
 import com.project.easywork.client.domain.persistance.*;
 import com.project.easywork.common.util.measurePoint.MeasurePointStrategy;
@@ -134,7 +135,8 @@ public class MeasurementDocumentFactory {
         .company(buildCompany(s))
         .stack(buildStack(s))
         .preventions(buildPrevention(s))
-        .build();
+        .build()
+        .normalize();
   }
   
   private ClientDoc.CompanyDoc buildCompany(MeasurementSnapshot s) {

@@ -1,13 +1,14 @@
 package com.project.easywork.measurement.dto;
 
 import com.project.easywork.measurement.dto.command.*;
-import com.project.easywork.measurement.mapper.ClientMapper;
 import io.swagger.v3.oas.annotations.media.Schema;
 
-@Schema(description = "측정 임시저장(초안) 업데이트 요청 DTO")
+import java.util.List;
+
+@Schema(description = "측정 데이터 임시저장 요청 DTO")
 public record DraftUpdateCommandD(
-    @Schema(description = "의뢰기관 정보")
-    ClientCommandD client,
+    @Schema(description = "측정시설 재원 정보")
+    StackInfoCommandD stackInfo,
     
     @Schema(description = "기상 정보")
     WeatherCommandD weather,
@@ -16,5 +17,8 @@ public record DraftUpdateCommandD(
     MoistureCommandD moisture,
     
     @Schema(description = "배출가스 정보")
-    ExhaustGasCommandD exhaustGas
+    ExhaustGasCommandD exhaustGas,
+    
+    @Schema(description = "각 측정점 측정 데이터 정보")
+    List<MeasurementPointCommandD> measurementPointInfo
 ) {}

@@ -24,7 +24,7 @@ public class MeasurementPointCalculator {
           return 1;
         }
         
-        strategy = MeasurePointStrategyFactory.of("rectangle");
+        strategy = MeasurePointStrategyFactory.of("rectangular");
         return strategy.calculate(horizontal, vertical);
       }
       

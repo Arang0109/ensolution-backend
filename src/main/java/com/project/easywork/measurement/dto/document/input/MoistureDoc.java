@@ -16,15 +16,15 @@ public class MoistureDoc {
   private GasMeterTemperatureDocument gasMeterTemperature;
   private DryGasVolumeDocument dryGasVolume;
   
-  @Field(targetType = FieldType.DECIMAL128)
-  private BigDecimal suctionVelocity;        // 예: 소수 3자리
-  
-  @Field(targetType = FieldType.DECIMAL128)
-  private BigDecimal gasMeterGaugePressure;  // 예: 소수 2자리
+  private BigDecimal suctionVelocity;
+  private BigDecimal gasMeterGaugePressure;
   
   /**
-   * Mongo 저장 전 자릿수 정규화
+   * 계산 영역
+   * 수분량 (%)
    */
+  private BigDecimal moistureRatio;
+  
   public MoistureDoc normalize() {
     return this.toBuilder()
         .suctionVelocity(scale(suctionVelocity, 1))
@@ -39,40 +39,40 @@ public class MoistureDoc {
     return value == null ? null : value.setScale(scale, RoundingMode.HALF_UP);
   }
   
-  public void merge(MoistureDoc source) {
-    if (source == null) return;
+  public MoistureDoc merge(MoistureDoc doc) {
+    if (doc == null) return this;
     
-    if (source.weight != null) {
-      if (this.weight == null) {
-        this.weight = source.weight;
-      } else {
-        this.weight = this.weight.merge(source.weight);
-      }
-    }
-    
-    if (source.gasMeterTemperature != null) {
-      if (this.gasMeterTemperature == null) {
-        this.gasMeterTemperature = source.gasMeterTemperature;
-      } else {
-        this.gasMeterTemperature = this.gasMeterTemperature.merge(source.gasMeterTemperature);
-      }
-    }
-    
-    if (source.dryGasVolume != null) {
-      if (this.dryGasVolume == null) {
-        this.dryGasVolume = source.dryGasVolume;
-      } else {
-        this.dryGasVolume = this.dryGasVolume.merge(source.dryGasVolume);
-      }
-    }
-    
-    if (source.suctionVelocity != null) {
-      this.suctionVelocity = source.suctionVelocity;
-    }
-    
-    if (source.gasMeterGaugePressure != null) {
-      this.gasMeterGaugePressure = source.gasMeterGaugePressure;
-    }
+    return this.toBuilder()
+        .weight(
+            doc.weight != null
+                ? (this.weight == null ? doc.weight : this.weight.merge(doc.weight))
+                : this.weight
+        )
+        .gasMeterTemperature(
+            doc.gasMeterTemperature != null
+                ? (this.gasMeterTemperature == null
+                ? doc.gasMeterTemperature
+                : this.gasMeterTemperature.merge(doc.gasMeterTemperature))
+                : this.gasMeterTemperature
+        )
+        .dryGasVolume(
+            doc.dryGasVolume != null
+                ? (this.dryGasVolume == null
+                ? doc.dryGasVolume
+                : this.dryGasVolume.merge(doc.dryGasVolume))
+                : this.dryGasVolume
+        )
+        .suctionVelocity(
+            doc.suctionVelocity != null
+                ? doc.suctionVelocity
+                : this.suctionVelocity
+        )
+        .gasMeterGaugePressure(
+            doc.gasMeterGaugePressure != null
+                ? doc.gasMeterGaugePressure
+                : this.gasMeterGaugePressure
+        )
+        .build();
   }
   
   // ------------------------
@@ -94,12 +94,12 @@ public class MoistureDoc {
           .build();
     }
     
-    public WeightDocument merge(WeightDocument source) {
-      if (source == null) return this;
+    public WeightDocument merge(WeightDocument doc) {
+      if (doc == null) return this;
       
       return this.toBuilder()
-          .before(source.before != null ? source.before : this.before)
-          .after(source.after != null ? source.after : this.after)
+          .before(doc.before != null ? doc.before : this.before)
+          .after(doc.after != null ? doc.after : this.after)
           .build();
     }
   }
@@ -123,12 +123,12 @@ public class MoistureDoc {
           .build();
     }
     
-    public GasMeterTemperatureDocument merge(GasMeterTemperatureDocument source) {
-      if (source == null) return this;
+    public GasMeterTemperatureDocument merge(GasMeterTemperatureDocument doc) {
+      if (doc == null) return this;
       
       return this.toBuilder()
-          .in(source.in != null ? source.in : this.in)
-          .out(source.out != null ? source.out : this.out)
+          .in(doc.in != null ? doc.in : this.in)
+          .out(doc.out != null ? doc.out : this.out)
           .build();
     }
   }
@@ -152,12 +152,12 @@ public class MoistureDoc {
           .build();
     }
     
-    public DryGasVolumeDocument merge(DryGasVolumeDocument source) {
-      if (source == null) return this;
+    public DryGasVolumeDocument merge(DryGasVolumeDocument doc) {
+      if (doc == null) return this;
       
       return this.toBuilder()
-          .before(source.before != null ? source.before : this.before)
-          .after(source.after != null ? source.after : this.after)
+          .before(doc.before != null ? doc.before : this.before)
+          .after(doc.after != null ? doc.after : this.after)
           .build();
     }
   }

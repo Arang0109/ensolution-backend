@@ -26,21 +26,6 @@ public class PreInfoDoc {
   
   private List<StackMeasurementDoc> measurementItems;
   
-  public void addMeasurementItems(List<StackMeasurementDoc> items) {
-    if (this.measurementItems == null) {
-      this.measurementItems = new ArrayList<>();
-    }
-    this.measurementItems.addAll(items);
-  }
-  
-  public void merge(PreInfoDoc doc) {
-    if (doc.measureDate != null) this.measureDate = doc.measureDate;
-    if (doc.measurementType != null) this.measurementType = doc.measurementType;
-    if (doc.teamName != null) this.teamName = doc.teamName;
-    if (doc.vehicleNumber != null) this.vehicleNumber = doc.vehicleNumber;
-    if (doc.engineers != null) this.engineers = doc.engineers;
-  }
-  
   public void replaceMeasurementItems(List<StackMeasurementDoc> items) {
     this.measurementItems = new ArrayList<>(items);
   }

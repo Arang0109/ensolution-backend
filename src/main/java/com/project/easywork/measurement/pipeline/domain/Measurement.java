@@ -1,6 +1,6 @@
 package com.project.easywork.measurement.pipeline.domain;
 
-import com.project.easywork.measurement.dto.command.*;
+import com.project.easywork.measurement.dto.document.MeasurementDoc;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -9,5 +9,9 @@ import lombok.Getter;
 @Getter
 @Builder
 public class Measurement {
-  private final MeasurementCommandD measurement;
+  private MeasurementDoc measurement;
+  
+  public void updateMeasurement(MeasurementDoc measurement) {
+    this.measurement = measurement;
+  }
 }

@@ -17,16 +17,6 @@ public class EquipmentDoc {
   private ParticularEquipmentDoc particularEquipment;
   private PitotTubeDoc pitotTube;
   
-  public void merge(EquipmentDoc doc) {
-    if (doc == null) return;
-    if (doc.particularEquipment != null) {
-      this.particularEquipment = doc.particularEquipment;
-    }
-    if (doc.pitotTube != null) {
-      this.pitotTube = doc.pitotTube;
-    }
-  }
-  
   public void changeParticularEquipment(
       ParticularEquipmentDoc doc
   ) {
