@@ -19,11 +19,14 @@ public class MeasurementResultProcessor {
     
     MeasurementContext context = new MeasurementContext(domain);
     
+    // 입자상, 가스상 모두 해당
     MeasurementPipeline pipeline = new MeasurementPipeline()
         .addStep(new WeatherStep())
         .addStep(new MoistureStep())
         .addStep(new ExhaustGasStep())
-        .addStep(new MeasurementPointStep());
+        .addStep(new MeasurementPointStep())
+        .addStep(new GasDensityStep());
+    
     
     pipeline.execute(context);
     
