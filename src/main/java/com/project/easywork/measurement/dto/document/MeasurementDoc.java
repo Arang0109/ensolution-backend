@@ -40,6 +40,9 @@ public class MeasurementDoc {
   
   private List<MeasurementPointDoc> measurementPoints;
   
+  private BigDecimal pitotTubeCoefficient;
+  private BigDecimal quantity;
+  
   @CreatedDate
   private LocalDateTime createdAt;
   
@@ -60,6 +63,10 @@ public class MeasurementDoc {
       throw new IllegalStateException("PreInfoDocument가 먼저 생성되어야 합니다.");
     }
     this.preInfo.replaceMeasurementItems(items);
+  }
+  
+  public void changePitotTubeCoefficient(BigDecimal coefficient) {
+    this.pitotTubeCoefficient = coefficient;
   }
   
   public void changeMeasurementPointCnt(int cnt) {

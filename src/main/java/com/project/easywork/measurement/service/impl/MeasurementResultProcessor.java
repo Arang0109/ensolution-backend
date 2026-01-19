@@ -25,7 +25,7 @@ public class MeasurementResultProcessor {
         .addStep(new MoistureStep())
         .addStep(new ExhaustGasStep())
         .addStep(new MeasurementPointStep())
-        .addStep(new GasDensityStep());
+        .addStep(new QuantityStep());
     
     
     pipeline.execute(context);
