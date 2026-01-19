@@ -2,7 +2,6 @@ package com.project.easywork.measurement.dto.document;
 
 import com.project.easywork.measurement.dto.MeasurementStatus;
 import com.project.easywork.measurement.dto.document.input.*;
-import com.project.easywork.measurement.dto.document.result.MeasurementResultDoc;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;

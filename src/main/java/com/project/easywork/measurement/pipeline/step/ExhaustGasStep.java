@@ -45,8 +45,6 @@ public class ExhaustGasStep implements MeasurementStep {
       }
     }
     
-    System.out.println("applyResult 진입 전");
-    
     applyResult(domain, measurement, exhaustGas, gasDensity, corrected);
   }
   
@@ -57,8 +55,6 @@ public class ExhaustGasStep implements MeasurementStep {
       BigDecimal gasDensity,
       BigDecimal o2CorrectionFactor
   ) {
-    System.out.println("applyResult 진입");
-    System.out.println("gasDensity: " + gasDensity);
     ExhaustGasDoc updated = exhaustGas.toBuilder()
         .gasDensity(gasDensity)
         .o2CorrectionFactor(o2CorrectionFactor)

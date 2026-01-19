@@ -5,9 +5,7 @@ import com.project.easywork.equipment.domain.persistance.PitotTube;
 import com.project.easywork.equipment.service_data.IEquipmentDataService;
 import com.project.easywork.equipment.service_data.IPitotTubeDataService;
 import com.project.easywork.measurement.dto.document.input.EquipmentDoc;
-import com.project.easywork.measurement.dto.document.result.MeasurementResultDoc;
 import com.project.easywork.measurement.dto.DraftUpdateCommandD;
-import com.project.easywork.measurement.dto.command.MeasurementCommandD;
 import com.project.easywork.measurement.dto.document.MeasurementDoc;
 import com.project.easywork.measurement.mapper.MeasurementMapper;
 import com.project.easywork.measurement.service.IMeasurementQueryService;
@@ -67,9 +65,7 @@ public class MeasurementService implements IMeasurementService {
     
     MeasurementDoc result = resultProcessor.process(doc);
     
-    doc.complete(result);
-    
-    measurementDataService.save(result);
+    measurementDataService.save(doc.complete(result));
   }
   
   @Override
