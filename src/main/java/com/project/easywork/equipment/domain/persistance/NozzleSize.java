@@ -24,6 +24,6 @@ public class NozzleSize {
   @OnDelete(action = OnDeleteAction.CASCADE)
   private Nozzle nozzle;
   
-  @Column(precision = 4, scale = 2, nullable = false)
+  @Column(precision = 4, scale = 3, nullable = false)
   private BigDecimal size;
 }
