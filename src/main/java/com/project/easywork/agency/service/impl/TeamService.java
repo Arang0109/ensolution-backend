@@ -66,11 +66,13 @@ public class TeamService implements ITeamService {
   public TeamD updateParticularEquip(Long teamId, @Nullable Long equipmentId) {
     Team team = teamDataService.findById(teamId);
     
-    Equipment equipment = equipmentId == null
-        ? null
-        : equipmentDataService.findById(equipmentId);
-    
-    team.changeParticularEquip(equipment);
+    if (equipmentId == null) {
+      team.changeParticularEquip(null);
+    } else {
+      Equipment equipment = equipmentDataService.findById(equipmentId);
+      
+      team.changeParticularEquip(equipment.getParticularSampler());
+    }
     
     entityManager.flush();
     

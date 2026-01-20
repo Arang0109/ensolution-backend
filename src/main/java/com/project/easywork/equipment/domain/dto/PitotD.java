@@ -6,10 +6,8 @@ import lombok.*;
 @AllArgsConstructor
 @Getter
 @Builder
-@ToString
 public class PitotD {
   private Long id;
+  private String alias;
   private String type;
-  private String modelName;
-  private String equipmentName;
 }

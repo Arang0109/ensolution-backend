@@ -1,21 +1,19 @@
 package com.project.easywork.equipment.domain.persistance;
 
-import com.project.easywork.equipment.domain.PitotType;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.math.BigDecimal;
 
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Entity
 @Getter
-@Table(name = "pitot_tube")
-public class PitotTube {
+@Table(name = "particular_sampler")
+public class ParticularSampler {
   @Id
   @Column(name = "equipment_id")
   private Long id;
@@ -29,9 +27,13 @@ public class PitotTube {
   @Column(nullable = false, length = 100)
   private String alias;
   
-  @Enumerated(EnumType.STRING)
-  private PitotType type;
+  @Column(name = "orificeDP", precision = 10, scale = 4)
+  private BigDecimal orificeDP;
   
-  @OneToMany(mappedBy = "pitotTube", cascade = CascadeType.ALL)
-  private List<PitotTubeCoefficient> pitotTubeCoefficientList = new ArrayList<>();
+  @Column(name = "YD", precision = 10, scale = 4)
+  private BigDecimal yd;
+  
+  protected void setEquipment(Equipment equipment) {
+    this.equipment = equipment;
+  }
 }

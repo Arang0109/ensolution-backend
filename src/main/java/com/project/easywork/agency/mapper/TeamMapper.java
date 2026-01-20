@@ -20,7 +20,7 @@ import java.util.List;
 public interface TeamMapper {
   Team toEntity(TeamCreateD dto);
   
-  @Mapping(source = "particularEquip.id", target = "particularEquipId")
+  @Mapping(source = "particularSampler.id", target = "particularSamplerId")
   @Mapping(source = "pitotTube.id", target = "pitotTubeId")
   TeamD toDto(Team team);
   

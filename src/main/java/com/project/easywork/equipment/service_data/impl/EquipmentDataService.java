@@ -4,6 +4,7 @@ import com.project.easywork.common.exception.CustomException;
 import com.project.easywork.common.exception.ErrorCode;
 import com.project.easywork.equipment.domain.EquipType;
 import com.project.easywork.equipment.domain.persistance.Equipment;
+import com.project.easywork.equipment.domain.persistance.ParticularSampler;
 import com.project.easywork.equipment.repository.EquipmentRepository;
 import com.project.easywork.equipment.service_data.IEquipmentDataService;
 import lombok.AllArgsConstructor;
@@ -27,11 +28,6 @@ public class EquipmentDataService implements IEquipmentDataService {
   @Override
   public List<Equipment> findAll() {
     return equipmentRepository.findAll();
-  }
-  
-  @Override
-  public List<Equipment> findByType(EquipType type) {
-    return equipmentRepository.findByType(type);
   }
   
   @Override

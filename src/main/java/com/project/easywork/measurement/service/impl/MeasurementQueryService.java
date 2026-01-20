@@ -5,6 +5,7 @@ import com.project.easywork.agency.service_data.impl.TeamDataService;
 import com.project.easywork.client.domain.persistance.*;
 import com.project.easywork.client.service_data.impl.*;
 import com.project.easywork.equipment.domain.persistance.Equipment;
+import com.project.easywork.equipment.domain.persistance.ParticularSampler;
 import com.project.easywork.equipment.domain.persistance.PitotTube;
 import com.project.easywork.equipment.service_data.impl.EquipmentDataService;
 import com.project.easywork.equipment.service_data.impl.PitotTubeDataService;
@@ -60,8 +61,8 @@ public class MeasurementQueryService implements IMeasurementQueryService {
     User junior =
         userDataService.findById(dto.getJuniorUserId());
     
-    Equipment equipment =
-        equipmentDataService.findById(dto.getEquipmentId());
+    ParticularSampler particularSampler =
+        equipmentDataService.findById(dto.getEquipmentId()).getParticularSampler();
     
     PitotTube pitotTube =
         pitotTubeDataService.findById(dto.getPitotTubeId());
@@ -77,7 +78,7 @@ public class MeasurementQueryService implements IMeasurementQueryService {
         team,
         senior,
         junior,
-        equipment,
+        particularSampler,
         pitotTube,
         vehicleNumber
     );

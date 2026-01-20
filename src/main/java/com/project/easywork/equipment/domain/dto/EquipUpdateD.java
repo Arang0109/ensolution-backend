@@ -1,6 +1,5 @@
 package com.project.easywork.equipment.domain.dto;
 
-import com.project.easywork.equipment.domain.EquipType;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -15,14 +14,11 @@ public class EquipUpdateD {
   private String serialNumber;
   private String modelName;
   private String equipmentName;
-  private EquipType type;
   private BigDecimal price;
   private String manufacturer;
   private String originCountry;
   private LocalDate purchaseDate;
   private LocalDate calibrationDate;
   private Integer calibrationCycle;
-  private BigDecimal dh;
-  private BigDecimal yd;
   private String remark;
 }

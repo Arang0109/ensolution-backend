@@ -1,6 +1,7 @@
 package com.project.easywork.measurement.service.impl;
 
 import com.project.easywork.equipment.domain.persistance.Equipment;
+import com.project.easywork.equipment.domain.persistance.ParticularSampler;
 import com.project.easywork.equipment.domain.persistance.PitotTube;
 import com.project.easywork.equipment.service_data.IEquipmentDataService;
 import com.project.easywork.equipment.service_data.IPitotTubeDataService;
@@ -70,16 +71,15 @@ public class MeasurementService implements IMeasurementService {
   
   @Override
   public void changeEquipment(Long planId, Long equipmentId) {
-    Equipment particularEquipment = equipmentDataService.findById(equipmentId);
+    ParticularSampler particularSampler = equipmentDataService.findById(equipmentId).getParticularSampler();
     MeasurementDoc doc = measurementDataService.findByPlanId(planId);
     
     doc.getEquipment().changeParticularEquipment(
         EquipmentDoc.ParticularEquipmentDoc.builder()
-            .particularEquipmentId(particularEquipment.getId())
-            .modelName(particularEquipment.getModelName())
-            .equipmentName(particularEquipment.getEquipmentName())
-            .deltaH(particularEquipment.getDh())
-            .Yd(particularEquipment.getYd())
+            .equipmentId(particularSampler.getId())
+            .alias(particularSampler.getAlias())
+            .deltaH(particularSampler.getOrificeDP())
+            .Yd(particularSampler.getYd())
             .build()
     );
     
@@ -103,9 +103,9 @@ public class MeasurementService implements IMeasurementService {
     
     doc.getEquipment().changePitotTube(
         EquipmentDoc.PitotTubeDoc.builder()
-            .pitotTubeId(pitotTube.getId())
-            .modelName(pitotTube.getModelName())
-            .equipmentName(pitotTube.getEquipmentName())
+            .equipmentId(pitotTube.getId())
+            .alias(pitotTube.getAlias())
+            .type(pitotTube.getType().name())
             .coefficients(coefficientDocs)
             .build()
     );

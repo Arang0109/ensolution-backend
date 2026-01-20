@@ -7,18 +7,17 @@ public record EquipmentCommandD(
     PitotTube pitotTube
 ) {
   public record ParticularEquipment(
-      Long particularEquipmentId,
-      String modelName,
-      String equipmentName,
+      Long equipmentId,
+      String alias,
       
       BigDecimal deltaH, // 오리피스 보정 계수
       BigDecimal Yd // 가스미터 보정 계수
   ) {}
   
   public record PitotTube(
-      Long pitotTubeId,
-      String modelName,
-      String equipmentName
+      Long equipmentId,
+      String alias,
+      String type
   ) {
     public record Coefficient(
         Long coefficientId,

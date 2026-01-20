@@ -1,6 +1,5 @@
 package com.project.easywork.equipment.domain.persistance;
 
-import com.project.easywork.equipment.domain.EquipType;
 import com.project.easywork.equipment.domain.dto.EquipUpdateD;
 import jakarta.persistence.*;
 import lombok.*;
@@ -20,6 +19,13 @@ public class Equipment {
   @Column(nullable = false, unique = true)
   private Long id;
   
+  @OneToOne(
+      mappedBy = "equipment",
+      cascade = CascadeType.ALL,
+      orphanRemoval = true
+  )
+  private ParticularSampler particularSampler;
+  
   // 관리번호
   @Column(name = "management_number", nullable = false, length = 100)
   private String managementNumber;
@@ -35,9 +41,6 @@ public class Equipment {
   // 장비명(커스텀명)
   @Column(name = "equipment_name", length = 100)
   private String equipmentName;
-  
-  @Enumerated(EnumType.STRING)
-  private EquipType type;
   
   // 가격
   @Column(name = "price", precision = 12, scale = 2)
@@ -67,12 +70,6 @@ public class Equipment {
   @Column(name = "calibration_cycle")
   private Integer calibrationCycle;
   
-  @Column(name = "dH", precision = 10, scale = 4)
-  private BigDecimal dh;
-  
-  @Column(name = "Yd", precision = 10, scale = 4)
-  private BigDecimal yd;
-  
   // 비고
   @Lob
   private String remark;
@@ -82,15 +79,12 @@ public class Equipment {
     if (dto.getSerialNumber() != null) this.serialNumber = dto.getSerialNumber();
     if (dto.getModelName() != null) this.modelName = dto.getModelName();
     if (dto.getEquipmentName() != null) this.equipmentName = dto.getEquipmentName();
-    if (dto.getType() != null) this.type = dto.getType();
     if (dto.getPrice() != null) this.price = dto.getPrice();
     if (dto.getManufacturer() != null) this.manufacturer = dto.getManufacturer();
     if (dto.getOriginCountry() != null) this.originCountry = dto.getOriginCountry();
     if (dto.getPurchaseDate() != null) this.purchaseDate = dto.getPurchaseDate();
     if (dto.getCalibrationDate() != null) this.calibrationDate = dto.getCalibrationDate();
     if (dto.getCalibrationCycle() != null) this.calibrationCycle = dto.getCalibrationCycle();
-    if (dto.getDh() != null) this.dh = dto.getDh();
-    if (dto.getYd() != null) this.yd = dto.getYd();
     if (dto.getRemark() != null) this.remark = dto.getRemark();
   }
   
@@ -100,5 +94,17 @@ public class Equipment {
   
   public void updateCalibrationDate(LocalDate calibrationDate) {
     this.calibrationDate = calibrationDate;
+  }
+  
+  public void attachParticularSampler(ParticularSampler sampler) {
+    this.particularSampler = sampler;
+    sampler.setEquipment(this);
+  }
+  
+  public void removeParticularSampler() {
+    if (this.particularSampler != null) {
+      this.particularSampler.setEquipment(null);
+      this.particularSampler = null;
+    }
   }
 }

@@ -2,6 +2,7 @@ package com.project.easywork.agency.domain.entity;
 
 import com.project.easywork.equipment.domain.EquipType;
 import com.project.easywork.equipment.domain.persistance.Equipment;
+import com.project.easywork.equipment.domain.persistance.ParticularSampler;
 import com.project.easywork.equipment.domain.persistance.PitotTube;
 import com.project.easywork.agency.domain.dto.TeamUpdateD;
 import com.project.easywork.common.domain.BaseEntity;
@@ -25,8 +26,8 @@ public class Team extends BaseEntity {
    * Relations
    * ========================= */
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "particular_equip_id")
-  private Equipment particularEquip;
+  @JoinColumn(name = "particular_sampler_id")
+  private ParticularSampler particularSampler;
   
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "pitot_tube_id")
@@ -48,15 +49,13 @@ public class Team extends BaseEntity {
   /* =========================
    * Relation Logic
    * ========================= */
-  private void attachParticularEquip(Equipment equipment) {
-    if (equipment == null) {
-      this.particularEquip = null;
+  private void attachParticularEquip(ParticularSampler particularSampler) {
+    if (particularSampler == null) {
+      this.particularSampler = null;
       return;
     }
     
-    if (!equipment.getType().equals(EquipType.PARTICULAR)) return;
-    
-    this.particularEquip = equipment;
+    this.particularSampler = particularSampler;
   }
   
   private void attachPitotTube(PitotTube pitotTube) {
@@ -68,8 +67,8 @@ public class Team extends BaseEntity {
     this.pitotTube = pitotTube;
   }
   
-  public void changeParticularEquip(Equipment equipment) {
-    attachParticularEquip(equipment);
+  public void changeParticularEquip(ParticularSampler particularSampler) {
+    attachParticularEquip(particularSampler);
   }
   
   public void changePitotTube(PitotTube pitotTube) {

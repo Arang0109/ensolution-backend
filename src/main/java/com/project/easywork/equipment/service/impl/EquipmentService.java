@@ -36,9 +36,8 @@ public class EquipmentService implements IEquipmentService {
   
   @Override
   public List<EquipD> getListByParticular() {
-    return equipmentMapper.toDtoList(
-        equipmentDataService.findByType(EquipType.PARTICULAR)
-    );
+    /* 구현 필요 */
+    return null;
   }
   
   @Override

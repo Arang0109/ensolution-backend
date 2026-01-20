@@ -98,19 +98,18 @@ public class MeasurementDocumentFactory {
   
   private EquipmentDoc.ParticularEquipmentDoc buildParticularEquipment(MeasurementSnapshot s) {
     return EquipmentDoc.ParticularEquipmentDoc.builder()
-        .particularEquipmentId(s.equipment().getId())
-        .modelName(s.equipment().getModelName())
-        .equipmentName(s.equipment().getEquipmentName())
-        .deltaH(s.equipment().getDh())
-        .Yd(s.equipment().getYd())
+        .equipmentId(s.particularSampler().getId())
+        .alias(s.particularSampler().getAlias())
+        .deltaH(s.particularSampler().getOrificeDP())
+        .Yd(s.particularSampler().getYd())
         .build();
   }
   
   private EquipmentDoc.PitotTubeDoc buildPitotTube(MeasurementSnapshot s) {
     return EquipmentDoc.PitotTubeDoc.builder()
-        .pitotTubeId(s.pitotTube().getId())
-        .modelName(s.pitotTube().getModelName())
-        .equipmentName(s.pitotTube().getEquipmentName())
+        .equipmentId(s.pitotTube().getId())
+        .alias(s.pitotTube().getAlias())
+        .type(s.pitotTube().getType().name())
         .coefficients(buildCoefficientList(s))
         .build();
   }
