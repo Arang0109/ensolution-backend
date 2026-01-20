@@ -1,7 +1,6 @@
 package com.project.easywork.measurement.service.impl;
 
-import com.project.easywork.measurement.dto.command.MeasurementCommandD;
-import com.project.easywork.measurement.dto.document.result.MeasurementResultDoc;
+import com.project.easywork.measurement.dto.document.MeasurementDoc;
 import com.project.easywork.measurement.pipeline.MeasurementPipeline;
 import com.project.easywork.measurement.pipeline.context.MeasurementContext;
 import com.project.easywork.measurement.pipeline.domain.Measurement;
@@ -12,23 +11,25 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class MeasurementResultProcessor {
-  public MeasurementResultDoc process(MeasurementCommandD dto) {
+  public MeasurementDoc process(MeasurementDoc measurementDoc) {
     
     Measurement domain = Measurement.builder()
-        .measurement(dto)
+        .measurement(measurementDoc)
         .build();
     
     MeasurementContext context = new MeasurementContext(domain);
     
+    // 입자상, 가스상 모두 해당
     MeasurementPipeline pipeline = new MeasurementPipeline()
-        .addStep(new PressureConvertStep())
-        .addStep(new MoistureCalculateStep())
-        .addStep(new GasDensityCalculateStep())
+        .addStep(new WeatherStep())
+        .addStep(new MoistureStep())
+        .addStep(new ExhaustGasStep())
         .addStep(new MeasurementPointStep())
-        .addStep(new ResultBuildStep());
+        .addStep(new QuantityStep());
+    
     
     pipeline.execute(context);
     
-    return context.getResult();
+    return context.getDomain().getMeasurement();
   }
 }

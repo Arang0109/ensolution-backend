@@ -5,14 +5,12 @@ import com.project.easywork.equipment.domain.persistance.PitotTube;
 import com.project.easywork.equipment.service_data.IEquipmentDataService;
 import com.project.easywork.equipment.service_data.IPitotTubeDataService;
 import com.project.easywork.measurement.dto.document.input.EquipmentDoc;
-import com.project.easywork.measurement.dto.document.result.MeasurementResultDoc;
 import com.project.easywork.measurement.dto.DraftUpdateCommandD;
-import com.project.easywork.measurement.dto.command.MeasurementCommandD;
 import com.project.easywork.measurement.dto.document.MeasurementDoc;
+import com.project.easywork.measurement.mapper.MeasurementMapper;
 import com.project.easywork.measurement.service.IMeasurementQueryService;
 import com.project.easywork.measurement.service.IMeasurementService;
 import com.project.easywork.measurement.service_data.IMeasurementDataService;
-import com.project.easywork.measurement.util.MeasurementPointCalculator;
 import com.project.easywork.plan.domain.dto.PlanCreateBundleD;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -31,10 +29,11 @@ public class MeasurementService implements IMeasurementService {
   private final IEquipmentDataService equipmentDataService;
   private final IPitotTubeDataService pitotTubeDataService;
   
+  private final MeasurementMapper measurementMapper;
+  
   private final MeasurementDocumentFactory documentFactory;
   private final MeasurementDraftUpdater draftUpdater;
   private final MeasurementResultProcessor resultProcessor;
-  private final MeasurementPointCalculator measurementPointCalculator;
   
   @Override
   public void createDraft(Long planId, PlanCreateBundleD dto) {
@@ -50,17 +49,8 @@ public class MeasurementService implements IMeasurementService {
   @Override
   public void updateDraft(Long planId, DraftUpdateCommandD request) {
     MeasurementDoc document = measurementDataService.findByPlanId(planId);
-    draftUpdater.updateDraft(document, request);
-    
-    document.changeMeasurementPointCnt(
-        measurementPointCalculator.calculate(
-            request.client().stack().shape(),
-            request.client().stack().horizontalLength(),
-            request.client().stack().verticalLength()
-        )
-    );
-    
-    measurementDataService.save(document);
+    MeasurementDoc updated = draftUpdater.updateDraft(document, request);
+    measurementDataService.save(updated);
   }
   
   @Override
@@ -69,16 +59,13 @@ public class MeasurementService implements IMeasurementService {
   }
   
   @Override
-  public void saveDocument(Long planId, MeasurementCommandD dto) {
+  public void saveDocument(Long planId) {
     
     MeasurementDoc doc = measurementDataService.findByPlanId(planId);
     
-    MeasurementResultDoc result =
-        resultProcessor.process(dto);
+    MeasurementDoc result = resultProcessor.process(doc);
     
-    doc.complete(result);
-    
-    measurementDataService.save(doc);
+    measurementDataService.save(doc.complete(result));
   }
   
   @Override

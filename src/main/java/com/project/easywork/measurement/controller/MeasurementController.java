@@ -33,10 +33,9 @@ public class MeasurementController {
   @Operation(summary = "측정 데이터 저장 API", description = "측정 데이터를 저장합니다.")
   @PostMapping("/{planId}/completed")
   public ResponseEntity<ApiResponse<Void>> saveDocument(
-      @PathVariable Long planId,
-      @RequestBody MeasurementCommandD request
+      @PathVariable Long planId
   ) {
-    measurementService.saveDocument(planId, request);
+    measurementService.saveDocument(planId);
     return ResponseEntity.ok().body(ApiResponse.success());
   }
   

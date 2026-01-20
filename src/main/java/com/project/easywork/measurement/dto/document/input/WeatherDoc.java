@@ -11,42 +11,35 @@ import java.math.RoundingMode;
 @Builder(toBuilder = true)
 public class WeatherDoc {
   
-  private WeatherPressureDocument pressure;
+  private WeatherPressureDoc pressure;
   
   private String weatherCondition;
-  @Field(targetType = FieldType.DECIMAL128)
   private BigDecimal temperature;
-  @Field(targetType = FieldType.DECIMAL128)
   private BigDecimal humidity;
   private String windDirection;
-  @Field(targetType = FieldType.DECIMAL128)
   private BigDecimal windSpeed;
   
-  public void merge(WeatherDoc doc) {
-    if (doc == null) return;
+  /**
+   * 계산 영역
+   * mmHg로 변환된 대기압
+   */
+  private BigDecimal convertedPressure;
+  
+  public WeatherDoc merge(WeatherDoc doc) {
+    if (doc == null) return this;
     
-    if (doc.pressure != null) {
-      if (this.pressure == null) {
-        this.pressure = doc.pressure;
-      } else {
-        this.pressure = this.pressure.merge(doc.pressure);
-      }
-    }
-    
-    if (doc.weatherCondition != null)
-      this.weatherCondition = doc.weatherCondition;
-    
-    if (doc.temperature != null)
-      this.temperature = doc.temperature;
-    
-    if (doc.humidity != null)
-      this.humidity = doc.humidity;
-    
-    if (doc.windDirection != null)
-      this.windDirection = doc.windDirection;
-    
-    if (doc.windSpeed != null)
-      this.windSpeed = doc.windSpeed;
+    return this.toBuilder()
+        .pressure(
+            doc.pressure != null
+                ? (this.pressure == null ? doc.pressure : this.pressure.merge(doc.pressure))
+                : this.pressure
+        )
+        .weatherCondition(doc.weatherCondition != null ? doc.weatherCondition : this.weatherCondition)
+        .temperature(doc.temperature != null ? doc.temperature : this.temperature)
+        .humidity(doc.humidity != null ? doc.humidity : this.humidity)
+        .windDirection(doc.windDirection != null ? doc.windDirection : this.windDirection)
+        .windSpeed(doc.windSpeed != null ? doc.windSpeed : this.windSpeed)
+        .build();
   }
   
   public WeatherDoc normalize() {
@@ -54,8 +47,8 @@ public class WeatherDoc {
         .pressure(pressure != null ? pressure.normalize() : null)
         .temperature(scale(temperature))
         .humidity(scale(humidity))
-        .windDirection(windDirection)
         .windSpeed(scale(windSpeed))
+        .convertedPressure(scale(convertedPressure))
         .build();
   }
   
@@ -65,12 +58,12 @@ public class WeatherDoc {
   
   @Getter
   @Builder(toBuilder = true)
-  public static class WeatherPressureDocument {
+  public static class WeatherPressureDoc {
     @Field(targetType = FieldType.DECIMAL128)
     private BigDecimal pressure;
     private String unit;
     
-    public WeatherPressureDocument merge(WeatherPressureDocument doc) {
+    public WeatherPressureDoc merge(WeatherPressureDoc doc) {
       if (doc == null) return this;
       
       return this.toBuilder()
@@ -79,10 +72,9 @@ public class WeatherDoc {
           .build();
     }
     
-    public WeatherPressureDocument normalize() {
+    public WeatherPressureDoc normalize() {
       return this.toBuilder()
           .pressure(scale(pressure))
-          .unit(unit)
           .build();
     }
   }

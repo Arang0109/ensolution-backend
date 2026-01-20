@@ -16,6 +16,9 @@ public class ExhaustGasDoc {
   private List<BigDecimal> noxConcentration;
   private List<BigDecimal> soxConcentration;
   
+  private BigDecimal gasDensity;
+  private BigDecimal o2CorrectionFactor;
+  
   public ExhaustGasDoc normalize() {
     return this.toBuilder()
         .o2Concentration(scale(o2Concentration))
@@ -26,23 +29,26 @@ public class ExhaustGasDoc {
         .build();
   }
   
-  public void merge(ExhaustGasDoc source) {
-    if (source == null) return;
+  public ExhaustGasDoc merge(ExhaustGasDoc doc) {
+    if (doc == null) return this;
     
-    if (source.o2Concentration != null)
-      this.o2Concentration = source.o2Concentration;
-    
-    if (source.co2Concentration != null)
-      this.co2Concentration = source.co2Concentration;
-    
-    if (source.coConcentration != null)
-      this.coConcentration = source.coConcentration;
-    
-    if (source.noxConcentration != null)
-      this.noxConcentration = source.noxConcentration;
-    
-    if (source.soxConcentration != null)
-      this.soxConcentration = source.soxConcentration;
+    return this.toBuilder()
+        .o2Concentration(
+            doc.o2Concentration != null ? doc.o2Concentration : this.o2Concentration
+        )
+        .co2Concentration(
+            doc.co2Concentration != null ? doc.co2Concentration : this.co2Concentration
+        )
+        .coConcentration(
+            doc.coConcentration != null ? doc.coConcentration : this.coConcentration
+        )
+        .noxConcentration(
+            doc.noxConcentration != null ? doc.noxConcentration : this.noxConcentration
+        )
+        .soxConcentration(
+            doc.soxConcentration != null ? doc.soxConcentration : this.soxConcentration
+        )
+        .build();
   }
   
   private static List<BigDecimal> scale(List<BigDecimal> value) {

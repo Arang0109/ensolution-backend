@@ -22,26 +22,6 @@ public class ClientDoc {
   private StackDoc stack;
   private List<PreventionDoc> preventions;
   
-  public void merge(ClientDoc doc) {
-    if (doc == null) return;
-    
-    if (doc.company != null) {
-      this.company = doc.company;
-    }
-    
-    if (doc.stack != null) {
-      if (this.stack == null) {
-        this.stack = doc.stack;
-      } else {
-        this.stack = this.stack.merge(doc.stack);
-      }
-    }
-    
-    if (doc.preventions != null) {
-      this.preventions = doc.preventions;
-    }
-  }
-  
   public ClientDoc normalize() {
     return this.toBuilder()
         .company(company)
@@ -94,7 +74,7 @@ public class ClientDoc {
     private BigDecimal standardOxygen;
     
     public StackDoc merge(StackDoc doc) {
-      if (doc == null) return this;
+      if (doc == null)return this;
       
       Shape mergedShape = doc.shape != null ? doc.shape : this.shape;
       
@@ -104,10 +84,6 @@ public class ClientDoc {
               : (doc.verticalLength != null ? doc.verticalLength : this.verticalLength);
       
       return this.toBuilder()
-          .stackId(doc.stackId != null ? doc.stackId : this.stackId)
-          .name(doc.name != null ? doc.name : this.name)
-          .semsNumber(doc.semsNumber != null ? doc.semsNumber : this.semsNumber)
-          .grade(doc.grade != null ? doc.grade : this.grade)
           .height(doc.height != null ? doc.height : this.height)
           .horizontalLength(doc.horizontalLength != null ? doc.horizontalLength : this.horizontalLength)
           .verticalLength(mergedVerticalLength)
@@ -119,15 +95,9 @@ public class ClientDoc {
     
     public StackDoc normalize() {
       return this.toBuilder()
-          .stackId(stackId)
-          .name(name)
-          .semsNumber(semsNumber)
-          .grade(grade)
           .height(scale(height, 0))
           .horizontalLength(scale(horizontalLength, 3))
           .verticalLength(scale(verticalLength, 3))
-          .shape(shape)
-          .orientation(orientation)
           .standardOxygen(scale(standardOxygen, 1))
           .build();
     }

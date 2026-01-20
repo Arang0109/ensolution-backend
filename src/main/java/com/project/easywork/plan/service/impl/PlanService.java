@@ -103,7 +103,6 @@ public class PlanService implements IPlanService {
         .weather(doc.getWeather())
         .moisture(doc.getMoisture())
         .exhaustGas(doc.getExhaustGas())
-        .result(doc.getResult())
         .build();
   }
   

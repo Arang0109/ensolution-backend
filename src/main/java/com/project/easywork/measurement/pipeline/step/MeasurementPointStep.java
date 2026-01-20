@@ -5,6 +5,7 @@ import com.project.easywork.common.exception.CustomException;
 import com.project.easywork.common.exception.ErrorCode;
 import com.project.easywork.common.util.measurePoint.MeasurePointStrategy;
 import com.project.easywork.common.util.measurePoint.MeasurePointStrategyFactory;
+import com.project.easywork.measurement.dto.document.MeasurementDoc;
 import com.project.easywork.measurement.pipeline.context.MeasurementContext;
 import com.project.easywork.measurement.pipeline.domain.Measurement;
 
@@ -19,28 +20,32 @@ public class MeasurementPointStep implements MeasurementStep {
   
   @Override
   public void execute(MeasurementContext context) {
-    Measurement d = context.getDomain();
+    Measurement domain = context.getDomain();
+    MeasurementDoc measurement = domain.getMeasurement();
     
-    Shape stackShape = d.getMeasurement().client().stack().shape();
-    BigDecimal diameter = d.getMeasurement().client().stack().horizontalLength();
-    BigDecimal diameter2   = d.getMeasurement().client().stack().verticalLength();
+    Shape stackShape = measurement.getClient().getStack().getShape();
+    BigDecimal diameter = measurement.getClient().getStack().getHorizontalLength();
+    BigDecimal diameter2   = measurement.getClient().getStack().getVerticalLength();
     
-    boolean simplifiedMeasurement = d.getMeasurement().preInfo().simplifiedMeasurement();
+    boolean simplifiedMeasurement = measurement.getPreInfo().isSimplifiedMeasurement();
     
     MeasurePointStrategy strategy;
     
     switch (stackShape) {
       case RECTANGULAR -> {
-        strategy = MeasurePointStrategyFactory.of("rectangle");
-        int pointCount = strategy.calculate(diameter, diameter2);
-        context.setMeasurementPointCnt(pointCount);
-        context.setCircularAxisCoords(null);
+        strategy = MeasurePointStrategyFactory.of("rectangular");
+        
+        MeasurementDoc updatedMeasurement = measurement.toBuilder()
+            .measurementPointCnt(strategy.calculate(diameter, diameter2))
+            .circularAxisCoords(null)
+            .build();
+        
+        domain.updateMeasurement(updatedMeasurement);
       }
       
       case CIRCULAR -> {
         strategy = MeasurePointStrategyFactory.of("circular");
         int pointCount = strategy.calculate(diameter);
-        context.setMeasurementPointCnt(pointCount);
         
         int n = simplifiedMeasurement
             ? (pointCount == 1 ? 1 : pointCount / 4)
@@ -65,7 +70,12 @@ public class MeasurementPointStep implements MeasurementStep {
           coords.add(coord);
         }
         
-        context.setCircularAxisCoords(coords);
+        MeasurementDoc updatedMeasurement = measurement.toBuilder()
+            .measurementPointCnt(pointCount)
+            .circularAxisCoords(coords)
+            .build();
+        
+        domain.updateMeasurement(updatedMeasurement);
       }
       
       default -> throw new CustomException(ErrorCode.BAD_REQUEST, "Unsupported stack shape" + stackShape);

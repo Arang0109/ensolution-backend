@@ -2,7 +2,6 @@ package com.project.easywork.plan.domain.dto;
 
 import com.project.easywork.measurement.dto.MeasurementStatus;
 import com.project.easywork.measurement.dto.document.input.*;
-import com.project.easywork.measurement.dto.document.result.MeasurementResultDoc;
 import lombok.*;
 
 @NoArgsConstructor
@@ -20,6 +19,4 @@ public class PlanDetailD {
   private WeatherDoc weather;
   private MoistureDoc moisture;
   private ExhaustGasDoc exhaustGas;
-  
-  private MeasurementResultDoc result;
 }

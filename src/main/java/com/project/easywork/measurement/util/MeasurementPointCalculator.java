@@ -24,12 +24,12 @@ public class MeasurementPointCalculator {
           return 1;
         }
         
-        strategy = MeasurePointStrategyFactory.of("rectangle");
+        strategy = MeasurePointStrategyFactory.of("rectangular");
         return strategy.calculate(horizontal, vertical);
       }
       
       case CIRCULAR -> {
-        if (horizontal == null) { // 지름 하나만 있으면 됨
+        if (horizontal == null) {
           return 1;
         }
         

@@ -11,8 +11,8 @@ public record MeasurementCommandD(
     @Schema(description = "측정장비 정보")
     EquipmentCommandD equipment,
     
-    @Schema(description = "사전 정보 (회사, 사업장, 굴뚝, 방지시설 등)")
-    ClientCommandD client,
+    @Schema(description = "사전 정보 (굴뚝)")
+    StackInfoCommandD stackInfo,
     
     @Schema(description = "기상 정보")
     WeatherCommandD weather,

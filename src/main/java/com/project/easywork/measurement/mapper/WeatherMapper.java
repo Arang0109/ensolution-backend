@@ -8,6 +8,6 @@ import org.mapstruct.Mapper;
 public interface WeatherMapper {
   WeatherDoc toDocument(WeatherCommandD dto);
   
-  WeatherDoc.WeatherPressureDocument toDocument(WeatherCommandD.WeatherPressure pressure);
+  WeatherDoc.WeatherPressureDoc toDocument(WeatherCommandD.WeatherPressure pressure);
 }
 
