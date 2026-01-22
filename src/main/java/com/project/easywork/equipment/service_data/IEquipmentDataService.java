@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface IEquipmentDataService {
   EquipmentDoc save(EquipmentDoc doc);
+  EquipmentDoc findById(String id);
   List<EquipmentDoc> findAll();
   List<EquipmentDoc> findByType(EquipType type);
 }

@@ -23,6 +23,11 @@ public class EquipmentDataService implements IEquipmentDataService {
   }
   
   @Override
+  public EquipmentDoc findById(String id) {
+    return equipmentRepository.findById(id).orElseThrow();
+  }
+  
+  @Override
   public List<EquipmentDoc> findAll() {
     return equipmentRepository.findAll();
   }
