@@ -1,12 +1,11 @@
 package com.project.easywork.equipment.repository;
 
 import com.project.easywork.equipment.domain.EquipType;
-import com.project.easywork.equipment.domain.persistance.Equipment;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import com.project.easywork.equipment.domain.document.EquipmentDoc;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;
 
-@Repository
-public interface EquipmentRepository extends JpaRepository<Equipment, Long> {
+public interface EquipmentRepository extends MongoRepository<EquipmentDoc, String> {
+  List<EquipmentDoc> findByType(EquipType type);
 }

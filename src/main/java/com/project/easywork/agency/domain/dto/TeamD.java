@@ -12,8 +12,6 @@ public class TeamD {
   private Long id;
   private String name;
   private String vehicleNumber;
-  private Long particularSamplerId;
-  private Long pitotTubeId;
   private LocalDateTime createdAt;
   private LocalDateTime modifiedAt;
 }

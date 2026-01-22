@@ -1,11 +1,5 @@
 package com.project.easywork.measurement.service.impl;
 
-import com.project.easywork.equipment.domain.persistance.Equipment;
-import com.project.easywork.equipment.domain.persistance.ParticularSampler;
-import com.project.easywork.equipment.domain.persistance.PitotTube;
-import com.project.easywork.equipment.service_data.IEquipmentDataService;
-import com.project.easywork.equipment.service_data.IPitotTubeDataService;
-import com.project.easywork.measurement.dto.document.input.EquipmentDoc;
 import com.project.easywork.measurement.dto.DraftUpdateCommandD;
 import com.project.easywork.measurement.dto.document.MeasurementDoc;
 import com.project.easywork.measurement.mapper.MeasurementMapper;
@@ -26,11 +20,6 @@ public class MeasurementService implements IMeasurementService {
   
   private final IMeasurementDataService measurementDataService;
   private final IMeasurementQueryService measurementQueryService;
-  
-  private final IEquipmentDataService equipmentDataService;
-  private final IPitotTubeDataService pitotTubeDataService;
-  
-  private final MeasurementMapper measurementMapper;
   
   private final MeasurementDocumentFactory documentFactory;
   private final MeasurementDraftUpdater draftUpdater;
@@ -67,49 +56,5 @@ public class MeasurementService implements IMeasurementService {
     MeasurementDoc result = resultProcessor.process(doc);
     
     measurementDataService.save(doc.complete(result));
-  }
-  
-  @Override
-  public void changeEquipment(Long planId, Long equipmentId) {
-    ParticularSampler particularSampler = equipmentDataService.findById(equipmentId).getParticularSampler();
-    MeasurementDoc doc = measurementDataService.findByPlanId(planId);
-    
-    doc.getEquipment().changeParticularEquipment(
-        EquipmentDoc.ParticularEquipmentDoc.builder()
-            .equipmentId(particularSampler.getId())
-            .alias(particularSampler.getAlias())
-            .deltaH(particularSampler.getOrificeDP())
-            .Yd(particularSampler.getYd())
-            .build()
-    );
-    
-    measurementDataService.save(doc);
-  }
-  
-  @Override
-  public void changePitotTube(Long planId, Long pitotTubeId) {
-    PitotTube pitotTube = pitotTubeDataService.findById(pitotTubeId);
-    MeasurementDoc doc = measurementDataService.findByPlanId(planId);
-    
-    List<EquipmentDoc.PitotTubeDoc.CoefficientDoc> coefficientDocs =
-        pitotTube.getPitotTubeCoefficientList().stream().map(
-            c ->
-                EquipmentDoc.PitotTubeDoc.CoefficientDoc.builder()
-                    .coefficientId(c.getId())
-                    .velocity(c.getVelocity())
-                    .coefficient(c.getCoefficient())
-                    .build()
-        ).toList();
-    
-    doc.getEquipment().changePitotTube(
-        EquipmentDoc.PitotTubeDoc.builder()
-            .equipmentId(pitotTube.getId())
-            .alias(pitotTube.getAlias())
-            .type(pitotTube.getType().name())
-            .coefficients(coefficientDocs)
-            .build()
-    );
-    
-    measurementDataService.save(doc);
   }
 }

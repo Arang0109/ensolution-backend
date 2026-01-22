@@ -1,21 +1,27 @@
 package com.project.easywork.equipment.mapper;
 
-import com.project.easywork.equipment.domain.dto.EquipCreateD;
-import com.project.easywork.equipment.domain.dto.EquipD;
-import com.project.easywork.equipment.domain.dto.EquipUpdateD;
-import com.project.easywork.equipment.domain.persistance.Equipment;
-import org.mapstruct.*;
+import com.project.easywork.equipment.domain.document.EquipmentDoc;
+import com.project.easywork.equipment.domain.dto.EquipmentCreateReqD;
+import lombok.NoArgsConstructor;
 
-import java.util.List;
-
-@Mapper(
-    componentModel = "spring",
-    builder = @Builder()
-)
-public interface EquipmentMapper {
-  EquipD toDto(Equipment equipment);
-  
-  Equipment toEntity(EquipCreateD dto);
-  
-  List<EquipD> toDtoList(List<Equipment> equipments);
+@NoArgsConstructor
+public class EquipmentMapper {
+  public static EquipmentDoc toDoc(EquipmentCreateReqD dto) {
+    return EquipmentDoc.builder()
+        .type(dto.type())
+        .managementNumber(dto.managementNumber())
+        .serialNumber(dto.serialNumber())
+        .modelName(dto.modelName())
+        .equipmentName(dto.equipmentName())
+        .alias(dto.alias())
+        .price(dto.price())
+        .manufacturer(dto.manufacturer())
+        .originCountry(dto.originCountry())
+        .purchaseDate(dto.purchaseDate())
+        .remark(dto.remark())
+        .calibrationCycle(dto.calibrationCycle())
+        .lastCalibrationDate(null)
+        .spec(dto.spec())
+        .build();
+  }
 }

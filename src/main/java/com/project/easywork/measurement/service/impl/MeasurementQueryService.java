@@ -4,11 +4,6 @@ import com.project.easywork.agency.domain.entity.Team;
 import com.project.easywork.agency.service_data.impl.TeamDataService;
 import com.project.easywork.client.domain.persistance.*;
 import com.project.easywork.client.service_data.impl.*;
-import com.project.easywork.equipment.domain.persistance.Equipment;
-import com.project.easywork.equipment.domain.persistance.ParticularSampler;
-import com.project.easywork.equipment.domain.persistance.PitotTube;
-import com.project.easywork.equipment.service_data.impl.EquipmentDataService;
-import com.project.easywork.equipment.service_data.impl.PitotTubeDataService;
 import com.project.easywork.measurement.dto.snapshot.MeasurementSnapshot;
 import com.project.easywork.measurement.service.IMeasurementQueryService;
 import com.project.easywork.plan.domain.dto.PlanCreateBundleD;
@@ -31,8 +26,6 @@ public class MeasurementQueryService implements IMeasurementQueryService {
   private final PreventionDataService preventionDataService;
   private final TeamDataService teamDataService;
   private final UserDataService userDataService;
-  private final EquipmentDataService equipmentDataService;
-  private final PitotTubeDataService pitotTubeDataService;
   
   @Override
   public MeasurementSnapshot loadSnapshot(PlanCreateBundleD dto) {
@@ -61,12 +54,6 @@ public class MeasurementQueryService implements IMeasurementQueryService {
     User junior =
         userDataService.findById(dto.getJuniorUserId());
     
-    ParticularSampler particularSampler =
-        equipmentDataService.findById(dto.getEquipmentId()).getParticularSampler();
-    
-    PitotTube pitotTube =
-        pitotTubeDataService.findById(dto.getPitotTubeId());
-    
     String vehicleNumber = dto.getVehicleNumber();
     
     return new MeasurementSnapshot(
@@ -78,8 +65,6 @@ public class MeasurementQueryService implements IMeasurementQueryService {
         team,
         senior,
         junior,
-        particularSampler,
-        pitotTube,
         vehicleNumber
     );
   }

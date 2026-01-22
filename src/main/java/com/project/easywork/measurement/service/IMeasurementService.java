@@ -8,6 +8,4 @@ public interface IMeasurementService {
   void updateDraft(Long planId, DraftUpdateCommandD request);
   void deleteDraft(Long planId);
   void saveDocument(Long planId);
-  void changeEquipment(Long planId, Long equipmentId);
-  void changePitotTube(Long planId, Long pitotTubeId);
 }
