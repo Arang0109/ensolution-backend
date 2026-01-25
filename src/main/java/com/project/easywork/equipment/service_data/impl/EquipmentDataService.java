@@ -36,4 +36,9 @@ public class EquipmentDataService implements IEquipmentDataService {
   public List<EquipmentDoc> findByType(EquipType type) {
     return equipmentRepository.findByType(type);
   }
+  
+  @Override
+  public void deleteById(String id) {
+    equipmentRepository.deleteById(id);
+  }
 }

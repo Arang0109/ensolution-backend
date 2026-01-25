@@ -47,4 +47,8 @@ public class EquipmentServiceDispatcher {
   public List<EquipmentDoc> getList(EquipType type) {
     return equipmentDataService.findByType(type);
   }
+  
+  public void deleteById(String equipmentId) {
+    equipmentDataService.deleteById(equipmentId);
+  }
 }

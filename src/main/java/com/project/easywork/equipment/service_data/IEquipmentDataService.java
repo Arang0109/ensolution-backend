@@ -10,4 +10,5 @@ public interface IEquipmentDataService {
   EquipmentDoc findById(String id);
   List<EquipmentDoc> findAll();
   List<EquipmentDoc> findByType(EquipType type);
+  void deleteById(String id);
 }

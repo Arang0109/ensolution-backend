@@ -14,6 +14,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.service.annotation.DeleteExchange;
 
 import java.util.List;
 
@@ -67,5 +68,15 @@ public class EquipmentController {
   @GetMapping("/nozzle")
   public ResponseEntity<ApiResponse<List<EquipmentDoc>>> getNozzleList() {
     return ResponseEntity.ok().body(ApiResponse.success(equipmentServiceDispatcher.getList(EquipType.NOZZLE)));
+  }
+  
+  @Operation(summary = "장비 삭제 API")
+  @DeleteMapping("/{equipmentId}")
+  public ResponseEntity<ApiResponse<Void>> removeEquipment(
+      @PathVariable String equipmentId
+  ) {
+    equipmentServiceDispatcher.deleteById(equipmentId);
+    
+    return ResponseEntity.ok().body(ApiResponse.success());
   }
 }
