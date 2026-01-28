@@ -42,6 +42,7 @@ public class NozzleService implements IEquipmentService {
         .managementNumber(dto.managementNumber())
         .serialNumber(dto.serialNumber())
         .modelName(dto.modelName())
+        .equipmentName(dto.equipmentName())
         .alias(dto.alias())
         .price(dto.price())
         .originCountry(dto.originCountry())
