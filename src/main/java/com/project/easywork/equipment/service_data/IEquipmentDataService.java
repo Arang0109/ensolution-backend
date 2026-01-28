@@ -1,14 +1,14 @@
 package com.project.easywork.equipment.service_data;
 
 import com.project.easywork.equipment.domain.EquipType;
-import com.project.easywork.equipment.domain.persistance.Equipment;
+import com.project.easywork.equipment.domain.document.EquipmentDoc;
 
 import java.util.List;
 
 public interface IEquipmentDataService {
-  Equipment findById(Long equipmentId);
-  List<Equipment> findAll();
-  List<Equipment> findByType(EquipType type);
-  Equipment save(Equipment equipment);
-  void deleteById(Long equipmentId);
+  EquipmentDoc save(EquipmentDoc doc);
+  EquipmentDoc findById(String id);
+  List<EquipmentDoc> findAll();
+  List<EquipmentDoc> findByType(EquipType type);
+  void deleteById(String id);
 }

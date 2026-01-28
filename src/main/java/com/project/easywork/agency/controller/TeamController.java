@@ -52,26 +52,6 @@ public class TeamController {
     return ResponseEntity.ok(ApiResponse.success(teamService.update(teamId, request)));
   }
   
-  @Operation(summary = "측정팀 장비 등록/삭제 API")
-  @PatchMapping("/{teamId}/particular-equip")
-  public ResponseEntity<ApiResponse<TeamD>> updateParticularEquip
-      (
-          @PathVariable Long teamId,
-          @RequestBody ParticularEquipChangeD request
-      ) {
-    return ResponseEntity.ok(ApiResponse.success(teamService.updateParticularEquip(teamId, request.getEquipmentId())));
-  }
-  
-  @Operation(summary = "측정팀 피토우관 등록/삭제 API")
-  @PatchMapping("/{teamId}/pitotTube")
-  public ResponseEntity<ApiResponse<TeamD>> updatePitotTube
-      (
-          @PathVariable Long teamId,
-          @RequestBody PitotTubeChangeD request
-      ) {
-    return ResponseEntity.ok(ApiResponse.success(teamService.updatePitotTube(teamId, request.getPitotTubeId())));
-  }
-  
   @Operation(summary = "측정팀 삭제 API", description = "측정팀 정보를 데이터베이스에서 삭제합니다.")
   @DeleteMapping("/{teamId}")
   public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long teamId) {

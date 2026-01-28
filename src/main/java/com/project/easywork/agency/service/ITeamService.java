@@ -13,7 +13,4 @@ public interface ITeamService {
   TeamD register(TeamCreateD dto);
   TeamD update(Long teamId, TeamUpdateD dto);
   void delete(Long teamId);
-  
-  TeamD updateParticularEquip(Long teamId, Long equipmentId);
-  TeamD updatePitotTube(Long teamId, Long pitotTubeId);
 }

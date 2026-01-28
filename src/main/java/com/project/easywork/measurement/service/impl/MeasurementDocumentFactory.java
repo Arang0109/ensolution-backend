@@ -1,11 +1,6 @@
 package com.project.easywork.measurement.service.impl;
 
-import ch.qos.logback.core.net.server.Client;
-import com.project.easywork.client.domain.Shape;
 import com.project.easywork.client.domain.persistance.*;
-import com.project.easywork.common.util.measurePoint.MeasurePointStrategy;
-import com.project.easywork.common.util.measurePoint.MeasurePointStrategyFactory;
-import com.project.easywork.equipment.domain.persistance.PitotTubeCoefficient;
 import com.project.easywork.measurement.dto.MeasurementStatus;
 import com.project.easywork.measurement.dto.document.MeasurementDoc;
 import com.project.easywork.measurement.dto.document.input.ClientDoc;
@@ -37,7 +32,6 @@ public class MeasurementDocumentFactory {
             s.stack().getVerticalLength()
         ))
         .preInfo(buildPreInfo(plan, s))
-        .equipment(buildEquipment(s))
         .client(buildClient(s))
         .build();
   }
@@ -87,47 +81,6 @@ public class MeasurementDocumentFactory {
     }
     
     return items;
-  }
-  
-  private EquipmentDoc buildEquipment(MeasurementSnapshot s) {
-    return EquipmentDoc.builder()
-        .particularEquipment(buildParticularEquipment(s))
-        .pitotTube(buildPitotTube(s))
-        .build();
-  }
-  
-  private EquipmentDoc.ParticularEquipmentDoc buildParticularEquipment(MeasurementSnapshot s) {
-    return EquipmentDoc.ParticularEquipmentDoc.builder()
-        .particularEquipmentId(s.equipment().getId())
-        .modelName(s.equipment().getModelName())
-        .equipmentName(s.equipment().getEquipmentName())
-        .deltaH(s.equipment().getDh())
-        .Yd(s.equipment().getYd())
-        .build();
-  }
-  
-  private EquipmentDoc.PitotTubeDoc buildPitotTube(MeasurementSnapshot s) {
-    return EquipmentDoc.PitotTubeDoc.builder()
-        .pitotTubeId(s.pitotTube().getId())
-        .modelName(s.pitotTube().getModelName())
-        .equipmentName(s.pitotTube().getEquipmentName())
-        .coefficients(buildCoefficientList(s))
-        .build();
-  }
-  
-  private List<EquipmentDoc.PitotTubeDoc.CoefficientDoc> buildCoefficientList(MeasurementSnapshot s) {
-    List<EquipmentDoc.PitotTubeDoc.CoefficientDoc> list = new ArrayList<>();
-    for (PitotTubeCoefficient coefficient : safeList(s.pitotTube().getPitotTubeCoefficientList())) {
-      list.add(
-          EquipmentDoc.PitotTubeDoc.CoefficientDoc.builder()
-              .coefficientId(coefficient.getId())
-              .velocity(coefficient.getVelocity())
-              .coefficient(coefficient.getCoefficient())
-              .build()
-      );
-    }
-    
-    return list;
   }
   
   private ClientDoc buildClient(MeasurementSnapshot s) {

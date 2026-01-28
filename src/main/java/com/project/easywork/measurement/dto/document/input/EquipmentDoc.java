@@ -32,9 +32,8 @@ public class EquipmentDoc {
   @Getter
   @Builder(toBuilder = true)
   public static class ParticularEquipmentDoc {
-    private Long particularEquipmentId;
-    private String modelName;
-    private String equipmentName;
+    private Long equipmentId;
+    private String alias;
     
     private BigDecimal deltaH; // 오리피스 보정 계수
     private BigDecimal Yd;
@@ -43,9 +42,9 @@ public class EquipmentDoc {
   @Getter
   @Builder(toBuilder = true)
   public static class PitotTubeDoc {
-    private Long pitotTubeId;
-    private String modelName;
-    private String equipmentName;
+    private Long equipmentId;
+    private String alias;
+    private String type;
     
     private List<CoefficientDoc> coefficients;
     

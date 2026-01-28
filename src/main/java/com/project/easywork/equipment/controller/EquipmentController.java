@@ -1,9 +1,12 @@
 package com.project.easywork.equipment.controller;
 
 import com.project.easywork.common.api.ApiResponse;
-import com.project.easywork.equipment.domain.dto.*;
-import com.project.easywork.equipment.service.IEquipmentService;
-import com.project.easywork.equipment.service.IPitotTubeService;
+import com.project.easywork.equipment.domain.EquipType;
+import com.project.easywork.equipment.domain.document.EquipmentDoc;
+import com.project.easywork.equipment.domain.dto.EquipmentCreateReqD;
+import com.project.easywork.equipment.domain.dto.EquipmentRegisterResD;
+import com.project.easywork.equipment.domain.dto.EquipmentUpdateReqD;
+import com.project.easywork.equipment.service.impl.EquipmentServiceDispatcher;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -14,76 +17,65 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Tag(name = "Equipment", description = "측정장비 관련 API")
+@Tag(name = "Equipment", description = "장비 관련 API")
 @SecurityRequirement(name = "bearerAuth")
 @RestController
 @RequestMapping("/api/equipments")
 @RequiredArgsConstructor
 public class EquipmentController {
   
-  private final IEquipmentService equipmentService;
-  private final IPitotTubeService pitotTubeService;
+  private final EquipmentServiceDispatcher equipmentServiceDispatcher;
   
-  @Operation(
-      summary = "측정장비 등록 API",
-      description = "새로운 측정장비 정보를 데이터베이스에 저장합니다."
-  )
+  @Operation(summary = "장비 등록 API", description = "새로운 장비 정보를 데이터베이스에 저장합니다.")
   @PostMapping()
-  public ResponseEntity<ApiResponse<EquipD>> register(
-      @Valid @RequestBody EquipCreateD request
+  public ResponseEntity<ApiResponse<EquipmentRegisterResD>> register(
+      @Valid @RequestBody EquipmentCreateReqD dto
   ) {
-    return ResponseEntity.ok().body(ApiResponse.success(equipmentService.register(request)));
-  }
-  
-  @Operation(summary = "측정장비 목록 조회 API", description = "전체 측정장비 목록을 조회합니다.")
-  @GetMapping()
-  public ResponseEntity<ApiResponse<List<EquipD>>> getList() {
-    return ResponseEntity.ok().body(ApiResponse.success(equipmentService.getList()));
-  }
-  
-  @Operation(summary = "입자상 측정장비 목록 조회 API", description = "입자상 측정장비 목록을 조회합니다.")
-  @GetMapping("/particle")
-  public ResponseEntity<ApiResponse<List<EquipD>>> getParticleList() {
-    return ResponseEntity.ok().body(ApiResponse.success(equipmentService.getListByParticular()));
-  }
-  
-  @Operation(summary = "피토우관 목록 조회 API", description = "전체 피토우관 목록을 조회합니다.")
-  @GetMapping("/pitot")
-  public ResponseEntity<ApiResponse<PitotTableViewD>> getListForPitot() {
-    return ResponseEntity.ok().body(ApiResponse.success(pitotTubeService.getList()));
-  }
-  
-  @Operation(summary = "측정장비 상세 조회 API", description = "해당 측정장비의 상세정보를 조회합니다.")
-  @GetMapping("/{equipmentId}")
-  public ResponseEntity<ApiResponse<EquipD>> get(
-      @PathVariable Long equipmentId
-  ) {
-    return ResponseEntity.ok().body(ApiResponse.success(equipmentService.getEquipment(equipmentId)));
-  }
-  
-  @Operation(summary = "측정장비 수정 API", description = "해당 측정장비의 상세정보를 수정합니다.")
-  @PatchMapping("/{equipmentId}")
-  public ResponseEntity<ApiResponse<EquipD>> update
-      (
-          @PathVariable Long equipmentId,
-          @Valid @RequestBody EquipUpdateD request
-      ) {
+    EquipmentDoc doc = equipmentServiceDispatcher.register(dto);
     
-    return ResponseEntity.ok().body(ApiResponse.success(equipmentService.update(equipmentId, request)));
+    return ResponseEntity.ok().body(ApiResponse.success(new EquipmentRegisterResD(doc.getId())));
   }
   
-  @Operation(summary = "측정장비 교정날짜 업데이트 API", description = "해당 측정장비의 교정날짜를 업데이트합니다.")
-  @PatchMapping("/{equipmentId}/calibration")
-  public ResponseEntity<ApiResponse<EquipD>> updateCalibrationDate(
-      @PathVariable Long equipmentId,
-      @Valid @RequestBody EquipCalibrationDateUpdateD request) {
-    return ResponseEntity.ok().body(ApiResponse.success(equipmentService.updateCalibrationDate(equipmentId, request)));
+  @Operation(summary = "장비 수정 API")
+  @PatchMapping("/{equipmentId}")
+  public ResponseEntity<ApiResponse<EquipmentDoc>> update(
+      @PathVariable String equipmentId,
+      @Valid@RequestBody EquipmentUpdateReqD dto
+  ) {
+    return ResponseEntity.ok().body(ApiResponse.success(equipmentServiceDispatcher.update(dto, equipmentId)));
   }
   
-  @Operation(summary = "측정장비 삭제 API", description = "측정장비 정보를 데이터베이스에서 삭제합니다.")
+  @Operation(summary = "전체 장비 목록 조회 API")
+  @GetMapping()
+  public ResponseEntity<ApiResponse<List<EquipmentDoc>>> getAllEquipmentList() {
+    return ResponseEntity.ok().body(ApiResponse.success(equipmentServiceDispatcher.getAllEquipments()));
+  }
+  
+  @Operation(summary = "입자상시료채취장비 목록 조회 API")
+  @GetMapping("/particle-sampler")
+  public ResponseEntity<ApiResponse<List<EquipmentDoc>>> getParticleSamplerList() {
+    return ResponseEntity.ok().body(ApiResponse.success(equipmentServiceDispatcher.getList(EquipType.PARTICLE_SAMPLER)));
+  }
+  
+  @Operation(summary = "피토우관 목록 조회 API")
+  @GetMapping("/pitot-tube")
+  public ResponseEntity<ApiResponse<List<EquipmentDoc>>> getPitotTubeList() {
+    return ResponseEntity.ok().body(ApiResponse.success(equipmentServiceDispatcher.getList(EquipType.PITOT_TUBE)));
+  }
+  
+  @Operation(summary = "노즐 목록 조회 API")
+  @GetMapping("/nozzle")
+  public ResponseEntity<ApiResponse<List<EquipmentDoc>>> getNozzleList() {
+    return ResponseEntity.ok().body(ApiResponse.success(equipmentServiceDispatcher.getList(EquipType.NOZZLE)));
+  }
+  
+  @Operation(summary = "장비 삭제 API")
   @DeleteMapping("/{equipmentId}")
-  public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long equipmentId) {
-    equipmentService.delete(equipmentId);
+  public ResponseEntity<ApiResponse<Void>> removeEquipment(
+      @PathVariable String equipmentId
+  ) {
+    equipmentServiceDispatcher.deleteById(equipmentId);
+    
     return ResponseEntity.ok().body(ApiResponse.success());
   }
 }
