@@ -23,6 +23,7 @@ public class EquipmentServiceDispatcher {
   private final ObjectMapper objectMapper;
   
   public EquipmentDoc register(EquipmentCreateReqD dto) {
+    System.out.println("dto: " + dto);
     return services.stream()
         .filter(s -> s.supportType() == dto.type())
         .findFirst()

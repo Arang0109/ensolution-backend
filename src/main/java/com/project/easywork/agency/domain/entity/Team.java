@@ -35,6 +35,18 @@ public class Team extends BaseEntity {
   @Column(name = "vehicle_number", length = 100)
   private String vehicleNumber;
   
+  @Column(name = "particle_sampler_id")
+  private String particleSamplerId;
+  
+  @Column(name = "gas_sampler_id")
+  private String gasSamplerId;
+  
+  @Column(name = "pitot_tube_id")
+  private String pitotTubeId;
+  
+  @Column(name = "nozzle_id")
+  private String nozzleId;
+  
   /* =========================
    * Team Logic
    * ========================= */
@@ -45,6 +57,22 @@ public class Team extends BaseEntity {
     
     if (dto.getVehicleNumber() != null && !dto.getVehicleNumber().isBlank()) {
       this.vehicleNumber = dto.getVehicleNumber();
+    }
+    
+    if (dto.getParticleSamplerId() != null && !dto.getParticleSamplerId().isBlank()) {
+      this.particleSamplerId = dto.getParticleSamplerId();
+    }
+    
+    if (dto.getGasSamplerId() != null && !dto.getGasSamplerId().isBlank()) {
+      this.gasSamplerId = dto.getGasSamplerId();
+    }
+    
+    if (dto.getPitotTubeId() != null && !dto.getPitotTubeId().isBlank()) {
+      this.pitotTubeId = dto.getPitotTubeId();
+    }
+    
+    if (dto.getNozzleId() != null && !dto.getNozzleId().isBlank()) {
+      this.nozzleId = dto.getNozzleId();
     }
   }
 }

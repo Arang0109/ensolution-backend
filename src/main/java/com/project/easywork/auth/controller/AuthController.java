@@ -120,13 +120,13 @@ public class AuthController {
   @Operation(summary = "토큰 재발급 API", description = "새로운 AccessToken 발급")
   @SecurityRequirement(name = "bearerAuth")
   @PostMapping("/refresh")
-    public ResponseEntity<?> refresh(
+    public ResponseEntity<ApiResponse<String>> refresh(
       @CookieValue(value = "refreshToken", required = false) String refreshToken
   ) {
       // 1️⃣ 유효성 검증 (서명, 만료시간)
       if (!jwtTokenProvider.validateToken(refreshToken)) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-            .body(new ApiResponse<>(false, "Refresh Token이 유효하지 않습니다.", null));
+            .body(ApiResponse.error("Refresh Token이 유효하지 않습니다."));
       }
       
       // 2️⃣ username 추출
@@ -136,7 +136,7 @@ public class AuthController {
       String storedToken = refreshTokenService.getRefreshToken(username);
       if (storedToken == null || !storedToken.equals(refreshToken)) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-            .body(new ApiResponse<>(false, "Refresh Token이 일치하지 않습니다.", null));
+            .body(ApiResponse.error("Refresh Token이 일치하지 않습니다."));
       }
       
       // 4️⃣ Access Token 재발급
