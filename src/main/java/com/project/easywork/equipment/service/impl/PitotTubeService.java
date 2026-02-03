@@ -50,6 +50,7 @@ public class PitotTubeService implements IEquipmentService {
         .serialNumber(dto.serialNumber())
         .modelName(dto.modelName())
         .equipmentName(dto.equipmentName())
+        .manufacturer(dto.manufacturer())
         .alias(dto.alias())
         .price(dto.price())
         .originCountry(dto.originCountry())

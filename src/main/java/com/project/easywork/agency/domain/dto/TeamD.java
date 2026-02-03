@@ -12,6 +12,10 @@ public class TeamD {
   private Long id;
   private String name;
   private String vehicleNumber;
+  private String particleSamplerId;
+  private String gasSamplerId;
+  private String pitotTubeId;
+  private String nozzleId;
   private LocalDateTime createdAt;
   private LocalDateTime modifiedAt;
 }

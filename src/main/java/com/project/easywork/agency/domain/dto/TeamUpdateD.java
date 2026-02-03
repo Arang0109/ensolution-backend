@@ -10,4 +10,8 @@ import lombok.NoArgsConstructor;
 public class TeamUpdateD {
   private String name;
   private String vehicleNumber;
+  private String particleSamplerId;
+  private String gasSamplerId;
+  private String pitotTubeId;
+  private String nozzleId;
 }
