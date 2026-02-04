@@ -26,6 +26,9 @@ public class WorkplaceCreateD {
   @Pattern(regexp = "^\\d{10}$", message = "사업자번호는 10자리 숫자여야 합니다.")
   private String bizNumber;
   
+  @Schema(description = "환경기술인")
+  private String manager;
+  
   @Schema(description = "업종", example = "자동차 제조업")
   private String businessCategory;
   

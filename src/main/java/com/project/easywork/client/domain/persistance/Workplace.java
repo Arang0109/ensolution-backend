@@ -40,6 +40,9 @@ public class Workplace extends BaseEntity {
   @Column(name = "biz_number", nullable = false, length = 10)
   private String bizNumber;
   
+  @Column(name = "manager")
+  private String manager;
+  
   @Column(name = "business_category", length = 100)
   private String businessCategory;
   
@@ -71,6 +74,10 @@ public class Workplace extends BaseEntity {
     
     if (dto.getBizNumber() != null && !dto.getBizNumber().isBlank()) {
       this.bizNumber = dto.getBizNumber();
+    }
+    
+    if (dto.getManager() != null && !dto.getManager().isBlank()) {
+      this.manager = dto.getManager();
     }
     
     if (dto.getBusinessCategory() != null && !dto.getBusinessCategory().isBlank()) {

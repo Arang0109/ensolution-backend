@@ -18,6 +18,7 @@ public class WorkplaceD {
   private String name;
   private String address;
   private String bizNumber;
+  private String manager;
   private String businessCategory;
   private Grade grade;
   private String remark;
