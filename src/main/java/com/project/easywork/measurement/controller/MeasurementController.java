@@ -19,22 +19,22 @@ public class MeasurementController {
   
   private final IMeasurementService measurementService;
   
-  @Operation(summary = "측정 데이터 업데이트 API", description = "측정 데이터를 업데이트합니다.")
+  @Operation(summary = "데이터 저장 API", description = "데이터를 저장합니다.")
+  @PostMapping("/{planId}/completed")
+  public ResponseEntity<ApiResponse<Void>> saveDocument(
+      @PathVariable Long planId
+  ) {
+    measurementService.saveDocument(planId);
+    return ResponseEntity.ok().body(ApiResponse.success());
+  }
+  
+  @Operation(summary = "데이터 임시저장 API", description = "데이터를 임시저장합니다.")
   @PutMapping("/{planId}/draft")
   public ResponseEntity<ApiResponse<Void>> updateDraft(
       @PathVariable Long planId,
       @RequestBody DraftUpdateCommandD request
   ) {
     measurementService.updateDraft(planId, request);
-    return ResponseEntity.ok().body(ApiResponse.success());
-  }
-  
-  @Operation(summary = "측정 데이터 저장 API", description = "측정 데이터를 저장합니다.")
-  @PostMapping("/{planId}/completed")
-  public ResponseEntity<ApiResponse<Void>> saveDocument(
-      @PathVariable Long planId
-  ) {
-    measurementService.saveDocument(planId);
     return ResponseEntity.ok().body(ApiResponse.success());
   }
 }

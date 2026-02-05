@@ -14,7 +14,7 @@ public class PlanDetailD {
   private Integer measurementPointCnt;
   
   private PreInfoDoc preInfo;
-  private EquipmentDoc equipment;
+  private MeasurementEquipmentDoc equipment;
   private ClientDoc client;
   private WeatherDoc weather;
   private MoistureDoc moisture;

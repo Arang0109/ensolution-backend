@@ -1,6 +1,6 @@
 package com.project.easywork.equipment.domain.dto;
 
-import com.project.easywork.equipment.domain.EquipType;
+import com.project.easywork.equipment.domain.dto.spec.EquipmentSpecReqD;
 import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
@@ -9,8 +9,6 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public record EquipmentUpdateReqD(
-    EquipType type,
-    
     String managementNumber,
     String serialNumber,
     String modelName,
@@ -25,6 +23,6 @@ public record EquipmentUpdateReqD(
     
     @Positive Integer calibrationCycle,
     
-    Object spec
+    EquipmentSpecReqD spec
 ) {
 }

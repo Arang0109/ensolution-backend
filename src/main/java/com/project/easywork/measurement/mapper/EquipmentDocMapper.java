@@ -1,15 +1,13 @@
 package com.project.easywork.measurement.mapper;
 
 import com.project.easywork.measurement.dto.command.EquipmentCommandD;
-import com.project.easywork.measurement.dto.document.input.EquipmentDoc;
+import com.project.easywork.measurement.dto.document.input.MeasurementEquipmentDoc;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public interface EquipmentDocMapper {
-  EquipmentDoc toDocument(EquipmentCommandD dto);
-  EquipmentDoc.ParticularEquipmentDoc toDocument(EquipmentCommandD.ParticularEquipment particularEquipment);
-  EquipmentDoc.PitotTubeDoc toDocument(EquipmentCommandD.PitotTube pitotTube);
-  EquipmentDoc.PitotTubeDoc.CoefficientDoc toDocument(
-      EquipmentCommandD.PitotTube.Coefficient coefficient
+  MeasurementEquipmentDoc toDocument(EquipmentCommandD dto);
+  MeasurementEquipmentDoc.ParticleSamplerSnapshot toDocument(
+      EquipmentCommandD.ParticularEquipment particularEquipment
   );
 }

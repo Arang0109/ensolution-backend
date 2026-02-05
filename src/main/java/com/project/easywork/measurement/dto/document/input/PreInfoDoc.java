@@ -18,9 +18,11 @@ import java.util.List;
 public class PreInfoDoc {
   private LocalDate measureDate;
   private String measurementType;
+  private Long teamId;
   private String teamName;
   private String vehicleNumber;
-  private List<String> engineers;
+  private String mentor;
+  private String mentee;
   
   private boolean simplifiedMeasurement;
   
@@ -37,6 +39,11 @@ public class PreInfoDoc {
     private Long pollutantId;
     private String pollutantNameKr;
     private String pollutantNameEn;
+    private String method;
+    private String equipmentName;
+    private String testMethodName;
+    private Double samplingTime;
+    private String samplingVolume;
     private Cycle cycle;
     private BigDecimal allowance;
   }

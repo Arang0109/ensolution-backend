@@ -46,15 +46,7 @@ public class MeasurementDraftUpdater {
           .build();
       
       ClientDoc.StackDoc newDoc = stackInfoMapper
-          .toDocument(request.stackInfo())
-          .normalize();
-      
-      ClientDoc.StackDoc merged =
-          updated.getClient().getStack() == null
-              ? newDoc
-              : updated.getClient().getStack().merge(newDoc);
-      
-      updated = updated.updateStackInfo(merged);
+          .toDocument(request.stackInfo());
     }
     
     if (request.weather() != null) {

@@ -1,5 +1,6 @@
 package com.project.easywork.equipment.domain.document.spec;
 
+import com.project.easywork.equipment.domain.EquipType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -11,15 +12,10 @@ import java.util.List;
 @Getter
 @Builder(toBuilder = true)
 @NoArgsConstructor
-@AllArgsConstructor
-public class NozzleSpecDoc {
-  private List<NozzleDiameterSpecDoc> nozzleDiameters;
+public class OtherSpec extends EquipmentSpec {
   
-  @Getter
-  @Builder(toBuilder = true)
-  @NoArgsConstructor
-  @AllArgsConstructor
-  public static class NozzleDiameterSpecDoc {
-    private BigDecimal diameter;
+  @Override
+  public EquipType getType() {
+    return EquipType.OTHER;
   }
 }

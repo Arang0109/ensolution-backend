@@ -1,5 +1,6 @@
 package com.project.easywork.equipment.domain.document.spec;
 
+import com.project.easywork.equipment.domain.EquipType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -11,6 +12,11 @@ import java.math.BigDecimal;
 @Builder(toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class GasSamplerSpecDoc {
+public class GasSamplerSpec extends EquipmentSpec {
   private BigDecimal totalVolume;
+  
+  @Override
+  public EquipType getType() {
+    return EquipType.GAS_SAMPLER;
+  }
 }

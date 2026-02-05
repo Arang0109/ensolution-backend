@@ -3,7 +3,7 @@ package com.project.easywork.measurement.pipeline.step;
 import com.project.easywork.common.domain.PressureUnit;
 import com.project.easywork.common.util.PressureConverter;
 import com.project.easywork.measurement.dto.document.MeasurementDoc;
-import com.project.easywork.measurement.dto.document.input.EquipmentDoc;
+import com.project.easywork.measurement.dto.document.input.MeasurementEquipmentDoc;
 import com.project.easywork.measurement.dto.document.input.MeasurementPointDoc;
 import com.project.easywork.measurement.pipeline.context.MeasurementContext;
 import com.project.easywork.measurement.pipeline.domain.Measurement;
@@ -135,9 +135,9 @@ public class QuantityStep implements MeasurementStep {
   
   private BigDecimal findCoefficient(
       BigDecimal avgVs,
-      List<EquipmentDoc.PitotTubeDoc.CoefficientDoc> coeffs
+      List<MeasurementEquipmentDoc.PitotTubeSnapshot.PitotCoefficient> coeffs
   ) {
-    for (EquipmentDoc.PitotTubeDoc.CoefficientDoc c : coeffs) {
+    for (MeasurementEquipmentDoc.PitotTubeSnapshot.PitotCoefficient c : coeffs) {
       // avgVs < 기준 속도 → 해당 구간 계수
       if (avgVs.compareTo(c.getVelocity()) < 0) {
         return c.getCoefficient();

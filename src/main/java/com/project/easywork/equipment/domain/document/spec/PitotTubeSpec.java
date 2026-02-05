@@ -1,5 +1,6 @@
 package com.project.easywork.equipment.domain.document.spec;
 
+import com.project.easywork.equipment.domain.EquipType;
 import com.project.easywork.equipment.domain.PitotTubeType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,15 +14,20 @@ import java.util.List;
 @Builder(toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class PitotTubeSpecDoc {
-  private PitotTubeType type;
-  private List<CoefficientDoc> coefficients;
+public class PitotTubeSpec extends EquipmentSpec {
+  private PitotTubeType pitotTubeType;
+  private List<PitotCoefficientSpec> coefficients;
+  
+  @Override
+  public EquipType getType() {
+    return EquipType.PITOT_TUBE;
+  }
   
   @Getter
   @Builder(toBuilder = true)
   @NoArgsConstructor
   @AllArgsConstructor
-  public static class CoefficientDoc {
+  public static class PitotCoefficientSpec {
     private BigDecimal coefficient;
     private BigDecimal velocity;
   }

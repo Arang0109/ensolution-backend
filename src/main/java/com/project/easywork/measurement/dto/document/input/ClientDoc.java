@@ -9,7 +9,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.List;
 
 @Getter
@@ -20,24 +19,6 @@ public class ClientDoc {
   
   private CompanyDoc company;
   private StackDoc stack;
-  private List<PreventionDoc> preventions;
-  
-  public ClientDoc normalize() {
-    return this.toBuilder()
-        .company(company)
-        .stack(stack != null ? stack.normalize() : null)
-        .preventions(
-            preventions == null ? null :
-                preventions.stream()
-                    .map(p -> p != null ? p.normalize() : null)
-                    .toList()
-        )
-        .build();
-  }
-  
-  private static BigDecimal scale(BigDecimal value, int scale) {
-    return value == null ? null : value.setScale(scale, RoundingMode.HALF_UP);
-  }
   
   // ------------------------------------
   // 의뢰기관 정보
@@ -46,12 +27,13 @@ public class ClientDoc {
   @Builder(toBuilder = true)
   public static class CompanyDoc {
     private Long companyId;
-    private String companyName;
     private Long workplaceId;
+    private String companyName;
     private String workplaceName;
-    private String bizNumber;
     private String ceoName;
     private String address;
+    private String bizNumber;
+    private String manager;
     private String businessCategory;
     private Grade grade;
   }
@@ -72,35 +54,7 @@ public class ClientDoc {
     private Shape shape;
     private Orientation orientation;
     private BigDecimal standardOxygen;
-    
-    public StackDoc merge(StackDoc doc) {
-      if (doc == null)return this;
-      
-      Shape mergedShape = doc.shape != null ? doc.shape : this.shape;
-      
-      BigDecimal mergedVerticalLength =
-          mergedShape == Shape.CIRCULAR
-              ? null
-              : (doc.verticalLength != null ? doc.verticalLength : this.verticalLength);
-      
-      return this.toBuilder()
-          .height(doc.height != null ? doc.height : this.height)
-          .horizontalLength(doc.horizontalLength != null ? doc.horizontalLength : this.horizontalLength)
-          .verticalLength(mergedVerticalLength)
-          .shape(mergedShape)
-          .orientation(doc.orientation != null ? doc.orientation : this.orientation)
-          .standardOxygen(doc.standardOxygen != null ? doc.standardOxygen : this.standardOxygen)
-          .build();
-    }
-    
-    public StackDoc normalize() {
-      return this.toBuilder()
-          .height(scale(height, 0))
-          .horizontalLength(scale(horizontalLength, 3))
-          .verticalLength(scale(verticalLength, 3))
-          .standardOxygen(scale(standardOxygen, 1))
-          .build();
-    }
+    private List<PreventionDoc> preventions;
   }
   
   // ------------------------------------
@@ -113,22 +67,6 @@ public class ClientDoc {
     private String name;
     private List<FacilityDoc> facilities;
     private List<TargetDoc> targets;
-    
-    public PreventionDoc normalize() {
-      return this.toBuilder()
-          .preventionId(preventionId)
-          .name(name)
-          .facilities(
-              facilities == null ? null : facilities
-          )
-          .targets(
-              targets == null ? null :
-                  targets.stream()
-                      .map(t -> t != null ? t.normalize() : null)
-                      .toList()
-          )
-          .build();
-    }
   }
   
   // ------------------------------------
@@ -154,13 +92,5 @@ public class ClientDoc {
     private Long targetId;
     private String targetSubstance;
     private BigDecimal removalEfficiency;
-    
-    public TargetDoc normalize() {
-      return this.toBuilder()
-          .targetId(targetId)
-          .targetSubstance(targetSubstance)
-          .removalEfficiency(scale(removalEfficiency, 1))
-          .build();
-    }
   }
 }

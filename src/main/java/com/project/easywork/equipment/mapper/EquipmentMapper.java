@@ -6,9 +6,8 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 public class EquipmentMapper {
-  public static EquipmentDoc toDoc(EquipmentCreateReqD dto) {
+  public static EquipmentDoc toDocBase(EquipmentCreateReqD dto) {
     return EquipmentDoc.builder()
-        .type(dto.type())
         .managementNumber(dto.managementNumber())
         .serialNumber(dto.serialNumber())
         .modelName(dto.modelName())
@@ -21,7 +20,6 @@ public class EquipmentMapper {
         .remark(dto.remark())
         .calibrationCycle(dto.calibrationCycle())
         .lastCalibrationDate(null)
-        .spec(dto.spec())
         .build();
   }
 }
