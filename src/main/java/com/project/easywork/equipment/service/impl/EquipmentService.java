@@ -1,7 +1,7 @@
 package com.project.easywork.equipment.service.impl;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.project.easywork.equipment.domain.EquipStatus;
 import com.project.easywork.equipment.domain.EquipType;
 import com.project.easywork.equipment.domain.document.EquipmentDoc;
 import com.project.easywork.equipment.domain.document.spec.*;
@@ -36,10 +36,8 @@ public class EquipmentService {
     EquipmentDoc doc = equipmentDataService.findById(id);
     doc.updateCommonFields(dto);
     
-    if (dto.spec() != null) {
-      EquipmentSpec spec = objectMapper.convertValue(dto.spec(), EquipmentSpec.class);
-      doc.updateSpec(spec);
-    }
+    EquipmentSpec spec = objectMapper.convertValue(dto.spec(), EquipmentSpec.class);
+    doc.updateSpec(spec);
     
     return equipmentDataService.save(doc);
   }
@@ -56,7 +54,9 @@ public class EquipmentService {
     return equipmentDataService.findByType(type);
   }
   
-  public void deleteById(String equipmentId) {
-    equipmentDataService.deleteById(equipmentId);
+  public void changeStatus(String equipmentId, EquipStatus status) {
+    EquipmentDoc doc = equipmentDataService.findById(equipmentId);
+    doc.changeStatus(status);
+    equipmentDataService.save(doc);
   }
 }

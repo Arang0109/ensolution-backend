@@ -1,5 +1,6 @@
 package com.project.easywork.equipment.domain.document;
 
+import com.project.easywork.equipment.domain.EquipStatus;
 import com.project.easywork.equipment.domain.document.spec.EquipmentSpec;
 import com.project.easywork.equipment.domain.dto.EquipmentCreateReqD;
 import com.project.easywork.equipment.domain.dto.EquipmentUpdateReqD;
@@ -34,6 +35,8 @@ public class EquipmentDoc {
   private Integer calibrationCycle;
   private LocalDate lastCalibrationDate;
   
+  private EquipStatus status;
+  
   private EquipmentSpec spec;
   
   public static EquipmentDoc createBase(EquipmentCreateReqD dto) {
@@ -49,11 +52,21 @@ public class EquipmentDoc {
         .purchaseDate(dto.purchaseDate())
         .remark(dto.remark())
         .calibrationCycle(dto.calibrationCycle())
+        .status(EquipStatus.ACTIVE)
         .build();
   }
   
+  public void changeStatus(EquipStatus status) {
+    if (this.status == EquipStatus.DELETED) {
+      throw new IllegalStateException("삭제된 장비는 상태 변경 불가");
+    }
+    this.status = status;
+  }
+  
   public void updateSpec(EquipmentSpec spec) {
-    this.spec = spec;
+    if (spec != null) {
+      this.spec = spec;
+    }
   }
   
   public void updateCommonFields(EquipmentUpdateReqD dto) {

@@ -5,6 +5,7 @@ import com.project.easywork.equipment.domain.EquipType;
 import com.project.easywork.equipment.domain.document.EquipmentDoc;
 import com.project.easywork.equipment.domain.dto.EquipmentCreateReqD;
 import com.project.easywork.equipment.domain.dto.EquipmentRegisterResD;
+import com.project.easywork.equipment.domain.dto.EquipmentStatusUpdateReq;
 import com.project.easywork.equipment.domain.dto.EquipmentUpdateReqD;
 import com.project.easywork.equipment.service.impl.EquipmentService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -45,7 +46,7 @@ public class EquipmentController {
     return ResponseEntity.ok().body(ApiResponse.success(equipmentService.update(dto, equipmentId)));
   }
   
-  @Operation(summary = "장비 목록 조회 API")
+  @Operation(summary = "장비 목록조회 API")
   @GetMapping
   public ResponseEntity<ApiResponse<List<EquipmentDoc>>> getEquipmentList(
       @RequestParam(required = false) EquipType type
@@ -55,13 +56,14 @@ public class EquipmentController {
     );
   }
   
-  @Operation(summary = "장비 삭제 API")
-  @DeleteMapping("/{equipmentId}")
-  public ResponseEntity<ApiResponse<Void>> removeEquipment(
-      @PathVariable String equipmentId
+  @Operation(summary = "장비 상태관리 API")
+  @PatchMapping("/{equipmentId}/status")
+  public ResponseEntity<ApiResponse<Void>> changeStatus(
+      @PathVariable String equipmentId,
+      @RequestBody EquipmentStatusUpdateReq req
   ) {
-    equipmentService.deleteById(equipmentId);
+    equipmentService.changeStatus(equipmentId, req.status());
     
-    return ResponseEntity.ok().body(ApiResponse.success());
+    return ResponseEntity.ok(ApiResponse.success());
   }
 }
