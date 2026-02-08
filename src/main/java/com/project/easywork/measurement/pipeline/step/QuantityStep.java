@@ -135,9 +135,9 @@ public class QuantityStep implements MeasurementStep {
   
   private BigDecimal findCoefficient(
       BigDecimal avgVs,
-      List<MeasurementEquipmentDoc.PitotTubeSnapshot.PitotCoefficient> coeffs
+      List<MeasurementEquipmentDoc.PitotTubeDoc.PitotCoefficient> coeffs
   ) {
-    for (MeasurementEquipmentDoc.PitotTubeSnapshot.PitotCoefficient c : coeffs) {
+    for (MeasurementEquipmentDoc.PitotTubeDoc.PitotCoefficient c : coeffs) {
       // avgVs < 기준 속도 → 해당 구간 계수
       if (avgVs.compareTo(c.getVelocity()) < 0) {
         return c.getCoefficient();

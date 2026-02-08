@@ -6,6 +6,7 @@ import com.project.easywork.measurement.dto.document.input.PreInfoDoc;
 import com.project.easywork.measurement.dto.snapshot.MeasurementSnapshot;
 import com.project.easywork.measurement.mapper.AgencyDocMapper;
 import com.project.easywork.measurement.mapper.ClientDocMapper;
+import com.project.easywork.measurement.mapper.EquipmentDocMapper;
 import com.project.easywork.measurement.mapper.StackMeasurementDocMapper;
 import com.project.easywork.measurement.util.MeasurementPointCalculator;
 import com.project.easywork.plan.domain.dto.PlanCreateD;
@@ -21,7 +22,7 @@ public class MeasurementDocumentFactory {
   private final MeasurementPointCalculator measurementPointCalculator;
   private final ClientDocMapper clientDocMapper;
   private final AgencyDocMapper agencyDocMapper;
-  private final StackMeasurementDocMapper stackMeasurementDocMapper;
+  private final EquipmentDocMapper equipmentDocMapper;
   
   public MeasurementDoc createDraft(Long planId, MeasurementSnapshot s) {
   
@@ -35,6 +36,7 @@ public class MeasurementDocumentFactory {
         ))
         .preInfo(agencyDocMapper.toDoc(s.agency(), s.stackMeasurements()))
         .client(clientDocMapper.toDoc(s.client()))
+        .equipment(equipmentDocMapper.toDoc(s.measurementEquipment()))
         .build();
   }
   
