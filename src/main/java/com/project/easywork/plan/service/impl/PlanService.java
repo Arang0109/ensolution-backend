@@ -48,6 +48,7 @@ public class PlanService implements IPlanService {
     Plan plan = planMapper.toEntity(planD);
     plan.attachStack(stack);
     plan.attachTeam(team);
+    plan.createPlan();
     
     Plan savedPlan = planDataService.save(plan);
     Long planId = savedPlan.getId(); ;

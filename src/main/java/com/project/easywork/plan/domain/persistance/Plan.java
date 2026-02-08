@@ -63,6 +63,10 @@ public class Plan {
     this.team = team;
   }
   
+  public void createPlan() {
+    this.status = PlanStatus.MEASURING;
+  }
+  
   public void updateStatus(StatusUpdateD dto) {
     this.status = dto.getStatus();
   }

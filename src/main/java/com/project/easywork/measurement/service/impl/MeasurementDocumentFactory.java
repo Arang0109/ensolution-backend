@@ -4,6 +4,7 @@ import com.project.easywork.measurement.dto.MeasurementStatus;
 import com.project.easywork.measurement.dto.document.MeasurementDoc;
 import com.project.easywork.measurement.dto.document.input.PreInfoDoc;
 import com.project.easywork.measurement.dto.snapshot.MeasurementSnapshot;
+import com.project.easywork.measurement.mapper.AgencyDocMapper;
 import com.project.easywork.measurement.mapper.ClientDocMapper;
 import com.project.easywork.measurement.mapper.StackMeasurementDocMapper;
 import com.project.easywork.measurement.util.MeasurementPointCalculator;
@@ -19,9 +20,10 @@ public class MeasurementDocumentFactory {
   
   private final MeasurementPointCalculator measurementPointCalculator;
   private final ClientDocMapper clientDocMapper;
+  private final AgencyDocMapper agencyDocMapper;
   private final StackMeasurementDocMapper stackMeasurementDocMapper;
   
-  public MeasurementDoc createDraft(Long planId, PlanCreateD plan, MeasurementSnapshot s) {
+  public MeasurementDoc createDraft(Long planId, MeasurementSnapshot s) {
   
     return MeasurementDoc.builder()
         .planId(planId)
@@ -31,22 +33,8 @@ public class MeasurementDocumentFactory {
             s.client().stack().horizontalLength(),
             s.client().stack().verticalLength()
         ))
-        .preInfo(buildPreInfo(plan, s))
+        .preInfo(agencyDocMapper.toDoc(s.agency(), s.stackMeasurements()))
         .client(clientDocMapper.toDoc(s.client()))
-        .build();
-  }
-  
-  private PreInfoDoc buildPreInfo(PlanCreateD plan, MeasurementSnapshot s) {
-    return PreInfoDoc.builder()
-        .measureDate(plan.getMeasureDate())
-        .measurementType(plan.getMeasurementType())
-        .teamId(s.agency().team().teamId())
-        .teamName(s.agency().team().name())
-        .vehicleNumber(s.agency().vehicleNumber())
-        .mentor(s.agency().mentor())
-        .mentee(s.agency().mentee())
-        .simplifiedMeasurement(true) // 추후 수정
-        .measurementItems(stackMeasurementDocMapper.toDocs(s.stackMeasurements()))
         .build();
   }
   

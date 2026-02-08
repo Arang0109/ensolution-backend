@@ -48,6 +48,7 @@ public class EquipmentService {
   }
   
   public EquipmentDoc getEquipment(String id) {
+    
     return equipmentDataService.findById(id);
   }
   

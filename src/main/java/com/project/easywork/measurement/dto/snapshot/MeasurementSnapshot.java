@@ -8,6 +8,7 @@ import com.project.easywork.measurement.dto.snapshot.stack_measurement.StackMeas
 import java.util.List;
 
 public record MeasurementSnapshot(
+    
     /* 자가측정 대행업체 스냅샷 */
     AgencySnapshot agency,
     

@@ -27,7 +27,6 @@ public class MeasurementService implements IMeasurementService {
     
     MeasurementDoc doc = documentFactory.createDraft(
         planId,
-        dto.getPlan(),
         measurementQueryService.loadSnapshot(dto)
     );
     measurementDataService.save(doc);

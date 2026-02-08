@@ -5,13 +5,11 @@ import com.project.easywork.client.domain.persistance.Stack;
 import com.project.easywork.client.domain.persistance.StackMeasurement;
 import com.project.easywork.equipment.domain.document.EquipmentDoc;
 import com.project.easywork.measurement.dto.snapshot.MeasurementSnapshot;
-import com.project.easywork.measurement.mapper.snapshot_mapper.AgencySnapshotMapper;
-import com.project.easywork.measurement.mapper.snapshot_mapper.ClientSnapshotMapper;
-import com.project.easywork.measurement.mapper.snapshot_mapper.MeasurementEquipmentSnapshotMapper;
-import com.project.easywork.measurement.mapper.snapshot_mapper.StackMeasurementSnapshotMapper;
+import com.project.easywork.measurement.mapper.snapshot_mapper.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Component
@@ -24,6 +22,9 @@ public class MeasurementSnapshotAssembler {
   private final MeasurementEquipmentSnapshotMapper equipmentMapper;
   
   public MeasurementSnapshot assemble(
+      LocalDate measureDate,
+      String measurementType,
+      boolean simplifiedMeasurement,
       Stack stack,
       List<StackMeasurement> measurements,
       Team team,
@@ -37,7 +38,7 @@ public class MeasurementSnapshotAssembler {
   ) {
     
     return new MeasurementSnapshot(
-        agencyMapper.toSnapshot(team, vehicleNumber, mentor, mentee),
+        agencyMapper.toSnapshot(measureDate, measurementType, simplifiedMeasurement, team, vehicleNumber, mentor, mentee),
         clientMapper.toSnapshot(stack),
         stackMeasurementMapper.toSnapshots(measurements),
         equipmentMapper.toSnapshot(particleSampler, gasSampler, pitotTube, nozzle)
