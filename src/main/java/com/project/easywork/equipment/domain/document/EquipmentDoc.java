@@ -1,7 +1,7 @@
 package com.project.easywork.equipment.domain.document;
 
 import com.project.easywork.equipment.domain.EquipStatus;
-import com.project.easywork.equipment.domain.document.spec.EquipmentSpec;
+import com.project.easywork.equipment.domain.EquipType;
 import com.project.easywork.equipment.domain.dto.EquipmentCreateReqD;
 import com.project.easywork.equipment.domain.dto.EquipmentUpdateReqD;
 import lombok.*;
@@ -10,6 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Map;
 
 @Document("equipments")
 @Getter
@@ -19,6 +20,8 @@ import java.time.LocalDate;
 public class EquipmentDoc {
   @Id
   private String id;
+  
+  private EquipType type;
   
   private String managementNumber;
   private String serialNumber;
@@ -37,10 +40,11 @@ public class EquipmentDoc {
   
   private EquipStatus status;
   
-  private EquipmentSpec spec;
+  private Map<String, Object> spec;
   
   public static EquipmentDoc createBase(EquipmentCreateReqD dto) {
     return EquipmentDoc.builder()
+        .type(dto.type())
         .managementNumber(dto.managementNumber())
         .serialNumber(dto.serialNumber())
         .modelName(dto.modelName())
@@ -63,13 +67,15 @@ public class EquipmentDoc {
     this.status = status;
   }
   
-  public void updateSpec(EquipmentSpec spec) {
-    if (spec != null) {
-      this.spec = spec;
-    }
+  public void updateSpec(Map<String, Object> spec) {
+    if (spec == null) return;
+    this.spec = spec;
   }
   
   public void updateCommonFields(EquipmentUpdateReqD dto) {
+    if (dto.type() != null) {
+      this.type = dto.type();
+    }
     
     if (dto.managementNumber() != null) {
       this.managementNumber = dto.managementNumber();

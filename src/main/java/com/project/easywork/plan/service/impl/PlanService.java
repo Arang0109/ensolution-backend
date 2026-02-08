@@ -57,7 +57,7 @@ public class PlanService implements IPlanService {
     
     measurementService.createDraft(planId, dto);
     
-    return planMapper.toDto(planDataService.save(savedPlan));
+    return planMapper.toDto(savedPlan);
   }
   
   @Override

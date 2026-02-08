@@ -1,5 +1,6 @@
 package com.project.easywork.equipment.service_data.impl;
 
+import com.project.easywork.equipment.domain.EquipStatus;
 import com.project.easywork.equipment.domain.EquipType;
 import com.project.easywork.equipment.domain.document.EquipmentDoc;
 import com.project.easywork.equipment.domain.document.spec.*;
@@ -30,30 +31,19 @@ public class EquipmentDataService implements IEquipmentDataService {
   
   @Override
   public List<EquipmentDoc> findAll() {
-    return equipmentRepository.findAll();
+    return equipmentRepository.findByStatusNot(EquipStatus.DELETED);
   }
   
   @Override
   public List<EquipmentDoc> findByType(EquipType type) {
-    Class<?> specClass = getSpecClass(type);
-    
-    return equipmentRepository.findBySpecType(
-        specClass.getName()
+    return equipmentRepository.findByTypeAndStatusNot(
+        type,
+        EquipStatus.DELETED
     );
   }
   
   @Override
   public void deleteById(String id) {
     equipmentRepository.deleteById(id);
-  }
-  
-  private Class<? extends EquipmentSpec> getSpecClass(EquipType type) {
-    return switch (type) {
-      case PARTICLE_SAMPLER -> ParticleSamplerSpec.class;
-      case GAS_SAMPLER -> GasSamplerSpec.class;
-      case PITOT_TUBE -> PitotTubeSpec.class;
-      case NOZZLE -> NozzleSpec.class;
-      case OTHER -> OtherSpec.class;
-    };
   }
 }

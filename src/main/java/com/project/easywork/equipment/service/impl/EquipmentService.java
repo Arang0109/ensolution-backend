@@ -1,10 +1,10 @@
 package com.project.easywork.equipment.service.impl;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.easywork.equipment.domain.EquipStatus;
 import com.project.easywork.equipment.domain.EquipType;
 import com.project.easywork.equipment.domain.document.EquipmentDoc;
-import com.project.easywork.equipment.domain.document.spec.*;
 import com.project.easywork.equipment.domain.dto.EquipmentCreateReqD;
 import com.project.easywork.equipment.domain.dto.EquipmentUpdateReqD;
 import com.project.easywork.equipment.service_data.IEquipmentDataService;
@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -22,7 +23,9 @@ public class EquipmentService {
   private final ObjectMapper objectMapper;
   
   public EquipmentDoc register(EquipmentCreateReqD dto) {
-    EquipmentSpec spec = objectMapper.convertValue(dto.spec(), EquipmentSpec.class);
+    Map<String, Object> spec = objectMapper.convertValue(
+        dto.spec(), new TypeReference<Map<String, Object>>() {}
+    );
     
     EquipmentDoc doc = EquipmentDoc.createBase(dto)
         .toBuilder()
@@ -36,7 +39,9 @@ public class EquipmentService {
     EquipmentDoc doc = equipmentDataService.findById(id);
     doc.updateCommonFields(dto);
     
-    EquipmentSpec spec = objectMapper.convertValue(dto.spec(), EquipmentSpec.class);
+    Map<String, Object> spec = objectMapper.convertValue(
+        dto.spec(), new TypeReference<Map<String, Object>>() {}
+    );
     doc.updateSpec(spec);
     
     return equipmentDataService.save(doc);
