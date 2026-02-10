@@ -29,12 +29,10 @@ public class EquipmentController {
   
   @Operation(summary = "장비 등록 API")
   @PostMapping()
-  public ResponseEntity<ApiResponse<EquipmentRegisterResD>> register(
+  public ResponseEntity<ApiResponse<EquipmentDoc>> register(
       @Valid @RequestBody EquipmentCreateReqD dto
   ) {
-    EquipmentDoc doc = equipmentService.register(dto);
-    
-    return ResponseEntity.ok().body(ApiResponse.success(new EquipmentRegisterResD(doc.getId())));
+    return ResponseEntity.ok().body(ApiResponse.success(equipmentService.register(dto)));
   }
   
   @Operation(summary = "장비 수정 API")

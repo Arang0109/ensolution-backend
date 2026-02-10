@@ -11,6 +11,6 @@ import java.math.BigDecimal;
 @Builder(toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class GasSamplerSpec {
+public class GasSamplerSpec implements EquipmentSpec {
   private BigDecimal totalVolume;
 }

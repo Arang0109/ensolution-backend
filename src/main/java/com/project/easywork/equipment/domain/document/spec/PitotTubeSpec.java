@@ -13,7 +13,7 @@ import java.util.List;
 @Builder(toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class PitotTubeSpec {
+public class PitotTubeSpec implements EquipmentSpec {
   private PitotTubeType pitotTubeType;
   private List<PitotCoefficientSpec> coefficients;
   

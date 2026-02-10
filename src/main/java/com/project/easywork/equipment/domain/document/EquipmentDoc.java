@@ -1,7 +1,10 @@
 package com.project.easywork.equipment.domain.document;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.project.easywork.equipment.domain.EquipStatus;
 import com.project.easywork.equipment.domain.EquipType;
+import com.project.easywork.equipment.domain.document.spec.*;
 import com.project.easywork.equipment.domain.dto.EquipmentCreateReqD;
 import com.project.easywork.equipment.domain.dto.EquipmentUpdateReqD;
 import lombok.*;
@@ -40,7 +43,19 @@ public class EquipmentDoc {
   
   private EquipStatus status;
   
-  private Map<String, Object> spec;
+  @JsonTypeInfo(
+      use = JsonTypeInfo.Id.NAME,
+      include = JsonTypeInfo.As.EXTERNAL_PROPERTY,
+      property = "type"
+  )
+  @JsonSubTypes({
+      @JsonSubTypes.Type(value = ParticleSamplerSpec.class, name = "PARTICLE_SAMPLER"),
+      @JsonSubTypes.Type(value = GasSamplerSpec.class, name = "GAS_SAMPLER"),
+      @JsonSubTypes.Type(value = PitotTubeSpec.class, name = "PITOT_TUBE"),
+      @JsonSubTypes.Type(value = NozzleSpec.class, name = "NOZZLE"),
+      @JsonSubTypes.Type(value = OtherSpec.class, name = "OTHER")
+  })
+  private EquipmentSpec spec;
   
   public static EquipmentDoc createBase(EquipmentCreateReqD dto) {
     return EquipmentDoc.builder()
@@ -67,7 +82,7 @@ public class EquipmentDoc {
     this.status = status;
   }
   
-  public void updateSpec(Map<String, Object> spec) {
+  public void updateSpec(EquipmentSpec spec) {
     if (spec == null) return;
     this.spec = spec;
   }

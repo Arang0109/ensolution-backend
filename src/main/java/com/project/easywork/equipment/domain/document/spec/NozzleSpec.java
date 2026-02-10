@@ -12,7 +12,7 @@ import java.util.List;
 @Builder(toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class NozzleSpec {
+public class NozzleSpec implements EquipmentSpec {
   private List<NozzleDiameterSpec> diameters;
   
   @Getter
