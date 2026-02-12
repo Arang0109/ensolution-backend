@@ -38,7 +38,7 @@ public class TeamController {
   
   @Operation(summary = "측정팀 조회 API", description = "해당 측정팀의 상세정보를 조회합니다.")
   @GetMapping("/{teamId}")
-  public ResponseEntity<ApiResponse<TeamDetailD>> get(@PathVariable Long teamId) {
+  public ResponseEntity<ApiResponse<TeamD>> get(@PathVariable Long teamId) {
     return ResponseEntity.ok().body(ApiResponse.success(teamService.get(teamId)));
   }
   

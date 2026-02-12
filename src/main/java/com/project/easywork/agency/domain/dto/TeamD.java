@@ -12,6 +12,8 @@ public class TeamD {
   private Long id;
   private String name;
   private String vehicleNumber;
+  private String mentor;
+  private String mentee;
   private String particleSamplerId;
   private String gasSamplerId;
   private String pitotTubeId;

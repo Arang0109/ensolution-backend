@@ -9,6 +9,8 @@ import lombok.*;
 public class TeamCreateD {
   @NotBlank(message = "필수 입력")  private String name;
   private String vehicleNumber;
+  private String mentor;
+  private String mentee;
   private String particleSamplerId;
   private String gasSamplerId;
   private String pitotTubeId;

@@ -35,6 +35,12 @@ public class Team extends BaseEntity {
   @Column(name = "vehicle_number", length = 100)
   private String vehicleNumber;
   
+  @Column(name = "mentor", length = 100)
+  private String mentor;
+  
+  @Column(name = "mentee", length = 100)
+  private String mentee;
+  
   @Column(name = "particle_sampler_id")
   private String particleSamplerId;
   
