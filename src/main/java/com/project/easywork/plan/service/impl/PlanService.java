@@ -48,6 +48,7 @@ public class PlanService implements IPlanService {
     Plan plan = planMapper.toEntity(planD);
     plan.attachStack(stack);
     plan.attachTeam(team);
+    plan.createPlan();
     
     Plan savedPlan = planDataService.save(plan);
     Long planId = savedPlan.getId(); ;
@@ -57,7 +58,7 @@ public class PlanService implements IPlanService {
     
     measurementService.createDraft(planId, dto);
     
-    return planMapper.toDto(planDataService.save(savedPlan));
+    return planMapper.toDto(savedPlan);
   }
   
   @Override
@@ -83,14 +84,7 @@ public class PlanService implements IPlanService {
     
     return PlanDetailD.builder()
         .plan(planMapper.toDto(plan))
-        .status(doc.getStatus())
-        .measurementPointCnt(doc.getMeasurementPointCnt())
-        .preInfo(doc.getPreInfo())
-        .equipment(doc.getEquipment())
-        .client(doc.getClient())
-        .weather(doc.getWeather())
-        .moisture(doc.getMoisture())
-        .exhaustGas(doc.getExhaustGas())
+        .measurementInfo(doc)
         .build();
   }
   

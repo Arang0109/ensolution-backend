@@ -12,13 +12,13 @@ import lombok.NoArgsConstructor;
 public class PlanCreateBundleD {
   private PlanCreateD plan;
   
-  private Long companyId;
-  private Long workplaceId;
-  
+  private boolean simplifiedMeasurement = true;
   private String vehicleNumber; // 차량 번호는 변경될 수 있기 때문에 따로 관리
-  private Long seniorUserId;
-  private Long juniorUserId;
+  private String mentor;
+  private String mentee;
   
-  private Long equipmentId;
-  private Long pitotTubeId;
+  private String particleSamplerId;
+  private String gasSamplerId;
+  private String pitotTubeId;
+  private String nozzleId;
 }

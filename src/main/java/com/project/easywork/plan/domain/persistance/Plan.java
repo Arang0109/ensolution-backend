@@ -3,6 +3,7 @@ package com.project.easywork.plan.domain.persistance;
 import com.project.easywork.agency.domain.entity.Team;
 import com.project.easywork.client.domain.persistance.Stack;
 import com.project.easywork.client.domain.persistance.StackMeasurement;
+import com.project.easywork.plan.domain.MeasureField;
 import com.project.easywork.plan.domain.PlanStatus;
 import com.project.easywork.plan.domain.dto.MeasurementItemsUpdateD;
 import com.project.easywork.plan.domain.dto.StatusUpdateD;
@@ -39,6 +40,9 @@ public class Plan {
   @ToString.Exclude
   private Team team;
   
+  @Enumerated(EnumType.STRING)
+  private MeasureField measureField;
+  
   @Column(name = "measure_date")
   private LocalDate measureDate;
   
@@ -61,6 +65,10 @@ public class Plan {
   
   public void attachTeam(Team team) {
     this.team = team;
+  }
+  
+  public void createPlan() {
+    this.status = PlanStatus.MEASURING;
   }
   
   public void updateStatus(StatusUpdateD dto) {

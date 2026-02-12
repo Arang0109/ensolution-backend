@@ -42,8 +42,8 @@ public class TeamService implements ITeamService {
   
   @Override
   @Transactional(readOnly = true)
-  public TeamDetailD get(Long id) {
-    return teamMapper.toDetailDto(teamDataService.findById(id));
+  public TeamD get(Long id) {
+    return teamMapper.toDto(teamDataService.findById(id));
   }
   
   @Override public TeamD update(Long id, TeamUpdateD dto) {

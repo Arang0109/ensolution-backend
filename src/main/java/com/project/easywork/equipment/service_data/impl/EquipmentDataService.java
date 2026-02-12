@@ -1,7 +1,9 @@
 package com.project.easywork.equipment.service_data.impl;
 
+import com.project.easywork.equipment.domain.EquipStatus;
 import com.project.easywork.equipment.domain.EquipType;
 import com.project.easywork.equipment.domain.document.EquipmentDoc;
+import com.project.easywork.equipment.domain.document.spec.*;
 import com.project.easywork.equipment.repository.EquipmentRepository;
 import com.project.easywork.equipment.service_data.IEquipmentDataService;
 import lombok.RequiredArgsConstructor;
@@ -29,12 +31,15 @@ public class EquipmentDataService implements IEquipmentDataService {
   
   @Override
   public List<EquipmentDoc> findAll() {
-    return equipmentRepository.findAll();
+    return equipmentRepository.findByStatusNot(EquipStatus.DELETED);
   }
   
   @Override
   public List<EquipmentDoc> findByType(EquipType type) {
-    return equipmentRepository.findByType(type);
+    return equipmentRepository.findByTypeAndStatusNot(
+        type,
+        EquipStatus.DELETED
+    );
   }
   
   @Override

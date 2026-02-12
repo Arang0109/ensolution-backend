@@ -8,7 +8,6 @@ import org.mapstruct.Mapper;
     componentModel = "spring",
     uses = {
         StackInfoMapper.class,
-        PreInfoMapper.class,
         WeatherMapper.class,
         MoistureMapper.class,
         EquipmentDocMapper.class,

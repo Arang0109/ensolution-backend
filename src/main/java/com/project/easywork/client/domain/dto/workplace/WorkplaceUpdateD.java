@@ -12,6 +12,7 @@ public class WorkplaceUpdateD {
   private String address;
   @Pattern(regexp = "^\\d{10}$", message = "사업자번호는 10자리 숫자여야 합니다.")
   private String bizNumber;
+  private String manager;
   private String businessCategory;
   private Grade grade;
   private String remark;

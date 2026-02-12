@@ -1,11 +1,12 @@
 package com.project.easywork.equipment.service.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.project.easywork.equipment.domain.EquipStatus;
 import com.project.easywork.equipment.domain.EquipType;
 import com.project.easywork.equipment.domain.document.EquipmentDoc;
+import com.project.easywork.equipment.domain.document.spec.EquipmentSpec;
 import com.project.easywork.equipment.domain.dto.EquipmentCreateReqD;
 import com.project.easywork.equipment.domain.dto.EquipmentUpdateReqD;
-import com.project.easywork.equipment.service.IEquipmentService;
 import com.project.easywork.equipment.service_data.IEquipmentDataService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,40 +17,49 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class EquipmentServiceDispatcher {
-  private final List<IEquipmentService> services;
-  
+public class EquipmentService {
   private final IEquipmentDataService equipmentDataService;
+  private final SpecFactory specFactory;
   private final ObjectMapper objectMapper;
   
   public EquipmentDoc register(EquipmentCreateReqD dto) {
-    System.out.println("dto: " + dto);
-    return services.stream()
-        .filter(s -> s.supportType() == dto.type())
-        .findFirst()
-        .orElseThrow(() -> new IllegalArgumentException("지원하지 않는 장비 타입"))
-        .register(dto);
+    EquipmentSpec spec = specFactory.toSpec(dto.spec(), dto.type());
+    
+    EquipmentDoc doc = EquipmentDoc.createBase(dto)
+        .toBuilder()
+        .spec(spec)
+        .build();
+    return equipmentDataService.save(doc);
   }
   
   public EquipmentDoc update(EquipmentUpdateReqD dto, String id) {
-    EquipmentDoc doc = equipmentDataService.findById(id);
     
-    doc.update(dto, objectMapper);
+    EquipmentDoc doc = equipmentDataService.findById(id);
+    doc.updateCommonFields(dto);
+    
+    EquipmentSpec spec = specFactory.toSpec(dto.spec(), dto.type());
+    
+    doc.updateSpec(spec);
     
     return equipmentDataService.save(doc);
   }
   
-  @Transactional(readOnly = true)
-  public List<EquipmentDoc> getAllEquipments() {
-   return equipmentDataService.findAll();
+  public EquipmentDoc getEquipment(String id) {
+    
+    return equipmentDataService.findById(id);
   }
   
   @Transactional(readOnly = true)
   public List<EquipmentDoc> getList(EquipType type) {
+    if (type == null) {
+      return equipmentDataService.findAll();
+    }
     return equipmentDataService.findByType(type);
   }
   
-  public void deleteById(String equipmentId) {
-    equipmentDataService.deleteById(equipmentId);
+  public void changeStatus(String equipmentId, EquipStatus status) {
+    EquipmentDoc doc = equipmentDataService.findById(equipmentId);
+    doc.changeStatus(status);
+    equipmentDataService.save(doc);
   }
 }

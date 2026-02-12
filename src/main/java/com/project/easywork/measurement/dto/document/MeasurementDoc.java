@@ -31,7 +31,7 @@ public class MeasurementDoc {
   private List<BigDecimal> circularAxisCoords;
   
   private PreInfoDoc preInfo;
-  private EquipmentDoc equipment;
+  private MeasurementEquipmentDoc equipment;
   private ClientDoc client;
   private WeatherDoc weather;
   private MoistureDoc moisture;
