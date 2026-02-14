@@ -1,5 +1,6 @@
 package com.project.easywork.plan.domain.dto;
 
+import com.project.easywork.plan.domain.MeasureField;
 import com.project.easywork.plan.domain.PlanStatus;
 import lombok.*;
 
@@ -12,6 +13,7 @@ import java.util.List;
 @Builder
 public class PlanTableViewD {
   private Long id;
+  private MeasureField measureField;
   private LocalDate measureDate;
   private String measurementType;
   

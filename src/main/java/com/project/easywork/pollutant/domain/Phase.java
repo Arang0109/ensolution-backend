@@ -4,5 +4,5 @@ import lombok.Getter;
 
 @Getter
 public enum Phase {
-  PARTICULATE, GAS
+  PARTICLE, GAS
 }

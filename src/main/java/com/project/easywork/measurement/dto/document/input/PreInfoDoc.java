@@ -1,6 +1,7 @@
 package com.project.easywork.measurement.dto.document.input;
 
 import com.project.easywork.client.domain.Cycle;
+import com.project.easywork.pollutant.domain.Method;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -39,7 +40,7 @@ public class PreInfoDoc {
     private Long pollutantId;
     private String pollutantNameKr;
     private String pollutantNameEn;
-    private String method;
+    private Method method;
     private String equipmentName;
     private String testMethodName;
     private Double samplingTime;

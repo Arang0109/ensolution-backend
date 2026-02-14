@@ -1,5 +1,6 @@
 package com.project.easywork.pollutant.domain.dto;
 
+import com.project.easywork.pollutant.domain.Method;
 import com.project.easywork.pollutant.domain.Phase;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
@@ -14,7 +15,7 @@ public class PollutantD {
   
   private String nameKr;
   private String nameEn;
-  private String method;
+  private Method method;
   private Phase phase;
   private String equipmentName;
   private String testMethodName;

@@ -1,5 +1,6 @@
 package com.project.easywork.pollutant.domain.dto;
 
+import com.project.easywork.pollutant.domain.Method;
 import com.project.easywork.pollutant.domain.Phase;
 import jakarta.validation.constraints.Min;
 import lombok.*;
@@ -11,7 +12,7 @@ import lombok.*;
 public class PollutantCreateD {
   private String nameKr;
   private String nameEn;
-  private String method;
+  private Method method;
   private Phase phase;
   private String equipmentName;
   private String testMethodName;
