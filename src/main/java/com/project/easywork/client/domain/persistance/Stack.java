@@ -39,7 +39,7 @@ public class Stack extends BaseEntity {
   @Column(nullable = false, length = 100)
   private String name;
   
-  @Column(name = "sems_number", nullable = false, length = 10)
+  @Column(name = "sems_number", length = 10)
   private String semsNumber;
   
   @Enumerated(EnumType.STRING)

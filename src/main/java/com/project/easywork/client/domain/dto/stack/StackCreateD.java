@@ -21,7 +21,6 @@ public class StackCreateD {
   private Long workplaceId;
   
   @Schema(description = "SEMS 번호", example = "000")
-  @NotBlank(message = "필수 입력")
   private String semsNumber;
   
   @Schema(
@@ -31,15 +30,15 @@ public class StackCreateD {
   private Grade grade;
   
   @Schema(description = "측정공 높이", example = "15.5")
-  @Min(value = 0, message = "0 이상의 값을 입력해주세요.")
+  @Min(value = 0, message = "측정공 높이는 0 이상의 값을 입력해주세요.")
   private Double height;
   
   @Schema(description = "가로 길이", example = "1.2")
-  @Min(value = 0, message = "0 이상의 값을 입력해주세요.")
+  @Min(value = 0, message = "길이는 0 이상의 값을 입력해주세요.")
   private Double horizontalLength;
   
   @Schema(description = "세로 길이", example = "1.5")
-  @Min(value = 0, message = "0 이상의 값을 입력해주세요.")
+  @Min(value = 0, message = "길이는 0 이상의 값을 입력해주세요.")
   private Double verticalLength;
   
   @Schema(description = "측정시설 모양")

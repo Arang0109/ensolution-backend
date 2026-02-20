@@ -15,6 +15,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Tag(name = "User", description = "사용자 관련 API")
 @SecurityRequirement(name = "bearerAuth")
 @RestController
@@ -70,5 +72,11 @@ public class UserController {
   ) {
     userService.removeUser(userDetails);
     return ResponseEntity.ok().body(ApiResponse.success());
+  }
+  
+  @Operation(summary = "전체 회원조회 API", description = "전체 회원 목록을 조회합니다.")
+  @GetMapping("/all")
+  public ResponseEntity<ApiResponse<List<UserD>>> getList() {
+    return ResponseEntity.ok(ApiResponse.success(userService.findAll()));
   }
 }

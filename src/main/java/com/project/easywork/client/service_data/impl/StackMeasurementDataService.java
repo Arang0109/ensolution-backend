@@ -30,6 +30,11 @@ public class StackMeasurementDataService implements IStackMeasurementDataService
   }
   
   @Override
+  public List<StackMeasurement> saveAll(List<StackMeasurement> stackMeasurements) {
+    return stackMeasurementRepository.saveAll(stackMeasurements);
+  }
+  
+  @Override
   public void deleteById(Long stackMeasurementId) {
     stackMeasurementRepository.deleteById(stackMeasurementId);
   }

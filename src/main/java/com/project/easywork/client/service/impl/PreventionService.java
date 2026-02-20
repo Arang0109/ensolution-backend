@@ -28,16 +28,13 @@ public class PreventionService implements IPreventionService {
   
   private final DomainEntityResolver domainEntityResolver;
   
-  private final EntityManager entityManager;
-  
   @Override
   public PreventionDetailD registerPreventionBundle(PreventionBundleCreateD dto) {
-    
-    // stack 엔티티 불러오기 -> prevention 연관 엔티티 설정 -> 저장
     Stack stack = domainEntityResolver.getStackOrThrow(dto.getPrevention().getStackId());
-    
     Prevention prevention = preventionMapper.toEntity(dto.getPrevention());
     prevention.attachStack(stack);
+    
+    preventionDataService.save(prevention);
     
     facilityService.registerFacilities(dto.getFacilities(), prevention);
     targetService.registerTargets(dto.getTargets(), prevention);
@@ -70,8 +67,6 @@ public class PreventionService implements IPreventionService {
     prevention.update(dto.getPrevention());
     prevention.updateFacilities(dto.getFacilities());
     prevention.updateTargets(dto.getTargets());
-    
-    entityManager.flush();
     
     return preventionMapper.toDetailDto(prevention);
   }

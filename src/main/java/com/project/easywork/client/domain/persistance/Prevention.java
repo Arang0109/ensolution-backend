@@ -49,6 +49,8 @@ public class Prevention extends BaseEntity {
   }
   
   public void update(PreventionUpdateD dto) {
+    if (dto == null) return;
+    
     if (dto.getName() != null) {
       this.name = dto.getName();
     }

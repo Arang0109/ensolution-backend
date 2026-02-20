@@ -49,7 +49,7 @@ public class PlanController {
   
   @Operation(summary = "측정항목 변경 API", description = "해당 측정계획의 측정항목 목록을 변경합니다.")
   @PostMapping("/{planId}/measurements")
-  public ResponseEntity<ApiResponse<Void>> addMeasurement(
+  public ResponseEntity<ApiResponse<Void>> updateMeasurement(
       @PathVariable Long planId,
       @Valid @RequestBody List<MeasurementItemsUpdateD> request
   ) {

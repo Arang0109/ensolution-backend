@@ -31,15 +31,19 @@ public class StackMeasurementService implements IStackMeasurementService {
   private final EntityManager entityManager;
   
   @Override
-  public StackMeasurementD registerStackMeasurement(StackMeasurementCreateD dto) {
+  public List<StackMeasurementD> registerStackMeasurement(List<StackMeasurementCreateD> dtos) {
     
-    Stack stack = domainEntityResolver.getStackOrThrow(dto.getStackId());
-    Pollutant pollutant = domainEntityResolver.getPollutantOrThrow(dto.getPollutantId());
-    StackMeasurement stackMeasurement = stackMeasurementMapper.toEntity(dto);
-    stackMeasurement.attachStack(stack);
-    stackMeasurement.attachPollutant(pollutant);
+    List<StackMeasurement> stackMeasurements = dtos.stream()
+        .map(dto -> {
+          Stack stack = domainEntityResolver.getStackOrThrow(dto.getStackId());
+          Pollutant pollutant = domainEntityResolver.getPollutantOrThrow(dto.getPollutantId());
+          StackMeasurement stackMeasurement = stackMeasurementMapper.toEntity(dto);
+          stackMeasurement.attachStack(stack);
+          stackMeasurement.attachPollutant(pollutant);
+          return stackMeasurement;
+        }).toList();
     
-    return stackMeasurementMapper.toDto(stackMeasurementDataService.save(stackMeasurement));
+    return stackMeasurementMapper.toDtoList(stackMeasurementDataService.saveAll(stackMeasurements));
   }
   
   @Override
