@@ -10,6 +10,7 @@ import java.time.LocalDate;
 public class AgencySnapshotMapper {
   
   public AgencySnapshot toSnapshot(
+      String referenceNumber,
       LocalDate measureDate,
       String measurementType,
       boolean simplifiedMeasurement,
@@ -19,6 +20,7 @@ public class AgencySnapshotMapper {
       String mentee
   ) {
     return new AgencySnapshot(
+        referenceNumber,
         measureDate,
         measurementType,
         simplifiedMeasurement,

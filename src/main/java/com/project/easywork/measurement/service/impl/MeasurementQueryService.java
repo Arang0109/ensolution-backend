@@ -13,7 +13,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -50,6 +49,7 @@ public class MeasurementQueryService implements IMeasurementQueryService {
         equipmentService.getEquipment(dto.getNozzleId());
     
     return snapshotAssembler.assemble(
+        dto.getReferenceNumber(),
         dto.getPlan().getMeasureDate(),
         dto.getPlan().getMeasurementType(),
         dto.isSimplifiedMeasurement(),

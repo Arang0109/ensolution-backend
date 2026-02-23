@@ -22,6 +22,7 @@ public class MeasurementSnapshotAssembler {
   private final MeasurementEquipmentSnapshotMapper equipmentMapper;
   
   public MeasurementSnapshot assemble(
+      String referenceNumber,
       LocalDate measureDate,
       String measurementType,
       boolean simplifiedMeasurement,
@@ -38,7 +39,7 @@ public class MeasurementSnapshotAssembler {
   ) {
     
     return new MeasurementSnapshot(
-        agencyMapper.toSnapshot(measureDate, measurementType, simplifiedMeasurement, team, vehicleNumber, mentor, mentee),
+        agencyMapper.toSnapshot(referenceNumber, measureDate, measurementType, simplifiedMeasurement, team, vehicleNumber, mentor, mentee),
         clientMapper.toSnapshot(stack),
         stackMeasurementMapper.toSnapshots(measurements),
         equipmentMapper.toSnapshot(particleSampler, gasSampler, pitotTube, nozzle)

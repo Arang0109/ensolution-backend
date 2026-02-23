@@ -3,6 +3,7 @@ package com.project.easywork.measurement.dto.snapshot.agency;
 import java.time.LocalDate;
 
 public record AgencySnapshot(
+    String referenceNumber,
     LocalDate measureDate,
     String measurementType,
     boolean simplifiedMeasurement,

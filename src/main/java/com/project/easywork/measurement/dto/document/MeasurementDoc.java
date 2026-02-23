@@ -64,41 +64,38 @@ public class MeasurementDoc {
     this.preInfo.replaceMeasurementItems(items);
   }
   
-  public void changePitotTubeCoefficient(BigDecimal coefficient) {
-    this.pitotTubeCoefficient = coefficient;
-  }
-  
-  public void changeMeasurementPointCnt(int cnt) {
-    this.measurementPointCnt = cnt;
-  }
-  
-  public MeasurementDoc updateStackInfo(ClientDoc.StackDoc stackInfo) {
-    if (this.client == null) return this;
-    
-    ClientDoc newClient = this.client.toBuilder()
-        .stack(stackInfo)
-        .build();
+  public MeasurementDoc updatePreInfo(PreInfoDoc patch) {
+    if (this.preInfo == null) {
+      return this.toBuilder().preInfo(patch).build();
+    }
     
     return this.toBuilder()
-        .client(newClient)
+        .preInfo(this.preInfo.merge(patch))
         .build();
   }
   
-  public MeasurementDoc updateWeather(WeatherDoc weather) {
+  public MeasurementDoc updateClient(ClientDoc patch) {
+    if (this.client == null) {
+      return this.toBuilder().client(patch).build();
+    }
+    
     return this.toBuilder()
-        .weather(weather)
+        .client(this.client.merge(patch))
         .build();
   }
   
-  public MeasurementDoc updateMoisture(MoistureDoc moisture) {
+  public MeasurementDoc updateEquipment(MeasurementEquipmentDoc patch) {
+    if (!isDraft()) {
+      throw new IllegalStateException("Draft 상태에서만 수정 가능");
+    }
+    
+    MeasurementEquipmentDoc merged =
+        this.equipment == null
+            ? patch
+            : this.equipment.merge(patch);
+    
     return this.toBuilder()
-        .moisture(moisture)
-        .build();
-  }
-  
-  public MeasurementDoc updateExhaustGas(ExhaustGasDoc exhaustGas) {
-    return this.toBuilder()
-        .exhaustGas(exhaustGas)
+        .equipment(merged)
         .build();
   }
   

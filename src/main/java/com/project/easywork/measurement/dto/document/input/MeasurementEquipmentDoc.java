@@ -19,6 +19,31 @@ public class MeasurementEquipmentDoc {
   private PitotTubeDoc pitotTube;
   private NozzleDoc nozzle;
   
+  public MeasurementEquipmentDoc merge(MeasurementEquipmentDoc patch) {
+    return this.toBuilder()
+        .particleSampler(
+            patch.getParticleSampler() != null
+                ? patch.getParticleSampler()
+                : this.particleSampler
+        )
+        .gasSampler(
+            patch.getGasSampler() != null
+                ? patch.getGasSampler()
+                : this.gasSampler
+        )
+        .pitotTube(
+            patch.getPitotTube() != null
+                ? patch.getPitotTube()
+                : this.pitotTube
+        )
+        .nozzle(
+            patch.getNozzle() != null
+                ? patch.getNozzle()
+                : this.nozzle
+        )
+        .build();
+  }
+  
   @Getter
   @Builder(toBuilder = true)
   public static class ParticleSamplerDoc {

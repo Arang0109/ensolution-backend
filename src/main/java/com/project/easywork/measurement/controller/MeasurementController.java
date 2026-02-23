@@ -29,7 +29,7 @@ public class MeasurementController {
   }
   
   @Operation(summary = "데이터 임시저장 API", description = "데이터를 임시저장합니다.")
-  @PutMapping("/{planId}/draft")
+  @PatchMapping("/{planId}/draft")
   public ResponseEntity<ApiResponse<Void>> updateDraft(
       @PathVariable Long planId,
       @RequestBody DraftUpdateCommandD request

@@ -13,10 +13,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-@Builder
+@Builder(toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
 public class PreInfoDoc {
+  private String referenceNumber;
   private LocalDate measureDate;
   private String measurementType;
   private Long teamId;
@@ -33,8 +34,21 @@ public class PreInfoDoc {
     this.measurementItems = new ArrayList<>(items);
   }
   
+  public PreInfoDoc merge(PreInfoDoc request) {
+    return this.toBuilder()
+        .referenceNumber(request.getReferenceNumber() != null ? request.getReferenceNumber() : this.referenceNumber)
+        .measureDate(request.getMeasureDate() != null ? request.getMeasureDate() : this.measureDate)
+        .measurementType(request.getMeasurementType() != null ? request.getMeasurementType() : this.measurementType)
+        .teamId(request.getTeamId() != null ? request.getTeamId() : this.teamId)
+        .teamName(request.getTeamName() != null ? request.getTeamName() : this.teamName)
+        .vehicleNumber(request.getVehicleNumber() != null ? request.getVehicleNumber() : this.vehicleNumber)
+        .mentor(request.getMentor() != null ? request.getMentor() : this.mentor)
+        .mentee(request.getMentee() != null ? request.getMentee() : this.mentee)
+        .build();
+  }
+  
   @Getter
-  @Builder
+  @Builder(toBuilder = true)
   public static class StackMeasurementDoc {
     private Long stackMeasurementId;
     private Long pollutantId;
