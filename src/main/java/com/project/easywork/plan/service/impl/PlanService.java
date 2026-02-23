@@ -89,38 +89,6 @@ public class PlanService implements IPlanService {
   }
   
   @Override
-  public void replaceMeasurements(Long planId, List<MeasurementItemsUpdateD> dtos) {
-    Plan plan = planDataService.findById(planId);
-    
-    plan.replaceMeasurements(
-        dtos,
-        stackMeasurementDataService::findById
-    );
-    
-    MeasurementDoc doc = measurementDataService.findByPlanId(planId);
-    
-    List<PreInfoDoc.StackMeasurementDoc> stackDocs =
-        dtos.stream()
-            .map(dto -> {
-              StackMeasurement sm = stackMeasurementDataService
-                  .findById(dto.getStackMeasurementId());
-              
-              return PreInfoDoc.StackMeasurementDoc.builder()
-                  .stackMeasurementId(sm.getId())
-                  .pollutantId(sm.getPollutant().getId())
-                  .pollutantNameKr(sm.getPollutant().getNameKr())
-                  .pollutantNameEn(sm.getPollutant().getNameEn())
-                  .cycle(sm.getCycle())
-                  .allowance(sm.getAllowance())
-                  .build();
-            })
-            .toList();
-    
-    doc.replaceMeasurementItems(stackDocs);
-    measurementDataService.save(doc);
-  }
-  
-  @Override
   public PlanD updateStatus(Long planId, StatusUpdateD dto) {
     Plan plan = planDataService.findById(planId);
     plan.updateStatus(dto);

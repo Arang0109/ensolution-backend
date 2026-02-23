@@ -1,11 +1,9 @@
 package com.project.easywork.measurement.dto.document.input;
 
 import com.project.easywork.client.domain.Cycle;
+import com.project.easywork.plan.domain.MeasurementField;
 import com.project.easywork.pollutant.domain.Method;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -19,6 +17,7 @@ import java.util.List;
 public class PreInfoDoc {
   private String referenceNumber;
   private LocalDate measureDate;
+  private MeasurementField measurementField;
   private String measurementType;
   private Long teamId;
   private String teamName;
@@ -30,25 +29,29 @@ public class PreInfoDoc {
   
   private List<StackMeasurementDoc> measurementItems;
   
-  public void replaceMeasurementItems(List<StackMeasurementDoc> items) {
-    this.measurementItems = new ArrayList<>(items);
-  }
-  
-  public PreInfoDoc merge(PreInfoDoc request) {
+  public PreInfoDoc merge(
+      PreInfoDoc patch,
+      List<StackMeasurementDoc> measurementPatch
+  ) {
     return this.toBuilder()
-        .referenceNumber(request.getReferenceNumber() != null ? request.getReferenceNumber() : this.referenceNumber)
-        .measureDate(request.getMeasureDate() != null ? request.getMeasureDate() : this.measureDate)
-        .measurementType(request.getMeasurementType() != null ? request.getMeasurementType() : this.measurementType)
-        .teamId(request.getTeamId() != null ? request.getTeamId() : this.teamId)
-        .teamName(request.getTeamName() != null ? request.getTeamName() : this.teamName)
-        .vehicleNumber(request.getVehicleNumber() != null ? request.getVehicleNumber() : this.vehicleNumber)
-        .mentor(request.getMentor() != null ? request.getMentor() : this.mentor)
-        .mentee(request.getMentee() != null ? request.getMentee() : this.mentee)
+        .referenceNumber(patch.getReferenceNumber() != null ? patch.getReferenceNumber() : this.referenceNumber)
+        .measureDate(patch.getMeasureDate() != null ? patch.getMeasureDate() : this.measureDate)
+        .measurementField(patch.getMeasurementField() != null ? patch.getMeasurementField() : this.measurementField)
+        .measurementType(patch.getMeasurementType() != null ? patch.getMeasurementType() : this.measurementType)
+        .teamId(patch.getTeamId() != null ? patch.getTeamId() : this.teamId)
+        .teamName(patch.getTeamName() != null ? patch.getTeamName() : this.teamName)
+        .vehicleNumber(patch.getVehicleNumber() != null ? patch.getVehicleNumber() : this.vehicleNumber)
+        .mentor(patch.getMentor() != null ? patch.getMentor() : this.mentor)
+        .mentee(patch.getMentee() != null ? patch.getMentee() : this.mentee)
+        .measurementItems(
+            measurementPatch != null ? measurementPatch : this.measurementItems
+        )
         .build();
   }
   
   @Getter
   @Builder(toBuilder = true)
+  @ToString
   public static class StackMeasurementDoc {
     private Long stackMeasurementId;
     private Long pollutantId;

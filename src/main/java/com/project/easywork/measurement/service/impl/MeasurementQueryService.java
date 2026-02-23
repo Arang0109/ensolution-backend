@@ -51,6 +51,7 @@ public class MeasurementQueryService implements IMeasurementQueryService {
     return snapshotAssembler.assemble(
         dto.getReferenceNumber(),
         dto.getPlan().getMeasureDate(),
+        dto.getPlan().getMeasurementField(),
         dto.getPlan().getMeasurementType(),
         dto.isSimplifiedMeasurement(),
         stack,

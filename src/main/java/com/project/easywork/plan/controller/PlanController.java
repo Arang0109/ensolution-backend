@@ -47,16 +47,6 @@ public class PlanController {
     return ResponseEntity.ok().body(ApiResponse.success(planService.getPlan(planId)));
   }
   
-  @Operation(summary = "측정항목 변경 API", description = "해당 측정계획의 측정항목 목록을 변경합니다.")
-  @PostMapping("/{planId}/measurements")
-  public ResponseEntity<ApiResponse<Void>> updateMeasurement(
-      @PathVariable Long planId,
-      @Valid @RequestBody List<MeasurementItemsUpdateD> request
-  ) {
-    planService.replaceMeasurements(planId, request);
-    return ResponseEntity.ok().body(ApiResponse.success());
-  }
-  
   @Operation(summary = "측정상태 수정 API", description = "해당 측정계획의 측정상태를 수정합니다.")
   @PatchMapping("/{planId}/status")
   public ResponseEntity<ApiResponse<PlanD>> updateStatus

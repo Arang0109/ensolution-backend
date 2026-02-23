@@ -1,10 +1,13 @@
 package com.project.easywork.measurement.dto.snapshot.agency;
 
+import com.project.easywork.plan.domain.MeasurementField;
+
 import java.time.LocalDate;
 
 public record AgencySnapshot(
     String referenceNumber,
     LocalDate measureDate,
+    MeasurementField measurementField,
     String measurementType,
     boolean simplifiedMeasurement,
     

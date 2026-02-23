@@ -1,5 +1,6 @@
 package com.project.easywork.measurement.dto.document;
 
+import com.project.easywork.measurement.dto.DraftUpdateCommandD;
 import com.project.easywork.measurement.dto.MeasurementStatus;
 import com.project.easywork.measurement.dto.document.input.*;
 import lombok.*;
@@ -57,46 +58,52 @@ public class MeasurementDoc {
         .build();
   }
   
-  public void replaceMeasurementItems(List<PreInfoDoc.StackMeasurementDoc> items) {
-    if (this.preInfo == null) {
-      throw new IllegalStateException("PreInfoDocument가 먼저 생성되어야 합니다.");
-    }
-    this.preInfo.replaceMeasurementItems(items);
-  }
-  
-  public MeasurementDoc updatePreInfo(PreInfoDoc patch) {
-    if (this.preInfo == null) {
-      return this.toBuilder().preInfo(patch).build();
-    }
-    
-    return this.toBuilder()
-        .preInfo(this.preInfo.merge(patch))
-        .build();
-  }
-  
-  public MeasurementDoc updateClient(ClientDoc patch) {
-    if (this.client == null) {
-      return this.toBuilder().client(patch).build();
-    }
-    
-    return this.toBuilder()
-        .client(this.client.merge(patch))
-        .build();
-  }
-  
-  public MeasurementDoc updateEquipment(MeasurementEquipmentDoc patch) {
+  public MeasurementDoc apply(
+      DraftUpdateCommandD cmd,
+      List<PreInfoDoc.StackMeasurementDoc> stackMeasurementPatch,
+      MeasurementEquipmentDoc equipmentPatch
+  ) {
     if (!isDraft()) {
-      throw new IllegalStateException("Draft 상태에서만 수정 가능");
+      throw new IllegalStateException("Draft 상태만 수정 가능");
     }
     
-    MeasurementEquipmentDoc merged =
-        this.equipment == null
-            ? patch
-            : this.equipment.merge(patch);
-    
     return this.toBuilder()
-        .equipment(merged)
+        .preInfo(mergePreInfo(cmd.preInfo(), stackMeasurementPatch))
+        .client(mergeClient(cmd.client()))
+        .equipment(mergeEquipment(equipmentPatch))
         .build();
+  }
+  
+  private PreInfoDoc mergePreInfo(
+      PreInfoDoc patch,
+      List<PreInfoDoc.StackMeasurementDoc> measurementPatch) {
+    PreInfoDoc base = this.preInfo;
+    
+    if (base == null) { base = patch != null ? patch : PreInfoDoc.builder().build(); }
+    
+    if (patch != null) { base = base.merge(patch, null); }
+    
+    if (measurementPatch != null) {
+      base = base.toBuilder()
+          .measurementItems(measurementPatch)
+          .build();
+    }
+    
+    return base;
+  }
+  
+  private ClientDoc mergeClient(ClientDoc patch) {
+    if (patch == null) return this.client;
+    if (this.client == null) return patch;
+    
+    return this.client.merge(patch);
+  }
+  
+  private MeasurementEquipmentDoc mergeEquipment(MeasurementEquipmentDoc patch) {
+    if (patch == null) return this.equipment;
+    if (this.equipment == null) return patch;
+    
+    return this.equipment.merge(patch);
   }
   
   public boolean isDraft() {

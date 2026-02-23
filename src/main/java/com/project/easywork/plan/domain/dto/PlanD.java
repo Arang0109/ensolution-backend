@@ -1,6 +1,6 @@
 package com.project.easywork.plan.domain.dto;
 
-import com.project.easywork.plan.domain.MeasureField;
+import com.project.easywork.plan.domain.MeasurementField;
 import com.project.easywork.plan.domain.PlanStatus;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
@@ -20,7 +20,7 @@ public class PlanD {
   
   private Long stackId;
   private Long teamId;
-  private MeasureField measureField;
+  private MeasurementField measurementField;
   private LocalDate measureDate;
   private String measurementType;
   private PlanStatus status;

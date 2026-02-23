@@ -6,6 +6,7 @@ import com.project.easywork.client.domain.persistance.StackMeasurement;
 import com.project.easywork.equipment.domain.document.EquipmentDoc;
 import com.project.easywork.measurement.dto.snapshot.MeasurementSnapshot;
 import com.project.easywork.measurement.mapper.snapshot_mapper.*;
+import com.project.easywork.plan.domain.MeasurementField;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -24,6 +25,7 @@ public class MeasurementSnapshotAssembler {
   public MeasurementSnapshot assemble(
       String referenceNumber,
       LocalDate measureDate,
+      MeasurementField measurementField,
       String measurementType,
       boolean simplifiedMeasurement,
       Stack stack,
@@ -39,7 +41,7 @@ public class MeasurementSnapshotAssembler {
   ) {
     
     return new MeasurementSnapshot(
-        agencyMapper.toSnapshot(referenceNumber, measureDate, measurementType, simplifiedMeasurement, team, vehicleNumber, mentor, mentee),
+        agencyMapper.toSnapshot(referenceNumber, measureDate, measurementField, measurementType, simplifiedMeasurement, team, vehicleNumber, mentor, mentee),
         clientMapper.toSnapshot(stack),
         stackMeasurementMapper.toSnapshots(measurements),
         equipmentMapper.toSnapshot(particleSampler, gasSampler, pitotTube, nozzle)

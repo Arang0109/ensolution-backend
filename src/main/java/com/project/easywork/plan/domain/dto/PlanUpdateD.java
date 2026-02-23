@@ -1,6 +1,6 @@
 package com.project.easywork.plan.domain.dto;
 
-import com.project.easywork.plan.domain.MeasureField;
+import com.project.easywork.plan.domain.MeasurementField;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -12,7 +12,7 @@ import java.time.LocalDate;
 public class PlanUpdateD {
   private Long stackId;
   private Long teamId;
-  private MeasureField measureField;
+  private MeasurementField measurementField;
   private LocalDate measureDate;
   private String measurementType;
 }
