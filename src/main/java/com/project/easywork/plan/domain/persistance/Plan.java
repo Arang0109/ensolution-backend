@@ -2,21 +2,15 @@ package com.project.easywork.plan.domain.persistance;
 
 import com.project.easywork.agency.domain.entity.Team;
 import com.project.easywork.client.domain.persistance.Stack;
-import com.project.easywork.client.domain.persistance.StackMeasurement;
-import com.project.easywork.plan.domain.MeasureField;
+import com.project.easywork.measurement.dto.SaveDraftCommandD;
+import com.project.easywork.plan.domain.MeasurementField;
 import com.project.easywork.plan.domain.PlanStatus;
-import com.project.easywork.plan.domain.dto.MeasurementItemsUpdateD;
-import com.project.easywork.plan.domain.dto.StatusUpdateD;
+import com.project.easywork.measurement.dto.StatusUpdateCommandD;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -41,7 +35,8 @@ public class Plan {
   private Team team;
   
   @Enumerated(EnumType.STRING)
-  private MeasureField measureField;
+  @Column(name = "measurement_field")
+  private MeasurementField measurementField;
   
   @Column(name = "measure_date")
   private LocalDate measureDate;
@@ -56,9 +51,6 @@ public class Plan {
   @Column(name = "created_at", nullable = false)
   private LocalDate createdAt;
   
-  @OneToMany(mappedBy = "plan", cascade = CascadeType.ALL, orphanRemoval = true)
-  private List<PlanMeasurement> measurements = new ArrayList<>();
-  
   public void attachStack(Stack stack) {
     this.stack = stack;
   }
@@ -71,32 +63,13 @@ public class Plan {
     this.status = PlanStatus.MEASURING;
   }
   
-  public void updateStatus(StatusUpdateD dto) {
-    this.status = dto.getStatus();
+  public void updateStatus(StatusUpdateCommandD dto) {
+    this.status = dto.status();
   }
   
-  public void replaceMeasurements(
-      List<MeasurementItemsUpdateD> newMeasurements,
-      Function<Long, StackMeasurement> resolver
-  ) {
-    Map<Long, PlanMeasurement> existing =
-        this.measurements.stream()
-            .filter(pm -> pm.getStackMeasurement() != null)
-            .collect(Collectors.toMap(
-                pm -> pm.getStackMeasurement().getId(),
-                Function.identity()
-            ));
-    
-    this.measurements.clear();
-    
-    for (MeasurementItemsUpdateD dto : newMeasurements) {
-      PlanMeasurement pm = existing.getOrDefault(dto.getStackMeasurementId(), new PlanMeasurement());
-      
-      pm.attachPlan(this);
-      StackMeasurement sm = resolver.apply(dto.getStackMeasurementId());
-      pm.attachStackMeasurement(sm);
-      
-      this.measurements.add(pm);
-    }
+  public void updatePlan(SaveDraftCommandD request) {
+    this.measureDate = request.measureDate() == null ? this.measureDate : request.measureDate();
+    this.measurementType = request.measurementType() == null ? this.measurementType : request.measurementType();
+    this.measurementField = request.measurementField() == null ? this.measurementField : request.measurementField();
   }
 }

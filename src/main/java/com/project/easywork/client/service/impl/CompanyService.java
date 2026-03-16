@@ -32,7 +32,6 @@ public class CompanyService implements ICompanyService {
   @Override
   @Transactional
   public CompanyD registerCompany(CompanyCreateD dto) {
-    // Validation step
     companyValidator.validateForCreate(dto);
     
     Company company = companyMapper.toEntity(dto);

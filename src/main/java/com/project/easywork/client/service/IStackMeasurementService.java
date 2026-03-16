@@ -8,7 +8,7 @@ import com.project.easywork.client.domain.dto.stack_measurement.StackMeasurement
 import java.util.List;
 
 public interface IStackMeasurementService {
-  StackMeasurementD registerStackMeasurement(StackMeasurementCreateD dto);
+  List<StackMeasurementD> registerStackMeasurement(List<StackMeasurementCreateD> dtos);
   StackMeasurementD getStackMeasurement(Long id);
   List<MeasurementListD> getStackMeasurementsByStack(Long stackId);
   StackMeasurementD updateStackMeasurement(Long id, StackMeasurementUpdateD dto);

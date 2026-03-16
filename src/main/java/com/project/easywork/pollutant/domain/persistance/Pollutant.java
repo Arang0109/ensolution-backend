@@ -1,6 +1,7 @@
 package com.project.easywork.pollutant.domain.persistance;
 
 import com.project.easywork.client.domain.persistance.StackMeasurement;
+import com.project.easywork.pollutant.domain.Method;
 import com.project.easywork.pollutant.domain.Phase;
 import com.project.easywork.pollutant.domain.dto.PollutantUpdateD;
 import jakarta.persistence.*;
@@ -29,7 +30,8 @@ public class Pollutant {
   private String nameEn;
   
   @Column
-  private String method;
+  @Enumerated(EnumType.STRING)
+  private Method method;
   
   @Column
   @Enumerated(EnumType.STRING)

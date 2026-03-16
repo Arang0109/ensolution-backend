@@ -16,8 +16,8 @@ public class MoistureDoc {
   private GasMeterTemperatureDocument gasMeterTemperature;
   private DryGasVolumeDocument dryGasVolume;
   
-  private BigDecimal suctionVelocity;
-  private BigDecimal gasMeterGaugePressure;
+  @Field(targetType = FieldType.DECIMAL128) private BigDecimal suctionVelocity;
+  @Field(targetType = FieldType.DECIMAL128) private BigDecimal gasMeterGaugePressure;
   
   /**
    * 계산 영역
@@ -139,11 +139,8 @@ public class MoistureDoc {
   @Getter
   @Builder(toBuilder = true)
   public static class DryGasVolumeDocument {
-    @Field(targetType = FieldType.DECIMAL128)
-    private BigDecimal before;
-    
-    @Field(targetType = FieldType.DECIMAL128)
-    private BigDecimal after;
+    @Field(targetType = FieldType.DECIMAL128) private BigDecimal before;
+    @Field(targetType = FieldType.DECIMAL128) private BigDecimal after;
     
     public DryGasVolumeDocument normalize() {
       return this.toBuilder()

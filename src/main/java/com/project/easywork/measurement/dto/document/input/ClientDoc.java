@@ -20,6 +20,25 @@ public class ClientDoc {
   private CompanyDoc company;
   private StackDoc stack;
   
+  public ClientDoc merge(ClientDoc patch) {
+    return this.toBuilder()
+        .company(mergeCompany(patch.getCompany()))
+        .stack(mergeStack(patch.getStack()))
+        .build();
+  }
+  
+  private CompanyDoc mergeCompany(CompanyDoc patchCompany) {
+    if (patchCompany == null) return this.company;
+    if (this.company == null) return patchCompany;
+    return this.company.merge(patchCompany);
+  }
+  
+  private StackDoc mergeStack(StackDoc patchStack) {
+    if (patchStack == null) return this.stack;
+    if (this.stack == null) return patchStack;
+    return this.stack.merge(patchStack);
+  }
+  
   // ------------------------------------
   // 의뢰기관 정보
   // ------------------------------------
@@ -36,6 +55,19 @@ public class ClientDoc {
     private String manager;
     private String businessCategory;
     private Grade grade;
+    
+    public CompanyDoc merge(CompanyDoc patch) {
+      return this.toBuilder()
+          .companyName(patch.getCompanyName() != null ? patch.getCompanyName() : this.companyName)
+          .workplaceName(patch.getWorkplaceName() != null ? patch.getWorkplaceName() : this.workplaceName)
+          .ceoName(patch.getCeoName() != null ? patch.getCeoName() : this.ceoName)
+          .address(patch.getAddress() != null ? patch.getAddress() : this.address)
+          .bizNumber(patch.getBizNumber() != null ? patch.getBizNumber() : this.bizNumber)
+          .manager(patch.getManager() != null ? patch.getManager() : this.manager)
+          .businessCategory(patch.getBusinessCategory() != null ? patch.getBusinessCategory() : this.businessCategory)
+          .grade(patch.getGrade() != null ? patch.getGrade() : this.grade)
+          .build();
+    }
   }
   
   // ------------------------------------
@@ -55,6 +87,21 @@ public class ClientDoc {
     private Orientation orientation;
     private BigDecimal standardOxygen;
     private List<PreventionDoc> preventions;
+    
+    public StackDoc merge(StackDoc patch) {
+      
+      return this.toBuilder()
+          .name(patch.getName() != null ? patch.getName() : this.name)
+          .semsNumber(patch.getSemsNumber() != null ? patch.getSemsNumber() : this.semsNumber)
+          .grade(patch.getGrade() != null ? patch.getGrade() : this.grade)
+          .height(patch.getHeight() != null ? patch.getHeight() : this.height)
+          .horizontalLength(patch.getHorizontalLength() != null ? patch.getHorizontalLength() : this.horizontalLength)
+          .verticalLength(patch.getVerticalLength() != null ? patch.getVerticalLength() : this.verticalLength)
+          .shape(patch.getShape() != null ? patch.getShape() : this.shape)
+          .orientation(patch.getOrientation() != null ? patch.getOrientation() : this.orientation)
+          .standardOxygen(patch.getStandardOxygen() != null ? patch.getStandardOxygen() : this.standardOxygen)
+          .build();
+    }
   }
   
   // ------------------------------------

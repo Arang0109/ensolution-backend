@@ -1,5 +1,7 @@
 package com.project.easywork.measurement.dto.document.input;
 
+import com.project.easywork.measurement.dto.WeatherCondition;
+import com.project.easywork.measurement.dto.WindDirection;
 import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.data.mongodb.core.mapping.FieldType;
@@ -13,17 +15,21 @@ public class WeatherDoc {
   
   private WeatherPressureDoc pressure;
   
-  private String weatherCondition;
-  private BigDecimal temperature;
-  private BigDecimal humidity;
-  private String windDirection;
-  private BigDecimal windSpeed;
+  private WeatherCondition weatherCondition;
+  @Field(targetType = FieldType.DECIMAL128) private BigDecimal temperature;
+  @Field(targetType = FieldType.DECIMAL128) private BigDecimal humidity;
+  private WindDirection windDirection;
+  @Field(targetType = FieldType.DECIMAL128) private BigDecimal windSpeed;
   
   /**
    * 계산 영역
    * mmHg로 변환된 대기압
    */
   private BigDecimal convertedPressure;
+  
+  private static BigDecimal scale(BigDecimal value) {
+    return value == null ? null : value.setScale(1, RoundingMode.HALF_UP);
+  }
   
   public WeatherDoc merge(WeatherDoc doc) {
     if (doc == null) return this;
@@ -35,25 +41,11 @@ public class WeatherDoc {
                 : this.pressure
         )
         .weatherCondition(doc.weatherCondition != null ? doc.weatherCondition : this.weatherCondition)
-        .temperature(doc.temperature != null ? doc.temperature : this.temperature)
-        .humidity(doc.humidity != null ? doc.humidity : this.humidity)
+        .temperature(doc.temperature != null ? scale(doc.temperature) : this.temperature)
+        .humidity(doc.humidity != null ? scale(doc.humidity) : this.humidity)
         .windDirection(doc.windDirection != null ? doc.windDirection : this.windDirection)
-        .windSpeed(doc.windSpeed != null ? doc.windSpeed : this.windSpeed)
+        .windSpeed(doc.windSpeed != null ? scale(doc.windSpeed) : this.windSpeed)
         .build();
-  }
-  
-  public WeatherDoc normalize() {
-    return this.toBuilder()
-        .pressure(pressure != null ? pressure.normalize() : null)
-        .temperature(scale(temperature))
-        .humidity(scale(humidity))
-        .windSpeed(scale(windSpeed))
-        .convertedPressure(scale(convertedPressure))
-        .build();
-  }
-  
-  private static BigDecimal scale(BigDecimal value) {
-    return value == null ? null : value.setScale(1, RoundingMode.HALF_UP);
   }
   
   @Getter
@@ -67,14 +59,8 @@ public class WeatherDoc {
       if (doc == null) return this;
       
       return this.toBuilder()
-          .pressure(doc.pressure != null ? doc.pressure : this.pressure)
+          .pressure(doc.pressure != null ? scale(doc.pressure) : this.pressure)
           .unit(doc.unit != null ? doc.unit : this.unit)
-          .build();
-    }
-    
-    public WeatherPressureDoc normalize() {
-      return this.toBuilder()
-          .pressure(scale(pressure))
           .build();
     }
   }

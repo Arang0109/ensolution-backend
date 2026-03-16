@@ -1,5 +1,6 @@
 package com.project.easywork.plan.domain.dto;
 
+import com.project.easywork.plan.domain.MeasurementField;
 import com.project.easywork.plan.domain.PlanStatus;
 import lombok.*;
 
@@ -12,6 +13,8 @@ import java.util.List;
 @Builder
 public class PlanTableViewD {
   private Long id;
+  private PlanStatus status;
+  private MeasurementField measurementField;
   private LocalDate measureDate;
   private String measurementType;
   
@@ -20,8 +23,7 @@ public class PlanTableViewD {
   private String stackName;
   private String teamName;
   
-  private List<String> measurements;
+  private List<String> measurementItems;
   
-  private PlanStatus status;
   private LocalDate createdAt;
 }

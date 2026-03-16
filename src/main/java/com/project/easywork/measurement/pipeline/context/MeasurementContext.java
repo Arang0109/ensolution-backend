@@ -12,6 +12,8 @@ public class MeasurementContext {
   
   private final Measurement domain;
   
+  private BigDecimal convertedAtmosP;
+  private BigDecimal moistureRatio;
   private BigDecimal avgTs;
   private BigDecimal avgVs;
   private BigDecimal avgPd;

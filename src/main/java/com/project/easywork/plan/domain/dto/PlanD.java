@@ -1,6 +1,6 @@
 package com.project.easywork.plan.domain.dto;
 
-import com.project.easywork.plan.domain.MeasureField;
+import com.project.easywork.plan.domain.MeasurementField;
 import com.project.easywork.plan.domain.PlanStatus;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
@@ -17,13 +17,13 @@ public class PlanD {
       description = "측정계획 ID (PK)",
       accessMode = Schema.AccessMode.READ_ONLY)
   private Long id;
+  private PlanStatus status;
   
   private Long stackId;
   private Long teamId;
-  private MeasureField measureField;
+  private MeasurementField measurementField;
   private LocalDate measureDate;
   private String measurementType;
-  private PlanStatus status;
   
   @Schema(description = "생성날짜") private LocalDate createdAt;
 }

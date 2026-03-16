@@ -1,6 +1,5 @@
 package com.project.easywork.equipment.service.impl;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.easywork.equipment.domain.EquipStatus;
 import com.project.easywork.equipment.domain.EquipType;
 import com.project.easywork.equipment.domain.document.EquipmentDoc;
@@ -20,7 +19,6 @@ import java.util.List;
 public class EquipmentService {
   private final IEquipmentDataService equipmentDataService;
   private final SpecFactory specFactory;
-  private final ObjectMapper objectMapper;
   
   public EquipmentDoc register(EquipmentCreateReqD dto) {
     EquipmentSpec spec = specFactory.toSpec(dto.spec(), dto.type());

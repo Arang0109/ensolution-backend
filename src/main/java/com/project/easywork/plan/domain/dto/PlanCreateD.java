@@ -1,6 +1,6 @@
 package com.project.easywork.plan.domain.dto;
 
-import com.project.easywork.plan.domain.MeasureField;
+import com.project.easywork.plan.domain.MeasurementField;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -21,7 +21,7 @@ public class PlanCreateD {
   private Long teamId;
   
   @NotBlank(message = "측정분야 선택하세요.")
-  private MeasureField measureField;
+  private MeasurementField measurementField;
   
   @NotNull(message = "측정일자는 필수 값입니다.")
   private LocalDate measureDate;
@@ -29,5 +29,5 @@ public class PlanCreateD {
   @NotBlank(message = "측정용도를 선택하세요.")
   private String measurementType;
   
-  private List<Long> measurementIds = new ArrayList<>();
+  private List<Long> measurementItemIds = new ArrayList<>();
 }

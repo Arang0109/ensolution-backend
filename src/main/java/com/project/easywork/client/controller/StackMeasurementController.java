@@ -13,6 +13,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Tag(name = "StackMeasurement", description = "측정시설 내 측정항목 관련 API")
 @SecurityRequirement(name = "bearerAuth")
 @RestController
@@ -24,9 +26,9 @@ public class StackMeasurementController {
   
   @Operation(summary = "측정항목 등록 API", description = "새로운 측정시설 내 측정항목 정보를 데이터베이스에 저장합니다.")
   @PostMapping()
-  public ResponseEntity<ApiResponse<StackMeasurementD>> register
+  public ResponseEntity<ApiResponse<List<StackMeasurementD>>> register
       (
-          @Valid @RequestBody StackMeasurementCreateD request
+          @Valid @RequestBody List<StackMeasurementCreateD> request
       ) {
     return ResponseEntity.ok().body(ApiResponse.success(stackMeasurementService.registerStackMeasurement(request)));
   }

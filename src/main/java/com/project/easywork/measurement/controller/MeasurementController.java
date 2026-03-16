@@ -1,8 +1,9 @@
 package com.project.easywork.measurement.controller;
 
 import com.project.easywork.common.api.ApiResponse;
-import com.project.easywork.measurement.dto.DraftUpdateCommandD;
+import com.project.easywork.measurement.dto.SaveDraftCommandD;
 import com.project.easywork.measurement.service.IMeasurementService;
+import com.project.easywork.plan.service.impl.PlanApplicationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -18,23 +19,24 @@ import org.springframework.web.bind.annotation.*;
 public class MeasurementController {
   
   private final IMeasurementService measurementService;
+  private final PlanApplicationService planApplicationService;
   
   @Operation(summary = "데이터 저장 API", description = "데이터를 저장합니다.")
   @PostMapping("/{planId}/completed")
-  public ResponseEntity<ApiResponse<Void>> saveDocument(
+  public ResponseEntity<ApiResponse<Void>> submitDocument(
       @PathVariable Long planId
   ) {
-    measurementService.saveDocument(planId);
+    measurementService.submitDocument(planId);
     return ResponseEntity.ok().body(ApiResponse.success());
   }
   
   @Operation(summary = "데이터 임시저장 API", description = "데이터를 임시저장합니다.")
-  @PutMapping("/{planId}/draft")
-  public ResponseEntity<ApiResponse<Void>> updateDraft(
+  @PatchMapping("/{planId}/draft")
+  public ResponseEntity<ApiResponse<Void>> saveDocument(
       @PathVariable Long planId,
-      @RequestBody DraftUpdateCommandD request
+      @RequestBody SaveDraftCommandD dto
   ) {
-    measurementService.updateDraft(planId, request);
+    planApplicationService.saveDraft(planId, dto);
     return ResponseEntity.ok().body(ApiResponse.success());
   }
 }

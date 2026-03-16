@@ -39,7 +39,7 @@ public class Stack extends BaseEntity {
   @Column(nullable = false, length = 100)
   private String name;
   
-  @Column(name = "sems_number", nullable = false, length = 10)
+  @Column(name = "sems_number", length = 10)
   private String semsNumber;
   
   @Enumerated(EnumType.STRING)
@@ -111,6 +111,14 @@ public class Stack extends BaseEntity {
     }
     if (dto.getRemark() != null) {
       this.remark = dto.getRemark();
+    }
+    
+    normalizeShape();
+  }
+  
+  private void normalizeShape() {
+    if (this.shape == Shape.CIRCULAR) {
+      this.verticalLength = BigDecimal.ZERO;
     }
   }
   

@@ -1,11 +1,14 @@
-package com.project.easywork.measurement.dto.snapshot.agency;
+package com.project.easywork.measurement.dto.snapshot.plan_info;
+
+import com.project.easywork.plan.domain.MeasurementField;
 
 import java.time.LocalDate;
 
-public record AgencySnapshot(
+public record PlanInfoSnapshot(
+    String referenceNumber,
     LocalDate measureDate,
+    MeasurementField measurementField,
     String measurementType,
-    boolean simplifiedMeasurement,
     
     TeamSnapshot team,
     String vehicleNumber,

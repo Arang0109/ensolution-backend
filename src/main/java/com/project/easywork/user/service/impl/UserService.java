@@ -47,7 +47,6 @@ public class UserService implements IUserService {
   
   @Override
   @Transactional(readOnly = true)
-  @PreAuthorize("hasRole('ADMIN')")
   public List<UserD> findAll() {
     return userDataService.findAll()
         .stream()
