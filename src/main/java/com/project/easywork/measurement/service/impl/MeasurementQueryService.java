@@ -31,7 +31,7 @@ public class MeasurementQueryService implements IMeasurementQueryService {
     
     Stack stack = domainEntityResolver.getStackOrThrow(command.getPlan().getStackId());
     
-    List<StackMeasurement> measurementItems = domainEntityResolver.getStackMeasurementsOrThrow(command.getPlan().getMeasurementIds());
+    List<StackMeasurement> measurementItems = domainEntityResolver.getStackMeasurementsOrThrow(command.getPlan().getMeasurementItemIds());
     
     Team team = domainEntityResolver.getTeamOrThrow(command.getPlan().getTeamId());
     

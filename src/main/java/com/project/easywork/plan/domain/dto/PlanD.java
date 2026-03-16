@@ -17,13 +17,13 @@ public class PlanD {
       description = "측정계획 ID (PK)",
       accessMode = Schema.AccessMode.READ_ONLY)
   private Long id;
+  private PlanStatus status;
   
   private Long stackId;
   private Long teamId;
   private MeasurementField measurementField;
   private LocalDate measureDate;
   private String measurementType;
-  private PlanStatus status;
   
   @Schema(description = "생성날짜") private LocalDate createdAt;
 }

@@ -1,7 +1,5 @@
 package com.project.easywork.measurement.service.impl.draft;
 
-import com.project.easywork.client.domain.persistance.StackMeasurement;
-import com.project.easywork.client.service_data.impl.StackMeasurementDataService;
 import com.project.easywork.equipment.domain.document.EquipmentDoc;
 import com.project.easywork.equipment.service.impl.EquipmentService;
 import com.project.easywork.measurement.dto.SaveDraftCommandD;
@@ -23,7 +21,6 @@ public class DraftPatchFactory {
   private final MeasurementPointCalculator measurementPointCalculator;
   private final MeasurementEquipmentSnapshotMapper measurementEquipmentSnapshotMapper;
   private final EquipmentService equipmentService;
-  private final StackMeasurementDataService stackMeasurementDataService;
   private final EquipmentDocMapper equipmentDocMapper;
   
   public MeasurementDoc buildDraftPatch(

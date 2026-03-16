@@ -26,6 +26,7 @@ public class MeasurementSheetDoc {
   
   private BigDecimal quantity; // 유량
   private BigDecimal pitotTubeCoefficient; // 피토우관 계수
+  private BigDecimal nozzleSize; // 노즐 사이즈
   
   private LocalTime startTime; // 측정 시작시간
   private LocalTime endTime; // 측정 종료시간

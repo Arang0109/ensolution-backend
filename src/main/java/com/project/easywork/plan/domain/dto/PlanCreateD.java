@@ -29,5 +29,5 @@ public class PlanCreateD {
   @NotBlank(message = "측정용도를 선택하세요.")
   private String measurementType;
   
-  private List<Long> measurementIds = new ArrayList<>();
+  private List<Long> measurementItemIds = new ArrayList<>();
 }
