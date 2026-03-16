@@ -30,7 +30,7 @@ public class MeasurementPointDoc {
   
   private BigDecimal kFactor;               // K 계수
   private BigDecimal orificeDifferentialPressure;
-  private BigDecimal nozzleSize;
+  private BigDecimal isokineticRatio; // 등속흡인계수
   
   public MeasurementPointDoc merge(MeasurementPointDoc doc) {
     if (doc == null) return this;

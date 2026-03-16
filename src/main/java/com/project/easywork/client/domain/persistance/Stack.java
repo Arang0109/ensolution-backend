@@ -112,6 +112,14 @@ public class Stack extends BaseEntity {
     if (dto.getRemark() != null) {
       this.remark = dto.getRemark();
     }
+    
+    normalizeShape();
+  }
+  
+  private void normalizeShape() {
+    if (this.shape == Shape.CIRCULAR) {
+      this.verticalLength = BigDecimal.ZERO;
+    }
   }
   
 }

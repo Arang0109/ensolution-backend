@@ -13,8 +13,8 @@ import java.util.List;
 @Builder
 public class PlanTableViewD {
   private Long id;
-  private MeasurementField measurementField;
   private LocalDate measureDate;
+  private MeasurementField measurementField;
   private String measurementType;
   
   private String companyName;
@@ -22,7 +22,7 @@ public class PlanTableViewD {
   private String stackName;
   private String teamName;
   
-  private List<String> measurements;
+  private List<String> measurementItems;
   
   private PlanStatus status;
   private LocalDate createdAt;

@@ -1,19 +1,16 @@
 package com.project.easywork.plan.service.impl;
 
 import com.project.easywork.agency.domain.entity.Team;
-import com.project.easywork.client.domain.dto.stack.MeasurementHistoryD;
 import com.project.easywork.client.domain.persistance.Stack;
-import com.project.easywork.client.domain.persistance.StackMeasurement;
-import com.project.easywork.client.service_data.IStackMeasurementDataService;
 import com.project.easywork.common.resolver.DomainEntityResolver;
+import com.project.easywork.measurement.dto.SaveDraftCommandD;
+import com.project.easywork.measurement.dto.StatusUpdateCommandD;
 import com.project.easywork.measurement.dto.document.MeasurementDoc;
-import com.project.easywork.measurement.dto.document.input.PreInfoDoc;
-import com.project.easywork.measurement.service.IMeasurementService;
+import com.project.easywork.measurement.mapper.MeasurementDocMapper;
 import com.project.easywork.measurement.service_data.IMeasurementDataService;
 import com.project.easywork.plan.domain.dto.*;
 import com.project.easywork.plan.domain.persistance.Plan;
 import com.project.easywork.plan.mapper.PlanMapper;
-import com.project.easywork.plan.service.IPlanMeasurementService;
 import com.project.easywork.plan.service.IPlanService;
 import com.project.easywork.plan.service_data.IPlanDataService;
 import lombok.RequiredArgsConstructor;
@@ -29,17 +26,14 @@ public class PlanService implements IPlanService {
   
   private final IPlanDataService planDataService;
   private final IMeasurementDataService measurementDataService;
-  private final IStackMeasurementDataService stackMeasurementDataService;
   
   private final PlanMapper planMapper;
-  
-  private final IPlanMeasurementService scheduleMeasurementService;
-  private final IMeasurementService measurementService;
+  private final MeasurementDocMapper measurementDocMapper;
   
   private final DomainEntityResolver domainEntityResolver;
   
   @Override
-  public PlanD register(PlanCreateBundleD dto) {
+  public PlanD registerOnlyPlan(PlanCreateBundleD dto) {
     PlanCreateD planD = dto.getPlan();
     
     Stack stack = domainEntityResolver.getStackOrThrow(planD.getStackId());
@@ -51,12 +45,6 @@ public class PlanService implements IPlanService {
     plan.createPlan();
     
     Plan savedPlan = planDataService.save(plan);
-    Long planId = savedPlan.getId(); ;
-    
-    scheduleMeasurementService.registerAll(
-        planId,  planD.getMeasurementIds());
-    
-    measurementService.createDraft(planId, dto);
     
     return planMapper.toDto(savedPlan);
   }
@@ -64,15 +52,8 @@ public class PlanService implements IPlanService {
   @Override
   @Transactional(readOnly = true)
   public List<PlanTableViewD> getList() {
-    return planMapper.toTableList(planDataService.findAllWithTeamAndStack());
-  }
-  
-  @Override
-  @Transactional(readOnly = true)
-  public List<MeasurementHistoryD> getListByStack(Long stackId) {
-    return planMapper.toMeasurementHistory(
-        planDataService.findCompletedByStackId(stackId)
-    );
+    List<MeasurementDoc> docs = measurementDataService.findAll();
+    return measurementDocMapper.toTableList(docs);
   }
   
   @Override
@@ -89,16 +70,20 @@ public class PlanService implements IPlanService {
   }
   
   @Override
-  public PlanD updateStatus(Long planId, StatusUpdateD dto) {
+  public PlanD updateStatus(Long planId, StatusUpdateCommandD dto) {
     Plan plan = planDataService.findById(planId);
     plan.updateStatus(dto);
     return planMapper.toDto(plan);
   }
   
   @Override
+  public void updatePlanFromPreInfo(Long planId, SaveDraftCommandD request) {
+    Plan plan = planDataService.findById(planId);
+    plan.updatePlan(request);
+  }
   
+  @Override
   public void delete(Long planId) {
     planDataService.deleteById(planId);
-    measurementService.deleteDraft(planId);
   }
 }

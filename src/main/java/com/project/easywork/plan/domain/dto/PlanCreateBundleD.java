@@ -11,7 +11,6 @@ public class PlanCreateBundleD {
   private PlanCreateD plan;
   
   private String referenceNumber;
-  private boolean simplifiedMeasurement = true;
   private String vehicleNumber; // 차량 번호는 변경될 수 있기 때문에 따로 관리
   private String mentor;
   private String mentee;

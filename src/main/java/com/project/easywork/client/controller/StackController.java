@@ -53,12 +53,6 @@ public class StackController {
     return ResponseEntity.ok(ApiResponse.success(stackMeasurementService.getStackMeasurementsByStack(stackId)));
   }
   
-  @Operation(summary = "측정시설 완료일정 조회 API", description = "해당 측정시설의 완료된 측정일정 목록을 조회합니다.")
-  @GetMapping("/{stackId}/history")
-  public ResponseEntity<ApiResponse<List<MeasurementHistoryD>>> getHistoryByStack(@PathVariable Long stackId) {
-    return ResponseEntity.ok(ApiResponse.success(scheduleService.getListByStack(stackId)));
-  }
-  
   @Operation(summary = "측정시설 수정 API", description = "해당 측정시설의 상세정보를 수정합니다.")
   @PatchMapping("/{stackId}")
   public ResponseEntity<ApiResponse<StackD>> update

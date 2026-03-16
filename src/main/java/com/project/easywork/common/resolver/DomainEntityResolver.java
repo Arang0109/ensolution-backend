@@ -14,6 +14,8 @@ import com.project.easywork.user.service_data.IUserDataService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 @RequiredArgsConstructor
 public class DomainEntityResolver {
@@ -75,6 +77,17 @@ public class DomainEntityResolver {
       throw new CustomException(ErrorCode.NOT_FOUND, "해당 측정시설의 측정항목을 찾을 수 없습니다.");
     }
     return stackMeasurement;
+  }
+  
+  public List<StackMeasurement> getStackMeasurementsOrThrow(List<Long> ids) {
+    List<StackMeasurement> measurementItems =
+        stackMeasurementDataService.findByIdIn(ids);
+    
+    if(measurementItems == null) {
+      throw new CustomException(ErrorCode.NOT_FOUND, "해당 측정시설의 측정항목을 찾을 수 없습니다.");
+    }
+    
+    return measurementItems;
   }
   
   public Prevention getPreventionOrThrow(Long preventionId) {

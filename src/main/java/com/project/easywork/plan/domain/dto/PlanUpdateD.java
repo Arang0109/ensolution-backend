@@ -10,8 +10,6 @@ import java.time.LocalDate;
 @Getter
 @Builder
 public class PlanUpdateD {
-  private Long stackId;
-  private Long teamId;
   private MeasurementField measurementField;
   private LocalDate measureDate;
   private String measurementType;

@@ -1,13 +1,13 @@
 package com.project.easywork.measurement.service.impl;
 
 import com.project.easywork.agency.domain.entity.Team;
-import com.project.easywork.agency.service_data.impl.TeamDataService;
 import com.project.easywork.client.domain.persistance.*;
-import com.project.easywork.client.service_data.impl.*;
+import com.project.easywork.common.resolver.DomainEntityResolver;
 import com.project.easywork.equipment.domain.document.EquipmentDoc;
 import com.project.easywork.equipment.service.impl.EquipmentService;
-import com.project.easywork.measurement.dto.snapshot.MeasurementSnapshot;
+import com.project.easywork.measurement.dto.snapshot.DraftSnapshot;
 import com.project.easywork.measurement.service.IMeasurementQueryService;
+import com.project.easywork.measurement.service.impl.snapshot.MeasurementSnapshotAssembler;
 import com.project.easywork.plan.domain.dto.PlanCreateBundleD;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,46 +20,44 @@ import java.util.List;
 @Transactional(readOnly = true)
 public class MeasurementQueryService implements IMeasurementQueryService {
   
-  private final StackDataService stackDataService;
-  private final StackMeasurementDataService stackMeasurementDataService;
-  private final TeamDataService teamDataService;
-  private final EquipmentService equipmentService;
   private final MeasurementSnapshotAssembler snapshotAssembler;
   
+  private final DomainEntityResolver domainEntityResolver;
+  
+  private final EquipmentService equipmentService;
+  
   @Override
-  public MeasurementSnapshot loadSnapshot(PlanCreateBundleD dto) {
+  public DraftSnapshot createSnapshot(PlanCreateBundleD command) {
     
-    Stack stack = stackDataService.findById(dto.getPlan().getStackId());
+    Stack stack = domainEntityResolver.getStackOrThrow(command.getPlan().getStackId());
     
-    List<StackMeasurement> measurements =
-        stackMeasurementDataService.findByIdIn(dto.getPlan().getMeasurementIds());
+    List<StackMeasurement> measurementItems = domainEntityResolver.getStackMeasurementsOrThrow(command.getPlan().getMeasurementIds());
     
-    Team team = teamDataService.findById(dto.getPlan().getTeamId());
+    Team team = domainEntityResolver.getTeamOrThrow(command.getPlan().getTeamId());
     
     EquipmentDoc particleSampler =
-        equipmentService.getEquipment(dto.getParticleSamplerId());
+        equipmentService.getEquipment(command.getParticleSamplerId());
     
     EquipmentDoc gasSampler =
-        equipmentService.getEquipment(dto.getGasSamplerId());
+        equipmentService.getEquipment(command.getGasSamplerId());
     
     EquipmentDoc pitotTube =
-        equipmentService.getEquipment(dto.getPitotTubeId());
+        equipmentService.getEquipment(command.getPitotTubeId());
     
     EquipmentDoc nozzle =
-        equipmentService.getEquipment(dto.getNozzleId());
+        equipmentService.getEquipment(command.getNozzleId());
     
     return snapshotAssembler.assemble(
-        dto.getReferenceNumber(),
-        dto.getPlan().getMeasureDate(),
-        dto.getPlan().getMeasurementField(),
-        dto.getPlan().getMeasurementType(),
-        dto.isSimplifiedMeasurement(),
+        command.getReferenceNumber(),
+        command.getPlan().getMeasureDate(),
+        command.getPlan().getMeasurementField(),
+        command.getPlan().getMeasurementType(),
         stack,
-        measurements,
+        measurementItems,
         team,
-        dto.getVehicleNumber(),
-        dto.getMentor(),
-        dto.getMentee(),
+        command.getVehicleNumber(),
+        command.getMentor(),
+        command.getMentee(),
         particleSampler,
         gasSampler,
         pitotTube,

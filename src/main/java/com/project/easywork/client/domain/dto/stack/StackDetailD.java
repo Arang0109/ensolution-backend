@@ -13,6 +13,6 @@ import java.util.List;
 @AllArgsConstructor
 public class StackDetailD {
   private StackD stack;
-  private List<PreventionDetailD> preventions = new ArrayList<>();
-  private List<StackMeasurementD> stackMeasurements = new ArrayList<>();
+  @Builder.Default private List<PreventionDetailD> preventions = new ArrayList<>();
+  @Builder.Default private List<StackMeasurementD> stackMeasurements = new ArrayList<>();
 }

@@ -6,6 +6,8 @@ import com.project.easywork.measurement.service_data.IMeasurementDataService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class MeasurementDataService implements IMeasurementDataService {
@@ -24,6 +26,11 @@ public class MeasurementDataService implements IMeasurementDataService {
     return measurementRepository.findByPlanId(planId).orElseThrow(
         () -> new IllegalArgumentException("Measurement not found")
     );
+  }
+  
+  @Override
+  public List<MeasurementDoc> findAll() {
+    return measurementRepository.findAll();
   }
   
   @Override

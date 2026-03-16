@@ -1,4 +1,4 @@
-package com.project.easywork.measurement.service.impl;
+package com.project.easywork.measurement.service.impl.processor;
 
 import com.project.easywork.measurement.dto.document.MeasurementDoc;
 import com.project.easywork.measurement.pipeline.MeasurementPipeline;
@@ -24,7 +24,6 @@ public class MeasurementResultProcessor {
         .addStep(new WeatherStep())
         .addStep(new MoistureStep())
         .addStep(new ExhaustGasStep())
-        .addStep(new MeasurementPointStep())
         .addStep(new QuantityStep());
     
     

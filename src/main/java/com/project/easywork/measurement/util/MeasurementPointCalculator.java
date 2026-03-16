@@ -25,7 +25,10 @@ public class MeasurementPointCalculator {
         }
         
         strategy = MeasurePointStrategyFactory.of("rectangular");
-        return strategy.calculate(horizontal, vertical);
+        int point = strategy.calculate(horizontal, vertical);
+        
+        // 간소화 규칙
+        return point == 1 ? 1 : (int) Math.ceil(point / 4.0);
       }
       
       case CIRCULAR -> {
@@ -37,7 +40,7 @@ public class MeasurementPointCalculator {
         int point = strategy.calculate(horizontal);
         
         // 간소화 규칙 적용
-        return point == 1 ? 1 : point / 4;
+        return point == 1 ? 1 : (int) Math.ceil(point / 4.0);
       }
       
       default -> {
