@@ -21,11 +21,8 @@ public class WeatherDoc {
   private WindDirection windDirection;
   @Field(targetType = FieldType.DECIMAL128) private BigDecimal windSpeed;
   
-  /**
-   * 계산 영역
-   * mmHg로 변환된 대기압
-   */
-  private BigDecimal convertedPressure;
+  // 계산
+  private BigDecimal Pa; // 대기압 (mmHg)
   
   private static BigDecimal scale(BigDecimal value) {
     return value == null ? null : value.setScale(1, RoundingMode.HALF_UP);

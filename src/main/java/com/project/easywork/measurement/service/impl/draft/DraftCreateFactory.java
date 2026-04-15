@@ -6,7 +6,7 @@ import com.project.easywork.measurement.dto.snapshot.DraftSnapshot;
 import com.project.easywork.measurement.dto.snapshot.plan_info.PlanInfoSnapshot;
 import com.project.easywork.measurement.mapper.ClientDocMapper;
 import com.project.easywork.measurement.mapper.EquipmentDocMapper;
-import com.project.easywork.measurement.mapper.StackMeasurementDocMapper;
+import com.project.easywork.measurement.mapper.MeasurementItemDocMapper;
 import com.project.easywork.measurement.util.MeasurementPointCalculator;
 import com.project.easywork.plan.domain.MeasurementCategory;
 import com.project.easywork.plan.domain.PlanStatus;
@@ -22,7 +22,7 @@ public class DraftCreateFactory {
   private final MeasurementPointCalculator measurementPointCalculator;
   private final ClientDocMapper clientDocMapper;
   private final EquipmentDocMapper equipmentDocMapper;
-  private final StackMeasurementDocMapper stackMeasurementDocMapper;
+  private final MeasurementItemDocMapper measurementItemDocMapper;
   
   public MeasurementDoc createDraft(Long planId, DraftSnapshot s) {
     
@@ -43,7 +43,7 @@ public class DraftCreateFactory {
         
         .client(clientDocMapper.toDoc(s.client()))
         .equipment(equipmentDocMapper.toDoc(s.measurementEquipment()))
-        .measurementItems(stackMeasurementDocMapper.toDocs(s.stackMeasurements()))
+        .measurementItems(measurementItemDocMapper.toDocs(s.stackMeasurements()))
         
         .sheets(List.of(createDefaultSheet()))
         

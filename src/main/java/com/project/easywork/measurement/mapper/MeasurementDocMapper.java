@@ -12,7 +12,7 @@ import java.util.List;
     componentModel = "spring",
     unmappedTargetPolicy = ReportingPolicy.ERROR,
     uses = {
-        StackMeasurementDocMapper.class
+        MeasurementItemDocMapper.class
     }
 )
 public interface MeasurementDocMapper {

@@ -33,7 +33,10 @@ public record SaveDraftCommandD(
   
   List<MeasurementItemPatchCommandD> measurementItems,
   
-  List<MeasurementSheetDoc> sheets
+  List<MeasurementSheetDoc> sheets,
+  
+  LocalTime measureStartTime,
+  LocalTime measureEndTime
 ) {
   public record MeasurementItemPatchCommandD (
     Long stackMeasurementId,
@@ -49,6 +52,14 @@ public record SaveDraftCommandD(
     BigDecimal allowance,
     
     LocalTime startTime,
-    LocalTime endTime
+    LocalTime endTime,
+    BigDecimal suctionQuantity,
+    BigDecimal gasMeterGaugePressure,
+    BigDecimal inTemperature,
+    BigDecimal outTemperature,
+    BigDecimal beforeVolume,
+    BigDecimal afterVolume,
+    String blankSampleNumber,
+    String sampleNumber
   ) {}
 }

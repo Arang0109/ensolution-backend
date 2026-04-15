@@ -13,7 +13,7 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,13 +49,15 @@ public class MeasurementDoc {
   
   private List<MeasurementSheetDoc> sheets; // 측정 데이터
   
+  private LocalTime measureStartTime;
+  private LocalTime measureEndTime;
   private Integer measurementPointCnt; // 측정점 수
   
   @CreatedDate
-  private LocalDateTime createdAt;
+  private LocalDate createdAt;
   
   @LastModifiedDate
-  private LocalDateTime updatedAt;
+  private LocalDate updatedAt;
   
   public MeasurementDoc updateStatus(StatusUpdateCommandD dto) {
     return this.toBuilder()
@@ -69,6 +71,7 @@ public class MeasurementDoc {
   
   public MeasurementDoc complete(MeasurementDoc doc) {
     return this.toBuilder()
+        .sheets(doc.getSheets())
         .build();
   }
   
@@ -98,6 +101,8 @@ public class MeasurementDoc {
         .measurementItems(mergeMeasurementItems(stackMeasurementPatch))
         .sheets(command.sheets())
         .measurementPointCnt(measurementPointCnt)
+        .measureStartTime(command.measureStartTime() == null ? this.measureStartTime : command.measureStartTime())
+        .measureEndTime(command.measureEndTime() == null? this.measureEndTime : command.measureEndTime())
         .build();
   }
   
