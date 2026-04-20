@@ -3,6 +3,7 @@ package com.project.easywork.report.domain.client;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Builder
 @Getter
@@ -16,4 +17,7 @@ public class PreDataD {
   private LocalDate analysisDate; // 분석날짜
   private String mentor; // 사수
   private String mentee; // 부사수
+  
+  private LocalTime measureStartTime; // 채취 시작시간
+  private LocalTime measureEndTime; // 채취 종료시간
 }

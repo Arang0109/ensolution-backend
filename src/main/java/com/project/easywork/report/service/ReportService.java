@@ -52,11 +52,12 @@ public class ReportService {
         try (Workbook workbook = existingExcelFactory.createWorkbook()) {
           
           excelMapper.preDataSheetMap(workbook, dataBundle, sheetData);
-          excelMapper.analysisReportMap(workbook, dataBundle, sheetData);
+          excelMapper.analysisReportMap(workbook, dataBundle);
+          excelMapper.measurementReportMap(workbook, sheetData);
           workbook.setForceFormulaRecalculation(true);
           
           String fileName = String.format(
-              "fKET-A-QP-17-02-01(2) 대기측정기록부(%s-%s) %s",
+              "fKET-A-QP-17-02-01(2) 대기측정기록부(%s-%s) %s.xlsx",
               dataBundle.getPreData().getReferenceNumber(),
               sheetData.getReferenceNumber(),
               sheetData.getCategory().getDescription());

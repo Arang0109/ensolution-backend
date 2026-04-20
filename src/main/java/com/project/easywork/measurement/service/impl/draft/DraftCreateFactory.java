@@ -57,7 +57,7 @@ public class DraftCreateFactory {
   
   private MeasurementSheetDoc createDefaultSheet() {
     return MeasurementSheetDoc.builder()
-        .category(MeasurementCategory.OTHER)
+        .category(MeasurementCategory.GAS)
         .build();
   }
 }

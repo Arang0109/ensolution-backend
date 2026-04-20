@@ -17,6 +17,8 @@ public class ParticleSampleDoc {
   @JsonProperty("Vm")
   private BigDecimal Vm; // 건식가스미터에서 읽은 채취량
   private BigDecimal samplingTime; // 채취시간
+  private LocalTime measureStartTime;
+  private LocalTime measureEndTime;
   
   private BigDecimal kFactor; // K 계수 (평균)
   private BigDecimal orificeDp; // 오리피스 차압 (평균)
