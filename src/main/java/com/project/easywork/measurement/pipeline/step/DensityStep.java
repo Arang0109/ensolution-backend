@@ -38,9 +38,6 @@ public class DensityStep implements SheetStep {
     
     context.setStandardGasDensity(calculator.round(standardGasDensity, 2));
     context.setGasDensity(calculator.round(gasDensity, 3));
-    
-    System.out.println("standardGasDensity: " + context.getStandardGasDensity());
-    System.out.println("gasDensity: " + context.getGasDensity());
   }
   
   private BigDecimal convertFromSTP(BigDecimal value, BigDecimal temperature, BigDecimal pressure) {

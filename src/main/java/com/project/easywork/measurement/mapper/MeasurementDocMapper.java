@@ -2,6 +2,7 @@ package com.project.easywork.measurement.mapper;
 
 import com.project.easywork.measurement.dto.document.MeasurementDoc;
 import com.project.easywork.plan.domain.dto.PlanTableViewD;
+import com.project.easywork.report.domain.client.PreDataD;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
@@ -25,4 +26,6 @@ public interface MeasurementDocMapper {
   PlanTableViewD toTable(MeasurementDoc doc);
   
   List<PlanTableViewD> toTableList(List<MeasurementDoc> docs);
+  
+  PreDataD toPreDataDto(MeasurementDoc doc);
 }

@@ -2,6 +2,7 @@ package com.project.easywork.measurement.pipeline;
 
 import com.project.easywork.common.pipeline.Context;
 import com.project.easywork.measurement.dto.document.input.ClientDoc;
+import com.project.easywork.measurement.dto.document.input.MeasurementEquipmentDoc;
 import com.project.easywork.measurement.pipeline.domain.Sheet;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,6 +16,7 @@ import java.math.BigDecimal;
 public class SheetContext implements Context {
   
   private final ClientDoc client;
+  private final MeasurementEquipmentDoc equipment;
   private final Sheet sheet;
   
   // Part. 사용자 입력값
@@ -45,14 +47,17 @@ public class SheetContext implements Context {
   private BigDecimal standardGasDensity;
   private BigDecimal gasDensity;
   
+  private BigDecimal Cp;
+  
   private BigDecimal avgTg; // 배출가스 평균 온도 (K)
   private BigDecimal avgPv; // 배출가스 평균 동압 (mmH2O)
   private BigDecimal avgPs; // 배출가스 평균 정압 (mmH2O)
   private BigDecimal avgVs; // 배출가스 평균 유속 (m/s)
   private BigDecimal avgTm; // 가스미터 평균 온도 (K)
   
-  public SheetContext(ClientDoc client, Sheet sheet) {
+  public SheetContext(ClientDoc client, MeasurementEquipmentDoc equipment, Sheet sheet) {
     this.client = client;
+    this.equipment = equipment;
     this.sheet = sheet;
   }
 }

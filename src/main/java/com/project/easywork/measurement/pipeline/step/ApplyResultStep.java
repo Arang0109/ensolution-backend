@@ -12,6 +12,6 @@ public class ApplyResultStep implements SheetStep {
   
   @Override
   public void execute(SheetContext context) {
-//    context.getSheet().updateFromContext(context);
+    context.getSheet().updateFromContext(context);
   }
 }

@@ -32,11 +32,17 @@ public class InitStep implements SheetStep {
     
     BigDecimal avgTg = calculator.averageTreatNullAsZero(
         measurementPoints.stream()
-            .map(mp -> mp.getTs().add(BigDecimal.valueOf(273))).toList(), 1
+            .map(mp -> {
+              BigDecimal ts = mp.getTs();
+              return ts == null ? null : ts.add(BigDecimal.valueOf(273));
+            })
+            .toList(), 1
     );
     
     BigDecimal avgPv = calculator.averageTreatNullAsZero(
-        measurementPoints.stream().map(MeasurementPointDoc::getPv).toList(), 1
+        measurementPoints.stream()
+            .map(MeasurementPointDoc::getPv)
+            .toList(), 1
     );
     
     BigDecimal avgPs = calculator.averageTreatNullAsZero(

@@ -30,6 +30,11 @@ public class Sheet {
                 .gasDensity(context.getStandardGasDensity())
                 .build()
         )
+        .particleSample(
+            this.sheet.getParticleSample().toBuilder()
+                .Cp(context.getCp())
+                .build()
+        )
         .avgTg(context.getAvgTg())
         .avgPv(context.getAvgPv())
         .avgPs(context.getAvgPs())

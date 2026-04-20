@@ -3,6 +3,7 @@ package com.project.easywork.measurement.service.impl;
 import com.project.easywork.measurement.dto.SaveDraftCommandD;
 import com.project.easywork.measurement.dto.document.MeasurementDoc;
 import com.project.easywork.measurement.dto.document.input.ClientDoc;
+import com.project.easywork.measurement.dto.document.input.MeasurementEquipmentDoc;
 import com.project.easywork.measurement.dto.document.input.MeasurementSheetDoc;
 import com.project.easywork.measurement.service.IMeasurementQueryService;
 import com.project.easywork.measurement.service.IMeasurementService;
@@ -36,10 +37,11 @@ public class MeasurementService implements IMeasurementService {
     MeasurementDoc doc = measurementDataService.findByPlanId(planId);
     
     ClientDoc client = doc.getClient();
+    MeasurementEquipmentDoc equipment = doc.getEquipment();
     List<MeasurementSheetDoc> sheets = doc.getSheets();
     
     List<MeasurementSheetDoc> processedSheets = sheets.stream()
-        .map((MeasurementSheetDoc measurementSheetDoc) -> resultProcessor.process(measurementSheetDoc, client))
+        .map((MeasurementSheetDoc measurementSheetDoc) -> resultProcessor.process(measurementSheetDoc, client, equipment))
         .toList();
     
     MeasurementDoc updated = doc.toBuilder()

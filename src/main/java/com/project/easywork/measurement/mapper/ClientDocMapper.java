@@ -2,13 +2,18 @@ package com.project.easywork.measurement.mapper;
 
 import com.project.easywork.measurement.dto.document.input.ClientDoc;
 import com.project.easywork.measurement.dto.snapshot.client.*;
+import com.project.easywork.report.domain.client.ClientDataD;
+import com.project.easywork.report.domain.stack.FacilityDataD;
+import com.project.easywork.report.domain.stack.PreventionDataD;
+import com.project.easywork.report.domain.stack.StackDataD;
+import com.project.easywork.report.domain.stack.TargetDataD;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 
 @Mapper(
     componentModel = "spring",
-    unmappedTargetPolicy = ReportingPolicy.ERROR
+    unmappedTargetPolicy = ReportingPolicy.IGNORE
 )
 public interface ClientDocMapper {
   
@@ -25,6 +30,11 @@ public interface ClientDocMapper {
   ClientDoc.FacilityDoc toDoc(PreventionSnapshot.FacilitySnapshot snapshot);
   ClientDoc.TargetDoc toDoc(PreventionSnapshot.TargetSnapshot snapshot);
   
+  ClientDataD toClientDataDto(ClientDoc.CompanyDoc companyDoc);
+  StackDataD toStackDataDto(ClientDoc.StackDoc stackDoc);
+  PreventionDataD toPreventionDataDto(ClientDoc.PreventionDoc preventionDoc);
+  FacilityDataD toFacilityDataDto(ClientDoc.FacilityDoc facilityDoc);
+  TargetDataD toTargetDataDto(ClientDoc.TargetDoc targetDoc);
   
   default ClientDoc.CompanyDoc toCompanyDoc(
       CompanySnapshot company,
