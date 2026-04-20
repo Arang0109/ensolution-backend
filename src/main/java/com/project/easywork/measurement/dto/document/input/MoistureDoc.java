@@ -19,11 +19,8 @@ public class MoistureDoc {
   @Field(targetType = FieldType.DECIMAL128) private BigDecimal suctionVelocity;
   @Field(targetType = FieldType.DECIMAL128) private BigDecimal gasMeterGaugePressure;
   
-  /**
-   * 계산 영역
-   * 수분량 (%)
-   */
-  private BigDecimal moistureRatio;
+  // 계산
+  private BigDecimal Xw; // 수분량 (%)
   
   public MoistureDoc normalize() {
     return this.toBuilder()

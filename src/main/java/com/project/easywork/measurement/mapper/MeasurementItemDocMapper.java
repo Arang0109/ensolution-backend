@@ -12,10 +12,7 @@ import java.util.List;
     componentModel = "spring",
     unmappedTargetPolicy = ReportingPolicy.ERROR
 )
-public interface StackMeasurementDocMapper {
-  
-  @Mapping(target = "startTime", ignore = true)
-  @Mapping(target = "endTime", ignore = true)
+public interface MeasurementItemDocMapper {
   MeasurementItemDoc toDoc(StackMeasurementSnapshot snapshot);
   
   default String toName(MeasurementItemDoc doc) {

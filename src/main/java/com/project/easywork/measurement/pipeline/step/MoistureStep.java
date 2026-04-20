@@ -1,79 +1,65 @@
 package com.project.easywork.measurement.pipeline.step;
 
-import com.project.easywork.measurement.pipeline.context.MeasurementContext;
+import com.project.easywork.measurement.dto.document.input.MoistureDoc;
+import com.project.easywork.measurement.pipeline.SheetContext;
+import com.project.easywork.measurement.pipeline.domain.Sheet;
+import lombok.RequiredArgsConstructor;
+import org.springframework.core.annotation.Order;
+import org.springframework.stereotype.Component;
 
-/**
- * 수분량 계산
- * | ( ( 22.4 / 18 ) * diffWeight ) /                                                     | * 100
- * | ( diffVolume * ( 273 / 273 + T ) * ( P / 760 ) ) + ( ( 22.4 / 18 ) * diffWeight )    |
- */
-public class MoistureStep implements MeasurementStep {
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
+@Component
+@Order(3)
+@RequiredArgsConstructor
+public class MoistureStep implements SheetStep {
   
   @Override
-  public void execute(MeasurementContext context) {
+  public void execute(SheetContext context) {
+    Sheet sheet = context.getSheet();
+    MoistureDoc moisture = sheet.getSheet().getMoisture();
     
-//    Measurement domain = context.getDomain();
-//
-//    MeasurementDoc measurement = domain.getMeasurement();
-//    MoistureDoc moisture  = measurement.getMoisture();
-//
-//    // 흡수병 무게 차이
-//    BigDecimal diffWeight =
-//        moisture.getWeight().getAfter()
-//            .subtract(moisture.getWeight().getBefore());
-//
-//    // 부피 차이
-//    BigDecimal diffVolume =
-//        moisture.getDryGasVolume().getAfter()
-//            .subtract(moisture.getDryGasVolume().getBefore());
-//
-//    // 평균 온도
-//    BigDecimal avgTemp =
-//        moisture.getGasMeterTemperature().getIn()
-//            .add(moisture.getGasMeterTemperature().getOut())
-//            .divide(BigDecimal.valueOf(2), 1, RoundingMode.HALF_UP);
-//
-//    // 게이지압 mmH2O → mmHg 변환
-//    BigDecimal gaugePressureMmHg =
-//        moisture.getGasMeterGaugePressure()
-//            .divide(BigDecimal.valueOf(13.6), 2, RoundingMode.HALF_UP);
-//
-//  // 압력 = 대기압 + 게이지압
-//    BigDecimal pressure =
-//        context.getConvertedAtmosP()
-//            .add(gaugePressureMmHg);
-//
-//    // 표준 가스 부피
-//    BigDecimal standardGasVolume =
-//        GasCalculator.toStandardDensity(diffVolume, avgTemp, pressure);
-//
-//    // 무게 → 부피 변환
-//    BigDecimal diffWeightToVolume =
-//        diffWeight
-//            .multiply(BigDecimal.valueOf(22.4))
-//            .divide(BigDecimal.valueOf(18), 10, RoundingMode.HALF_UP);
-//
-//    // 분모
-//    BigDecimal denominator =
-//        standardGasVolume.add(diffWeightToVolume);
-//
-//    // 수분 함량(%)
-//    BigDecimal moistureContent =
-//        diffWeightToVolume
-//            .divide(denominator, 6, RoundingMode.HALF_UP)
-//            .multiply(BigDecimal.valueOf(100))
-//            .setScale(2, RoundingMode.HALF_UP);
-//
-//    context.setMoistureRatio(moistureContent);
-//
-//    MoistureDoc updatedMoistureRatio = moisture.toBuilder()
-//        .moistureRatio(moistureContent)
-//        .build();
-//
-//    MeasurementDoc updatedMeasurement = measurement.toBuilder()
-//        .moisture(updatedMoistureRatio)
-//        .build();
-//
-//    domain.updateMeasurement(updatedMeasurement);
+    // ma: 흡습된 수분의 질량 (g)
+    BigDecimal ma = moisture.getWeight().getAfter().subtract(moisture.getWeight().getBefore());
+    
+    // Tm_g: 가스미터에서의 흡입 가스온도 (°C)
+    BigDecimal Tm_g = moisture.getGasMeterTemperature().getIn()
+        .add(moisture.getGasMeterTemperature().getOut())
+        .divide(BigDecimal.TWO, 1, RoundingMode.HALF_UP);
+    // Vm_g: 흡입한 건조가스량 (L)
+    BigDecimal Vm_g = moisture.getDryGasVolume().getAfter().subtract(moisture.getDryGasVolume().getBefore());
+    
+    BigDecimal Pm = context.getPa().add(context.getPm_g());
+    BigDecimal waterVolStp = calcWaterVolumeStp(ma);
+    BigDecimal dryVolStp = convertToSTP(Vm_g, Tm_g, Pm);
+    // Xw: 배출가스 중의 수증기의 부피 백분율 (%)
+    BigDecimal Xw = calcMoistureRatioPure(waterVolStp, dryVolStp);
+    
+    context.setXw(Xw);
+    context.setTm_g(Tm_g);
+    context.setVm_g(Vm_g);
+    context.setMa(ma);
+  }
+  
+  private BigDecimal convertToSTP(BigDecimal value, BigDecimal temperature, BigDecimal pressure) {
+    BigDecimal t = BigDecimal.valueOf(273);
+    BigDecimal p = BigDecimal.valueOf(760);
+    
+    return value
+        .multiply(t.divide(t.add(temperature), 5, RoundingMode.HALF_UP))
+        .multiply(pressure.divide(p, 5, RoundingMode.HALF_UP));
+  }
+  
+  private BigDecimal calcWaterVolumeStp(BigDecimal waterG) {
+    return waterG.multiply(
+      BigDecimal.valueOf(22.4).divide(BigDecimal.valueOf(18), 5, RoundingMode.HALF_UP)
+    );
+  }
+  
+  private BigDecimal calcMoistureRatioPure(BigDecimal waterVolStp, BigDecimal dryVolStp) {
+    return BigDecimal.valueOf(100).multiply(
+        waterVolStp.divide(waterVolStp.add(dryVolStp), 5, RoundingMode.HALF_UP)
+    );
   }
 }

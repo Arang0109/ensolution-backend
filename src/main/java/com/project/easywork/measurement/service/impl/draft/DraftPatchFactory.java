@@ -66,8 +66,6 @@ public class DraftPatchFactory {
         .samplingVolume(command.samplingVolume())
         .cycle(command.cycle())
         .allowance(command.allowance())
-        .startTime(command.startTime())
-        .endTime(command.endTime())
         .build();
     })
     .toList();

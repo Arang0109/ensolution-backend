@@ -1,5 +1,6 @@
 package com.project.easywork.measurement.dto.document.input;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Getter;
 import org.springframework.data.mongodb.core.mapping.Field;
@@ -11,40 +12,41 @@ import java.math.BigDecimal;
 @Builder(toBuilder = true)
 public class MeasurementPointDoc {
   // ===== 입력 영역 =====
-  private BigDecimal gasTemperature;        // 배출가스 온도
-  private BigDecimal dynamicPressure;       // 동압
-  private BigDecimal staticPressure;        // 정압
+  @JsonProperty("Ts")
+  private BigDecimal Ts;        // 배출가스 온도
+  @JsonProperty("Pv")
+  private BigDecimal Pv;       // 동압
+  @JsonProperty("Ps")
+  private BigDecimal Ps;        // 정압
   
   private ParticularEquipmentTemperature equipmentTemperature;
   private ParticularEquipmentVolume equipmentVolume;
   
-  private BigDecimal measureTime;           // 측정 시간
+  private BigDecimal samplingTime;           // 채취 시간
   private BigDecimal vacuumGaugePressure;   // 진공게이지 압력
   private BigDecimal finalImpingerTemperature; // 최종 임핀저 온도
   
   // ===== 계산 영역 =====
-  private BigDecimal gasVelocity;           // 유속
+  @JsonProperty("Vs")
+  private BigDecimal Vs;           // 유속
   private BigDecimal gasDensity;            // 가스 밀도
   
-  private BigDecimal collectedWaterVolume;
+  @JsonProperty("Vm")
+  private BigDecimal Vm;  // 건식가스미터 채취량 (m³)
+  @JsonProperty("Vlc")
+  private BigDecimal Vlc;  // 채취된 물의 총량 (ml)
   
   private BigDecimal kFactor;               // K 계수
-  private BigDecimal orificeDifferentialPressure;
-  private BigDecimal isokineticRatio; // 등속흡인계수
+  private BigDecimal orificeDp;
+  private BigDecimal isokineticRatio; // 등속흡입계수
   
   public MeasurementPointDoc merge(MeasurementPointDoc doc) {
     if (doc == null) return this;
     
     return this.toBuilder()
-        .gasTemperature(
-            doc.gasTemperature != null ? doc.gasTemperature : this.gasTemperature
-        )
-        .dynamicPressure(
-            doc.dynamicPressure != null ? doc.dynamicPressure : this.dynamicPressure
-        )
-        .staticPressure(
-            doc.staticPressure != null ? doc.staticPressure : this.staticPressure
-        )
+        .Ts(doc.Ts != null ? doc.Ts : this.Ts)
+        .Pv(doc.Pv != null ? doc.Pv : this.Pv)
+        .Ps(doc.Ps != null ? doc.Ps : this.Ps)
         .equipmentTemperature(
             doc.equipmentTemperature != null
                 ? (this.equipmentTemperature == null
@@ -59,17 +61,9 @@ public class MeasurementPointDoc {
                 : this.equipmentVolume.merge(doc.equipmentVolume))
                 : this.equipmentVolume
         )
-        .measureTime(
-            doc.measureTime != null ? doc.measureTime : this.measureTime
-        )
-        .vacuumGaugePressure(
-            doc.vacuumGaugePressure != null ? doc.vacuumGaugePressure : this.vacuumGaugePressure
-        )
-        .finalImpingerTemperature(
-            doc.finalImpingerTemperature != null
-                ? doc.finalImpingerTemperature
-                : this.finalImpingerTemperature
-        )
+        .samplingTime(doc.samplingTime != null ? doc.samplingTime : this.samplingTime)
+        .vacuumGaugePressure(doc.vacuumGaugePressure != null ? doc.vacuumGaugePressure : this.vacuumGaugePressure)
+        .finalImpingerTemperature(doc.finalImpingerTemperature != null ? doc.finalImpingerTemperature : this.finalImpingerTemperature)
         .build();
   }
   
@@ -77,20 +71,20 @@ public class MeasurementPointDoc {
   @Builder(toBuilder = true)
   public static class ParticularEquipmentTemperature {
     @Field(targetType = FieldType.DECIMAL128)
-    private BigDecimal inletTemperature;   // 기존 in
+    private BigDecimal inTm;   // 기존 in
     
     @Field(targetType = FieldType.DECIMAL128)
-    private BigDecimal outletTemperature;  // 기존 out
+    private BigDecimal outTm;  // 기존 out
     
     // 계산 영역
-    private BigDecimal averageTemperature; // 기존 avgTemperature
+    private BigDecimal avgTm; // 기존 avgTemperature
     
     public ParticularEquipmentTemperature merge(ParticularEquipmentTemperature doc) {
       if (doc == null) return this;
       
       return this.toBuilder()
-          .inletTemperature(doc.inletTemperature != null ? doc.inletTemperature : this.inletTemperature)
-          .outletTemperature(doc.outletTemperature != null ? doc.outletTemperature : this.outletTemperature)
+          .inTm(doc.inTm != null ? doc.inTm : this.inTm)
+          .outTm(doc.outTm != null ? doc.outTm : this.outTm)
           .build();
     }
   }
@@ -99,23 +93,18 @@ public class MeasurementPointDoc {
   @Builder(toBuilder = true)
   public static class ParticularEquipmentVolume {
     @Field(targetType = FieldType.DECIMAL128)
-    private BigDecimal beforeVolume;   // 기존 before
+    private BigDecimal beforeVm;   // 기존 before
     
     @Field(targetType = FieldType.DECIMAL128)
-    private BigDecimal afterVolume;    // 기존 after
+    private BigDecimal afterVm;    // 기존 after
     
     public ParticularEquipmentVolume merge(ParticularEquipmentVolume doc) {
       if (doc == null) return this;
       
       return this.toBuilder()
-          .beforeVolume(doc.beforeVolume != null ? doc.beforeVolume : this.beforeVolume)
-          .afterVolume(doc.afterVolume != null ? doc.afterVolume : this.afterVolume)
+          .beforeVm(doc.beforeVm != null ? doc.beforeVm : this.beforeVm)
+          .afterVm(doc.afterVm != null ? doc.afterVm : this.afterVm)
           .build();
     }
-    
-    // 계산 영역
-    private BigDecimal requiredVolume;
-    private BigDecimal expectedVolume;
-    private BigDecimal actualCollectedVolume;
   }
 }

@@ -2,17 +2,22 @@ package com.project.easywork.measurement.service.impl;
 
 import com.project.easywork.measurement.dto.SaveDraftCommandD;
 import com.project.easywork.measurement.dto.document.MeasurementDoc;
+import com.project.easywork.measurement.dto.document.input.ClientDoc;
+import com.project.easywork.measurement.dto.document.input.MeasurementEquipmentDoc;
+import com.project.easywork.measurement.dto.document.input.MeasurementSheetDoc;
 import com.project.easywork.measurement.service.IMeasurementQueryService;
 import com.project.easywork.measurement.service.IMeasurementService;
 import com.project.easywork.measurement.service.impl.draft.DraftCreateFactory;
 import com.project.easywork.measurement.service.impl.draft.DraftPatchFactory;
-import com.project.easywork.measurement.service.impl.processor.MeasurementResultProcessor;
+import com.project.easywork.measurement.service.impl.processor.SheetResultProcessor;
 import com.project.easywork.measurement.service_data.IMeasurementDataService;
 import com.project.easywork.plan.domain.dto.PlanCreateBundleD;
 import com.project.easywork.measurement.dto.StatusUpdateCommandD;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -24,16 +29,26 @@ public class MeasurementService implements IMeasurementService {
   
   private final DraftCreateFactory draftCreateFactory;
   private final DraftPatchFactory draftPatchFactory;
-  private final MeasurementResultProcessor resultProcessor;
+  private final SheetResultProcessor resultProcessor;
   
   @Override
   public void submitDocument(Long planId) {
     
     MeasurementDoc doc = measurementDataService.findByPlanId(planId);
     
-    MeasurementDoc result = resultProcessor.process(doc);
+    ClientDoc client = doc.getClient();
+    MeasurementEquipmentDoc equipment = doc.getEquipment();
+    List<MeasurementSheetDoc> sheets = doc.getSheets();
     
-    measurementDataService.save(doc.complete(result));
+    List<MeasurementSheetDoc> processedSheets = sheets.stream()
+        .map((MeasurementSheetDoc measurementSheetDoc) -> resultProcessor.process(measurementSheetDoc, client, equipment))
+        .toList();
+    
+    MeasurementDoc updated = doc.toBuilder()
+        .sheets(processedSheets)
+        .build();
+    
+    measurementDataService.save(doc.complete(updated));
   }
   
   @Override

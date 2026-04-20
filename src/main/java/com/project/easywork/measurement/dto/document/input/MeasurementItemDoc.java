@@ -7,7 +7,6 @@ import lombok.Getter;
 import lombok.ToString;
 
 import java.math.BigDecimal;
-import java.time.LocalTime;
 
 @Getter
 @Builder(toBuilder = true)
@@ -25,20 +24,17 @@ public class MeasurementItemDoc {
   private Cycle cycle;
   private BigDecimal allowance;
   
-  
-  private LocalTime startTime;
-  private LocalTime endTime;
-  
   public MeasurementItemDoc merge(MeasurementItemDoc patch) {
     return this.toBuilder()
         .pollutantNameKr(patch.getPollutantNameKr() != null ? patch.getPollutantNameKr() : this.pollutantNameKr)
         .pollutantNameEn(patch.getPollutantNameEn() != null ? patch.getPollutantNameEn() : this.pollutantNameEn)
         .method(patch.getMethod() != null ? patch.getMethod() : this.method)
+        .testEquipment(patch.getTestEquipment() != null ? patch.getTestEquipment() : this.testEquipment)
         .testMethod(patch.getTestMethod() != null ? patch.getTestMethod() : this.testMethod)
         .samplingTime(patch.getSamplingTime() != null ? patch.getSamplingTime() : this.samplingTime)
         .samplingVolume(patch.getSamplingVolume() != null ? patch.getSamplingVolume() : this.samplingVolume)
-        .startTime(patch.getStartTime() != null ? patch.getStartTime() : this.startTime)
-        .endTime(patch.getEndTime() != null ? patch.getEndTime() : this.endTime)
+        .cycle(patch.getCycle() != null ? patch.getCycle() : this.cycle)
+        .allowance(patch.getAllowance() != null ? patch.getAllowance() : this.allowance)
         .build();
   }
 }
