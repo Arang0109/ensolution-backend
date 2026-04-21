@@ -26,4 +26,7 @@ public class ParticleSampleDoc {
   
   private LocalTime samplingStartTime; // 측정 시작시간
   private LocalTime samplingEndTime; // 측정 종료시간
+  
+  private String thimbleFilter;
+  private String bgThimbleFilter;
 }
