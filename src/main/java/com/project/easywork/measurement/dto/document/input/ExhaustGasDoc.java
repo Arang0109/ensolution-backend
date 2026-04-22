@@ -5,6 +5,7 @@ import lombok.Getter;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.LocalTime;
 import java.util.List;
 
 @Getter
@@ -18,6 +19,9 @@ public class ExhaustGasDoc {
   
   private BigDecimal gasDensity;
   private BigDecimal o2CorrectionFactor;
+  
+  private LocalTime gasAnalyzerStartTime;
+  private LocalTime thcAnalyzerStartTime;
   
   public ExhaustGasDoc normalize() {
     return this.toBuilder()
