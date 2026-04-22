@@ -1,6 +1,7 @@
 package com.project.easywork.report.mapper;
 
 import com.project.easywork.client.domain.Shape;
+import com.project.easywork.plan.domain.MeasurementCategory;
 import com.project.easywork.report.domain.client.ClientDataD;
 import com.project.easywork.report.domain.client.PreDataD;
 import com.project.easywork.report.domain.bundle.DataBundle;
@@ -12,6 +13,7 @@ import com.project.easywork.report.excel.ReportSheetNames;
 import lombok.RequiredArgsConstructor;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.hibernate.jdbc.Work;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -39,13 +41,13 @@ public class ExcelMapper {
     // 채취일 (N5)
     cellWriter.write(sheet, 4, 13, preData.getMeasureDate());
     
-//    String[] startTime = data.getMeasureStartTime().toString().split(":");
-//    String[] endTime = doc.getMeasureEndTime().toString().split(":");
-//
-//    cellWriter.write(sheet, 5, 7, Integer.parseInt(startTime[0]));
-//    cellWriter.write(sheet, 5, 8, Integer.parseInt(startTime[1]));
-//    cellWriter.write(sheet, 5, 10, Integer.parseInt(endTime[0]));
-//    cellWriter.write(sheet, 5, 11, Integer.parseInt(endTime[1]));
+    String[] startTime = preData.getMeasureStartTime().toString().split(":");
+    String[] endTime = preData.getMeasureEndTime().toString().split(":");
+
+    cellWriter.write(sheet, 5, 7, Integer.parseInt(startTime[0]));
+    cellWriter.write(sheet, 5, 8, Integer.parseInt(startTime[1]));
+    cellWriter.write(sheet, 5, 10, Integer.parseInt(endTime[0]));
+    cellWriter.write(sheet, 5, 11, Integer.parseInt(endTime[1]));
     
     WeatherDataD weather = sheetData.getWeather();
 
@@ -142,7 +144,7 @@ public class ExcelMapper {
     // cellWriter.write(sheet, row, col, value);
   }
   
-  public void analysisReportMap(Workbook workbook, DataBundle data, SheetDataD sheetData) {
+  public void analysisReportMap(Workbook workbook, DataBundle data) {
     Sheet sheet = workbook.getSheet(ReportSheetNames.ANALYSIS_REPORT);
     ClientDataD client = data.getClientData();
     StackDataD stack = data.getStackData();
@@ -162,6 +164,39 @@ public class ExcelMapper {
     cellWriter.write(sheet, 10, 7, height);
     
     cellWriter.write(sheet, 12, 4, stack.getPreventions().getFirst().getName());
+  }
+  
+  public void measurementReportMap(Workbook workbook, SheetDataD sheetData) {
+    Sheet sheet = workbook.getSheet(ReportSheetNames.MEASUREMENT_REPORT);
+    
+    MeasurementCategory category = sheetData.getCategory();
+    
+    if (category != MeasurementCategory.GAS) {
+      String[] startTime = sheetData.getParticleSample().getSamplingStartTime().toString().split(":");
+      String[] endTime = sheetData.getParticleSample().getSamplingEndTime().toString().split(":");
+      
+      switch (category) {
+        case DUST:
+          cellWriter.write(sheet, 18, 24, startTime[0]);
+          cellWriter.write(sheet, 18, 25, startTime[1]);
+          cellWriter.write(sheet, 18, 26, endTime[0]);
+          cellWriter.write(sheet, 18, 27, endTime[1]);
+          break;
+        case HEAVY_METAL:
+          cellWriter.write(sheet, 18, 28, startTime[0]);
+          cellWriter.write(sheet, 18, 29, startTime[1]);
+          cellWriter.write(sheet, 18, 30, endTime[0]);
+          cellWriter.write(sheet, 18, 31, endTime[1]);
+          break;
+        case MERCURY:
+          cellWriter.write(sheet, 18, 32, startTime[0]);
+          cellWriter.write(sheet, 18, 33, startTime[1]);
+          cellWriter.write(sheet, 18, 34, endTime[0]);
+          cellWriter.write(sheet, 18, 35, endTime[1]);
+          break;
+      }
+    }
+    
     
   }
   
@@ -173,4 +208,6 @@ public class ExcelMapper {
   private BigDecimal nullSafeFloat(BigDecimal value) {
     return value != null ? value : BigDecimal.valueOf(0.0);
   }
+  
+  private BigDecimal nullSafeInteger(BigDecimal value) { return value != null ? value : BigDecimal.ZERO; }
 }

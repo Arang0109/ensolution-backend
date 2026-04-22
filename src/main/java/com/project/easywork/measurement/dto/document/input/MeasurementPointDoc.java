@@ -36,6 +36,7 @@ public class MeasurementPointDoc {
   @JsonProperty("Vlc")
   private BigDecimal Vlc;  // 채취된 물의 총량 (ml)
   
+  @JsonProperty("kFactor")
   private BigDecimal kFactor;               // K 계수
   private BigDecimal orificeDp;
   private BigDecimal isokineticRatio; // 등속흡입계수

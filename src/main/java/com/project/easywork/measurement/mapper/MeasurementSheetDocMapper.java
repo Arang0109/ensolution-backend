@@ -42,5 +42,7 @@ public interface MeasurementSheetDocMapper {
   @Mapping(target = "outTemp", source = "equipmentTemperature.outTm")
   MeasurementPointDataD toMeasurementPointDataDto(MeasurementPointDoc doc);
   
+  ParticleSampleD toParticleSampleDto(ParticleSampleDoc doc);
+  
   List<MeasurementPointDataD> toMeasurementPointDataListDto(List<MeasurementPointDoc> docs);
 }

@@ -20,6 +20,8 @@ public class SheetDataD {
   private ExhaustGasDataD exhaustGas;
   private List<MeasurementPointDataD> measurementPoints;
   
+  private ParticleSampleD particleSample;
+  
   private BigDecimal Cp;
   private BigDecimal nozzleSize;
 }

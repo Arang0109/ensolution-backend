@@ -24,11 +24,12 @@ public class MeasurementPointCalculator {
           return 1;
         }
         
-        strategy = MeasurePointStrategyFactory.of("rectangular");
-        int point = strategy.calculate(horizontal, vertical);
-        
-        // 간소화 규칙
-        return point == 1 ? 1 : (int) Math.ceil(point / 4.0);
+//        strategy = MeasurePointStrategyFactory.of("rectangular");
+//        int point = strategy.calculate(horizontal, vertical);
+//
+//        // 간소화 규칙
+//        return point == 1 ? 1 : (int) Math.ceil(point / 4.0);
+        return 1; // 임시
       }
       
       case CIRCULAR -> {
