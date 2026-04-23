@@ -11,7 +11,7 @@ WORKDIR /app
 # build.gradle, settings.gradle, gradle.properties 먼저 복사해서 dependency 캐시
 COPY build.gradle settings.gradle gradlew ./
 COPY gradle ./gradle
-RUN ./gradlew dependencies --no-daemon || return 0
+RUN ./gradlew dependencies --no-daemon || true
 
 # 나머지 소스 복사
 COPY . .
@@ -35,6 +35,9 @@ EXPOSE 8080
 
 # 환경변수 (Cloud Run에서 .env나 Secret으로 덮어쓸 예정)
 ENV SPRING_PROFILES_ACTIVE=prod
+
+HEALTHCHECK --interval=30s --timeout=5s --retries=3 \
+  CMD wget -qO- http://localhost:8080/actuator/health || exit 1
 
 # 애플리케이션 실행
 ENTRYPOINT ["java", "-jar", "app.jar"]

@@ -12,4 +12,7 @@ import java.time.LocalTime;
 public class ParticleSampleD {
   private LocalTime samplingStartTime;
   private LocalTime samplingEndTime;
+  
+  private String thimbleFilter;
+  private String bgThimbleFilter;
 }

@@ -1,11 +1,16 @@
 spring:
-  config:
-    activate:
-      on-profile: prod
   jpa:
     hibernate:
       ddl-auto: validate
 
+# logging
 logging:
   level:
     root: warn
+
+# swagger
+springdoc:
+  api-docs:
+    enabled: false
+  swagger-ui:
+    enabled: false
