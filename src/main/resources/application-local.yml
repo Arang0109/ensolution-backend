@@ -1,12 +1,23 @@
 spring:
-  config:
-    activate:
-      on-profile: local
   jpa:
     hibernate:
       ddl-auto: update
 
+# logging
 logging:
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
   level:
     root: info
     com.project.easywork: debug
+
+# swagger
+springdoc:
+  swagger-ui:
+    doc-expansion: none
+    operations-sorter: alpha
+    tags-sorter: alpha
+
+server:
+  error:
+    include-message: always

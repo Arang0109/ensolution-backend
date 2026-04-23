@@ -8,19 +8,14 @@ import java.time.LocalDate;
 @Component
 public class ReportCellWriter {
   
-  private CellStyle dateStyle;
-  
   public void write(Sheet sheet, int rowIndex, int colIndex, Object value) {
+    if (sheet == null || value == null) return;
+    
     Row row = sheet.getRow(rowIndex);
     if (row == null) row = sheet.createRow(rowIndex);
     
     Cell cell = row.getCell(colIndex);
     if (cell == null) cell = row.createCell(colIndex);
-    
-    if (value == null) {
-      cell.setBlank();
-      return;
-    }
     
     if (value instanceof LocalDate v) {
       writeDate(cell, v);
@@ -44,14 +39,11 @@ public class ReportCellWriter {
     cell.setCellValue(java.sql.Date.valueOf(date));
     
     CellStyle originStyle = cell.getCellStyle();
-    
     CellStyle newStyle = workbook.createCellStyle();
-    newStyle.cloneStyleFrom(originStyle); // 기존 스타일 복사
+    newStyle.cloneStyleFrom(originStyle);
     
     CreationHelper helper = workbook.getCreationHelper();
-    newStyle.setDataFormat(
-        helper.createDataFormat().getFormat("m\"월\" d\"일\"")
-    );
+    newStyle.setDataFormat(helper.createDataFormat().getFormat("m\"월\" d\"일\""));
     
     cell.setCellStyle(newStyle);
   }

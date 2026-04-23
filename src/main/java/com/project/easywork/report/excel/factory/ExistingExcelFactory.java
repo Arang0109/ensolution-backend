@@ -13,10 +13,10 @@ public class ExistingExcelFactory extends ExcelFactory {
     try {
       InputStream is = getClass()
           .getClassLoader()
-          .getResourceAsStream("excel/template.xlsx");
+          .getResourceAsStream("templates/report.xlsx");
       
       if (is == null) {
-        throw new IllegalArgumentException("excel/template.xlsx 파일을 찾을 수 없습니다.");
+        throw new IllegalArgumentException("templates/report.xlsx 파일을 찾을 수 없습니다.");
       }
       
       return new XSSFWorkbook(is);

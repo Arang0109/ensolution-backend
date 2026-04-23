@@ -3,6 +3,7 @@ package com.project.easywork.report.domain.sheet;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.time.LocalTime;
 import java.util.List;
 
 @Builder
@@ -16,4 +17,7 @@ public class ExhaustGasDataD {
   private List<BigDecimal> coConcentration;
   private List<BigDecimal> noxConcentration;
   private List<BigDecimal> soxConcentration;
+  
+  private LocalTime gasAnalyzerStartTime;
+  private LocalTime thcAnalyzerStartTime;
 }

@@ -1,0 +1,52 @@
+version: "3.8"
+
+services:
+  frontend:
+    build:
+      context: ./ensolution-front
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"
+    depends_on:
+      - app
+    restart: unless-stopped
+
+  app:
+    build: ./ensolution-back
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mongo
+      - redis
+      - mysql
+    env_file:
+      - ./ensolution-back/.env.prod
+    restart: unless-stopped
+
+  mongo:
+    image: mongo
+    volumes:
+      - mongo-data:/data/db
+    restart: unless-stopped
+
+  redis:
+    image: redis
+    volumes:
+      - redis-data:/data
+    restart: unless-stopped
+
+  mysql:
+    image: mysql:8
+    env_file:
+      - ./ensolution-back/.env.prod
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+    volumes:
+      - mysql-data:/var/lib/mysql
+    restart: unless-stopped
+
+volumes:
+  mongo-data:
+  redis-data:
+  mysql-data:
