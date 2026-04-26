@@ -13,7 +13,6 @@ import java.util.List;
 @ToString
 public class SheetDataD {
   private MeasurementCategory category; // 측정 카테고리 (먼지, 중금속, 수은, PM10, PM2.5, 기타)
-  private String referenceNumber; // 문서번호 (부)
   
   private WeatherDataD weather;
   private MoistureDataD moisture;

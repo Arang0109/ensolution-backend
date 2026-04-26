@@ -208,13 +208,10 @@ public class ExcelMapper {
   
   private String buildReferenceNumber(PreDataD preData, SheetDataD sheetData) {
     String preRef = get(preData::getReferenceNumber);
-    String sheetRef = get(sheetData::getReferenceNumber);
     
-    if (preRef == null && sheetRef == null) return null;
-    if (preRef == null) return sheetRef;
-    if (sheetRef == null) return preRef;
+    if (preRef == null) return null;
     
-    return String.format("01-%s-%s", preRef, sheetRef);
+    return String.format("01-%s", preRef);
   }
   
   private String buildStackName(StackDataD stack) {

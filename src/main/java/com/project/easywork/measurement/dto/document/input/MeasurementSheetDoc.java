@@ -15,7 +15,6 @@ import java.util.List;
 @AllArgsConstructor
 public class MeasurementSheetDoc {
   private MeasurementCategory category; // 측정 카테고리 (먼지, 중금속, 수은, PM10, PM2.5, 기타)
-  private String referenceNumber; // 문서번호 (부)
   
   private WeatherDoc weather; // 날씨정보
   private MoistureDoc moisture; // 수분정보

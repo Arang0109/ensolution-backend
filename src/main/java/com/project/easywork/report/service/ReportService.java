@@ -65,9 +65,8 @@ public class ReportService {
         byte[] excelBytes = createSingleExcel(dataBundle, sheetData);
         
         String fileName = String.format(
-            "fKET-A-QP-17-02-01(2)_대기측정기록부(%s-%s)_%s.xlsx",
+            "fKET-A-QP-17-02-01(2)_대기측정기록부(%s)_%s.xlsx",
             dataBundle.getPreData().getReferenceNumber(),
-            sheetData.getReferenceNumber(),
             sheetData.getCategory().getDescription()
         );
         
