@@ -29,7 +29,7 @@ public class StackDataService implements IStackDataService {
     public List<Stack> findAll() {return stackRepository.findAll(); }
   
   @Override
-  public List<Stack> findStacksByWorkplaceId(Long workplaceId) {
-    return stackRepository.findStacksByWorkplaceId(workplaceId);
+  public List<Stack> findByWorkplaceIdOrderByNameAsc(Long workplaceId) {
+    return stackRepository.findByWorkplaceIdOrderByNameAsc(workplaceId);
   }
 }

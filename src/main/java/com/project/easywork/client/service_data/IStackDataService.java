@@ -9,5 +9,5 @@ public interface IStackDataService {
   Stack save(Stack stack);
   void deleteById(Long stackId);
   List<Stack> findAll();
-  List<Stack> findStacksByWorkplaceId(Long workplaceId);
+  List<Stack> findByWorkplaceIdOrderByNameAsc(Long workplaceId);
 }

@@ -1,6 +1,8 @@
 package com.project.easywork.client.controller;
 
+import com.project.easywork.client.domain.dto.stack.StackD;
 import com.project.easywork.client.domain.dto.workplace.*;
+import com.project.easywork.client.service.IStackService;
 import com.project.easywork.common.api.ApiResponse;
 import com.project.easywork.client.service.IWorkplaceService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -21,6 +23,7 @@ import java.util.List;
 public class WorkplaceController {
   
   private final IWorkplaceService workplaceService;
+  private final IStackService stackService;
   
   @Operation(summary = "사업장 등록 API", description = "새로운 사업장 정보를 데이터베이스에 저장합니다.")
   @PostMapping()

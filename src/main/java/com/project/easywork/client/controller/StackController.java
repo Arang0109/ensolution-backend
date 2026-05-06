@@ -12,6 +12,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -23,7 +24,6 @@ import java.util.List;
 public class StackController {
   
   private final IStackService stackService;
-  private final IPlanService scheduleService;
   private final IStackMeasurementService stackMeasurementService;
   
   @Operation(summary = "측정시설 등록 API", description = "새로운 측정시설 정보를 데이터베이스에 저장합니다.")
@@ -67,6 +67,17 @@ public class StackController {
   @DeleteMapping("/{stackId}")
   public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long stackId) {
     stackService.removeStack(stackId);
+    return ResponseEntity.ok(ApiResponse.success());
+  }
+  
+  @Operation(summary = "측정시설 CSV/TXT 업로드", description = "파일을 업로드하여 측정시설을 일괄 등록합니다.")
+  @PostMapping("/import")
+  public ResponseEntity<ApiResponse<Void>> importStacks(
+      @RequestParam("file") MultipartFile file
+  ) {
+    
+    stackService.importStacks(file);
+    
     return ResponseEntity.ok(ApiResponse.success());
   }
 }

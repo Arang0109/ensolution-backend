@@ -7,12 +7,16 @@ import com.project.easywork.client.service_data.IStackDataService;
 import com.project.easywork.client.mapper.StackMapper;
 import com.project.easywork.client.service.IStackService;
 import com.project.easywork.client.validator.StackValidator;
+import com.project.easywork.common.file.CsvReader;
+import com.project.easywork.common.file.UploadFileValidator;
 import com.project.easywork.common.resolver.DomainEntityResolver;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -25,6 +29,9 @@ public class StackService implements IStackService {
   
   private final StackValidator stackValidator;
   private final DomainEntityResolver domainEntityResolver;
+  
+  private final UploadFileValidator uploadFileValidator;
+  private final CsvReader csvReader;
   
   private final EntityManager entityManager;
   
@@ -70,5 +77,14 @@ public class StackService implements IStackService {
   public void removeStack(Long stackId) {
     domainEntityResolver.getStackOrThrow(stackId);
     stackDataService.deleteById(stackId);
+  }
+  
+  @Override
+  public void importStacks(MultipartFile file) {
+    uploadFileValidator.validate(file);
+    
+    List<String[]> rows = csvReader.read(file);
+    
+    rows.forEach(row -> Arrays.stream(row).forEach(System.out::println));
   }
 }
