@@ -1,7 +1,7 @@
 package com.project.easywork.measurement.controller;
 
 import com.project.easywork.common.api.ApiResponse;
-import com.project.easywork.measurement.dto.SaveDraftCommandD;
+import com.project.easywork.measurement.domain.dto.command.SaveDraftCommandD;
 import com.project.easywork.measurement.service.IMeasurementService;
 import com.project.easywork.plan.service.impl.PlanApplicationService;
 import io.swagger.v3.oas.annotations.Operation;

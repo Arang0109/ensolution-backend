@@ -1,10 +1,10 @@
 package com.project.easywork.plan.service.impl;
 
-import com.project.easywork.measurement.dto.SaveDraftCommandD;
+import com.project.easywork.measurement.domain.dto.command.SaveDraftCommandD;
 import com.project.easywork.measurement.service.IMeasurementService;
 import com.project.easywork.plan.domain.dto.PlanCreateBundleD;
 import com.project.easywork.plan.domain.dto.PlanD;
-import com.project.easywork.measurement.dto.StatusUpdateCommandD;
+import com.project.easywork.measurement.domain.dto.command.StatusUpdateCommandD;
 import com.project.easywork.plan.service.IPlanService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

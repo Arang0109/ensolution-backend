@@ -1,6 +1,6 @@
 package com.project.easywork.measurement.service_data.impl;
 
-import com.project.easywork.measurement.dto.document.MeasurementDoc;
+import com.project.easywork.measurement.domain.document.MeasurementDoc;
 import com.project.easywork.measurement.repository.MeasurementRepository;
 import com.project.easywork.measurement.service_data.IMeasurementDataService;
 import lombok.RequiredArgsConstructor;

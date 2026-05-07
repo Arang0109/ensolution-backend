@@ -1,7 +1,7 @@
 package com.project.easywork.plan.controller;
 
 import com.project.easywork.common.api.ApiResponse;
-import com.project.easywork.measurement.dto.StatusUpdateCommandD;
+import com.project.easywork.measurement.domain.dto.command.StatusUpdateCommandD;
 import com.project.easywork.plan.domain.dto.*;
 import com.project.easywork.plan.service.IPlanService;
 import com.project.easywork.plan.service.impl.PlanApplicationService;

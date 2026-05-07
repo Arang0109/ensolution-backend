@@ -24,6 +24,4 @@ public class PlanTableViewD {
   private String teamName;
   
   private List<String> measurementItems;
-  
-  private LocalDate createdAt;
 }

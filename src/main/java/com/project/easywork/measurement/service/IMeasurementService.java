@@ -1,7 +1,7 @@
 package com.project.easywork.measurement.service;
 
-import com.project.easywork.measurement.dto.SaveDraftCommandD;
-import com.project.easywork.measurement.dto.StatusUpdateCommandD;
+import com.project.easywork.measurement.domain.dto.command.SaveDraftCommandD;
+import com.project.easywork.measurement.domain.dto.command.StatusUpdateCommandD;
 import com.project.easywork.plan.domain.dto.PlanCreateBundleD;
 
 public interface IMeasurementService {

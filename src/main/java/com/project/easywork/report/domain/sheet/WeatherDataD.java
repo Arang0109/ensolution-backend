@@ -1,7 +1,7 @@
 package com.project.easywork.report.domain.sheet;
 
-import com.project.easywork.measurement.dto.WeatherCondition;
-import com.project.easywork.measurement.dto.WindDirection;
+import com.project.easywork.measurement.domain.constants.WeatherCondition;
+import com.project.easywork.measurement.domain.constants.WindDirection;
 import lombok.*;
 
 import java.math.BigDecimal;
