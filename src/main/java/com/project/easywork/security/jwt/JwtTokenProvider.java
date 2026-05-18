@@ -1,4 +1,4 @@
-package com.project.easywork.auth.security;
+package com.project.easywork.security.jwt;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;

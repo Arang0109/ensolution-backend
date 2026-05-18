@@ -3,7 +3,6 @@ package com.project.easywork.client.mapper;
 import com.project.easywork.client.domain.dto.company.CompanyCreateD;
 import com.project.easywork.client.domain.dto.company.CompanyDetailD;
 import com.project.easywork.client.domain.dto.company.CompanyD;
-import com.project.easywork.client.domain.dto.company.CompanyUpdateD;
 import com.project.easywork.client.domain.persistance.Company;
 import org.mapstruct.*;
 

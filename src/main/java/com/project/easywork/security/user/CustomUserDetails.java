@@ -1,4 +1,4 @@
-package com.project.easywork.auth.security;
+package com.project.easywork.security.user;
 
 import com.project.easywork.user.domain.entity.User;
 import lombok.Getter;
@@ -7,8 +7,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 

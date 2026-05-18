@@ -1,6 +1,5 @@
 package com.project.easywork.measurement.pipeline.step;
 
-import com.project.easywork.measurement.domain.document.equipments.EquipmentSnapshotDoc;
 import com.project.easywork.measurement.domain.document.equipments.spec.PitotTubeSnapshotDoc;
 import com.project.easywork.measurement.pipeline.SheetContext;
 import lombok.RequiredArgsConstructor;

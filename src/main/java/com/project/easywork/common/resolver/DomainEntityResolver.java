@@ -6,7 +6,6 @@ import com.project.easywork.client.domain.persistance.*;
 import com.project.easywork.client.service_data.*;
 import com.project.easywork.common.exception.CustomException;
 import com.project.easywork.common.exception.ErrorCode;
-import com.project.easywork.equipment.service_data.IEquipmentDataService;
 import com.project.easywork.pollutant.domain.persistance.Pollutant;
 import com.project.easywork.pollutant.service_data.IPollutantDataService;
 import com.project.easywork.user.domain.entity.User;

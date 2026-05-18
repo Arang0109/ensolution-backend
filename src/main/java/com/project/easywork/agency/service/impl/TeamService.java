@@ -1,6 +1,8 @@
 package com.project.easywork.agency.service.impl;
 
-import com.project.easywork.agency.domain.dto.*;
+import com.project.easywork.agency.domain.dto.TeamCreateD;
+import com.project.easywork.agency.domain.dto.TeamD;
+import com.project.easywork.agency.domain.dto.TeamUpdateD;
 import com.project.easywork.agency.domain.entity.Team;
 import com.project.easywork.agency.mapper.TeamMapper;
 import com.project.easywork.agency.service.ITeamService;

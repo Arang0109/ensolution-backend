@@ -1,6 +1,5 @@
-package com.project.easywork.auth.service;
+package com.project.easywork.security.user;
 
-import com.project.easywork.auth.security.CustomUserDetails;
 import com.project.easywork.user.domain.entity.User;
 import com.project.easywork.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;

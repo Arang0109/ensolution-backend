@@ -1,6 +1,9 @@
 package com.project.easywork.client.controller;
 
-import com.project.easywork.client.domain.dto.prevention.*;
+import com.project.easywork.client.domain.dto.prevention.PreventionBundleCreateD;
+import com.project.easywork.client.domain.dto.prevention.PreventionBundleUpdateD;
+import com.project.easywork.client.domain.dto.prevention.PreventionD;
+import com.project.easywork.client.domain.dto.prevention.PreventionDetailD;
 import com.project.easywork.client.service.IFacilityService;
 import com.project.easywork.client.service.IPreventionService;
 import com.project.easywork.client.service.ITargetService;

@@ -1,7 +1,7 @@
 package com.project.easywork.user.service.impl;
 
 import com.project.easywork.agency.service_data.ITeamDataService;
-import com.project.easywork.auth.security.CustomUserDetails;
+import com.project.easywork.security.user.CustomUserDetails;
 import com.project.easywork.user.validator.UserPasswordValidator;
 import com.project.easywork.user.domain.dto.PasswordUpdateD;
 import com.project.easywork.user.domain.dto.UserCreateD;
@@ -14,7 +14,6 @@ import com.project.easywork.user.service.IUserService;
 import com.project.easywork.user.validator.UserValidator;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

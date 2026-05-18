@@ -1,6 +1,8 @@
 package com.project.easywork.agency.controller;
 
-import com.project.easywork.agency.domain.dto.*;
+import com.project.easywork.agency.domain.dto.TeamCreateD;
+import com.project.easywork.agency.domain.dto.TeamD;
+import com.project.easywork.agency.domain.dto.TeamUpdateD;
 import com.project.easywork.agency.service.ITeamService;
 import com.project.easywork.common.api.ApiResponse;
 import io.swagger.v3.oas.annotations.Operation;

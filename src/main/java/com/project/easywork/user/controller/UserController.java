@@ -4,7 +4,7 @@ import com.project.easywork.common.api.ApiResponse;
 import com.project.easywork.user.domain.dto.PasswordUpdateD;
 import com.project.easywork.user.domain.dto.UserD;
 import com.project.easywork.user.domain.dto.UserUpdateD;
-import com.project.easywork.auth.security.CustomUserDetails;
+import com.project.easywork.security.user.CustomUserDetails;
 import com.project.easywork.user.service.IUserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;

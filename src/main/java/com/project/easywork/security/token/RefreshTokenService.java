@@ -1,4 +1,4 @@
-package com.project.easywork.auth.service;
+package com.project.easywork.security.token;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.StringRedisTemplate;

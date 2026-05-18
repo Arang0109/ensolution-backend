@@ -1,7 +1,9 @@
 package com.project.easywork.client.controller;
 
-import com.project.easywork.client.domain.dto.stack.StackD;
-import com.project.easywork.client.domain.dto.workplace.*;
+import com.project.easywork.client.domain.dto.workplace.WorkplaceCreateD;
+import com.project.easywork.client.domain.dto.workplace.WorkplaceD;
+import com.project.easywork.client.domain.dto.workplace.WorkplaceDetailD;
+import com.project.easywork.client.domain.dto.workplace.WorkplaceUpdateD;
 import com.project.easywork.client.service.IStackService;
 import com.project.easywork.common.api.ApiResponse;
 import com.project.easywork.client.service.IWorkplaceService;

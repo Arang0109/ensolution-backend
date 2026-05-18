@@ -1,6 +1,9 @@
 package com.project.easywork.client.service.impl;
 
-import com.project.easywork.client.domain.dto.prevention.*;
+import com.project.easywork.client.domain.dto.prevention.PreventionBundleCreateD;
+import com.project.easywork.client.domain.dto.prevention.PreventionBundleUpdateD;
+import com.project.easywork.client.domain.dto.prevention.PreventionD;
+import com.project.easywork.client.domain.dto.prevention.PreventionDetailD;
 import com.project.easywork.client.domain.persistance.Prevention;
 import com.project.easywork.client.domain.persistance.Stack;
 import com.project.easywork.client.mapper.PreventionMapper;
@@ -9,7 +12,6 @@ import com.project.easywork.client.service.IPreventionService;
 import com.project.easywork.client.service.ITargetService;
 import com.project.easywork.client.service_data.IPreventionDataService;
 import com.project.easywork.common.resolver.DomainEntityResolver;
-import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

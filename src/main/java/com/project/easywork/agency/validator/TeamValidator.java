@@ -1,7 +1,6 @@
 package com.project.easywork.agency.validator;
 
 import com.project.easywork.agency.domain.dto.TeamCreateD;
-import com.project.easywork.agency.domain.dto.TeamUpdateD;
 import com.project.easywork.agency.repository.TeamRepository;
 import com.project.easywork.common.exception.CustomException;
 import com.project.easywork.common.exception.ErrorCode;

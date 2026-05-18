@@ -2,14 +2,12 @@ package com.project.easywork.client.service.impl;
 
 import com.project.easywork.client.domain.dto.facility.FacilityCreateD;
 import com.project.easywork.client.domain.dto.facility.FacilityD;
-import com.project.easywork.client.domain.dto.facility.FacilityUpdateD;
 import com.project.easywork.client.domain.persistance.Facility;
 import com.project.easywork.client.domain.persistance.Prevention;
 import com.project.easywork.client.mapper.FacilityMapper;
 import com.project.easywork.client.service.IFacilityService;
 import com.project.easywork.client.service_data.IFacilityDataService;
 import com.project.easywork.common.resolver.DomainEntityResolver;
-import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
