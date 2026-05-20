@@ -43,44 +43,41 @@ public class SecurityConfig {
         .csrf(AbstractHttpConfigurer::disable)
         .cors(cors -> cors.configurationSource(corsConfigurationSource()))
         .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-        
         .exceptionHandling(exception -> exception
-            // 인증 실패 (토큰 없음, 만료, 위조 등) → 401
-            .authenticationEntryPoint((request, response, authException) -> {
-              response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-              response.setContentType("application/json;charset=UTF-8");
-              response.getWriter().write("""
-              {"success":false,"message":"Unauthorized"}
-            """);
-            })
+          // 인증 실패 → 401
+          .authenticationEntryPoint((request, response, authException) -> {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.setContentType("application/json;charset=UTF-8");
+            response.getWriter().write("""
+            {"success":false,"message":"Unauthorized"}
+          """);
+          })
             
-            // 인증은 됐지만 권한이 없을 때 → 403
-            .accessDeniedHandler((request, response, accessDeniedException) -> {
-              response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-              response.setContentType("application/json;charset=UTF-8");
-              response.getWriter().write("""
-              {"success":false,"message":"Forbidden"}
-            """);
-            })
+          // 권한이 없을 때 → 403
+          .accessDeniedHandler((request, response, accessDeniedException) -> {
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            response.setContentType("application/json;charset=UTF-8");
+            response.getWriter().write("""
+            {"success":false,"message":"Forbidden"}
+          """);
+          })
         )
         
         .authorizeHttpRequests
-            (
-                (authorize) -> authorize
-                    .requestMatchers("/api/admin/**").hasRole("ADMIN")
-                    .requestMatchers(
-                        "/api/auth/register",
-                      "/api/auth/login",
-                        "/api/auth/refresh",
-                      "/swagger-ui.html",
-                      "/swagger-ui/**",
-                      "/v3/api-docs/**",
-                      "/v3/api-docs.yaml",
-                      "/swagger-resources/**",
-                      "/webjars/**").permitAll()
-                    .requestMatchers("/api/auth/logout").authenticated()
-                    .anyRequest().authenticated()
-            )
+          ((authorize) -> authorize
+            .requestMatchers("/api/admin/**").hasRole("ADMIN")
+            .requestMatchers(
+                "/api/auth/register",
+              "/api/auth/login",
+                "/api/auth/refresh",
+              "/swagger-ui.html",
+              "/swagger-ui/**",
+              "/v3/api-docs/**",
+              "/v3/api-docs.yaml",
+              "/swagger-resources/**",
+              "/webjars/**").permitAll()
+            .requestMatchers("/api/auth/logout").authenticated()
+            .anyRequest().authenticated())
         .formLogin(AbstractHttpConfigurer::disable)
         .httpBasic(AbstractHttpConfigurer::disable)
         .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
