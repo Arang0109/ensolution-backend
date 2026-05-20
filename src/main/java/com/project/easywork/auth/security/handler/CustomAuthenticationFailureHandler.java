@@ -1,4 +1,4 @@
-package com.project.easywork.security.handler;
+package com.project.easywork.auth.security.handler;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

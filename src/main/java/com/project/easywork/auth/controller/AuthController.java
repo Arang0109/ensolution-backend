@@ -1,13 +1,13 @@
 package com.project.easywork.auth.controller;
 
-import com.project.easywork.auth.domain.dto.LoginRequestD;
-import com.project.easywork.auth.domain.dto.LoginResponseD;
-import com.project.easywork.common.api.ApiResponse;
-import com.project.easywork.security.domain.JwtProperties;
-import com.project.easywork.security.domain.JwtToken;
-import com.project.easywork.security.jwt.JwtTokenProvider;
-import com.project.easywork.security.user.CustomUserDetails;
-import com.project.easywork.security.token.RefreshTokenService;
+import com.project.easywork.auth.domain.LoginRequestD;
+import com.project.easywork.auth.domain.LoginResponseD;
+import com.project.easywork.common.web.ApiResponse;
+import com.project.easywork.auth.security.domain.JwtProperties;
+import com.project.easywork.auth.security.domain.JwtToken;
+import com.project.easywork.auth.security.jwt.JwtTokenProvider;
+import com.project.easywork.auth.security.user.CustomUserDetails;
+import com.project.easywork.auth.service.AuthTokenService;
 import com.project.easywork.user.domain.dto.UserCreateD;
 import com.project.easywork.user.domain.dto.UserD;
 import com.project.easywork.user.service.IUserService;
@@ -33,7 +33,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class AuthController {
   
-  private final RefreshTokenService refreshTokenService;
+  private final AuthTokenService authTokenService;
   private final IUserService IUserService;
   
   private final AuthenticationManager authenticationManager;
@@ -59,7 +59,7 @@ public class AuthController {
     
     JwtToken token = jwtTokenProvider.createToken(authentication);
     
-    refreshTokenService.saveRefreshToken(
+    authTokenService.saveRefreshToken(
       token.username(),
       token.refreshToken(),
       jwtProperties.refreshTokenValidity()
@@ -92,7 +92,7 @@ public class AuthController {
     HttpServletResponse response
   ) {
     
-    refreshTokenService.deleteRefreshToken(userDetails.getUsername());
+    authTokenService.deleteRefreshToken(userDetails.getUsername());
     
     ResponseCookie refreshCookie = ResponseCookie.from("refreshToken", null)
       .httpOnly(true)
@@ -120,7 +120,7 @@ public class AuthController {
       
       Authentication authentication = jwtTokenProvider.getAuthentication(refreshToken);
       
-      String storedToken = refreshTokenService.getRefreshToken(authentication);
+      String storedToken = authTokenService.getRefreshToken(authentication);
       
       if (storedToken == null || !storedToken.equals(refreshToken)) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)

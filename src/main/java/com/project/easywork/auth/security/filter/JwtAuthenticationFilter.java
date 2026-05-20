@@ -1,7 +1,7 @@
-package com.project.easywork.security.filter;
+package com.project.easywork.auth.security.filter;
 
-import com.project.easywork.security.handler.CustomAuthenticationFailureHandler;
-import com.project.easywork.security.jwt.JwtTokenProvider;
+import com.project.easywork.auth.security.handler.CustomAuthenticationFailureHandler;
+import com.project.easywork.auth.security.jwt.JwtTokenProvider;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

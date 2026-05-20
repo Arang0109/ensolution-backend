@@ -3,8 +3,8 @@ package com.project.easywork.agency.controller;
 import com.project.easywork.agency.domain.dto.TeamCreateD;
 import com.project.easywork.agency.domain.dto.TeamD;
 import com.project.easywork.agency.domain.dto.TeamUpdateD;
-import com.project.easywork.agency.service.ITeamService;
-import com.project.easywork.common.api.ApiResponse;
+import com.project.easywork.agency.service.TeamService;
+import com.project.easywork.common.web.ApiResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -22,7 +22,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TeamController {
   
-  private final ITeamService teamService;
+  private final TeamService teamService;
   
   @Operation(summary = "측정팀 등록 API", description = "새로운 측정팀 정보를 데이터베이스에 저장합니다.")
   @PostMapping()
@@ -45,7 +45,7 @@ public class TeamController {
   }
   
   @Operation(summary = "측정팀 수정 API", description = "해당 측정팀의 상세정보를 수정합니다.")
-  @PatchMapping("/{teamId}")
+  @PutMapping("/{teamId}")
   public ResponseEntity<ApiResponse<TeamD>> update
       (
           @PathVariable Long teamId,

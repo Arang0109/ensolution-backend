@@ -1,9 +1,7 @@
 package com.project.easywork.agency.domain.dto;
 
-import jakarta.validation.constraints.NotBlank;
-
-public record TeamUpdateD (
-    @NotBlank(message = "필수 입력") String name,
+public record TeamUpdateCommand(
+    String name,
     String vehicleNumber,
     String mentor,
     String mentee,
@@ -11,4 +9,5 @@ public record TeamUpdateD (
     String gasSamplerId,
     String pitotTubeId,
     String nozzleId
-) {}
+) {
+}

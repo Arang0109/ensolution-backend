@@ -2,7 +2,7 @@ package com.project.easywork.client.controller;
 
 import com.project.easywork.client.domain.dto.stack.*;
 import com.project.easywork.client.service.IStackMeasurementService;
-import com.project.easywork.common.api.ApiResponse;
+import com.project.easywork.common.web.ApiResponse;
 import com.project.easywork.client.service.IStackService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;

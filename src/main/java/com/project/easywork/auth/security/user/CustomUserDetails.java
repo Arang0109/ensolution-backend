@@ -1,4 +1,4 @@
-package com.project.easywork.security.user;
+package com.project.easywork.auth.security.user;
 
 import com.project.easywork.user.domain.entity.User;
 import lombok.Getter;

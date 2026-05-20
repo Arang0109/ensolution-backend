@@ -1,6 +1,6 @@
-package com.project.easywork.security.config;
+package com.project.easywork.auth.security.config;
 
-import com.project.easywork.security.filter.JwtAuthenticationFilter;
+import com.project.easywork.auth.security.filter.JwtAuthenticationFilter;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

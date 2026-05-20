@@ -1,4 +1,4 @@
-package com.project.easywork.common.config;
+package com.project.easywork.common.swagger;
 
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
@@ -15,11 +15,11 @@ public class SwaggerConfig {
   public OpenAPI openAPI() {
     Server localServer = new Server()
         .url("http://localhost:8080")
-        .description("💻 Local Development Server");
+        .description("💻 로컬 개발 서버");
     
     return new OpenAPI()
         .info(new Info()
-            .title("EasyWork API")
+            .title("Ensolution API")
             .description("환경 솔루션 프로젝트 API 문서")
             .version("v1.0"))
         .servers(List.of(localServer));

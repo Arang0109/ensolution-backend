@@ -1,6 +1,6 @@
 package com.project.easywork;
 
-import com.project.easywork.security.domain.JwtProperties;
+import com.project.easywork.auth.security.domain.JwtProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.event.ApplicationReadyEvent;

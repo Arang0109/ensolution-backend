@@ -1,4 +1,4 @@
-package com.project.easywork.security.domain;
+package com.project.easywork.auth.security.domain;
 
 import java.util.List;
 

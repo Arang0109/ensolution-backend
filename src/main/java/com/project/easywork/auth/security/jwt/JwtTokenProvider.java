@@ -1,9 +1,9 @@
-package com.project.easywork.security.jwt;
+package com.project.easywork.auth.security.jwt;
 
-import com.project.easywork.security.domain.JwtProperties;
-import com.project.easywork.security.domain.JwtToken;
-import com.project.easywork.security.user.CustomUserDetails;
-import com.project.easywork.security.user.CustomUserDetailsService;
+import com.project.easywork.auth.security.domain.JwtProperties;
+import com.project.easywork.auth.security.domain.JwtToken;
+import com.project.easywork.auth.security.user.CustomUserDetails;
+import com.project.easywork.auth.security.user.CustomUserDetailsService;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;

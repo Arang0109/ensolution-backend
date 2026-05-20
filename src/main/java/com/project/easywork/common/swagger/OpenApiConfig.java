@@ -1,4 +1,4 @@
-package com.project.easywork.common.config;
+package com.project.easywork.common.swagger;
 
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;

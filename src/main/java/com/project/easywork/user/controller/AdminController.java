@@ -1,6 +1,6 @@
 package com.project.easywork.user.controller;
 
-import com.project.easywork.common.api.ApiResponse;
+import com.project.easywork.common.web.ApiResponse;
 import com.project.easywork.user.domain.dto.UserD;
 import com.project.easywork.user.service.IUserService;
 import io.swagger.v3.oas.annotations.Operation;

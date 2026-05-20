@@ -1,7 +1,7 @@
 package com.project.easywork.user.service.impl;
 
-import com.project.easywork.agency.service_data.ITeamDataService;
-import com.project.easywork.security.user.CustomUserDetails;
+import com.project.easywork.agency.service_data.TeamDataService;
+import com.project.easywork.auth.security.user.CustomUserDetails;
 import com.project.easywork.user.validator.UserPasswordValidator;
 import com.project.easywork.user.domain.dto.PasswordUpdateD;
 import com.project.easywork.user.domain.dto.UserCreateD;
@@ -30,7 +30,7 @@ public class UserService implements IUserService {
   private final PasswordEncoder passwordEncoder;
   
   private final IUserDataService userDataService;
-  private final ITeamDataService teamDataService;
+  private final TeamDataService teamDataService;
   private final UserMapper userMapper;
   
   private final EntityManager entityManager;

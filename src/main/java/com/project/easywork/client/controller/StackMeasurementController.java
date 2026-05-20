@@ -4,7 +4,7 @@ import com.project.easywork.client.domain.dto.stack_measurement.StackMeasurement
 import com.project.easywork.client.domain.dto.stack_measurement.StackMeasurementD;
 import com.project.easywork.client.domain.dto.stack_measurement.StackMeasurementUpdateD;
 import com.project.easywork.client.service.IStackMeasurementService;
-import com.project.easywork.common.api.ApiResponse;
+import com.project.easywork.common.web.ApiResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;

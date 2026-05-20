@@ -1,6 +1,6 @@
 package com.project.easywork.plan.controller;
 
-import com.project.easywork.common.api.ApiResponse;
+import com.project.easywork.common.web.ApiResponse;
 import com.project.easywork.measurement.domain.dto.command.StatusUpdateCommandD;
 import com.project.easywork.plan.domain.dto.PlanCreateBundleD;
 import com.project.easywork.plan.domain.dto.PlanD;

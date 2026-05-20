@@ -1,6 +1,6 @@
-package com.project.easywork.security.token;
+package com.project.easywork.auth.service;
 
-import com.project.easywork.security.user.CustomUserDetails;
+import com.project.easywork.auth.security.user.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.core.Authentication;
@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit;
 
 @Service
 @RequiredArgsConstructor
-public class RefreshTokenService {
+public class AuthTokenService {
   
   private final StringRedisTemplate redisTemplate;
   

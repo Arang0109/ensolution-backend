@@ -5,7 +5,7 @@ import com.project.easywork.client.domain.dto.workplace.WorkplaceD;
 import com.project.easywork.client.domain.dto.workplace.WorkplaceDetailD;
 import com.project.easywork.client.domain.dto.workplace.WorkplaceUpdateD;
 import com.project.easywork.client.service.IStackService;
-import com.project.easywork.common.api.ApiResponse;
+import com.project.easywork.common.web.ApiResponse;
 import com.project.easywork.client.service.IWorkplaceService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;

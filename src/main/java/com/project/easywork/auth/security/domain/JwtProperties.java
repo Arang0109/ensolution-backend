@@ -1,4 +1,4 @@
-package com.project.easywork.security.domain;
+package com.project.easywork.auth.security.domain;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

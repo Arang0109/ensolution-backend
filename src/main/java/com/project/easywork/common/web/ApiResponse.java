@@ -1,16 +1,10 @@
-package com.project.easywork.common.api;
+package com.project.easywork.common.web;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-
-@Getter
-@AllArgsConstructor
-public class ApiResponse<T> {
-  
-  private boolean status;
-  private String message;
-  private T data;
-  
+public record ApiResponse<T> (
+    boolean status,
+    String message,
+    T data
+) {
   // 성공 기본 응답
   public static <T> ApiResponse<T> success() {
     return new ApiResponse<>(true, "OK", null);
