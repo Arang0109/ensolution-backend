@@ -1,6 +1,9 @@
 package com.project.easywork.client.service.impl;
 
-import com.project.easywork.client.domain.dto.stack.*;
+import com.project.easywork.client.domain.dto.stack.StackCreateD;
+import com.project.easywork.client.domain.dto.stack.StackD;
+import com.project.easywork.client.domain.dto.stack.StackDetailD;
+import com.project.easywork.client.domain.dto.stack.StackUpdateD;
 import com.project.easywork.client.domain.persistance.Stack;
 import com.project.easywork.client.domain.persistance.Workplace;
 import com.project.easywork.client.service_data.IStackDataService;

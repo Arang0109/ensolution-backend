@@ -1,6 +1,6 @@
 package com.project.easywork.measurement.service_data;
 
-import com.project.easywork.measurement.dto.document.MeasurementDoc;
+import com.project.easywork.measurement.domain.document.MeasurementDoc;
 
 import java.util.List;
 

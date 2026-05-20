@@ -1,7 +1,6 @@
 package com.project.easywork.measurement.pipeline.domain;
 
-import com.project.easywork.measurement.dto.document.input.ClientDoc;
-import com.project.easywork.measurement.dto.document.input.MeasurementSheetDoc;
+import com.project.easywork.measurement.domain.document.sheets.MeasurementSheetDoc;
 import com.project.easywork.measurement.pipeline.SheetContext;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

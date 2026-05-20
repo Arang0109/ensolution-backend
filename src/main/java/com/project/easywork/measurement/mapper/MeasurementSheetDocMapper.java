@@ -1,6 +1,6 @@
 package com.project.easywork.measurement.mapper;
 
-import com.project.easywork.measurement.dto.document.input.*;
+import com.project.easywork.measurement.domain.document.sheets.*;
 import com.project.easywork.report.domain.sheet.*;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

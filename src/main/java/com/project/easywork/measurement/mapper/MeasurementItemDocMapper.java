@@ -1,9 +1,8 @@
 package com.project.easywork.measurement.mapper;
 
-import com.project.easywork.measurement.dto.document.input.MeasurementItemDoc;
-import com.project.easywork.measurement.dto.snapshot.stack_measurement.StackMeasurementSnapshot;
+import com.project.easywork.measurement.domain.document.items.MeasurementItemSnapshotDoc;
+import com.project.easywork.measurement.domain.dto.draft_source.items.MeasurementItemSource;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 
 import java.util.List;
@@ -13,11 +12,11 @@ import java.util.List;
     unmappedTargetPolicy = ReportingPolicy.ERROR
 )
 public interface MeasurementItemDocMapper {
-  MeasurementItemDoc toDoc(StackMeasurementSnapshot snapshot);
+  MeasurementItemSnapshotDoc toDoc(MeasurementItemSource snapshot);
   
-  default String toName(MeasurementItemDoc doc) {
+  default String toName(MeasurementItemSnapshotDoc doc) {
     return doc == null ? null : doc.getPollutantNameKr();
   }
   
-  List<MeasurementItemDoc> toDocs(List<StackMeasurementSnapshot> snapshots);
+  List<MeasurementItemSnapshotDoc> toDocs(List<MeasurementItemSource> snapshots);
 }

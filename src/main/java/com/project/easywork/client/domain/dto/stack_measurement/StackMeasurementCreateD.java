@@ -2,7 +2,6 @@ package com.project.easywork.client.domain.dto.stack_measurement;
 
 import com.project.easywork.client.domain.Cycle;
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;

@@ -1,6 +1,6 @@
 package com.project.easywork.measurement.pipeline.step;
 
-import com.project.easywork.measurement.dto.document.input.ExhaustGasDoc;
+import com.project.easywork.measurement.domain.document.sheets.ExhaustGasDoc;
 import com.project.easywork.measurement.pipeline.SheetContext;
 import com.project.easywork.measurement.pipeline.domain.Sheet;
 import com.project.easywork.measurement.util.Calculator;

@@ -1,10 +1,11 @@
 package com.project.easywork.measurement.service.impl;
 
-import com.project.easywork.measurement.dto.SaveDraftCommandD;
-import com.project.easywork.measurement.dto.document.MeasurementDoc;
-import com.project.easywork.measurement.dto.document.input.ClientDoc;
-import com.project.easywork.measurement.dto.document.input.MeasurementEquipmentDoc;
-import com.project.easywork.measurement.dto.document.input.MeasurementSheetDoc;
+import com.project.easywork.measurement.domain.dto.command.SaveDraftCommandD;
+import com.project.easywork.measurement.domain.document.MeasurementDoc;
+import com.project.easywork.measurement.domain.document.client.ClientSnapshotDoc;
+import com.project.easywork.measurement.domain.document.equipments.EquipmentSnapshotDoc;
+import com.project.easywork.measurement.domain.document.sheets.MeasurementSheetDoc;
+import com.project.easywork.measurement.domain.dto.patch.DraftPatchD;
 import com.project.easywork.measurement.service.IMeasurementQueryService;
 import com.project.easywork.measurement.service.IMeasurementService;
 import com.project.easywork.measurement.service.impl.draft.DraftCreateFactory;
@@ -12,7 +13,7 @@ import com.project.easywork.measurement.service.impl.draft.DraftPatchFactory;
 import com.project.easywork.measurement.service.impl.processor.SheetResultProcessor;
 import com.project.easywork.measurement.service_data.IMeasurementDataService;
 import com.project.easywork.plan.domain.dto.PlanCreateBundleD;
-import com.project.easywork.measurement.dto.StatusUpdateCommandD;
+import com.project.easywork.measurement.domain.dto.command.StatusUpdateCommandD;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,8 +37,8 @@ public class MeasurementService implements IMeasurementService {
     
     MeasurementDoc doc = measurementDataService.findByPlanId(planId);
     
-    ClientDoc client = doc.getClient();
-    MeasurementEquipmentDoc equipment = doc.getEquipment();
+    ClientSnapshotDoc client = doc.getClient();
+    EquipmentSnapshotDoc equipment = doc.getEquipment();
     List<MeasurementSheetDoc> sheets = doc.getSheets();
     
     List<MeasurementSheetDoc> processedSheets = sheets.stream()
@@ -54,8 +55,9 @@ public class MeasurementService implements IMeasurementService {
   @Override
   public void saveDraft(Long planId, SaveDraftCommandD command) {
     MeasurementDoc document = measurementDataService.findByPlanId(planId);
-    MeasurementDoc updated = draftPatchFactory.buildDraftPatch(document, command);
-    measurementDataService.save(updated);
+    DraftPatchD patch = draftPatchFactory.buildDraftPatch(document, command);
+    MeasurementDoc patchedDoc = document.saveDraft(patch);
+    measurementDataService.save(patchedDoc);
   }
   
   @Override
@@ -63,7 +65,7 @@ public class MeasurementService implements IMeasurementService {
     
     MeasurementDoc doc = draftCreateFactory.createDraft(
         planId,
-        measurementQueryService.createSnapshot(command)
+        measurementQueryService.createDraftSource(command)
     );
     measurementDataService.save(doc);
   }

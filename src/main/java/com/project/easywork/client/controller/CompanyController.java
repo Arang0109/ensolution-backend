@@ -5,7 +5,7 @@ import com.project.easywork.client.domain.dto.company.CompanyDetailD;
 import com.project.easywork.client.domain.dto.company.CompanyD;
 import com.project.easywork.client.domain.dto.company.CompanyUpdateD;
 import com.project.easywork.client.service.ICompanyService;
-import com.project.easywork.common.api.ApiResponse;
+import com.project.easywork.common.web.ApiResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;

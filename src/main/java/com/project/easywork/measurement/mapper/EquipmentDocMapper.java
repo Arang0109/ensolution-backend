@@ -1,9 +1,11 @@
 package com.project.easywork.measurement.mapper;
 
-import com.project.easywork.measurement.dto.document.input.MeasurementEquipmentDoc;
-import com.project.easywork.measurement.dto.snapshot.equipment.MeasurementEquipmentSnapshot;
-import com.project.easywork.measurement.dto.snapshot.equipment.NozzleSnapshot;
-import com.project.easywork.measurement.dto.snapshot.equipment.PitotTubeSnapshot;
+import com.project.easywork.measurement.domain.document.equipments.EquipmentSnapshotDoc;
+import com.project.easywork.measurement.domain.document.equipments.spec.NozzleSnapshotDoc;
+import com.project.easywork.measurement.domain.document.equipments.spec.PitotTubeSnapshotDoc;
+import com.project.easywork.measurement.domain.dto.draft_source.equipments.EquipmentSource;
+import com.project.easywork.measurement.domain.dto.draft_source.equipments.NozzleSource;
+import com.project.easywork.measurement.domain.dto.draft_source.equipments.PitotTubeSource;
 import com.project.easywork.report.domain.equipment.EquipmentDataD;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -17,19 +19,19 @@ public interface EquipmentDocMapper {
   
   @Mapping(target = "deltaH", source = "particleSampler.deltaH")
   @Mapping(target = "yd", source = "particleSampler.yd")
-  EquipmentDataD toEquipmentDataDto(MeasurementEquipmentDoc doc);
+  EquipmentDataD toEquipmentDataDto(EquipmentSnapshotDoc doc);
   
-  MeasurementEquipmentDoc toDoc(MeasurementEquipmentSnapshot snapshot);
+  EquipmentSnapshotDoc toDoc(EquipmentSource snapshot);
   
-  MeasurementEquipmentDoc.PitotTubeDoc toDoc(PitotTubeSnapshot snapshot);
+  PitotTubeSnapshotDoc toDoc(PitotTubeSource snapshot);
   
-  MeasurementEquipmentDoc.PitotTubeDoc.PitotCoefficient toDoc(
-      PitotTubeSnapshot.PitotCoefficientSnapshot snapshot
+  PitotTubeSnapshotDoc.PitotCoefficient toDoc(
+      PitotTubeSource.PitotCoefficientSource snapshot
   );
   
-  MeasurementEquipmentDoc.NozzleDoc toDoc(NozzleSnapshot snapshot);
+  NozzleSnapshotDoc toDoc(NozzleSource snapshot);
   
-  MeasurementEquipmentDoc.NozzleDoc.NozzleDiameter toDoc(
-      NozzleSnapshot.NozzleDiameterSnapshot snapshot
+  NozzleSnapshotDoc.NozzleDiameter toDoc(
+      NozzleSource.NozzleDiameterSource snapshot
   );
 }

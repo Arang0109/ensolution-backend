@@ -1,6 +1,9 @@
 package com.project.easywork.client.service.impl;
 
-import com.project.easywork.client.domain.dto.workplace.*;
+import com.project.easywork.client.domain.dto.workplace.WorkplaceCreateD;
+import com.project.easywork.client.domain.dto.workplace.WorkplaceD;
+import com.project.easywork.client.domain.dto.workplace.WorkplaceDetailD;
+import com.project.easywork.client.domain.dto.workplace.WorkplaceUpdateD;
 import com.project.easywork.client.domain.persistance.Company;
 import com.project.easywork.client.domain.persistance.Workplace;
 import com.project.easywork.client.mapper.WorkplaceMapper;

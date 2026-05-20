@@ -1,6 +1,6 @@
 package com.project.easywork.user.service;
 
-import com.project.easywork.auth.security.CustomUserDetails;
+import com.project.easywork.auth.security.user.CustomUserDetails;
 import com.project.easywork.user.domain.dto.PasswordUpdateD;
 import com.project.easywork.user.domain.dto.UserCreateD;
 import com.project.easywork.user.domain.dto.UserD;

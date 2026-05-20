@@ -1,6 +1,6 @@
 package com.project.easywork.agency.domain.entity;
 
-import com.project.easywork.agency.domain.dto.TeamUpdateD;
+import com.project.easywork.agency.domain.dto.TeamUpdateCommand;
 import com.project.easywork.common.domain.BaseEntity;
 import com.project.easywork.user.domain.entity.User;
 import jakarta.persistence.*;
@@ -56,29 +56,16 @@ public class Team extends BaseEntity {
   /* =========================
    * Team Logic
    * ========================= */
-  public void update(TeamUpdateD dto) {
-    if (dto.getName() != null && !dto.getName().isBlank()) {
-      this.name = dto.getName();
-    }
+  public void update(TeamUpdateCommand command) {
+    this.name = command.name();
+    this.vehicleNumber = command.vehicleNumber();
     
-    if (dto.getVehicleNumber() != null && !dto.getVehicleNumber().isBlank()) {
-      this.vehicleNumber = dto.getVehicleNumber();
-    }
+    this.mentor = command.mentor();
+    this.mentee = command.mentee();
     
-    if (dto.getParticleSamplerId() != null && !dto.getParticleSamplerId().isBlank()) {
-      this.particleSamplerId = dto.getParticleSamplerId();
-    }
-    
-    if (dto.getGasSamplerId() != null && !dto.getGasSamplerId().isBlank()) {
-      this.gasSamplerId = dto.getGasSamplerId();
-    }
-    
-    if (dto.getPitotTubeId() != null && !dto.getPitotTubeId().isBlank()) {
-      this.pitotTubeId = dto.getPitotTubeId();
-    }
-    
-    if (dto.getNozzleId() != null && !dto.getNozzleId().isBlank()) {
-      this.nozzleId = dto.getNozzleId();
-    }
+    this.particleSamplerId = command.particleSamplerId();
+    this.gasSamplerId = command.gasSamplerId();
+    this.pitotTubeId = command.pitotTubeId();
+    this.nozzleId = command.nozzleId();
   }
 }

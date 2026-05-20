@@ -1,6 +1,6 @@
 package com.project.easywork.equipment.controller;
 
-import com.project.easywork.common.api.ApiResponse;
+import com.project.easywork.common.web.ApiResponse;
 import com.project.easywork.equipment.domain.EquipType;
 import com.project.easywork.equipment.domain.document.EquipmentDoc;
 import com.project.easywork.equipment.domain.dto.EquipmentCreateReqD;

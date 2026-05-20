@@ -3,7 +3,8 @@ package com.project.easywork.plan.mapper;
 import com.project.easywork.client.mapper.CompanyMapper;
 import com.project.easywork.client.mapper.StackMapper;
 import com.project.easywork.client.mapper.WorkplaceMapper;
-import com.project.easywork.plan.domain.dto.*;
+import com.project.easywork.plan.domain.dto.PlanCreateD;
+import com.project.easywork.plan.domain.dto.PlanD;
 import com.project.easywork.plan.domain.persistance.Plan;
 import org.mapstruct.*;
 

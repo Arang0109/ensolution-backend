@@ -2,7 +2,7 @@ package com.project.easywork.report.service;
 
 import com.project.easywork.common.exception.CustomException;
 import com.project.easywork.common.exception.ErrorCode;
-import com.project.easywork.measurement.dto.document.MeasurementDoc;
+import com.project.easywork.measurement.domain.document.MeasurementDoc;
 import com.project.easywork.measurement.mapper.ClientDocMapper;
 import com.project.easywork.measurement.mapper.EquipmentDocMapper;
 import com.project.easywork.measurement.mapper.MeasurementDocMapper;

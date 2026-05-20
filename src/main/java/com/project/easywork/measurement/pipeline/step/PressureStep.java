@@ -1,8 +1,7 @@
 package com.project.easywork.measurement.pipeline.step;
 
-import com.project.easywork.measurement.dto.document.input.MeasurementPointDoc;
-import com.project.easywork.measurement.dto.document.input.MoistureDoc;
-import com.project.easywork.measurement.dto.document.input.WeatherDoc;
+import com.project.easywork.measurement.domain.document.sheets.MoistureDoc;
+import com.project.easywork.measurement.domain.document.sheets.WeatherDoc;
 import com.project.easywork.measurement.pipeline.SheetContext;
 import com.project.easywork.measurement.pipeline.domain.Sheet;
 import com.project.easywork.measurement.util.Calculator;

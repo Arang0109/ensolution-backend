@@ -1,6 +1,6 @@
 package com.project.easywork.measurement.repository;
 
-import com.project.easywork.measurement.dto.document.MeasurementDoc;
+import com.project.easywork.measurement.domain.document.MeasurementDoc;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 

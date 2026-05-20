@@ -1,6 +1,6 @@
 package com.project.easywork.plan.domain.dto;
 
-import com.project.easywork.measurement.dto.document.MeasurementDoc;
+import com.project.easywork.measurement.domain.document.MeasurementDoc;
 import lombok.*;
 
 @NoArgsConstructor

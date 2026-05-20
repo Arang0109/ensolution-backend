@@ -1,0 +1,72 @@
+package com.project.easywork.measurement.domain.dto.command;
+
+import com.project.easywork.client.domain.Cycle;
+import com.project.easywork.measurement.domain.document.client.ClientSnapshotDoc;
+import com.project.easywork.measurement.domain.document.sheets.MeasurementSheetDoc;
+import com.project.easywork.plan.domain.MeasurementField;
+import com.project.easywork.pollutant.domain.Method;
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.List;
+
+@Schema(description = "측정 데이터 임시저장 요청 DTO")
+public record SaveDraftCommandD(
+  String referenceNumber,
+  // 측정일 : 필수 입력값
+  @NotNull LocalDate measureDate,
+  LocalDate receivedDate,
+  LocalDate analysisDate,
+  // 측정분야 : 필수 입력값
+  @NotNull MeasurementField measurementField,
+  // 측정용도 : 필수 입력값
+  @NotBlank String measurementType,
+  
+  LocalTime measureStartTime,
+  LocalTime measureEndTime,
+  
+  String teamName,
+  String vehicleNumber,
+  String mentor,
+  String mentee,
+  
+  ClientSnapshotDoc client,
+  
+  String particleSamplerId,
+  String gasSamplerId,
+  String pitotTubeId,
+  String nozzleId,
+  
+  List<MeasurementItemPatchCommandD> measurementItems,
+  
+  List<MeasurementSheetDoc> sheets
+) {
+  public record MeasurementItemPatchCommandD (
+    Long stackMeasurementId,
+    Long pollutantId,
+    String pollutantNameKr,
+    String pollutantNameEn,
+    Method method,
+    String testEquipment,
+    String testMethod,
+    Double samplingTime,
+    String samplingVolume,
+    Cycle cycle,
+    BigDecimal allowance,
+    
+    LocalTime startTime,
+    LocalTime endTime,
+    BigDecimal suctionQuantity,
+    BigDecimal gasMeterGaugePressure,
+    BigDecimal inTemperature,
+    BigDecimal outTemperature,
+    BigDecimal beforeVolume,
+    BigDecimal afterVolume,
+    String blankSampleNumber,
+    String sampleNumber
+  ) {}
+}

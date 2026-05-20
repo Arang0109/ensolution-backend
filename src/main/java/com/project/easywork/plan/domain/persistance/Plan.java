@@ -2,10 +2,10 @@ package com.project.easywork.plan.domain.persistance;
 
 import com.project.easywork.agency.domain.entity.Team;
 import com.project.easywork.client.domain.persistance.Stack;
-import com.project.easywork.measurement.dto.SaveDraftCommandD;
+import com.project.easywork.measurement.domain.dto.command.SaveDraftCommandD;
 import com.project.easywork.plan.domain.MeasurementField;
 import com.project.easywork.plan.domain.PlanStatus;
-import com.project.easywork.measurement.dto.StatusUpdateCommandD;
+import com.project.easywork.measurement.domain.dto.command.StatusUpdateCommandD;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;

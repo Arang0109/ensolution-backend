@@ -1,10 +1,13 @@
 package com.project.easywork.client.controller;
 
-import com.project.easywork.client.domain.dto.prevention.*;
+import com.project.easywork.client.domain.dto.prevention.PreventionBundleCreateD;
+import com.project.easywork.client.domain.dto.prevention.PreventionBundleUpdateD;
+import com.project.easywork.client.domain.dto.prevention.PreventionD;
+import com.project.easywork.client.domain.dto.prevention.PreventionDetailD;
 import com.project.easywork.client.service.IFacilityService;
 import com.project.easywork.client.service.IPreventionService;
 import com.project.easywork.client.service.ITargetService;
-import com.project.easywork.common.api.ApiResponse;
+import com.project.easywork.common.web.ApiResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;

@@ -1,8 +1,8 @@
 package com.project.easywork.measurement.service.impl.processor;
 
-import com.project.easywork.measurement.dto.document.input.ClientDoc;
-import com.project.easywork.measurement.dto.document.input.MeasurementEquipmentDoc;
-import com.project.easywork.measurement.dto.document.input.MeasurementSheetDoc;
+import com.project.easywork.measurement.domain.document.client.ClientSnapshotDoc;
+import com.project.easywork.measurement.domain.document.equipments.EquipmentSnapshotDoc;
+import com.project.easywork.measurement.domain.document.sheets.MeasurementSheetDoc;
 import com.project.easywork.common.pipeline.Pipeline;
 import com.project.easywork.measurement.pipeline.SheetContext;
 import com.project.easywork.measurement.pipeline.domain.Sheet;
@@ -16,7 +16,7 @@ public class SheetResultProcessor {
   private final Pipeline<SheetContext> pipeline;
   
   public MeasurementSheetDoc process(
-      MeasurementSheetDoc measurementSheetDoc, ClientDoc client, MeasurementEquipmentDoc equipment
+      MeasurementSheetDoc measurementSheetDoc, ClientSnapshotDoc client, EquipmentSnapshotDoc equipment
   ) {
     Sheet sheet = Sheet.builder()
         .sheet(measurementSheetDoc)

@@ -1,7 +1,7 @@
 package com.project.easywork.measurement.mapper;
 
-import com.project.easywork.measurement.dto.document.input.ClientDoc;
-import com.project.easywork.measurement.dto.snapshot.client.*;
+import com.project.easywork.measurement.domain.document.client.ClientSnapshotDoc;
+import com.project.easywork.measurement.domain.dto.draft_source.client.*;
 import com.project.easywork.report.domain.client.ClientDataD;
 import com.project.easywork.report.domain.stack.FacilityDataD;
 import com.project.easywork.report.domain.stack.PreventionDataD;
@@ -19,29 +19,29 @@ public interface ClientDocMapper {
   
   @Mapping(target = "company", expression = "java(toCompanyDoc(snapshot.company(), snapshot.workplace()))")
   @Mapping(target = "stack", source = "stack")
-  ClientDoc toDoc(ClientSnapshot snapshot);
+  ClientSnapshotDoc toDoc(ClientSource snapshot);
   
   @Mapping(target = "preventions", source = "preventions")
-  ClientDoc.StackDoc toDoc(StackSnapshot snapshot);
+  ClientSnapshotDoc.StackSnapshotDoc toDoc(StackSource snapshot);
   
   @Mapping(target = "facilities", source = "facilities")
   @Mapping(target = "targets", source = "targets")
-  ClientDoc.PreventionDoc toDoc(PreventionSnapshot snapshot);
-  ClientDoc.FacilityDoc toDoc(PreventionSnapshot.FacilitySnapshot snapshot);
-  ClientDoc.TargetDoc toDoc(PreventionSnapshot.TargetSnapshot snapshot);
+  ClientSnapshotDoc.PreventionSnapshotDoc toDoc(PreventionSource snapshot);
+  ClientSnapshotDoc.FacilitySnapshotDoc toDoc(PreventionSource.FacilitySource snapshot);
+  ClientSnapshotDoc.TargetSnapshotDoc toDoc(PreventionSource.TargetSource snapshot);
   
-  ClientDataD toClientDataDto(ClientDoc.CompanyDoc companyDoc);
-  StackDataD toStackDataDto(ClientDoc.StackDoc stackDoc);
-  PreventionDataD toPreventionDataDto(ClientDoc.PreventionDoc preventionDoc);
-  FacilityDataD toFacilityDataDto(ClientDoc.FacilityDoc facilityDoc);
-  TargetDataD toTargetDataDto(ClientDoc.TargetDoc targetDoc);
+  ClientDataD toClientDataDto(ClientSnapshotDoc.CompanySnapshotDoc companyDoc);
+  StackDataD toStackDataDto(ClientSnapshotDoc.StackSnapshotDoc stackDoc);
+  PreventionDataD toPreventionDataDto(ClientSnapshotDoc.PreventionSnapshotDoc preventionDoc);
+  FacilityDataD toFacilityDataDto(ClientSnapshotDoc.FacilitySnapshotDoc facilityDoc);
+  TargetDataD toTargetDataDto(ClientSnapshotDoc.TargetSnapshotDoc targetDoc);
   
-  default ClientDoc.CompanyDoc toCompanyDoc(
-      CompanySnapshot company,
-      WorkplaceSnapshot workplace
+  default ClientSnapshotDoc.CompanySnapshotDoc toCompanyDoc(
+      CompanySource company,
+      WorkplaceSource workplace
   ) {
     
-    return ClientDoc.CompanyDoc.builder()
+    return ClientSnapshotDoc.CompanySnapshotDoc.builder()
         .companyId(company != null ? company.companyId() : null)
         .companyName(company != null ? company.name() : null)
         .ceoName(company != null ? company.ceoName() : null)

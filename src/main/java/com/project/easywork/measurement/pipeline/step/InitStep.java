@@ -1,7 +1,7 @@
 package com.project.easywork.measurement.pipeline.step;
 
-import com.project.easywork.measurement.dto.document.input.ClientDoc;
-import com.project.easywork.measurement.dto.document.input.MeasurementPointDoc;
+import com.project.easywork.measurement.domain.document.client.ClientSnapshotDoc;
+import com.project.easywork.measurement.domain.document.sheets.MeasurementPointDoc;
 import com.project.easywork.measurement.pipeline.SheetContext;
 import com.project.easywork.measurement.pipeline.domain.Sheet;
 import com.project.easywork.measurement.util.Calculator;
@@ -22,7 +22,7 @@ public class InitStep implements SheetStep {
   @Override
   public void execute(SheetContext context) {
     Sheet sheet = context.getSheet();
-    ClientDoc client = context.getClient();
+    ClientSnapshotDoc client = context.getClient();
     List<MeasurementPointDoc> measurementPoints = sheet.getSheet().getMeasurementPoints();
     
     BigDecimal standardOxygen = client.getStack().getStandardOxygen();

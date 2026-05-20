@@ -1,12 +1,11 @@
 package com.project.easywork.common.resolver;
 
 import com.project.easywork.agency.domain.entity.Team;
-import com.project.easywork.agency.service_data.ITeamDataService;
+import com.project.easywork.agency.service_data.TeamDataService;
 import com.project.easywork.client.domain.persistance.*;
 import com.project.easywork.client.service_data.*;
 import com.project.easywork.common.exception.CustomException;
 import com.project.easywork.common.exception.ErrorCode;
-import com.project.easywork.equipment.service_data.IEquipmentDataService;
 import com.project.easywork.pollutant.domain.persistance.Pollutant;
 import com.project.easywork.pollutant.service_data.IPollutantDataService;
 import com.project.easywork.user.domain.entity.User;
@@ -29,7 +28,7 @@ public class DomainEntityResolver {
   private final IPreventionDataService preventionDataService;
   private final IFacilityDataService facilityDataService;
   private final ITargetDataService targetDataService;
-  private final ITeamDataService teamDataService;
+  private final TeamDataService teamDataService;
   
   public User getUserOrThrow(Long userId) {
     User user = userDataService.findById(userId);
